@@ -19,4 +19,13 @@ subprocess.run([str(zig), 'cc', '-std=c99', '-Wall', '-Wextra', '-Werror',
                str(root/'demo/user/src/car_core.c'), str(root/'demo/user/src/car_app.c'),
                '-o', str(app_exe)], check=True)
 subprocess.run([str(app_exe)], check=True)
+scene_exe = out / 'test_vision_scenarios.exe'
+scene_out = out / 'vision'
+scene_out.mkdir(exist_ok=True)
+subprocess.run([str(zig), 'cc', '-std=c99', '-Wall', '-Wextra', '-Werror',
+               '-O1', '-UNDEBUG', '-I', str(root/'demo/user/inc'),
+               str(root/'tests/test_vision_scenarios.c'), str(root/'demo/user/src/car_core.c'),
+               '-o', str(scene_exe)], check=True)
+subprocess.run([str(scene_exe), str(scene_out)], check=True)
+subprocess.run([sys.executable,str(root/'tests/render_vision_report.py')], check=True)
 sys.exit(subprocess.run([sys.executable,str(root/'tests/test_capture.py')]).returncode)
