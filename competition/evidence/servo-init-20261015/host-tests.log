@@ -1,0 +1,36 @@
+vision tests: PASS
+control tests: PASS
+hardware adapter tests: PASS (host I/O double, not physical hardware)
+servo initialization/limits/nonfinite/reinitialize tests: PASS
+straight                           PASS valid=1 error=   0.50 paired=13/13
+straight_left                      PASS valid=1 error= -23.50 paired=13/13
+straight_right                     PASS valid=1 error=  24.50 paired=13/13
+dim_light                          PASS valid=1 error=   0.50 paired=13/13
+bright_light                       PASS valid=1 error=   0.50 paired=13/13
+sharp_left_curve                   PASS valid=1 error=  -6.26 paired=13/13
+sharp_right_curve                  PASS valid=1 error=   7.26 paired=13/13
+s_bend                             PASS valid=1 error=   8.68 paired=13/13
+horizontal_shadow                  PASS valid=1 error=   0.50 paired=9/13
+severe_shadow                      PASS valid=0 error=   0.50 paired=2/13
+background_reflection              PASS valid=1 error=   0.50 paired=13/13
+reflection_merges_right_edge       OBSERVE valid=1 error=  14.28 paired=13/13
+short_left_boundary_gap            PASS valid=1 error=   0.32 paired=12/13
+short_both_boundary_gaps           PASS valid=1 error=   0.50 paired=12/13
+missing_left_boundary              PASS valid=0 error= -14.50 paired=0/13
+missing_right_boundary             PASS valid=0 error=  15.50 paired=0/13
+all_white                          PASS valid=0 error=   0.00 paired=0/0
+all_black                          PASS valid=0 error=   0.00 paired=0/0
+low_contrast                       PASS valid=0 error=   0.00 paired=0/0
+abrupt_corner_out_of_search        PASS valid=0 error=   0.50 paired=3/13
+gray_noise                         PASS valid=1 error=   0.50 paired=13/13
+isolated_salt_pepper               PASS valid=1 error=   0.50 paired=13/13
+curve_gray_noise                   PASS valid=1 error=   7.26 paired=13/13
+clustered_dark_noise               OBSERVE valid=1 error=  16.50 paired=13/13
+Temporal sequences: PASS (13 moving + 3 lost + 1 recovery frames)
+Scenario suite: 143 accuracy contracts, 7 rejection contracts, 2 characterization cases; 48986 checks, 0 failures
+Visual report: D:\major-car\firmware\camera_car\tests\out\vision\report.html
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK

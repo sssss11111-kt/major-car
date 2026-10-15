@@ -1,0 +1,8 @@
+.tools/
+tests/out/
+demo/mdk/Objects*/
+demo/mdk/Listings*/
+demo/mdk/*.uvoptx
+demo/mdk/*.uvguix.*
+demo/iar/
+*.bak
