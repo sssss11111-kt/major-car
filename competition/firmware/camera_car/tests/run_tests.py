@@ -26,6 +26,17 @@ subprocess.run([str(zig), 'cc', '-std=c99', '-Wall', '-Wextra', '-Werror',
                '-I', str(root/'demo/user/inc'), str(root/'tests/test_servo.c'),
                str(root/'demo/user/src/car_servo.c'), '-o', str(servo_exe)], check=True)
 subprocess.run([str(servo_exe)], check=True)
+for diagnostic, bad_ack, auto_baud in ((0, 0, 1), (1, 0, 1), (1, 1, 1), (0, 0, 0)):
+    uart_exe = out / ('test_uart8_%d_%d_%d.exe' % (diagnostic, bad_ack, auto_baud))
+    extra = ['-DTEST_BAD_BAUD_ACK=1'] if bad_ack else []
+    subprocess.run([str(zig), 'cc', '-std=c99', '-Wall', '-Wextra', '-Werror',
+                   '-O1', '-UNDEBUG', '-DCAR_COMM_DIAGNOSTIC='+str(diagnostic),
+                   '-DCAR_WIRELESS_AUTO_BAUD='+str(auto_baud), *extra,
+                   '-I', str(root/'tests/sdk'), '-I', str(root/'demo/user/inc'),
+                   str(root/'tests/test_uart8.c'), str(root/'demo/user/src/car_core.c'),
+                   str(root/'demo/user/src/car_app.c'), str(root/'demo/user/src/car_servo.c'),
+                   '-o', str(uart_exe)], check=True)
+    subprocess.run([str(uart_exe)], check=True)
 scene_exe = out / 'test_vision_scenarios.exe'
 scene_out = out / 'vision'
 scene_out.mkdir(exist_ok=True)

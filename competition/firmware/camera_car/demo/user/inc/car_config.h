@@ -1,5 +1,19 @@
 #ifndef CAR_CONFIG_H
 #define CAR_CONFIG_H
+#ifndef CAR_COMM_DIAGNOSTIC
+#define CAR_COMM_DIAGNOSTIC 0
+#endif
+#define CAR_WIRELESS_UART UART_8
+#define CAR_WIRELESS_TX UART8_TX_D16
+#define CAR_WIRELESS_RX UART8_RX_D17
+#define CAR_WIRELESS_BAUD 115200u
+#define CAR_WIRELESS_RTS D26
+#ifndef CAR_WIRELESS_AUTO_BAUD
+#define CAR_WIRELESS_AUTO_BAUD 1
+#endif
+#ifndef CAR_WIRELESS_USE_RTS
+#define CAR_WIRELESS_USE_RTS 1
+#endif
 /* School example pin mapping; verify wiring and physical polarity before driving. */
 #ifndef CAR_SIMULATED
 #define CAR_SIMULATED 0

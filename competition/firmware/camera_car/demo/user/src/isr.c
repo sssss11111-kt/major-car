@@ -140,17 +140,8 @@ void LPUART6_IRQHandler(void)
 
 void LPUART8_IRQHandler(void)
 {
-    if(kLPUART_RxDataRegFullFlag & LPUART_GetStatusFlags(LPUART8))
-    {
-        // 接收中断
-        if(NULL != wireless_module_uart_handler)
-        {
-            wireless_module_uart_handler();
-        }
-        
-    }
-        
-    LPUART_ClearStatusFlags(LPUART8, kLPUART_RxOverrunFlag);    // 不允许删除
+    car_app_uart8_irq();
+    __DSB();
 }
 
 

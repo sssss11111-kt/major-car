@@ -11,6 +11,8 @@ volatile uint8_t mt9v03x_finish_flag;
 static uint32_t duties[64];
 static unsigned initialized[64];
 static unsigned tx_len;
+static uint8_t tx8[80000];
+static unsigned tx8_len,uart8_initialized,uart8_rx_enabled;
 static unsigned stop_on_lock;
 uint32_t interrupt_global_disable(void) {
     /* Inject RX just before entering a critical section, as on real hardware. */
@@ -20,7 +22,20 @@ uint32_t interrupt_global_disable(void) {
 void interrupt_global_enable(uint32_t k) {(void)k;}
 void interrupt_set_priority(int i,int p) {(void)i;(void)p;}
 uint32_t LPUART_GetStatusFlags(void *u) {(void)u;return 1;}
-void LPUART_WriteByte(void *u,uint8_t b) {(void)u;if(tx_len<sizeof tx) tx[tx_len++]=b;}
+void LPUART_WriteByte(void *u,uint8_t b) {
+    if(u==LPUART8) { if(tx8_len<sizeof tx8) tx8[tx8_len++]=b; }
+    else if(tx_len<sizeof tx) tx[tx_len++]=b;
+}
+uint8_t LPUART_ReadByte(void *u) {(void)u;return 0;}
+int LPUART_ClearStatusFlags(void *u,uint32_t f) {(void)u;(void)f;return 0;}
+void uart_init(int ch,uint32_t baud,int txp,int rxp) {
+    CHECK(ch==UART_8 && baud==115200 && txp==UART8_TX_D16 && rxp==UART8_RX_D17);
+    uart8_initialized++;
+}
+void uart_rx_interrupt(int ch,int enabled) {CHECK(ch==UART_8 && enabled);uart8_rx_enabled++;}
+uint8_t gpio_get_level(int p) {CHECK(p==D26);return 0;}
+void gpio_set_level(int p,uint8_t level) {(void)p;(void)level;}
+void system_delay_ms(uint32_t ms) {(void)ms;}
 void pwm_set_duty(int p,uint32_t d) {CHECK(initialized[p]);duties[p]=d;}
 void pwm_init(int p,int h,int d) {
     if(p==CAR_SERVO_PWM) CHECK(h==50 && d==750);
@@ -49,6 +64,7 @@ int main(void) {
     car_app_uart_rx_isr('s'); car_app_uart_rx_isr('1');
     for(int y=0;y<120;y++) for(int x=0;x<188;x++) camera[y][x]=(uint8_t)(x>=50 && x<=138?210:30);
     car_app_init(); CHECK(duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0);
+    CHECK(uart8_initialized==1 && uart8_rx_enabled==1);
     car_app_foreground(); car_app_tick_10ms();
     CHECK(duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0 && duties[CAR_SERVO_PWM]==750);
     car_app_uart_rx_isr('a'); car_app_foreground(); car_app_tick_10ms();
@@ -75,6 +91,8 @@ int main(void) {
     while(start+4<tx_len && memcmp(tx+start,"\x00\xff\x01\x01",4)!=0) start++;
     CHECK(start+4+sizeof camera<=tx_len);
     CHECK(memcmp(tx+start+4,camera,sizeof camera)==0);
+    unsigned prefix=CAR_WIRELESS_AUTO_BAUD?3:0;
+    CHECK(tx_len+prefix==tx8_len && memcmp(tx,tx8+prefix,tx_len)==0);
     /* Pre-stop commands must not revive motion, even if RX ring was full. */
     for(int i=0;i<63;i++) car_app_uart_rx_isr('1');
     car_app_uart_rx_isr('s');
