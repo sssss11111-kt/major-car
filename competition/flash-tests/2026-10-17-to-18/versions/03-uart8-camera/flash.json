@@ -1,0 +1,7 @@
+{
+  "image_sha256": "329836b3bda102f4ea88bcc484930ff618874549a4a47bc568fccc17fe64def9",
+  "readback_verified": true,
+  "verified_bytes": 65152,
+  "evidence": "records/FINAL-SUMMARY.json; records/VALIDATION.md; UART8 published validation",
+  "note": "整合版专门flash JSON当时被覆盖，使用当时已公开的验证摘要交叉证明。"
+}

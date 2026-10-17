@@ -1,0 +1,7 @@
+{
+  "user_observation": "10%输出、2秒测试仍然完全没动静",
+  "motor_rotation_verified": false,
+  "command_ack": true,
+  "software_automatic_stop_verified": true,
+  "next_step": "Measure motor output during bounded test. Do not infer physical PWM from software telemetry."
+}

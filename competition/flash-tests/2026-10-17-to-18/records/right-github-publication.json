@@ -1,0 +1,9 @@
+{
+  "branch": "fix/uart8-20261017",
+  "commit": "34903599dbfa0dc8b77b46aa3a3dee3934b6924e",
+  "verified_files": 12,
+  "scope": "right motor verified snapshot; left diagnostic working files preserved",
+  "right_forward": "LOW",
+  "encoder_sign": 1,
+  "physical_test": "30 percent, 2 seconds, forward positive counts"
+}

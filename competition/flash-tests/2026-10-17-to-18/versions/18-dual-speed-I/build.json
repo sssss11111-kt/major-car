@@ -1,0 +1,22 @@
+{
+  "profile": "camera",
+  "command": "6",
+  "feature": "dual independent wheel speed bench",
+  "target_counts_per_10ms_each": 80,
+  "target_ramp_ms": 1000,
+  "duration_ms": 4000,
+  "pwm_cap_percent_each": 30,
+  "startup_timeout_ms_each": 200,
+  "fault_action": "stop both motors",
+  "left_dir": "C11 HIGH",
+  "left_encoder_sign": -1,
+  "right_dir": "C9 LOW",
+  "right_encoder_sign": 1,
+  "host_tests": "ALL TESTS PASSED",
+  "model_tests": "dual unequal motor response and single-wheel regressions passed; not physical acceptance",
+  "build": "BUILD SUCCESS",
+  "sha256": "1879b08cd4cee04b893c358bfe0d0bb80b1ac1cf2b380652f024133fc24e54a1",
+  "flashed": true,
+  "physical_validation": "PASS: both forward, broadly smooth, both stop; initial unloaded 80-count target only",
+  "readback_verified": true
+}

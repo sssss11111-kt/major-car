@@ -1,0 +1,12 @@
+{
+  "id": "02-uart8-diag-b",
+  "title": "诊断B：加入自动波特率握手",
+  "firmware_sha256": "e81d302c256494456b0cff727c8b8d2935c0e251c64e8e62b5fde7d660690b9a",
+  "readback_verified": true,
+  "result": "AB1，ASCII双向通信通过；摄像头跳过，运动禁用。",
+  "source_status": "历史单版源码未完整冻结；保留精确HEX、构建/回读记录与版本行为，不以最新源码冒充历史源码。",
+  "firmware": "versions/02-uart8-diag-b/firmware.hex",
+  "build_record": null,
+  "flash_record": "diag-b-flash-verified.json",
+  "recovered_by_relink": false
+}

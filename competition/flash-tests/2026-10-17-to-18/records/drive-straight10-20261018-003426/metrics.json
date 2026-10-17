@@ -1,0 +1,11 @@
+{
+  "window": "last 3 seconds active, unique telemetry timestamps",
+  "samples": 76,
+  "mean_left_counts_per_10ms": 42.06578947368421,
+  "mean_right_counts_per_10ms": 42.21052631578947,
+  "mean_left_minus_right": -0.14473684210526316,
+  "automatic_stop": true,
+  "fault": 0,
+  "physical_trajectory": "approximately straight with slight right drift",
+  "interpretation": "Short straight travel broadly demonstrated; slight right drift source not isolated. Wheel target tracking and mechanical center require separate evaluation."
+}

@@ -1,0 +1,12 @@
+{
+  "id": "23-straight10-N",
+  "title": "N：10秒直行和通信租约",
+  "firmware_sha256": "01b7c108ca777934c7fe1a3893ac8beff9f47f7b41cbf38311fb40b3e2dd7af5",
+  "readback_verified": true,
+  "result": "多次实测；最终测量前进360cm、左偏5cm，机械中位/重复性尚待排查。",
+  "source_status": "当前完整源码见 competition/firmware/camera_car；源文件清单见 current-source-manifest.json。",
+  "firmware": "versions/23-straight10-N/firmware.hex",
+  "build_record": "ground-straight10-build.json",
+  "flash_record": "ground-straight10-flash.json",
+  "recovered_by_relink": false
+}

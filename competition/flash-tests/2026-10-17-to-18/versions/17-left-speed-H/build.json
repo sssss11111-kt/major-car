@@ -1,0 +1,25 @@
+{
+  "profile": "camera",
+  "feature": "independent single-wheel speed bench",
+  "commands": {
+    "4": "left speed bench",
+    "5": "right speed bench"
+  },
+  "target_counts_per_10ms": 80,
+  "target_ramp_ms": 1000,
+  "duration_ms": 4000,
+  "pwm_cap_percent": 30,
+  "startup_max_ms": 200,
+  "unselected_output": "zero",
+  "left_dir": "C11 HIGH",
+  "left_encoder_sign": -1,
+  "right_dir": "C9 LOW",
+  "right_encoder_sign": 1,
+  "host_tests": "ALL TESTS PASSED",
+  "model_tests": "left and right passed; not physical validation",
+  "build": "BUILD SUCCESS",
+  "sha256": "f545be9f0ec1dec404d570a47768111c2029bcdde0858d841136a859096edd40",
+  "flashed": true,
+  "left_physical_validation": "PASS: forward, broadly smooth, stop, right stationary at 80 counts/10ms",
+  "readback_verified": true
+}

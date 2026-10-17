@@ -1,0 +1,12 @@
+{
+  "id": "11-direction-registers",
+  "title": "方向GPIO配置/读值诊断",
+  "firmware_sha256": "83671f38fe6b8372a5f31977d25dead7f9661082b5db39c26a95addd537c20e0",
+  "readback_verified": true,
+  "result": "C7配置LOW，左轮仍后退；后续发现GND/LDIR曾接反。",
+  "source_status": "历史单版源码未完整冻结；保留精确HEX、构建/回读记录与版本行为，不以最新源码冒充历史源码。",
+  "firmware": "versions/11-direction-registers/firmware.hex",
+  "build_record": "dir-diagnostic-c-build.json",
+  "flash_record": "dir-diagnostic-c-flash.json",
+  "recovered_by_relink": false
+}

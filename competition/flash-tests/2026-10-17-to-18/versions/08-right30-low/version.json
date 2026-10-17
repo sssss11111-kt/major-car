@@ -1,0 +1,12 @@
+{
+  "id": "08-right30-low",
+  "title": "右DIR LOW修正",
+  "firmware_sha256": "bd2096dbb1ca6609e9e210f35595f55cf232e40adcbc0c122a8298a111071426",
+  "readback_verified": true,
+  "result": "右轮前进、计数为正、自动停止，左轮不动。",
+  "source_status": "可追溯到已发布提交34903599dbfa0dc8b77b46aa3a3dee3934b6924e；预编译实测HEX独立保留。",
+  "firmware": "versions/08-right30-low/firmware.hex",
+  "build_record": "right-direction-low-build.json",
+  "flash_record": "right-direction-low-flash.json",
+  "recovered_by_relink": false
+}

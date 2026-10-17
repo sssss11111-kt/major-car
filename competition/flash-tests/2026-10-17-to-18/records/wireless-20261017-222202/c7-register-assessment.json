@@ -1,0 +1,13 @@
+{
+  "raw": "C7-REG v=20261017D mux=00000005 ctl=00000048 route=00000000 dr2=300cf080 dir2=000c0280 psr2=3000f000 dr7=3000f000 dir7=00000000 psr7=3000f000",
+  "decoded": {
+    "gpio_mux_mode": 5,
+    "gpio2_selected": true,
+    "gpio2_output_enabled": true,
+    "gpio2_output_latch_high": true,
+    "gpio2_pad_high": false,
+    "gpio7_output_enabled": false
+  },
+  "interpretation": "C7 configured GPIO2 output with HIGH latch; pad sample LOW. Physical C7 drive or measurement requires independent verification; no software register misconfiguration identified. Do not assert pin damaged from register data alone.",
+  "motor_test": "No motion commands; communication diagnostic profile keeps PWM zero."
+}

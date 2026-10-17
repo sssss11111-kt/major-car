@@ -1,0 +1,12 @@
+{
+  "id": "05-left15",
+  "title": "左15%、2秒",
+  "firmware_sha256": "946455dd507ffdbe5324b115bff9c4010e350587bd7aaf156a68cd3552b6979f",
+  "readback_verified": true,
+  "result": "未转动；输出平均约1.3V，不等于驱动没有PWM。",
+  "source_status": "历史单版源码未完整冻结；保留精确HEX、构建/回读记录与版本行为，不以最新源码冒充历史源码。",
+  "firmware": "versions/05-left15/firmware.hex",
+  "build_record": "left15pct-2s-build.json",
+  "flash_record": "left15pct-2s-flash.json",
+  "recovered_by_relink": false
+}

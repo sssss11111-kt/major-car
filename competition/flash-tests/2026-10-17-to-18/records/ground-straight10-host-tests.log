@@ -1,0 +1,99 @@
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /Fe:<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_core.exe /Fo:<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_core\ /I <WORKSPACE>\competition\firmware\camera_car\demo\user\inc <WORKSPACE>\competition\firmware\camera_car\tests\test_core.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_core.c
+test_core.c
+car_core.c
+正在生成代码...
+<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_core.exe
+10s drive timeout, lease, stop, no-vision guards: PASS
+ground drive guards/no-vision/timeout: PASS
+static steering guards: PASS
+dual speed bench guards/model: PASS (model is not hardware validation)
+right speed bench guards/model: PASS (model is not hardware validation)
+vision tests: PASS
+control tests: PASS
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /Fe:<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_app.exe /Fo:<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_app\ /I <WORKSPACE>\competition\firmware\camera_car\tests\sdk /I <WORKSPACE>\competition\firmware\camera_car\demo\user\inc <WORKSPACE>\competition\firmware\camera_car\tests\test_app.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_core.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_app.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_servo.c
+test_app.c
+car_core.c
+car_app.c
+car_servo.c
+正在生成代码...
+<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_app.exe
+hardware adapter tests: PASS (host I/O double, not physical hardware)
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /Fe:<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_servo.exe /Fo:<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_servo\ /I <WORKSPACE>\competition\firmware\camera_car\tests\sdk /I <WORKSPACE>\competition\firmware\camera_car\demo\user\inc <WORKSPACE>\competition\firmware\camera_car\tests\test_servo.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_servo.c
+test_servo.c
+car_servo.c
+正在生成代码...
+<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_servo.exe
+servo initialization/limits/nonfinite/reinitialize tests: PASS
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /Fe:<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_uart8.exe /Fo:<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_uart8\ /I <WORKSPACE>\competition\firmware\camera_car\tests\sdk /I <WORKSPACE>\competition\firmware\camera_car\demo\user\inc <WORKSPACE>\competition\firmware\camera_car\tests\test_uart8.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_core.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_app.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_servo.c
+test_uart8.c
+car_core.c
+car_app.c
+car_servo.c
+正在生成代码...
+<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_uart8.exe
+UART8 IRQ/RX/error-discard, independent TX/backpressure, RTS and diagnostic safety: PASS (diag=0)
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /Fe:<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_uart8_diag.exe /Fo:<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_uart8_diag\ /DCAR_COMM_DIAGNOSTIC=1 /I <WORKSPACE>\competition\firmware\camera_car\tests\sdk /I <WORKSPACE>\competition\firmware\camera_car\demo\user\inc <WORKSPACE>\competition\firmware\camera_car\tests\test_uart8.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_core.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_app.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_servo.c
+test_uart8.c
+car_core.c
+car_app.c
+car_servo.c
+正在生成代码...
+<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_uart8_diag.exe
+UART8 IRQ/RX/error-discard, independent TX/backpressure, RTS and diagnostic safety: PASS (diag=1)
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /Fe:<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_uart8_bad_ack.exe /Fo:<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_uart8_bad_ack\ /DCAR_COMM_DIAGNOSTIC=1 /DTEST_BAD_BAUD_ACK=1 /I <WORKSPACE>\competition\firmware\camera_car\tests\sdk /I <WORKSPACE>\competition\firmware\camera_car\demo\user\inc <WORKSPACE>\competition\firmware\camera_car\tests\test_uart8.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_core.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_app.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_servo.c
+test_uart8.c
+car_core.c
+car_app.c
+car_servo.c
+正在生成代码...
+<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_uart8_bad_ack.exe
+UART8 IRQ/RX/error-discard, independent TX/backpressure, RTS and diagnostic safety: PASS (diag=1)
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /Fe:<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_uart8_fixed_baud.exe /Fo:<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_uart8_fixed_baud\ /DCAR_WIRELESS_AUTO_BAUD=0 /I <WORKSPACE>\competition\firmware\camera_car\tests\sdk /I <WORKSPACE>\competition\firmware\camera_car\demo\user\inc <WORKSPACE>\competition\firmware\camera_car\tests\test_uart8.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_core.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_app.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_servo.c
+test_uart8.c
+car_core.c
+car_app.c
+car_servo.c
+正在生成代码...
+<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_uart8_fixed_baud.exe
+UART8 IRQ/RX/error-discard, independent TX/backpressure, RTS and diagnostic safety: PASS (diag=0)
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /Fe:<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_vision_scenarios.exe /Fo:<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_vision_scenarios\ /I <WORKSPACE>\competition\firmware\camera_car\demo\user\inc <WORKSPACE>\competition\firmware\camera_car\tests\test_vision_scenarios.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_core.c
+test_vision_scenarios.c
+<WORKSPACE>\competition\firmware\camera_car\tests\test_vision_scenarios.c(201): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+car_core.c
+正在生成代码...
+<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-vo7iubp0\test_vision_scenarios.exe <WORKSPACE>\competition\firmware\camera_car\tests\out\vision
+straight                           PASS valid=1 error=   0.50 paired=13/13
+straight_left                      PASS valid=1 error= -23.50 paired=13/13
+straight_right                     PASS valid=1 error=  24.50 paired=13/13
+dim_light                          PASS valid=1 error=   0.50 paired=13/13
+bright_light                       PASS valid=1 error=   0.50 paired=13/13
+sharp_left_curve                   PASS valid=1 error=  -6.26 paired=13/13
+sharp_right_curve                  PASS valid=1 error=   7.26 paired=13/13
+s_bend                             PASS valid=1 error=   8.68 paired=13/13
+horizontal_shadow                  PASS valid=1 error=   0.50 paired=9/13
+severe_shadow                      PASS valid=0 error=   0.50 paired=2/13
+background_reflection              PASS valid=1 error=   0.50 paired=13/13
+reflection_merges_right_edge       OBSERVE valid=1 error=  14.28 paired=13/13
+short_left_boundary_gap            PASS valid=1 error=   0.32 paired=12/13
+short_both_boundary_gaps           PASS valid=1 error=   0.50 paired=12/13
+missing_left_boundary              PASS valid=0 error= -14.50 paired=0/13
+missing_right_boundary             PASS valid=0 error=  15.50 paired=0/13
+all_white                          PASS valid=0 error=   0.00 paired=0/0
+all_black                          PASS valid=0 error=   0.00 paired=0/0
+low_contrast                       PASS valid=0 error=   0.00 paired=0/0
+abrupt_corner_out_of_search        PASS valid=0 error=   0.50 paired=3/13
+gray_noise                         PASS valid=1 error=   0.50 paired=13/13
+isolated_salt_pepper               PASS valid=1 error=   0.50 paired=13/13
+curve_gray_noise                   PASS valid=1 error=   7.26 paired=13/13
+clustered_dark_noise               OBSERVE valid=1 error=  16.50 paired=13/13
+Temporal sequences: PASS (13 moving + 3 lost + 1 recovery frames)
+Scenario suite: 143 accuracy contracts, 7 rejection contracts, 2 characterization cases; 48986 checks, 0 failures
+"C:\Program Files\Python314\python.exe" <WORKSPACE>\competition\firmware\camera_car\tests\render_vision_report.py
+Visual report: <WORKSPACE>\competition\firmware\camera_car\tests\out\vision\report.html
+"C:\Program Files\Python314\python.exe" <WORKSPACE>\competition\firmware\camera_car\tests\test_capture.py
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+ALL TESTS PASSED

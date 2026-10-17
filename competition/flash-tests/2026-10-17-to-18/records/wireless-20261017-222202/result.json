@@ -1,0 +1,94 @@
+{
+  "time_china": "2026-10-17 22:22:02",
+  "port": "COM6",
+  "baud": 115200,
+  "framing": "8N1",
+  "handshake": "None",
+  "dtr": false,
+  "rts": false,
+  "device_id": "USB\\VID_2E3C&PID_5740\\<USB_INSTANCE>",
+  "commands_sent": [
+    "p",
+    "q",
+    "p",
+    "q"
+  ],
+  "phases": [
+    {
+      "phase": "passive",
+      "duration_ms": 5029,
+      "bytes": 4130,
+      "zero_bytes": 0,
+      "nonzero_bytes": 4130,
+      "status_lines": 10,
+      "first_64_hex": "6D-73-3D-37-34-35-30-30-20-6D-6F-64-65-3D-30-20-66-61-75-6C-74-3D-30-20-66-72-61-6D-65-73-3D-30-20-76-61-6C-69-64-3D-30-20-70-61-69-72-3D-30-2F-30-20-74-68-72-3D-30-20-65-72-72-31-30-3D-30-20",
+      "last_status_lines": [
+        "ms=77500 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=78000 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=78500 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=79000 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20"
+      ]
+    },
+    {
+      "phase": "query-1",
+      "duration_ms": 2030,
+      "bytes": 1652,
+      "zero_bytes": 0,
+      "nonzero_bytes": 1652,
+      "status_lines": 4,
+      "first_64_hex": "6D-73-3D-37-39-35-30-30-20-6D-6F-64-65-3D-30-20-66-61-75-6C-74-3D-30-20-66-72-61-6D-65-73-3D-30-20-76-61-6C-69-64-3D-30-20-70-61-69-72-3D-30-2F-30-20-74-68-72-3D-30-20-65-72-72-31-30-3D-30-20",
+      "last_status_lines": [
+        "ms=79500 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=80000 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=80500 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=81000 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20"
+      ]
+    },
+    {
+      "phase": "query-2",
+      "duration_ms": 2032,
+      "bytes": 2225,
+      "zero_bytes": 0,
+      "nonzero_bytes": 2225,
+      "status_lines": 5,
+      "first_64_hex": "6D-73-3D-38-31-35-30-30-20-6D-6F-64-65-3D-30-20-66-61-75-6C-74-3D-30-20-66-72-61-6D-65-73-3D-30-20-76-61-6C-69-64-3D-30-20-70-61-69-72-3D-30-2F-30-20-74-68-72-3D-30-20-65-72-72-31-30-3D-30-20",
+      "last_status_lines": [
+        "ms=82000 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=82500 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=83000 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=83500 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20"
+      ]
+    },
+    {
+      "phase": "query-3",
+      "duration_ms": 2041,
+      "bytes": 1905,
+      "zero_bytes": 0,
+      "nonzero_bytes": 1905,
+      "status_lines": 5,
+      "first_64_hex": "66-67-3D-30-20-70-61-64-3D-30-0D-0A-43-37-2D-52-45-47-20-76-3D-32-30-32-36-31-30-31-37-44-20-6D-75-78-3D-30-30-30-30-30-30-30-35-20-63-74-6C-3D-30-30-30-30-30-30-34-38-20-72-6F-75-74-65-3D-30",
+      "last_status_lines": [
+        "ms=84000 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=84500 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=85000 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=85500 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20"
+      ]
+    },
+    {
+      "phase": "query-4",
+      "duration_ms": 2024,
+      "bytes": 1967,
+      "zero_bytes": 0,
+      "nonzero_bytes": 1967,
+      "status_lines": 4,
+      "first_64_hex": "55-41-52-54-38-2D-44-49-41-47-20-76-3D-32-30-32-36-31-30-31-37-42-20-63-66-67-5F-62-61-75-64-3D-31-31-35-32-30-30-20-72-78-3D-36-20-74-78-3D-37-31-34-30-33-20-65-72-72-3D-30-20-72-74-73-3D-30",
+      "last_status_lines": [
+        "ms=86000 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=86500 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=87000 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=87500 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20"
+      ]
+    }
+  ],
+  "evidence_directory": "<WORKSPACE>\\repair\\evidence\\wireless-20261017-222202"
+}

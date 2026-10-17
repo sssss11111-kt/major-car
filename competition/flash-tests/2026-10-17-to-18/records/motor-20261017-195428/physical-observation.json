@@ -1,0 +1,11 @@
+{
+  "user_observation": {
+    "rotation": false,
+    "motor_terminal_voltage_idle_v": 0,
+    "motor_terminal_voltage_test_v": 0.75,
+    "motor_terminal_voltage_after_test_v": 0,
+    "wheel_can_be_turned_by_hand": true,
+    "mechanical_jam_reported": false
+  },
+  "interpretation": "Voltage changes with command; waveform and starting torque not verified. Prepare bounded 15 percent test."
+}

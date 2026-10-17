@@ -1,0 +1,11 @@
+{
+  "left_pwm_percent": 15,
+  "left_duration_ms": 2000,
+  "right_pwm_percent": 5,
+  "right_duration_ms": 1000,
+  "sha256": "946455dd507ffdbe5324b115bff9c4010e350587bd7aaf156a68cd3552b6979f",
+  "host_tests": "ALL TESTS PASSED",
+  "build": "BUILD SUCCESS",
+  "flashed": true,
+  "readback_verified": true
+}

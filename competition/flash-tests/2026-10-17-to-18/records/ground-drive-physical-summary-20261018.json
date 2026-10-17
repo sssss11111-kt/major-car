@@ -1,0 +1,50 @@
+{
+  "tests": [
+    {
+      "action": "straight",
+      "firmware": "20261018L",
+      "software_automatic_stop": true,
+      "physical_observation": {
+        "source": "user confirmation",
+        "forward": true,
+        "approximately_straight": true,
+        "stopped": true,
+        "distance": "not reported"
+      },
+      "evidence": "drive-straight-20261018-002321"
+    },
+    {
+      "action": "left",
+      "firmware": "20261018M",
+      "software_automatic_stop": true,
+      "physical_observation": {
+        "source": "user confirmation",
+        "forward": true,
+        "direction": "left",
+        "stopped": true,
+        "front_wheels_returned_to_center": true
+      },
+      "evidence": "drive-left-20261018-002802"
+    },
+    {
+      "action": "right",
+      "firmware": "20261018M",
+      "software_automatic_stop": true,
+      "physical_observation": {
+        "source": "user confirmation",
+        "forward": true,
+        "direction": "right",
+        "stopped": true,
+        "front_wheels_returned_to_center": true
+      },
+      "evidence": "drive-right-20261018-002842"
+    }
+  ],
+  "vision_used": false,
+  "drive_ms_each": 1000,
+  "limitations": [
+    "Straight was physically verified on firmware L; M changes loaded startup detection only, straight repeat on M not yet performed.",
+    "No distance or physical speed calibration.",
+    "No long-distance straight-line precision or vision tracking acceptance."
+  ]
+}

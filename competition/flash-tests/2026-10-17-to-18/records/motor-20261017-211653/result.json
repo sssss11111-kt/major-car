@@ -1,0 +1,37 @@
+{
+  "time_china": "2026-10-17 21:16:53",
+  "port": "COM6",
+  "motor": 1,
+  "pulses": 1,
+  "results": [],
+  "failure": "Direction diagnostic requires left HIGH and right LOW pad readback; no motion command sent",
+  "final_status": {
+    "ms": 19730,
+    "mode": 0,
+    "fault": 0,
+    "frames": 838,
+    "enc_left": 0,
+    "enc_right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0
+  },
+  "commands": [
+    {
+      "utc": "2026-10-17T13:16:53.1444924Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T13:16:53.1567165Z",
+      "command": "q"
+    },
+    {
+      "utc": "2026-10-17T13:16:54.3893255Z",
+      "command": "s"
+    },
+    {
+      "utc": "2026-10-17T13:16:54.3896226Z",
+      "command": "p"
+    }
+  ],
+  "evidence": "<WORKSPACE>\\repair\\evidence\\motor-20261017-211653"
+}

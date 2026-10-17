@@ -1,0 +1,11 @@
+{
+  "profile": "diag",
+  "image_sha256": "5053b9fe91486eab93f91f88d1f13b57a631a49cf0c94b6b8251328449597eec",
+  "register_diagnostic_present_in_binary": true,
+  "camera": "skipped",
+  "motor_pwm": "forced zero; motion commands disabled",
+  "host_tests": "ALL TESTS PASSED",
+  "arm_build": "BUILD SUCCESS",
+  "flashed": true,
+  "readback_verified": true
+}

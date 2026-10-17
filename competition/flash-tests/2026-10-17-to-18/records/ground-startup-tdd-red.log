@@ -1,0 +1,6 @@
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /Fe:<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-n3wu_7xm\test_core.exe /Fo:<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-n3wu_7xm\test_core\ /I <WORKSPACE>\competition\firmware\camera_car\demo\user\inc <WORKSPACE>\competition\firmware\camera_car\tests\test_core.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_core.c
+test_core.c
+car_core.c
+正在生成代码...
+<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-n3wu_7xm\test_core.exe
+FAIL line 267: s.mode==CAR_DRIVE_TEST && s.fault==FAULT_NONE

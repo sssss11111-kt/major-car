@@ -1,0 +1,17 @@
+{
+  "user_observation": {
+    "left_direction": "vehicle backward",
+    "left_stopped_after_test": true,
+    "right_remained_stationary": true
+  },
+  "left_encoder_range": [
+    -282,
+    -96
+  ],
+  "right_encoder": 0,
+  "sample_period_ms": 10,
+  "pwm_percent": 30,
+  "duration_ms": 2000,
+  "automatic_output_stop_verified": true,
+  "conclusion": "Backward and negative feedback consistent. Change left DIR HIGH to LOW; keep left encoder sign -1. Forward-positive recheck pending."
+}

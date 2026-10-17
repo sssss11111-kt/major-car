@@ -31,6 +31,9 @@ static volatile uint8_t baud_handshake_active,baud_ack_count,baud_ack[3];
 static uint8_t baud_handshake_result; /* 0 not attempted, 1 verified ACK, 2 failed */
 static uint8_t image_requested,camera_ready;
 static volatile uint8_t outputs_ready;
+#if CAR_COMM_DIAGNOSTIC
+static uint8_t c11_probe_level;
+#endif
 static uint32_t last_screen,last_telemetry;
 #if CAR_SIMULATED
 static uint32_t last_generated;
@@ -183,16 +186,57 @@ static void wireless_diagnostic(void) {
         (unsigned long)serial_tx[1].dropped_lines,(unsigned)CAR_COMM_DIAGNOSTIC,
         (unsigned)baud_handshake_result);
     text_queue(line);
+    snprintf(line,sizeof line,
+        "MOTOR-DIR v=20261017I left=C11 cfg=%u sample=%u right=C9 cfg=%u sample=%u sample_unverified=1\r\n",
+        (unsigned)CAR_LEFT_FORWARD,(unsigned)gpio_get_level(CAR_LEFT_DIR),
+        (unsigned)CAR_RIGHT_FORWARD,(unsigned)gpio_get_level(CAR_RIGHT_DIR));
+    text_queue(line);
+#if defined(__arm__) || defined(__ARM_ARCH)
+    /* GPIO_B0_07 addresses are specified by the SDK IOMUXC definitions.
+       Read only: inspect regular GPIO2 versus fast GPIO7 routing and state. */
+    snprintf(line,sizeof line,
+        "C7-REG v=20261017D mux=%08lx ctl=%08lx route=%08lx dr2=%08lx dir2=%08lx psr2=%08lx dr7=%08lx dir7=%08lx psr7=%08lx\r\n",
+        (unsigned long)*(volatile uint32_t *)0x401F8158u,
+        (unsigned long)*(volatile uint32_t *)0x401F8348u,
+        (unsigned long)IOMUXC_GPR->GPR27,
+        (unsigned long)GPIO2->DR,(unsigned long)GPIO2->GDIR,(unsigned long)GPIO2->PSR,
+        (unsigned long)GPIO7->DR,(unsigned long)GPIO7->GDIR,(unsigned long)GPIO7->PSR);
+    text_queue(line);
+#endif
+#if CAR_COMM_DIAGNOSTIC
+    snprintf(line,sizeof line,"C11-STATIC v=20261017E cfg=%u pad=%u motors=disabled\r\n",
+        (unsigned)c11_probe_level,(unsigned)gpio_get_level(C11));
+    text_queue(line);
+#endif
+}
+static void servo_register_diagnostic(void) {
+#if defined(__arm__) || defined(__ARM_ARCH)
+    char line[240];
+    uint32_t key=lock();
+    uint32_t mux=*(volatile uint32_t *)0x401F81B4u;
+    uint16_t ctrl=PWM4->SM[2].CTRL,mctrl=PWM4->MCTRL,out=PWM4->OUTEN;
+    uint16_t fault=PWM4->FSTS,map=PWM4->SM[2].DISMAP[0],cnt=PWM4->SM[2].CNT;
+    uint16_t init=PWM4->SM[2].INIT,v1=PWM4->SM[2].VAL1,v2=PWM4->SM[2].VAL2,v3=PWM4->SM[2].VAL3;
+    unlock(key);
+    snprintf(line,sizeof line,
+        "SERVO-REG v=20261017J ipg=%lu mux=%08lx ctrl=%04x mctrl=%04x out=%04x fault=%04x map=%04x cnt=%04x init=%04x v1=%04x v2=%04x v3=%04x\r\n",
+        (unsigned long)CLOCK_GetFreq(kCLOCK_IpgClk),(unsigned long)mux,
+        ctrl,mctrl,out,fault,map,cnt,init,v1,v2,v3);
+    text_queue(line);
+#else
+    text_queue("SERVO-REG: host I/O double; hardware registers unavailable\r\n");
+#endif
 }
 static void telemetry(void) {
     char line[220];
     control_state_t snapshot;
     uint32_t key=lock(); snapshot=control; unlock(key);
     snprintf(line,sizeof line,
-        "ms=%lu mode=%u fault=%u frames=%lu valid=%u pair=%u/%u thr=%u err10=%d enc=%d,%d pwm=%u,%u us=%u speed=%u\r\n",
+        "ms=%lu mode=%u fault=%u frames=%lu valid=%u pair=%u/%u thr=%u err10=%d bench_target=%u bench_started=%u enc=%d,%d pwm=%u,%u us=%u speed=%u\r\n",
         (unsigned long)milliseconds,(unsigned)snapshot.mode,(unsigned)snapshot.fault,
         (unsigned long)frame_count,result.valid,result.paired_rows,result.scanned_rows,
-        result.threshold,(int)(result.error*10),measured_left,measured_right,
+        result.threshold,(int)(result.error*10),(unsigned)snapshot.bench_target,
+        (unsigned)snapshot.bench_started,measured_left,measured_right,
         (unsigned)snapshot.duty[0],(unsigned)snapshot.duty[1],
         (unsigned)car_servo_get_us(),(unsigned)snapshot.cfg.speed_target);
     text_queue(line);
@@ -229,6 +273,9 @@ void car_app_init(void) {
     gpio_init(CAR_LEFT_DIR,GPO,CAR_LEFT_FORWARD,GPO_PUSH_PULL);
     gpio_init(CAR_RIGHT_DIR,GPO,CAR_RIGHT_FORWARD,GPO_PUSH_PULL);
     pwm_init(CAR_LEFT_PWM,CAR_MOTOR_HZ,0); pwm_init(CAR_RIGHT_PWM,CAR_MOTOR_HZ,0);
+#if CAR_COMM_DIAGNOSTIC
+    c11_probe_level=0; gpio_init(C11,GPO,GPIO_LOW,GPO_PUSH_PULL);
+#endif
     car_servo_init();
     outputs_ready=1;
     /* Match the uart_init signature: MCU TX first, MCU RX second. */
@@ -262,18 +309,59 @@ static void command(uint8_t byte,uint32_t epoch) {
     /* Also cancel a command already dequeued when an RX stop preempted us. */
     if(epoch!=stop_epoch) { unlock(key); return; }
 #if CAR_COMM_DIAGNOSTIC
-    if(byte!='p' && byte!='q' && byte!='h' && byte!='s' && byte!='S') {
+    if(byte!='p' && byte!='q' && byte!='h' && byte!='s' && byte!='S' && byte!='u' && byte!='v' && byte!='z') {
         unlock(key); return;
     }
 #endif
     switch(byte) {
     case 's': case 'S': servo_test_active=0; control_stop(&control); apply_outputs(); break;
+#if CAR_COMM_DIAGNOSTIC
+    case 'u': case 'v':
+        c11_probe_level=(uint8_t)(byte=='u');
+        gpio_set_level(C11,c11_probe_level);
+        text_queue(c11_probe_level?"C11 HIGH; motors disabled\r\n":"C11 LOW; motors disabled\r\n");
+        break;
+#endif
+    case '0': case '7': case '8': case '9':
+        if(control.mode==CAR_IDLE && !control.cfg.simulated) {
+            gpio_init(CAR_LEFT_DIR,GPO,CAR_LEFT_FORWARD,GPO_PUSH_PULL);
+            gpio_init(CAR_RIGHT_DIR,GPO,CAR_RIGHT_FORWARD,GPO_PUSH_PULL);
+        }
+        if(byte=='0'?control_drive_long_test(&control,milliseconds):control_drive_test(&control,byte=='7'?0:(byte=='8'?-1:1),milliseconds)) {
+            servo_test_active=0;apply_outputs();
+            text_queue(byte=='0'?"DRIVE-TEST v=20261018N settle=200ms drive=10000ms target=40 cap=30% vision=ignored\r\n":
+                "DRIVE-TEST v=20261018N settle=200ms drive=1000ms target=40 cap=30% vision=ignored\r\n");
+        } else text_queue("DRIVE-TEST REFUSED\r\n");
+        break;
+    case 'w':
+        if(camera_ready && control_steer_test(&control,milliseconds)) {
+            servo_test_active=0;
+            text_queue("STATIC-STEER v=20261017K 30s motors=0; s STOP\r\n");
+        } else text_queue("STATIC-STEER REFUSED: idle + 3 fresh valid frames required\r\n");
+        break;
     case 'a':
         if(camera_ready && control_start(&control,milliseconds)) text_queue("START\r\n");
         else text_queue("START REFUSED: idle + 3 valid fresh real frames required\r\n");
         break;
+    case '4': case '5': case '6':
+        if(control.mode==CAR_IDLE && !control.cfg.simulated) {
+            gpio_init(CAR_LEFT_DIR,GPO,CAR_LEFT_FORWARD,GPO_PUSH_PULL);
+            gpio_init(CAR_RIGHT_DIR,GPO,CAR_RIGHT_FORWARD,GPO_PUSH_PULL);
+        }
+        if(control_speed_test(&control,(uint8_t)(byte=='4'?1:(byte=='5'?2:3)),milliseconds))
+            text_queue(byte=='4'?"LEFT SPEED TEST v=20261017I 4s target=80 cap=30%\r\n":
+                       byte=='5'?"RIGHT SPEED TEST v=20261017I 4s target=80 cap=30%\r\n":
+                                 "BOTH SPEED TEST v=20261017I 4s target=80 cap=30%\r\n");
+        else text_queue("SPEED TEST REFUSED\r\n");
+        break;
     case '1': case '2':
-        if(control_test(&control,(uint8_t)(byte-'0'),milliseconds)) text_queue("MOTOR TEST 1s at 5%\r\n");
+        if(control.mode==CAR_IDLE && !control.cfg.simulated) {
+            /* PWM is zero in idle; restore GPIO mux and direction before motion. */
+            gpio_init(CAR_LEFT_DIR,GPO,CAR_LEFT_FORWARD,GPO_PUSH_PULL);
+            gpio_init(CAR_RIGHT_DIR,GPO,CAR_RIGHT_FORWARD,GPO_PUSH_PULL);
+        }
+        if(control_test(&control,(uint8_t)(byte-'0'),milliseconds))
+            text_queue(byte=='1'?"LEFT MOTOR TEST 2s at 30%\r\n":"RIGHT MOTOR TEST 2s at 30%\r\n");
         else text_queue("TEST REFUSED\r\n");
         break;
     case '+': if(control.cfg.speed_target<60) control.cfg.speed_target+=5; break;
@@ -291,22 +379,24 @@ static void command(uint8_t byte,uint32_t epoch) {
     switch(byte) {
     case 'h':
 #if CAR_COMM_DIAGNOSTIC
-        text_queue("COMM DIAG: p status; q UART8 diagnostics; s STOP; motion disabled\r\n");
+        text_queue("COMM DIAG: p status; q diagnostics; u C11 HIGH; v C11 LOW; s STOP; motion disabled\r\n");
 #else
-        text_queue("a start; s stop/ack; 1/2 motor test; c center,l/j limits; +/- speed\r\no Otsu,t fixed,[/] threshold; g gray,b binary; p status;r camera retry;e/E exposure\r\nq UART8 diagnostics; UART1+UART8 115200\r\n");
+        text_queue("0 straight 10s (p lease); 7/8/9 ground straight/left/right 1s; d drive config; w static steering 30s motors=0; a start; s stop/ack; 1/2 motor test; 4/5/6 left/right/both speed bench 4s; c center,l/j limits; +/- speed\r\no Otsu,t fixed,[/] threshold; g gray,b binary; p status;r camera retry;e/E exposure\r\nq UART8 diagnostics; UART1+UART8 115200\r\n");
 #endif
         break;
-    case 'p': telemetry(); break;
+    case 'p': control_drive_keepalive(&control,milliseconds); telemetry(); break;
     case 'q': wireless_diagnostic(); break;
+    case 'z': servo_register_diagnostic(); break;
+    case 'd': text_queue("DRIVE-CFG v=20261018N straight=7 left=8 right=9 duration=1000 settle=200 target=40 cap=3000 straight10=0 lease=500\r\n"); break;
     case 'o': vision_cfg.otsu=1; break;
     case 't': vision_cfg.otsu=0; break;
     case '[': if(vision_cfg.fixed_threshold>=5) vision_cfg.fixed_threshold-=5; break;
     case ']': if(vision_cfg.fixed_threshold<=250) vision_cfg.fixed_threshold+=5; break;
     case 'g': case 'b':
-        if(control.mode!=CAR_RUNNING && control.mode!=CAR_TEST && images_idle())
+        if(control.mode!=CAR_RUNNING && control.mode!=CAR_TEST && control.mode!=CAR_SPEED_TEST && control.mode!=CAR_DRIVE_TEST && control.mode!=CAR_STEER_TEST && images_idle())
             image_requested=(uint8_t)(byte=='g'?1:2);
         break;
-    case 'r': if(control.mode!=CAR_RUNNING && control.mode!=CAR_TEST) camera_init_once(); break;
+    case 'r': if(control.mode!=CAR_RUNNING && control.mode!=CAR_TEST && control.mode!=CAR_SPEED_TEST && control.mode!=CAR_DRIVE_TEST && control.mode!=CAR_STEER_TEST) camera_init_once(); break;
     case 'e': case 'E':
 #if !CAR_SIMULATED
         if(control.mode==CAR_IDLE && camera_ready) {
@@ -397,7 +487,7 @@ void car_app_foreground(void) {
     if((uint32_t)(milliseconds-last_screen)>=CAR_SCREEN_PERIOD_MS) {
         last_screen=milliseconds; display_frame();
     }
-    if((uint32_t)(milliseconds-last_telemetry)>=CAR_TELEMETRY_PERIOD_MS) {
+    if((uint32_t)(milliseconds-last_telemetry)>=((control.mode==CAR_SPEED_TEST || control.mode==CAR_DRIVE_TEST)?50u:CAR_TELEMETRY_PERIOD_MS)) {
         last_telemetry=milliseconds; telemetry();
 #if CAR_COMM_DIAGNOSTIC
         wireless_diagnostic();

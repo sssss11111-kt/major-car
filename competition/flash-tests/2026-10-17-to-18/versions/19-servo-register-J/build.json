@@ -1,0 +1,13 @@
+{
+  "profile": "camera",
+  "feature": "read-only servo PWM register query",
+  "command": "z",
+  "servo_config": "C30, 50Hz, center1500us, bounds1350..1650us (unchanged)",
+  "motor_config": "existing dual speed bench preserved; no actuation during register query",
+  "host_tests": "ALL TESTS PASSED",
+  "build": "BUILD SUCCESS",
+  "sha256": "91ac6265b52a6b9405aab798c6395147be32fb7e184abe0df217aede0ec564b0",
+  "flashed": true,
+  "root_cause": "unresolved; register evidence pending",
+  "readback_verified": true
+}

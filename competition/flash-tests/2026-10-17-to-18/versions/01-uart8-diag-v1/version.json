@@ -1,0 +1,12 @@
+{
+  "id": "01-uart8-diag-v1",
+  "title": "诊断初版：UART8接入，无自动握手",
+  "firmware_sha256": "dddf6663f280e9e81329a11d1c2ce4518b93225bd4a20acc8d6f78e97f8665c4",
+  "readback_verified": true,
+  "result": "已烧录回读；电脑仍收到全00，通信未通过。",
+  "source_status": "历史单版源码未完整冻结；保留精确HEX、构建/回读记录与版本行为，不以最新源码冒充历史源码。",
+  "firmware": "versions/01-uart8-diag-v1/firmware.hex",
+  "build_record": null,
+  "flash_record": "diag-v1-flash-verified.json",
+  "recovered_by_relink": false
+}

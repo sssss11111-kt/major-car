@@ -1,0 +1,38 @@
+{
+  "feature": "10-second straight ground test with command lease",
+  "marker": "20261018N",
+  "commands": {
+    "0": "straight 10s",
+    "7": "straight 1s",
+    "8": "left 1s",
+    "9": "right 1s",
+    "d": "profile query",
+    "p": "status and keepalive for 10s mode"
+  },
+  "mode": 6,
+  "steering_settle_ms": 200,
+  "drive_ms": 10000,
+  "target_counts_per_10ms": 40,
+  "ramp_ms": 500,
+  "pwm_cap": 3000,
+  "startup_pwm": 3000,
+  "startup_timeout_ms": 200,
+  "servo_us": {
+    "straight": 1500,
+    "left": 1650,
+    "right": 1350
+  },
+  "vision_dependency": false,
+  "host_tests": "ALL TESTS PASSED",
+  "arm_build": "BUILD SUCCESS",
+  "sha256": "01b7c108ca777934c7fe1a3893ac8beff9f47f7b41cbf38311fb40b3e2dd7af5",
+  "flashed": true,
+  "physical_ground_tests": "N 10-second straight: user reports approximately straight, slight right drift; automatic zero output verified. No distance/offset measurement.",
+  "limitations": "Physical speed and travel distance uncalibrated; equal encoder targets do not guarantee straight trajectory.",
+  "readback_verified": true,
+  "startup_detection": "at least 5 counts/10ms for 3 consecutive ticks per wheel, within 200ms after motor onset",
+  "reason": "Loaded left-turn inner wheel reported 16..18 counts; old 20-count startup threshold faulted despite actual forward movement. Reproduced by failing host regression.",
+  "keepalive_timeout_ms": 500,
+  "keepalive_failure": "FAULT_LINK, both outputs zero and steering centered",
+  "scene_user_confirmation": "At least 5m ahead, 1m each side clear, no people nearby."
+}

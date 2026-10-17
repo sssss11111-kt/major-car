@@ -1,0 +1,11 @@
+{
+  "result": "FAIL: physical servo movement not observed",
+  "user_observation": "一点都没动，也没有声音",
+  "command_us": 1350,
+  "software_command_and_return_to_center_observed": true,
+  "motor_outputs": [
+    0,
+    0
+  ],
+  "next_step": "Check actual servo supply and connector before further actuation; no obvious C30 pin conflict found in active source."
+}

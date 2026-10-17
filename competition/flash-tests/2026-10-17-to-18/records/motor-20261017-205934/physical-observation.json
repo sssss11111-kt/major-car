@@ -1,0 +1,15 @@
+{
+  "user_observation": {
+    "left_direction": "backward",
+    "left_stopped": true,
+    "right_stationary": true
+  },
+  "direction_query": "MOTOR-DIR v=20261017C left=C7 cfg=0 pad=0 right=C9 cfg=0 pad=0",
+  "left_encoder_range": [
+    -321,
+    -248
+  ],
+  "automatic_output_stop_verified": true,
+  "root_cause": "Unresolved. MCU-side LOW readback does not establish voltage at driver DIR input or signal mapping.",
+  "next_step": "With PWM idle, measure left driver DIR relative to driver signal GND and verify connection to C7. No further motor actuation."
+}

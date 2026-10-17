@@ -1,0 +1,12 @@
+{
+  "id": "20-static-steering-K",
+  "title": "K：静态视觉转向模式",
+  "firmware_sha256": "e7cc8db8fb129d184ff6002b82bfc7526f2fe73088975341e405abcd5ac9099e",
+  "readback_verified": true,
+  "result": "已烧录；赛道识别时有效时无效，未启动w完成实体视觉联动验收。",
+  "source_status": "应用/核心代码根据对话变更重建，与保留库对象重链接后HEX逐字节SHA完全匹配；见 sources/reconstructed-J-K.zip。重建过程未烧录。",
+  "firmware": "versions/20-static-steering-K/firmware.hex",
+  "build_record": "static-steering-build.json",
+  "flash_record": "static-steering-flash.json",
+  "recovered_by_relink": true
+}

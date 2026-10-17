@@ -1,0 +1,10 @@
+{
+  "source": "user measured",
+  "forward_cm": 360,
+  "lateral_direction": "left",
+  "lateral_cm": 5,
+  "setup": "user manually aligned wheels before this run",
+  "physical_stop": "not explicitly confirmed",
+  "previous_runs": "user reports two right-drifting runs with larger deviations; exact distances not reported",
+  "drift_to_forward_ratio": 0.013888888888888888
+}

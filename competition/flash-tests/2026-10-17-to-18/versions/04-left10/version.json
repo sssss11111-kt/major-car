@@ -1,0 +1,12 @@
+{
+  "id": "04-left10",
+  "title": "左10%、2秒",
+  "firmware_sha256": "8ce8e3b1a4ffa3eee2a8814f63fa68d5704b25cf940e6db8720d27dfcf561bab",
+  "readback_verified": true,
+  "result": "未转动；后续确认输出约0.75V且待机/结束归零。",
+  "source_status": "历史单版源码未完整冻结；保留精确HEX、构建/回读记录与版本行为，不以最新源码冒充历史源码。",
+  "firmware": "versions/04-left10/firmware.hex",
+  "build_record": "left10pct-2s-build.json",
+  "flash_record": "left10pct-2s-flash.json",
+  "recovered_by_relink": false
+}

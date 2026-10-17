@@ -1,0 +1,43 @@
+CONNECTED; core halted
+FLASH_HEADER=46434642
+BACKUP_BYTES=524288
+BACKUP_BYTES=1048576
+BACKUP_BYTES=1572864
+BACKUP_BYTES=2097152
+BACKUP_BYTES=2621440
+BACKUP_BYTES=3145728
+BACKUP_BYTES=3670016
+BACKUP_BYTES=4194304
+BACKUP_COMPLETE 86249442bc64333ec23a73faee07b5dc0d8b6b6303274d25c32af50ace5288d4
+[---|---|---|---|---|---|---|---|---|----]
+Traceback (most recent call last):
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\flash_with_backup.py", line 58, in <module>
+    FileProgrammer(session,chip_erase='sector',smart_flash=False).program(str(image))
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\flash\file_programmer.py", line 199, in program
+    self.commit()
+    ~~~~~~~~~~~^^
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\flash\file_programmer.py", line 173, in commit
+    self._loader.commit()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\flash\loader.py", line 299, in commit
+    builder.erase(chip_erase=self._chip_erase,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  progress_cb=self._progress_cb,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  smart_flash=self._smart_flash,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  fast_verify=self._trust_crc,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  keep_unwritten=self._keep_unwritten)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\flash\builder.py", line 536, in erase
+    self._erase_sectors(progress_cb)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\flash\builder.py", line 868, in _erase_sectors
+    self.flash.init(self.flash.Operation.ERASE)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\flash\flash.py", line 262, in init
+    raise FlashFailure('flash init timed out')
+pyocd.core.exceptions.FlashFailure: flash init timed out
+[

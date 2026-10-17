@@ -1,0 +1,12 @@
+{
+  "id": "19-servo-register-J",
+  "title": "J：舵机PWM寄存器只读查询",
+  "firmware_sha256": "91ac6265b52a6b9405aab798c6395147be32fb7e184abe0df217aede0ec564b0",
+  "readback_verified": true,
+  "result": "50Hz、约1500us；后续实测1650左转、1350右转，均回中。",
+  "source_status": "应用/核心代码根据对话变更重建，与保留库对象重链接后HEX逐字节SHA完全匹配；见 sources/reconstructed-J-K.zip。重建过程未烧录。",
+  "firmware": "versions/19-servo-register-J/firmware.hex",
+  "build_record": "servo-register-build.json",
+  "flash_record": "servo-register-flash.json",
+  "recovered_by_relink": true
+}

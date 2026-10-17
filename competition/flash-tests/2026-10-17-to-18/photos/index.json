@@ -1,0 +1,47 @@
+[
+  {
+    "path": "photos/01-driver-board.jpg",
+    "sha256": "4bf7521a30cdc823b7db6ef3e5e8cac72cab69a0095db8222915a4821a5a101e",
+    "source": "本对话用户提供照片，原图未作处理。"
+  },
+  {
+    "path": "photos/02-meter-wiring.jpg",
+    "sha256": "9b0cfe1ec748e3e3d110c2bb1c063422c098c153edd03f0e398904a12a07b49e",
+    "source": "本对话用户提供照片，原图未作处理。"
+  },
+  {
+    "path": "photos/03-meter-motor.jpg",
+    "sha256": "57951eda8c3822709c776b10b5b7867358055b729efc5223f2cf893ff0c66188",
+    "source": "本对话用户提供照片，原图未作处理。"
+  },
+  {
+    "path": "photos/04-meter-range.jpg",
+    "sha256": "87c8b17f8e0b6ca3975de714854dda90e2a892478f77e9a966d249192006520f",
+    "source": "本对话用户提供照片，原图未作处理。"
+  },
+  {
+    "path": "photos/05-direction-wire.jpg",
+    "sha256": "4fa69070a18fd24940b99db17732ea48c7089df968c58cd9dd2b001f10dc9b91",
+    "source": "本对话用户提供照片，原图未作处理。"
+  },
+  {
+    "path": "photos/06-pin-diagnostic-screen.jpg",
+    "sha256": "18b1b1cd4ff3aa384436b377652b78e76ca0ad424d928eeb77ea72818a832bdd",
+    "source": "本对话用户提供照片，原图未作处理。"
+  },
+  {
+    "path": "photos/07-servo-connector.jpg",
+    "sha256": "11a5d1238d707203e480ca720d2d61a56cbc6f60dbc109f0157d189a5a12c6ad",
+    "source": "本对话用户提供照片，原图未作处理。"
+  },
+  {
+    "path": "photos/08-track-screen.jpg",
+    "sha256": "6644c5fd00d43f5eedd6e07c231fb0b35f25c9aa7a75a349cb0d4acc9496f25f",
+    "source": "本对话用户提供照片，原图未作处理。"
+  },
+  {
+    "path": "photos/09-paper-track.jpg",
+    "sha256": "ca088ee8a33bd9d69cdd89786b0454bcf9241e433c541b4a18676162f91a5094",
+    "source": "本对话用户提供照片，原图未作处理。"
+  }
+]

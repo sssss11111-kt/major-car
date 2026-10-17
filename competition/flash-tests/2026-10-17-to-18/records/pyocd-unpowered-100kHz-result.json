@@ -1,0 +1,12 @@
+{
+  "image": "<WORKSPACE>\\repair\\build\\diag\\camera-car-uart8-diag.hex",
+  "image_sha256": "dddf6663f280e9e81329a11d1c2ce4518b93225bd4a20acc8d6f78e97f8665c4",
+  "target": "mimxrt1064",
+  "frequency": 100000,
+  "connect": "under-reset",
+  "backup_complete": false,
+  "program_complete": false,
+  "readback_verified": false,
+  "core_left_halted": false,
+  "error": "SWD/JTAG communication failure (No ACK); check USB cable, reduce debugger clock"
+}

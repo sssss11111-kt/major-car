@@ -1,0 +1,11 @@
+{
+  "new_firmware_diagnostic_lines": 29,
+  "last_diagnostic_lines": [
+    "UART8-DIAG v=20261017B cfg_baud=115200 rx=5 tx=70990 err=0 rts=0 drop=0 diag=1 ab=1 pattern=UUUU0123456789\r\n",
+    "UART8-DIAG v=20261017B cfg_baud=115200 rx=6 tx=71403 err=0 rts=0 drop=0 diag=1 ab=1 pattern=UUUU0123456789\r\n",
+    "UART8-DIAG v=20261017B cfg_baud=115200 rx=6 tx=71718 err=0 rts=0 drop=0 diag=1 ab=1 pattern=UUUU0123456789\r\n",
+    "UART8-DIAG v=20261017B cfg_baud=115200 rx=6 tx=72131 err=0 rts=0 drop=0 diag=1 ab=1 pattern=UUUU0123456789\r\n",
+    "UART8-DIAG v=20261017B cfg_baud=115200 rx=6 tx=72544 err=0 rts=0 drop=0 diag=1 ab=1 pattern=UUUU0123456789\r\n",
+    "UART8-DIAG v=20261017B cfg_baud=115200 rx=6 tx=72957 err=0 rts=0 drop=0 diag=1 ab=1 pattern=UUUU0123456789\r\n"
+  ]
+}

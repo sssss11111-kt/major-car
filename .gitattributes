@@ -1,0 +1,5 @@
+*.hex -text
+*.zip binary
+*.jpg binary
+*.bin binary
+competition/flash-tests/2026-10-17-to-18/** -text

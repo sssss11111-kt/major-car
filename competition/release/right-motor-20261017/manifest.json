@@ -1,0 +1,57 @@
+[
+  {
+    "path": "competition/firmware/camera_car/demo/user/inc/car_config.h",
+    "size": 2076,
+    "sha256": "993e6b95c1903499750e6160d111a80b2c3525ef5ae3b5aec21283329f20dd8e"
+  },
+  {
+    "path": "competition/firmware/camera_car/demo/user/src/car_core.c",
+    "size": 8240,
+    "sha256": "bde7399afaf30cfb0330edbd7fc2b830ee7a8d11225e86da19c17d6ab962f747"
+  },
+  {
+    "path": "competition/firmware/camera_car/demo/user/src/car_app.c",
+    "size": 18345,
+    "sha256": "99717101652b5a441d824dcbc592a8cad458425c6950f8dd20f9b8b69ef23344"
+  },
+  {
+    "path": "competition/firmware/camera_car/tests/test_core.c",
+    "size": 7400,
+    "sha256": "c2d04ef6abbe4ea8f4336e0dda329381ed922b19885a963d751522805d708645"
+  },
+  {
+    "path": "competition/firmware/camera_car/tests/sdk/zf_common_headfile.h",
+    "size": 2332,
+    "sha256": "fb60d71aa3bbb30fbf2fe809e59797269eff8d9a3096bd04a3b6691090b41b6e"
+  },
+  {
+    "path": "competition/firmware/camera_car/HARDWARE.md",
+    "size": 3189,
+    "sha256": "9186432c412121780d40f7dd1ce55672d863475731d74c7f754b1e0e76f7daab"
+  },
+  {
+    "path": "README.md",
+    "size": 2075,
+    "sha256": "7a37dbebe34872f064df5ef782bb2a4916ca4f611d5d16d6272411c29f1565ec"
+  },
+  {
+    "path": "competition/release/right-motor-20261017/README.md",
+    "size": 999,
+    "sha256": "22482193741f8759f625f4933280d7316de02ce7b8d9442f50c665cc106621d3"
+  },
+  {
+    "path": "competition/release/right-motor-20261017/validation.json",
+    "size": 795,
+    "sha256": "4b65122af61afc388d7228cc3db4ffbb2bc3e767c298009ea2f1521e2bd74be7"
+  },
+  {
+    "path": "competition/release/right-motor-20261017/camera-car-right-verified.hex",
+    "size": 183291,
+    "sha256": "bd2096dbb1ca6609e9e210f35595f55cf232e40adcbc0c122a8298a111071426"
+  },
+  {
+    "path": "competition/release/right-motor-20261017/camera-car-right-rebuilt.hex",
+    "size": 185648,
+    "sha256": "34b84ffeb4c1c853cf6130fef704189edfe94c047683d5e47f9cfabf9e5f7149"
+  }
+]

@@ -1,0 +1,87 @@
+{
+  "base_commit": "34903599dbfa0dc8b77b46aa3a3dee3934b6924e",
+  "host_tests": "ALL TESTS PASSED",
+  "firmware_sha256": "9c44808f9dedba25caec9daa73c79f015d010ab94d0557b937d02b42092ac027",
+  "files": [
+    {
+      "path": "README.md",
+      "size": 2042,
+      "sha256": "393145a004ddd50861f135b4cf0df84718e31162034bc6e404bfa3bc376a8457"
+    },
+    {
+      "path": "competition/firmware/camera_car/README.md",
+      "size": 7454,
+      "sha256": "ead0ae729b54c063e4b73b0e6d3b14c676d787d3cd1be85aba579ff4f09f65e6"
+    },
+    {
+      "path": "competition/firmware/camera_car/HARDWARE.md",
+      "size": 3819,
+      "sha256": "b85c78c8843dd26c260583cc4f8aa771dac2410c4d70d8d6ca109d99114e9611"
+    },
+    {
+      "path": "competition/firmware/camera_car/demo/user/inc/car_config.h",
+      "size": 2099,
+      "sha256": "e94c13df355114d58fdf0ce25d61f9af89442267c425f2400e2bc9f235dbbd5f"
+    },
+    {
+      "path": "competition/firmware/camera_car/demo/user/src/car_app.c",
+      "size": 19949,
+      "sha256": "8a66c7917c5545cbe34d67250f99462abb47e1f13fbbc0509ed444e0a23057be"
+    },
+    {
+      "path": "competition/firmware/camera_car/demo/user/src/car_core.c",
+      "size": 8058,
+      "sha256": "7c7506a88bc045f271750a6efb1852504029a94ee2e70aced5218b28687fc76b"
+    },
+    {
+      "path": "competition/firmware/camera_car/tests/sdk/zf_common_headfile.h",
+      "size": 2291,
+      "sha256": "0f1a68b9e5c09adca3c20f0208195a10b7804e8a7c2de26d8601689f0f11c166"
+    },
+    {
+      "path": "competition/firmware/camera_car/tests/test_app.c",
+      "size": 6034,
+      "sha256": "94c697ab0d0275bef1f9fca9d993fe1f05d8db542cd6c61f660791de0e5375bc"
+    },
+    {
+      "path": "competition/firmware/camera_car/tests/test_core.c",
+      "size": 7256,
+      "sha256": "50bf87b51cdb9ee7838c87f7bd3f8a1f84d8ff780e45cfd9dab1e2852c696776"
+    },
+    {
+      "path": "competition/firmware/camera_car/tests/test_uart8.c",
+      "size": 6276,
+      "sha256": "415099287e5c217631f62952cc10bc67d2ef21f290ac42476ddf83cce4cee0dd"
+    },
+    {
+      "path": "competition/release/left-motor-c11-20261017/camera-car-left-c11-verified.hex",
+      "size": 185108,
+      "sha256": "9c44808f9dedba25caec9daa73c79f015d010ab94d0557b937d02b42092ac027"
+    },
+    {
+      "path": "competition/release/left-motor-c11-20261017/left-first-pass-status.csv",
+      "size": 1370,
+      "sha256": "b067518785e33544da91e7965433abdeabe4bf09576545f264f1aa4a3dc373f6"
+    },
+    {
+      "path": "competition/release/left-motor-c11-20261017/left-first-pass.json",
+      "size": 1165,
+      "sha256": "0e64bc6119d077b1e04fd49a4111b14f289bde79c04927bac8adb0e7736bfb15"
+    },
+    {
+      "path": "competition/release/left-motor-c11-20261017/left-repeat-pass-status.csv",
+      "size": 1431,
+      "sha256": "9c1bd5d796e78189502a55735eceb93365c2f5b8c6829b8d535c1558308857dd"
+    },
+    {
+      "path": "competition/release/left-motor-c11-20261017/left-repeat-pass.json",
+      "size": 484,
+      "sha256": "62a70cce750572aab8cd4e9141d7647bd416e81f22e3a70368a43f8143909367"
+    },
+    {
+      "path": "competition/release/left-motor-c11-20261017/README.md",
+      "size": 1860,
+      "sha256": "da5db510ecb6436e33308f9780f7b62238e76725f33f8ab39f8adfa6e3873632"
+    }
+  ]
+}

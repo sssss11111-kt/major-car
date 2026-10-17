@@ -1,0 +1,38 @@
+{
+  "last_1s_unique_samples": 21,
+  "target_each_counts_per_10ms": 80,
+  "left": {
+    "mean": 81.67,
+    "min": 73,
+    "max": 94,
+    "mean_absolute_target_error": 7,
+    "pwm_percent_range": [
+      15.0,
+      16.22
+    ]
+  },
+  "right": {
+    "mean": 81.71,
+    "min": 72,
+    "max": 91,
+    "mean_absolute_target_error": 4.76,
+    "pwm_percent_range": [
+      13.14,
+      13.86
+    ]
+  },
+  "signed_mean_left_minus_right": -0.05,
+  "mean_absolute_instantaneous_difference": 10.24,
+  "automatic_zero_output_verified": true,
+  "final": {
+    "ms": 14860,
+    "mode": 0,
+    "fault": 0,
+    "target": 0,
+    "started": 0,
+    "enc_left": 0,
+    "enc_right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0
+  }
+}

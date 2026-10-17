@@ -1,0 +1,10 @@
+{
+  "user_observation": "左轮向后转并停下，右轮不动",
+  "wiring_correction": "用户明确此前GND和LDIR接反，当前已纠正",
+  "left_dir": "LOW",
+  "left_encoder_range": [
+    -324,
+    -270
+  ],
+  "conclusion": "Current corrected wiring LOW causes backward rotation. Earlier tests with reversed GND/LDIR cannot determine correct direction polarity. Prepare HIGH comparison with unchanged wiring."
+}

@@ -1,0 +1,17 @@
+{
+  "profile": "diag",
+  "image_sha256": "237a4dfe229357bc809976fa7cd03f2ff1cf86c74d275374720008996b3b885c",
+  "c11_initial_level": "LOW",
+  "commands": {
+    "u": "C11 HIGH only",
+    "v": "C11 LOW only",
+    "q": "Read diagnostics"
+  },
+  "motors": "PWM forced zero; motion commands disabled",
+  "camera": "skipped",
+  "host_tests": "ALL TESTS PASSED",
+  "arm_build": "BUILD SUCCESS",
+  "flashed": true,
+  "physical_validation": "pending",
+  "readback_verified": true
+}

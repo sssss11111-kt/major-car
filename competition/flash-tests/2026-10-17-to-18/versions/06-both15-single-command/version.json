@@ -1,0 +1,12 @@
+{
+  "id": "06-both15-single-command",
+  "title": "两侧各15%配置，逐侧测试",
+  "firmware_sha256": "c0f9a1f5e3521044731e961ab22262fef69f8667074dfbf2949884ce8183a270",
+  "readback_verified": true,
+  "result": "每次只驱动一侧；右轮有声音/抖动但未起转。",
+  "source_status": "历史单版源码未完整冻结；保留精确HEX、构建/回读记录与版本行为，不以最新源码冒充历史源码。",
+  "firmware": "versions/06-both15-single-command/firmware.hex",
+  "build_record": "both15pct-2s-build.json",
+  "flash_record": "both15pct-2s-flash.json",
+  "recovered_by_relink": false
+}

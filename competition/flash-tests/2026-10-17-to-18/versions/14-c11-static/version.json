@@ -1,0 +1,12 @@
+{
+  "id": "14-c11-static",
+  "title": "C11静态HIGH/LOW对照",
+  "firmware_sha256": "237a4dfe229357bc809976fa7cd03f2ff1cf86c74d275374720008996b3b885c",
+  "readback_verified": true,
+  "result": "万用表HIGH=3.3V、LOW=0V；HIGH时pad仍读0。",
+  "source_status": "历史单版源码未完整冻结；保留精确HEX、构建/回读记录与版本行为，不以最新源码冒充历史源码。",
+  "firmware": "versions/14-c11-static/firmware.hex",
+  "build_record": "c11-static-probe-build.json",
+  "flash_record": "c11-static-probe-flash.json",
+  "recovered_by_relink": false
+}

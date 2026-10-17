@@ -1,0 +1,12 @@
+{
+  "id": "13-c7-static",
+  "title": "C7静态诊断，禁用电机/跳过摄像头",
+  "firmware_sha256": "5053b9fe91486eab93f91f88d1f13b57a631a49cf0c94b6b8251328449597eec",
+  "readback_verified": true,
+  "result": "寄存器与pad读回存在差异，未证明C7损坏。",
+  "source_status": "历史单版源码未完整冻结；保留精确HEX、构建/回读记录与版本行为，不以最新源码冒充历史源码。",
+  "firmware": "versions/13-c7-static/firmware.hex",
+  "build_record": "c7-static-diagnostic-build.json",
+  "flash_record": "c7-static-diagnostic-flash.json",
+  "recovered_by_relink": false
+}

@@ -1,0 +1,6 @@
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /Fe:<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-eifeweuv\test_core.exe /Fo:<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-eifeweuv\test_core\ /I <WORKSPACE>\competition\firmware\camera_car\demo\user\inc <WORKSPACE>\competition\firmware\camera_car\tests\test_core.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_core.c
+test_core.c
+car_core.c
+正在生成代码...
+<WORKSPACE>\competition\firmware\camera_car\tests\out\msvc-eifeweuv\test_core.exe
+FAIL line 231: control_drive_long_test(&s,0)

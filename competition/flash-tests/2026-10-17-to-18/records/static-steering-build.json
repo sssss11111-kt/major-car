@@ -1,0 +1,22 @@
+{
+  "feature": "static vision steering mode",
+  "marker": "20261017K",
+  "command": "w",
+  "mode": 5,
+  "timeout_seconds": 30,
+  "motor_outputs": "both always zero in static mode",
+  "guards": [
+    "3 fresh valid frames before start",
+    "3 invalid frames centers and faults",
+    "frame timeout",
+    "foreground timeout",
+    "RX ISR stop",
+    "reject motor and run commands while active"
+  ],
+  "host_tests": "ALL TESTS PASSED",
+  "build": "BUILD SUCCESS",
+  "sha256": "e7cc8db8fb129d184ff6002b82bfc7526f2fe73088975341e405abcd5ac9099e",
+  "flashed": true,
+  "physical_linkage_validation": "pending",
+  "readback_verified": true
+}

@@ -1,0 +1,12 @@
+{
+  "id": "17-left-speed-H",
+  "title": "H：左轮独立速度闭环",
+  "firmware_sha256": "f545be9f0ec1dec404d570a47768111c2029bcdde0858d841136a859096edd40",
+  "readback_verified": true,
+  "result": "80计数/10ms，4秒，用户确认前进平稳停车、右轮不动。",
+  "source_status": "历史单版源码未完整冻结；保留精确HEX、构建/回读记录与版本行为，不以最新源码冒充历史源码。",
+  "firmware": "versions/17-left-speed-H/firmware.hex",
+  "build_record": "left-speed-bench-build.json",
+  "flash_record": "left-speed-bench-flash.json",
+  "recovered_by_relink": false
+}

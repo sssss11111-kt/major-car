@@ -1,0 +1,12 @@
+{
+  "id": "12-left-high-corrected-wiring",
+  "title": "纠正接线后的C7 HIGH对照",
+  "firmware_sha256": "e1fa3b22229a592dbf20ba688a280e8c4a10dc7f4c93141351ca665b7d1580e9",
+  "readback_verified": true,
+  "result": "方向问题未取得有效解决证据；转入静态引脚对照。",
+  "source_status": "历史单版源码未完整冻结；保留精确HEX、构建/回读记录与版本行为，不以最新源码冒充历史源码。",
+  "firmware": "versions/12-left-high-corrected-wiring/firmware.hex",
+  "build_record": "left-high-corrected-wiring-build.json",
+  "flash_record": "left-high-corrected-wiring-flash.json",
+  "recovered_by_relink": false
+}

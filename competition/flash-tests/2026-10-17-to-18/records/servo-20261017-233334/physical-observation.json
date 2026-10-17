@@ -1,0 +1,9 @@
+{
+  "user_observation": "仍完全不动、没有声音",
+  "servo_model_user_confirmed": "原装BDS300",
+  "measured_servo_power_rail_v": 6.7,
+  "software_us_command": 1350,
+  "software_return_to_center": 1500,
+  "physical_result": "FAIL: no movement",
+  "next_step": "Read PWM4/C30 registers; no frequency or amplitude changes"
+}

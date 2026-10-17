@@ -1,0 +1,8 @@
+{
+  "physical_high_v": 3.3,
+  "physical_low_v": 0,
+  "software_high_sample": 0,
+  "result": "PASS: C11 static physical HIGH/LOW switching. Software input sample cannot be used as output voltage confirmation.",
+  "c7_damage": "not established",
+  "motors": "disabled throughout static comparison"
+}

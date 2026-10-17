@@ -1,0 +1,12 @@
+{
+  "id": "16-right-speed-G",
+  "title": "G：右轮独立速度闭环",
+  "firmware_sha256": "ff398c18d8485607a86e951cb701d7a551077488dc8a10f5618c1ac599e2621b",
+  "readback_verified": true,
+  "result": "80计数/10ms，4秒，用户确认前进平稳停车、左轮不动。",
+  "source_status": "历史单版源码未完整冻结；保留精确HEX、构建/回读记录与版本行为，不以最新源码冒充历史源码。",
+  "firmware": "versions/16-right-speed-G/firmware.hex",
+  "build_record": "right-speed-bench-build.json",
+  "flash_record": "right-speed-bench-flash.json",
+  "recovered_by_relink": false
+}

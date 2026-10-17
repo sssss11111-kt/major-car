@@ -1,0 +1,15 @@
+{
+  "sha256": "83671f38fe6b8372a5f31977d25dead7f9661082b5db39c26a95addd537c20e0",
+  "host_tests": "ALL TESTS PASSED",
+  "arm_build": "BUILD SUCCESS",
+  "flashed": true,
+  "root_cause": "unresolved; diagnostic build",
+  "changes": [
+    "MOTOR-DIR v20261017C configured and pad level query",
+    "Reassert direction GPIO in idle before test",
+    "Require new diagnostic and LOW pad readings before scripted actuation"
+  ],
+  "test_pwm_percent": 30,
+  "test_duration_ms": 2000,
+  "readback_verified": true
+}

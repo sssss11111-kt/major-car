@@ -1,0 +1,12 @@
+{
+  "id": "03-uart8-camera",
+  "title": "UART8摄像头整合版",
+  "firmware_sha256": "329836b3bda102f4ea88bcc484930ff618874549a4a47bc568fccc17fe64def9",
+  "readback_verified": true,
+  "result": "摄像头恢复、帧增长、无线双向查询通过；当时5%点动不转。",
+  "source_status": "历史单版源码未完整冻结；保留精确HEX、构建/回读记录与版本行为，不以最新源码冒充历史源码。",
+  "firmware": "versions/03-uart8-camera/firmware.hex",
+  "build_record": null,
+  "flash_record": null,
+  "recovered_by_relink": false
+}

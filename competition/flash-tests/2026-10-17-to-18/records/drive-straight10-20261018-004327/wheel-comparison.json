@@ -1,0 +1,11 @@
+{
+  "folder": "drive-straight10-20261018-004327",
+  "last3s_samples": 74,
+  "left_mean": 38.959,
+  "right_mean": 39.405,
+  "mean_left_minus_right": -0.446,
+  "commanded_servo_us": [
+    1500
+  ],
+  "fault": 0
+}

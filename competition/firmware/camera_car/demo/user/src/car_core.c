@@ -99,6 +99,9 @@ static void zero_outputs(control_state_t *s) {
     s->integral[0]=0; s->integral[1]=0;
     s->stalled_ticks[0]=0; s->stalled_ticks[1]=0;
     s->servo_us=s->cfg.servo_center_us;
+    s->bench_target=0; s->bench_started=0;
+    s->drive_start_ticks[0]=s->drive_start_ticks[1]=0;
+    s->drive_lease_active=0;
 }
 void control_stop(control_state_t *s) {
     s->mode=CAR_IDLE; s->fault=FAULT_NONE;
@@ -119,15 +122,39 @@ void control_frame(control_state_t *s,const vision_result_t *f,uint32_t now) {
         s->frame_ms=now; s->previous_error=f->error; s->error=f->error;
         if(s->good_frames<255) s->good_frames++;
         s->bad_frames=0;
-        if(s->mode==CAR_RUNNING)
+        if(s->mode==CAR_RUNNING || s->mode==CAR_STEER_TEST)
             s->servo_us=clampf(s->cfg.servo_center_us+s->cfg.steer_sign*
                 (s->cfg.steer_kp*s->error+s->cfg.steer_kd*s->derivative),
                 s->cfg.servo_min_us,s->cfg.servo_max_us);
     } else {
         s->good_frames=0;
         if(s->bad_frames<255) s->bad_frames++;
-        if(s->mode==CAR_RUNNING && s->bad_frames>=3) control_fault(s,FAULT_LINE);
+        if((s->mode==CAR_RUNNING || s->mode==CAR_STEER_TEST) && s->bad_frames>=3) control_fault(s,FAULT_LINE);
     }
+}
+int control_drive_long_test(control_state_t *s,uint32_t now) {
+    if(!control_drive_test(s,0,now))return 0;
+    s->test_until=now+10200u;s->drive_lease_active=1;s->drive_command_ms=now;return 1;
+}
+void control_drive_keepalive(control_state_t *s,uint32_t now) {
+    if(s->mode==CAR_DRIVE_TEST && s->drive_lease_active)s->drive_command_ms=now;
+}
+int control_drive_test(control_state_t *s,int turn,uint32_t now) {
+    if(s->mode!=CAR_IDLE || s->cfg.simulated || turn< -1 || turn>1 ||
+       (uint32_t)(now-s->heartbeat_ms)>s->cfg.heartbeat_timeout_ms) return 0;
+    zero_outputs(s);s->mode=CAR_DRIVE_TEST;s->fault=FAULT_NONE;
+    s->test_motor=3;s->drive_turn=(int8_t)turn;
+    /* Allow steering to settle at zero motor output, then drive for 1 second. */
+    s->motion_ms=now+200u;s->test_until=now+1200u;
+    s->servo_us=turn<0?s->cfg.servo_max_us:(turn>0?s->cfg.servo_min_us:s->cfg.servo_center_us);
+    return 1;
+}
+int control_steer_test(control_state_t *s,uint32_t now) {
+    if(s->mode!=CAR_IDLE || s->cfg.simulated || s->good_frames<3 ||
+       (uint32_t)(now-s->frame_ms)>s->cfg.frame_timeout_ms ||
+       (uint32_t)(now-s->heartbeat_ms)>s->cfg.heartbeat_timeout_ms) return 0;
+    zero_outputs(s); s->derivative=0; s->test_until=now+30000u;
+    s->mode=CAR_STEER_TEST; s->fault=FAULT_NONE; return 1;
 }
 int control_start(control_state_t *s,uint32_t now) {
     if(s->mode!=CAR_IDLE || s->cfg.simulated || s->good_frames<3 ||
@@ -138,8 +165,57 @@ int control_start(control_state_t *s,uint32_t now) {
 }
 int control_test(control_state_t *s,uint8_t motor,uint32_t now) {
     if(s->mode!=CAR_IDLE || s->cfg.simulated || motor<1 || motor>2) return 0;
-    zero_outputs(s); s->mode=CAR_TEST; s->test_motor=motor; s->test_until=now+1000;
+    zero_outputs(s); s->mode=CAR_TEST; s->test_motor=motor;
+    s->test_until=now+2000u;
     return 1;
+}
+int control_speed_test(control_state_t *s,uint8_t motor,uint32_t now) {
+    if(s->mode!=CAR_IDLE || s->cfg.simulated || motor<1 || motor>3) return 0;
+    zero_outputs(s); s->mode=CAR_SPEED_TEST; s->test_motor=motor;
+    s->motion_ms=now; s->test_until=now+4000u;
+    return 1;
+}
+int control_speed_test_right(control_state_t *s,uint32_t now) {
+    return control_speed_test(s,2,now);
+}
+static void speed_bench_tick(control_state_t *s,uint32_t now,int16_t left,int16_t right) {
+    if((int32_t)(now-s->test_until)>=0) {control_stop(s);return;}
+    unsigned mask=s->test_motor==3?3u:(1u<<(s->test_motor-1u));
+    int samples[2]={left,right};
+    for(unsigned w=0;w<2;w++) {
+        if((mask&(1u<<w))?(samples[w]<-5 || samples[w]>450):(abs_i(samples[w])>10)) {
+            control_fault(s,FAULT_ENCODER);return;
+        }
+    }
+    uint32_t elapsed=now-s->motion_ms;
+    int ground=s->mode==CAR_DRIVE_TEST;
+    s->bench_target=(ground?40.0f:80.0f)*clampf(elapsed/(ground?500.0f:1000.0f),0,1);
+    s->servo_us=ground?(s->drive_turn<0?s->cfg.servo_max_us:
+        (s->drive_turn>0?s->cfg.servo_min_us:s->cfg.servo_center_us)):s->cfg.servo_center_us;
+    for(unsigned w=0;w<2;w++) {
+        unsigned bit=1u<<w;
+        if(!(mask&bit)) {s->duty[w]=0;continue;}
+        int measured=samples[w];
+        if(!(s->bench_started&bit)) {
+            if(ground) {
+                if(measured>=5) {if(s->drive_start_ticks[w]<3)s->drive_start_ticks[w]++;}
+                else s->drive_start_ticks[w]=0;
+            }
+            if(ground?s->drive_start_ticks[w]>=3:measured>=20) s->bench_started|=(uint8_t)bit;
+            else if(elapsed>=200) {control_fault(s,FAULT_ENCODER);return;}
+            else {s->duty[w]=3000;continue;}
+        }
+        /* Independent per-wheel bench PI; tracking settings stay unchanged. */
+        float error=s->bench_target-measured;
+        float candidate=clampf(s->integral[w]+20.0f*error*0.01f,-1500,1500);
+        float raw=1500.0f+4.0f*error+candidate;
+        if((raw>=0 && raw<=3000) || (raw>3000 && error<0) || (raw<0 && error>0))
+            s->integral[w]=candidate;
+        s->duty[w]=clampf(1500.0f+4.0f*error+s->integral[w],0,3000);
+        if(s->duty[w]>=500 && measured<2) s->stalled_ticks[w]++;
+        else s->stalled_ticks[w]=0;
+        if(s->stalled_ticks[w]>=50) {control_fault(s,FAULT_ENCODER);return;}
+    }
 }
 static float pi_step(control_state_t *s,int wheel,float error) {
     float candidate=clampf(s->integral[wheel]+s->cfg.speed_ki*error*0.01f,
@@ -150,15 +226,31 @@ static float pi_step(control_state_t *s,int wheel,float error) {
     return clampf(s->cfg.speed_kp*error+s->integral[wheel],0,s->cfg.pwm_max);
 }
 void control_tick(control_state_t *s,uint32_t now,int16_t left,int16_t right) {
-    if(s->mode!=CAR_RUNNING && s->mode!=CAR_TEST) { zero_outputs(s); return; }
+    if(s->mode!=CAR_RUNNING && s->mode!=CAR_TEST && s->mode!=CAR_SPEED_TEST && s->mode!=CAR_STEER_TEST && s->mode!=CAR_DRIVE_TEST) { zero_outputs(s); return; }
     if(s->cfg.simulated) { control_stop(s); return; }
     if((uint32_t)(now-s->heartbeat_ms)>s->cfg.heartbeat_timeout_ms) {
         control_fault(s,FAULT_FOREGROUND); return;
     }
+    if(s->mode==CAR_STEER_TEST) {
+        s->duty[0]=s->duty[1]=0;
+        if((int32_t)(now-s->test_until)>=0) { control_stop(s); return; }
+        if((uint32_t)(now-s->frame_ms)>s->cfg.frame_timeout_ms)
+            control_fault(s,FAULT_FRAME);
+        return;
+    }
+    if(s->mode==CAR_DRIVE_TEST) {
+        if(s->drive_lease_active && (uint32_t)(now-s->drive_command_ms)>=500u) {
+            control_fault(s,FAULT_LINK);return;
+        }
+        if((int32_t)(now-s->motion_ms)<0) {s->duty[0]=s->duty[1]=0;return;}
+        speed_bench_tick(s,now,left,right);return;
+    }
+    if(s->mode==CAR_SPEED_TEST) {speed_bench_tick(s,now,left,right);return;}
     if(s->mode==CAR_TEST) {
         if((int32_t)(now-s->test_until)>=0) { control_stop(s); return; }
-        s->duty[0]=s->test_motor==1?500.0f:0;
-        s->duty[1]=s->test_motor==2?500.0f:0;
+        /* Bench-only single-wheel test: 30%, bounded by test_until and watchdog. */
+        s->duty[0]=s->test_motor==1?3000.0f:0;
+        s->duty[1]=s->test_motor==2?3000.0f:0;
         return;
     }
     if((uint32_t)(now-s->frame_ms)>s->cfg.frame_timeout_ms) {

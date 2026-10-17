@@ -1,0 +1,80 @@
+{
+  "time_china": "2026-10-18 00:23:46",
+  "action": "left",
+  "preflight_only": false,
+  "failure": "Abnormal mode, duty, encoder or steering; stop sent",
+  "ack": false,
+  "automatic_stop": false,
+  "active_samples": [],
+  "last_before_explicit_stop": null,
+  "final": {
+    "ms": 78120,
+    "mode": 0,
+    "fault": 0,
+    "target": 0,
+    "started": 0,
+    "enc_left": -1,
+    "enc_right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0,
+    "us": 1500
+  },
+  "physical_observation": {
+    "source": "user confirmation",
+    "moved_forward": true,
+    "turned_left": true,
+    "stopped_early": true,
+    "abnormal_noise_or_obstruction": false
+  },
+  "commands": [
+    {
+      "utc": "2026-10-17T16:23:46.5222157Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T16:23:46.5336908Z",
+      "command": "q"
+    },
+    {
+      "utc": "2026-10-17T16:23:47.4509279Z",
+      "command": "d"
+    },
+    {
+      "utc": "2026-10-17T16:23:48.0826667Z",
+      "command": "8"
+    },
+    {
+      "utc": "2026-10-17T16:23:48.0835118Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T16:23:48.2266621Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T16:23:48.3202861Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T16:23:48.4356667Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T16:23:48.5006867Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T16:23:48.6132237Z",
+      "command": "s"
+    },
+    {
+      "utc": "2026-10-17T16:23:48.6196580Z",
+      "command": "s"
+    },
+    {
+      "utc": "2026-10-17T16:23:48.6199077Z",
+      "command": "p"
+    }
+  ],
+  "evidence": "<WORKSPACE>\\repair\\evidence\\drive-left-20261018-002346"
+}

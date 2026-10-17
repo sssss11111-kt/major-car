@@ -1,0 +1,9 @@
+{
+  "user_confirmation": "左路LDIR驱动端已断开",
+  "measurement": {
+    "left_dir_wire_disconnected_driver_end_v": 0.1,
+    "probe_user_confirmed_metal_contact": true
+  },
+  "diagnostic_plan": "Static direction register readout; no motor actuation. Existing communication diagnostic profile forces both PWMs zero and disables motion commands; camera is skipped.",
+  "root_cause": "unresolved"
+}

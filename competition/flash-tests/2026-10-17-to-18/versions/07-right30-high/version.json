@@ -1,0 +1,12 @@
+{
+  "id": "07-right30-high",
+  "title": "右30%、2秒，原方向",
+  "firmware_sha256": "233d16d01ee92a79f6dffac00b83d3e5c0c96f124d4c3eed3291af8573f22462",
+  "readback_verified": true,
+  "result": "能起转；用户先误判前进，复测确认后退、编码器为负。",
+  "source_status": "历史单版源码未完整冻结；保留精确HEX、构建/回读记录与版本行为，不以最新源码冒充历史源码。",
+  "firmware": "versions/07-right30-high/firmware.hex",
+  "build_record": "right30pct-2s-build.json",
+  "flash_record": "right30pct-2s-flash.json",
+  "recovered_by_relink": false
+}

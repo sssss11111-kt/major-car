@@ -1,0 +1,10 @@
+{
+  "samples": 25,
+  "valid_samples": 25,
+  "error_pixels_range": [
+    -10.9,
+    5.9
+  ],
+  "motor_outputs_zero": true,
+  "note": "Stationary track recognition baseline; camera orientation and physical steering response still require linkage test."
+}

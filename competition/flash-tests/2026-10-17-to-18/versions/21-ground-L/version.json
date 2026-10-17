@@ -1,0 +1,12 @@
+{
+  "id": "21-ground-L",
+  "title": "L：不依赖视觉的1秒落地行驶",
+  "firmware_sha256": "0b61e4cd606c14e393447c990062fde49d4254585eee2f1805136528104a522a",
+  "readback_verified": true,
+  "result": "直行通过；左转已发生，但内轮未达20计数门槛而提前停车。",
+  "source_status": "历史单版源码未完整冻结；保留精确HEX、构建/回读记录与版本行为，不以最新源码冒充历史源码。",
+  "firmware": "versions/21-ground-L/firmware.hex",
+  "build_record": "ground-drive-build.json",
+  "flash_record": "ground-drive-flash.json",
+  "recovered_by_relink": false
+}

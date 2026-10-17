@@ -1,0 +1,15 @@
+{
+  "image": "<WORKSPACE>\\repair\\build\\diag\\camera-car-uart8-diag.hex",
+  "image_sha256": "dddf6663f280e9e81329a11d1c2ce4518b93225bd4a20acc8d6f78e97f8665c4",
+  "target": "mimxrt1064",
+  "frequency": 1000000,
+  "connect": "halt",
+  "backup_complete": true,
+  "program_complete": false,
+  "readback_verified": false,
+  "core_left_halted": false,
+  "algorithm": "NXP.MIMXRT1064_DFP.19.0.0/MIMXRT1064_QSPI_4KB_SEC.FLM",
+  "backup": "<WORKSPACE>\\repair\\evidence\\before-flash-70000000-4MiB.bin",
+  "backup_sha256": "86249442bc64333ec23a73faee07b5dc0d8b6b6303274d25c32af50ace5288d4",
+  "error": "flash erase sector timed out"
+}

@@ -1,0 +1,210 @@
+{
+  "time_china": "2026-10-17 17:38:37",
+  "port": "COM6",
+  "motor": 1,
+  "pulses": 1,
+  "results": [
+    {
+      "pulse": 1,
+      "motor": 1,
+      "requested_pwm_percent": 5,
+      "firmware_duration_ms": 1000,
+      "command_ack": true,
+      "active_samples": [
+        {
+          "ms": 903170,
+          "mode": 2,
+          "fault": 0,
+          "frames": 40308,
+          "enc_left": 0,
+          "enc_right": 0,
+          "pwm_left": 500,
+          "pwm_right": 0
+        },
+        {
+          "ms": 903230,
+          "mode": 2,
+          "fault": 0,
+          "frames": 40311,
+          "enc_left": 0,
+          "enc_right": 0,
+          "pwm_left": 500,
+          "pwm_right": 0
+        },
+        {
+          "ms": 903320,
+          "mode": 2,
+          "fault": 0,
+          "frames": 40314,
+          "enc_left": 0,
+          "enc_right": 0,
+          "pwm_left": 500,
+          "pwm_right": 0
+        },
+        {
+          "ms": 903520,
+          "mode": 2,
+          "fault": 0,
+          "frames": 40323,
+          "enc_left": 0,
+          "enc_right": 0,
+          "pwm_left": 500,
+          "pwm_right": 0
+        },
+        {
+          "ms": 903610,
+          "mode": 2,
+          "fault": 0,
+          "frames": 40328,
+          "enc_left": 0,
+          "enc_right": 0,
+          "pwm_left": 500,
+          "pwm_right": 0
+        },
+        {
+          "ms": 903730,
+          "mode": 2,
+          "fault": 0,
+          "frames": 40333,
+          "enc_left": 0,
+          "enc_right": 0,
+          "pwm_left": 500,
+          "pwm_right": 0
+        },
+        {
+          "ms": 903790,
+          "mode": 2,
+          "fault": 0,
+          "frames": 40336,
+          "enc_left": 0,
+          "enc_right": 0,
+          "pwm_left": 500,
+          "pwm_right": 0
+        },
+        {
+          "ms": 903930,
+          "mode": 2,
+          "fault": 0,
+          "frames": 40342,
+          "enc_left": 0,
+          "enc_right": 0,
+          "pwm_left": 500,
+          "pwm_right": 0
+        },
+        {
+          "ms": 904070,
+          "mode": 2,
+          "fault": 0,
+          "frames": 40349,
+          "enc_left": 0,
+          "enc_right": 0,
+          "pwm_left": 500,
+          "pwm_right": 0
+        }
+      ],
+      "last_status_before_explicit_stop": {
+        "ms": 904730,
+        "mode": 0,
+        "fault": 0,
+        "frames": 40375,
+        "enc_left": 0,
+        "enc_right": 0,
+        "pwm_left": 0,
+        "pwm_right": 0
+      },
+      "automatic_stop_observed": true,
+      "physical_rotation": "Requires user observation"
+    }
+  ],
+  "failure": null,
+  "final_status": {
+    "ms": 905730,
+    "mode": 0,
+    "fault": 0,
+    "frames": 40415,
+    "enc_left": 0,
+    "enc_right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0
+  },
+  "commands": [
+    {
+      "utc": "2026-10-17T09:38:37.2853242Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T09:38:37.2893044Z",
+      "command": "q"
+    },
+    {
+      "utc": "2026-10-17T09:38:38.5171166Z",
+      "command": "1"
+    },
+    {
+      "utc": "2026-10-17T09:38:38.5178969Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T09:38:38.6709087Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T09:38:38.8710744Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T09:38:38.9684120Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T09:38:39.1478955Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T09:38:39.2872499Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T09:38:39.4226421Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T09:38:39.5701758Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T09:38:39.7710100Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T09:38:39.8887991Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T09:38:40.0629188Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T09:38:40.3339512Z",
+      "command": "s"
+    },
+    {
+      "utc": "2026-10-17T09:38:40.3342034Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T09:38:41.0052624Z",
+      "command": "s"
+    },
+    {
+      "utc": "2026-10-17T09:38:41.0056470Z",
+      "command": "p"
+    }
+  ],
+  "evidence": "<WORKSPACE>\\repair\\evidence\\motor-20261017-173837",
+  "user_observation": {
+    "both_wheels_rotated": false,
+    "text": "两个轮子都没有转动"
+  },
+  "assessment": "Command accepted and automatic stop verified; physical motor rotation failed at 5 percent PWM. Cause unresolved."
+}

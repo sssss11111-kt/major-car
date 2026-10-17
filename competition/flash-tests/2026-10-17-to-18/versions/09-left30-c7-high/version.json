@@ -1,0 +1,12 @@
+{
+  "id": "09-left30-c7-high",
+  "title": "左30%、C7 HIGH",
+  "firmware_sha256": "4261d0cbf1009f0d4d4b4d39bb62c345f90aea948f6b88e1fb0dc10113608fb9",
+  "readback_verified": true,
+  "result": "左轮后退、计数为负，右轮不动。",
+  "source_status": "历史单版源码未完整冻结；保留精确HEX、构建/回读记录与版本行为，不以最新源码冒充历史源码。",
+  "firmware": "versions/09-left30-c7-high/firmware.hex",
+  "build_record": "left30pct-2s-build.json",
+  "flash_record": "left30pct-2s-flash.json",
+  "recovered_by_relink": false
+}

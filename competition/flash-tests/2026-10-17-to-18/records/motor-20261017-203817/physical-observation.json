@@ -1,0 +1,32 @@
+{
+  "user_observation": {
+    "right_wheel_rotated": true,
+    "right_direction": "vehicle forward",
+    "right_wheel_stopped_after_test": true,
+    "left_wheel_remained_stationary": true
+  },
+  "test": {
+    "right_pwm_percent": 30,
+    "duration_ms": 2000
+  },
+  "result": "PASS: right motor forward actuation and automatic stop physically confirmed",
+  "encoder": {
+    "motion_detected": true,
+    "active_count_range_excluding_initial_zero": [
+      -312,
+      -186
+    ],
+    "sample_period_ms": 10,
+    "forward_sign": "negative",
+    "polarity_calibration_required_before_closed_loop": true
+  },
+  "limits": [
+    "Left motor start at 30 percent has not been tested.",
+    "Loaded running and speed calibration have not been validated.",
+    "Current tracking PWM limit is 20 percent; successful 30 percent bench startup does not validate tracking startup."
+  ],
+  "direction_interpretation_superseded": {
+    "by": "motor-20261017-203958",
+    "reason": "用户重新观察，确认本命令对应后退；撤回此前前进负计数的判断。应先修正驱动方向，暂不反转编码器符号。"
+  }
+}

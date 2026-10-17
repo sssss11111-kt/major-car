@@ -1,0 +1,12 @@
+{
+  "servo": "BDS300",
+  "pin": "C30",
+  "frequency_hz": 50,
+  "center_us": 1500,
+  "left_us": 1650,
+  "right_us": 1350,
+  "both_returned_to_center": true,
+  "supply_rail_loaded_volts": 6.5,
+  "signal_dc_average_volts": 0.25,
+  "limits": "Small-angle direction and return verified; mechanical center, travel limits and vision steering sign require validation."
+}

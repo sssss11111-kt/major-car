@@ -1,0 +1,21 @@
+{
+  "profile": "camera",
+  "left_test": {
+    "pwm_percent": 10,
+    "duration_ms": 2000,
+    "command": "1"
+  },
+  "right_test": {
+    "pwm_percent": 5,
+    "duration_ms": 1000,
+    "command": "2"
+  },
+  "image": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-uart8-20261017\\repair\\build\\camera\\camera-car-uart8-camera.hex",
+  "sha256": "8ce8e3b1a4ffa3eee2a8814f63fa68d5704b25cf940e6db8720d27dfcf561bab",
+  "host_tests": "ALL TESTS PASSED",
+  "arm_build": "BUILD SUCCESS",
+  "flashed": true,
+  "physical_test": "pending",
+  "notes": "Left test is open loop. Serial stop and foreground watchdog remain active; running-mode encoder stall detection is not applied to test mode.",
+  "readback_verified": true
+}

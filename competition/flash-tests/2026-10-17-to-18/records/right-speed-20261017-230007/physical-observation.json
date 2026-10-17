@@ -1,0 +1,22 @@
+{
+  "result": "PASS: initial unloaded right-wheel speed bench at 80 counts/10ms",
+  "user_confirmation": "右轮向前转，整体平稳，结束停下，左轮不动",
+  "metrics": {
+    "last_1s_unique_samples": 24,
+    "target_counts_per_10ms": 80,
+    "actual_mean": 80.88,
+    "actual_min": 70,
+    "actual_max": 89,
+    "mean_absolute_error": 5.04,
+    "pwm_percent_range": [
+      12.82,
+      13.7
+    ],
+    "left_output_always_zero": true,
+    "left_encoder_always_zero": true,
+    "automatic_zero_output_verified": true,
+    "fault": 0
+  },
+  "limits": "4-second unloaded single target only; no loaded-driving, robustness or multi-speed acceptance",
+  "firmware_sha256": "ff398c18d8485607a86e951cb701d7a551077488dc8a10f5618c1ac599e2621b"
+}

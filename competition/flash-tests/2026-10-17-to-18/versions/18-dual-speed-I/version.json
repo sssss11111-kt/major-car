@@ -1,0 +1,12 @@
+{
+  "id": "18-dual-speed-I",
+  "title": "I：双轮速度闭环",
+  "firmware_sha256": "1879b08cd4cee04b893c358bfe0d0bb80b1ac1cf2b380652f024133fc24e54a1",
+  "readback_verified": true,
+  "result": "双轮前进平稳，4秒后均停；仅短时架空验证。",
+  "source_status": "历史单版源码未完整冻结；保留精确HEX、构建/回读记录与版本行为，不以最新源码冒充历史源码。",
+  "firmware": "versions/18-dual-speed-I/firmware.hex",
+  "build_record": "dual-speed-bench-build.json",
+  "flash_record": "dual-speed-bench-flash.json",
+  "recovered_by_relink": false
+}

@@ -1,0 +1,1254 @@
+{
+  "time_china": "2026-10-17 22:59:28",
+  "failure": null,
+  "ack": true,
+  "automatic_stop": true,
+  "active_samples": [
+    {
+      "ms": 18010,
+      "mode": 4,
+      "fault": 0,
+      "target": 0,
+      "started": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0
+    },
+    {
+      "ms": 18010,
+      "mode": 4,
+      "fault": 0,
+      "target": 0,
+      "started": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0
+    },
+    {
+      "ms": 18060,
+      "mode": 4,
+      "fault": 0,
+      "target": 4,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 70,
+      "pwm_left": 0,
+      "pwm_right": 1207
+    },
+    {
+      "ms": 18120,
+      "mode": 4,
+      "fault": 0,
+      "target": 8,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 50,
+      "pwm_left": 0,
+      "pwm_right": 1243
+    },
+    {
+      "ms": 18170,
+      "mode": 4,
+      "fault": 0,
+      "target": 12,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 38,
+      "pwm_left": 0,
+      "pwm_right": 1276
+    },
+    {
+      "ms": 18220,
+      "mode": 4,
+      "fault": 0,
+      "target": 16,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 23,
+      "pwm_left": 0,
+      "pwm_right": 1339
+    },
+    {
+      "ms": 18240,
+      "mode": 4,
+      "fault": 0,
+      "target": 18,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 21,
+      "pwm_left": 0,
+      "pwm_right": 1352
+    },
+    {
+      "ms": 18270,
+      "mode": 4,
+      "fault": 0,
+      "target": 20,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 16,
+      "pwm_left": 0,
+      "pwm_right": 1383
+    },
+    {
+      "ms": 18320,
+      "mode": 4,
+      "fault": 0,
+      "target": 24,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 18,
+      "pwm_left": 0,
+      "pwm_right": 1394
+    },
+    {
+      "ms": 18370,
+      "mode": 4,
+      "fault": 0,
+      "target": 28,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 41,
+      "pwm_left": 0,
+      "pwm_right": 1313
+    },
+    {
+      "ms": 18420,
+      "mode": 4,
+      "fault": 0,
+      "target": 32,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 32,
+      "pwm_left": 0,
+      "pwm_right": 1360
+    },
+    {
+      "ms": 18440,
+      "mode": 4,
+      "fault": 0,
+      "target": 34,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 32,
+      "pwm_left": 0,
+      "pwm_right": 1367
+    },
+    {
+      "ms": 18470,
+      "mode": 4,
+      "fault": 0,
+      "target": 36,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 31,
+      "pwm_left": 0,
+      "pwm_right": 1384
+    },
+    {
+      "ms": 18520,
+      "mode": 4,
+      "fault": 0,
+      "target": 40,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 36,
+      "pwm_left": 0,
+      "pwm_right": 1388
+    },
+    {
+      "ms": 18570,
+      "mode": 4,
+      "fault": 0,
+      "target": 44,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 34,
+      "pwm_left": 0,
+      "pwm_right": 1417
+    },
+    {
+      "ms": 18620,
+      "mode": 4,
+      "fault": 0,
+      "target": 48,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 33,
+      "pwm_left": 0,
+      "pwm_right": 1451
+    },
+    {
+      "ms": 18650,
+      "mode": 4,
+      "fault": 0,
+      "target": 51,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 39,
+      "pwm_left": 0,
+      "pwm_right": 1444
+    },
+    {
+      "ms": 18670,
+      "mode": 4,
+      "fault": 0,
+      "target": 52,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 50,
+      "pwm_left": 0,
+      "pwm_right": 1408
+    },
+    {
+      "ms": 18720,
+      "mode": 4,
+      "fault": 0,
+      "target": 56,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 49,
+      "pwm_left": 0,
+      "pwm_right": 1433
+    },
+    {
+      "ms": 18770,
+      "mode": 4,
+      "fault": 0,
+      "target": 60,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 46,
+      "pwm_left": 0,
+      "pwm_right": 1473
+    },
+    {
+      "ms": 18820,
+      "mode": 4,
+      "fault": 0,
+      "target": 64,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 50,
+      "pwm_left": 0,
+      "pwm_right": 1486
+    },
+    {
+      "ms": 18850,
+      "mode": 4,
+      "fault": 0,
+      "target": 67,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 52,
+      "pwm_left": 0,
+      "pwm_right": 1496
+    },
+    {
+      "ms": 18870,
+      "mode": 4,
+      "fault": 0,
+      "target": 68,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 53,
+      "pwm_left": 0,
+      "pwm_right": 1505
+    },
+    {
+      "ms": 18920,
+      "mode": 4,
+      "fault": 0,
+      "target": 72,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 63,
+      "pwm_left": 0,
+      "pwm_right": 1490
+    },
+    {
+      "ms": 18970,
+      "mode": 4,
+      "fault": 0,
+      "target": 76,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 53,
+      "pwm_left": 0,
+      "pwm_right": 1564
+    },
+    {
+      "ms": 19020,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 65,
+      "pwm_left": 0,
+      "pwm_right": 1547
+    },
+    {
+      "ms": 19050,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 68,
+      "pwm_left": 0,
+      "pwm_right": 1543
+    },
+    {
+      "ms": 19070,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 75,
+      "pwm_left": 0,
+      "pwm_right": 1518
+    },
+    {
+      "ms": 19120,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 65,
+      "pwm_left": 0,
+      "pwm_right": 1565
+    },
+    {
+      "ms": 19170,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 75,
+      "pwm_left": 0,
+      "pwm_right": 1537
+    },
+    {
+      "ms": 19220,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 80,
+      "pwm_left": 0,
+      "pwm_right": 1520
+    },
+    {
+      "ms": 19240,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 84,
+      "pwm_left": 0,
+      "pwm_right": 1502
+    },
+    {
+      "ms": 19270,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 67,
+      "pwm_left": 0,
+      "pwm_right": 1575
+    },
+    {
+      "ms": 19320,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 83,
+      "pwm_left": 0,
+      "pwm_right": 1514
+    },
+    {
+      "ms": 19370,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 88,
+      "pwm_left": 0,
+      "pwm_right": 1491
+    },
+    {
+      "ms": 19420,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 71,
+      "pwm_left": 0,
+      "pwm_right": 1565
+    },
+    {
+      "ms": 19420,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 71,
+      "pwm_left": 0,
+      "pwm_right": 1565
+    },
+    {
+      "ms": 19470,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 83,
+      "pwm_left": 0,
+      "pwm_right": 1514
+    },
+    {
+      "ms": 19520,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 77,
+      "pwm_left": 0,
+      "pwm_right": 1534
+    },
+    {
+      "ms": 19570,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 87,
+      "pwm_left": 0,
+      "pwm_right": 1496
+    },
+    {
+      "ms": 19620,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 86,
+      "pwm_left": 0,
+      "pwm_right": 1494
+    },
+    {
+      "ms": 19640,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 83,
+      "pwm_left": 0,
+      "pwm_right": 1504
+    },
+    {
+      "ms": 19670,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 75,
+      "pwm_left": 0,
+      "pwm_right": 1539
+    },
+    {
+      "ms": 19720,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 88,
+      "pwm_left": 0,
+      "pwm_right": 1483
+    },
+    {
+      "ms": 19770,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 78,
+      "pwm_left": 0,
+      "pwm_right": 1518
+    },
+    {
+      "ms": 19820,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 83,
+      "pwm_left": 0,
+      "pwm_right": 1500
+    },
+    {
+      "ms": 19830,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 87,
+      "pwm_left": 0,
+      "pwm_right": 1483
+    },
+    {
+      "ms": 19870,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 88,
+      "pwm_left": 0,
+      "pwm_right": 1471
+    },
+    {
+      "ms": 19920,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 79,
+      "pwm_left": 0,
+      "pwm_right": 1508
+    },
+    {
+      "ms": 19970,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 88,
+      "pwm_left": 0,
+      "pwm_right": 1467
+    },
+    {
+      "ms": 20020,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 76,
+      "pwm_left": 0,
+      "pwm_right": 1511
+    },
+    {
+      "ms": 20040,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 79,
+      "pwm_left": 0,
+      "pwm_right": 1500
+    },
+    {
+      "ms": 20070,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 82,
+      "pwm_left": 0,
+      "pwm_right": 1487
+    },
+    {
+      "ms": 20120,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 88,
+      "pwm_left": 0,
+      "pwm_right": 1455
+    },
+    {
+      "ms": 20170,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 79,
+      "pwm_left": 0,
+      "pwm_right": 1494
+    },
+    {
+      "ms": 20220,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 86,
+      "pwm_left": 0,
+      "pwm_right": 1462
+    },
+    {
+      "ms": 20240,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 89,
+      "pwm_left": 0,
+      "pwm_right": 1447
+    },
+    {
+      "ms": 20270,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 73,
+      "pwm_left": 0,
+      "pwm_right": 1512
+    },
+    {
+      "ms": 20320,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 86,
+      "pwm_left": 0,
+      "pwm_right": 1460
+    },
+    {
+      "ms": 20370,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 88,
+      "pwm_left": 0,
+      "pwm_right": 1447
+    },
+    {
+      "ms": 20420,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 77,
+      "pwm_left": 0,
+      "pwm_right": 1495
+    },
+    {
+      "ms": 20430,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 83,
+      "pwm_left": 0,
+      "pwm_right": 1470
+    },
+    {
+      "ms": 20470,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 86,
+      "pwm_left": 0,
+      "pwm_right": 1453
+    },
+    {
+      "ms": 20520,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 76,
+      "pwm_left": 0,
+      "pwm_right": 1488
+    },
+    {
+      "ms": 20570,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 87,
+      "pwm_left": 0,
+      "pwm_right": 1444
+    },
+    {
+      "ms": 20620,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 88,
+      "pwm_left": 0,
+      "pwm_right": 1431
+    },
+    {
+      "ms": 20640,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 78,
+      "pwm_left": 0,
+      "pwm_right": 1471
+    },
+    {
+      "ms": 20670,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 78,
+      "pwm_left": 0,
+      "pwm_right": 1474
+    },
+    {
+      "ms": 20720,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 89,
+      "pwm_left": 0,
+      "pwm_right": 1422
+    },
+    {
+      "ms": 20770,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 78,
+      "pwm_left": 0,
+      "pwm_right": 1463
+    },
+    {
+      "ms": 20820,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 87,
+      "pwm_left": 0,
+      "pwm_right": 1425
+    },
+    {
+      "ms": 20860,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 88,
+      "pwm_left": 0,
+      "pwm_right": 1415
+    },
+    {
+      "ms": 20870,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 83,
+      "pwm_left": 0,
+      "pwm_right": 1434
+    },
+    {
+      "ms": 20920,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 79,
+      "pwm_left": 0,
+      "pwm_right": 1453
+    },
+    {
+      "ms": 20970,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 90,
+      "pwm_left": 0,
+      "pwm_right": 1403
+    },
+    {
+      "ms": 21020,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 75,
+      "pwm_left": 0,
+      "pwm_right": 1463
+    },
+    {
+      "ms": 21040,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 81,
+      "pwm_left": 0,
+      "pwm_right": 1439
+    },
+    {
+      "ms": 21070,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 82,
+      "pwm_left": 0,
+      "pwm_right": 1433
+    },
+    {
+      "ms": 21120,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 81,
+      "pwm_left": 0,
+      "pwm_right": 1430
+    },
+    {
+      "ms": 21170,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 84,
+      "pwm_left": 0,
+      "pwm_right": 1420
+    },
+    {
+      "ms": 21220,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 91,
+      "pwm_left": 0,
+      "pwm_right": 1386
+    },
+    {
+      "ms": 21260,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 73,
+      "pwm_left": 0,
+      "pwm_right": 1456
+    },
+    {
+      "ms": 21270,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 72,
+      "pwm_left": 0,
+      "pwm_right": 1462
+    },
+    {
+      "ms": 21320,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 85,
+      "pwm_left": 0,
+      "pwm_right": 1406
+    },
+    {
+      "ms": 21370,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 81,
+      "pwm_left": 0,
+      "pwm_right": 1416
+    },
+    {
+      "ms": 21420,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 85,
+      "pwm_left": 0,
+      "pwm_right": 1403
+    },
+    {
+      "ms": 21420,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 85,
+      "pwm_left": 0,
+      "pwm_right": 1403
+    },
+    {
+      "ms": 21470,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 87,
+      "pwm_left": 0,
+      "pwm_right": 1388
+    },
+    {
+      "ms": 21520,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 73,
+      "pwm_left": 0,
+      "pwm_right": 1444
+    },
+    {
+      "ms": 21570,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 86,
+      "pwm_left": 0,
+      "pwm_right": 1390
+    },
+    {
+      "ms": 21620,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 81,
+      "pwm_left": 0,
+      "pwm_right": 1404
+    },
+    {
+      "ms": 21620,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 81,
+      "pwm_left": 0,
+      "pwm_right": 1404
+    },
+    {
+      "ms": 21670,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 79,
+      "pwm_left": 0,
+      "pwm_right": 1417
+    },
+    {
+      "ms": 21720,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 87,
+      "pwm_left": 0,
+      "pwm_right": 1379
+    },
+    {
+      "ms": 21770,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 73,
+      "pwm_left": 0,
+      "pwm_right": 1438
+    },
+    {
+      "ms": 21820,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 84,
+      "pwm_left": 0,
+      "pwm_right": 1395
+    },
+    {
+      "ms": 21820,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 84,
+      "pwm_left": 0,
+      "pwm_right": 1395
+    },
+    {
+      "ms": 21870,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 78,
+      "pwm_left": 0,
+      "pwm_right": 1415
+    },
+    {
+      "ms": 21920,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 79,
+      "pwm_left": 0,
+      "pwm_right": 1416
+    },
+    {
+      "ms": 21970,
+      "mode": 4,
+      "fault": 0,
+      "target": 80,
+      "started": 1,
+      "enc_left": 0,
+      "enc_right": 87,
+      "pwm_left": 0,
+      "pwm_right": 1381
+    }
+  ],
+  "last_before_explicit_stop": {
+    "ms": 22720,
+    "mode": 0,
+    "fault": 0,
+    "target": 0,
+    "started": 0,
+    "enc_left": 0,
+    "enc_right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0
+  },
+  "final": {
+    "ms": 23000,
+    "mode": 0,
+    "fault": 0,
+    "target": 0,
+    "started": 0,
+    "enc_left": 0,
+    "enc_right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0
+  },
+  "physical_observation": "pending",
+  "commands": [
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:28.7181578Z"
+    },
+    {
+      "command": "q",
+      "utc": "2026-10-17T14:59:28.7210045Z"
+    },
+    {
+      "command": "5",
+      "utc": "2026-10-17T14:59:30.5554622Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:30.5567911Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:30.7851003Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:30.9809599Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:31.1999989Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:31.3953036Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:31.5936537Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:31.7860405Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:31.9650867Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:32.1865714Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:32.3774878Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:32.5863324Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:32.7853532Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:32.9750579Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:33.1855240Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:33.3802480Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:33.5854668Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:33.8095051Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:33.9684011Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:34.1689817Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:34.3664774Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:34.5676747Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:34.7876322Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:34.9867541Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:35.2099946Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:35.2654565Z"
+    },
+    {
+      "command": "s",
+      "utc": "2026-10-17T14:59:35.5234944Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T14:59:35.5241557Z"
+    }
+  ],
+  "evidence": "<WORKSPACE>\\repair\\evidence\\right-speed-20261017-225928"
+}

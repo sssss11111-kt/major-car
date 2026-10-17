@@ -1,0 +1,16 @@
+{
+  "last_1s_unique_samples": 24,
+  "target_counts_per_10ms": 80,
+  "actual_mean": 80.88,
+  "actual_min": 70,
+  "actual_max": 89,
+  "mean_absolute_error": 5.04,
+  "pwm_percent_range": [
+    12.82,
+    13.7
+  ],
+  "left_output_always_zero": true,
+  "left_encoder_always_zero": true,
+  "automatic_zero_output_verified": true,
+  "fault": 0
+}

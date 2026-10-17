@@ -1,0 +1,10 @@
+CONNECTED; core halted
+NXP_FLM page=256 RAM=0x200078ec
+FLASH_HEADER=f3d17bf6
+RECOVERING flash interface after reset; verified original backup preserved
+BACKUP_COMPLETE 86249442bc64333ec23a73faee07b5dc0d8b6b6303274d25c32af50ace5288d4
+[---|---|---|---|---|---|---|---|---|----]
+[========================================]
+[---|---|---|---|---|---|---|---|---|----]
+[========================================]
+FLASH_READBACK_VERIFIED bytes=65152; CORE_HALTED; battery cold boot required

@@ -1,0 +1,10 @@
+{
+  "test": "left ground drive",
+  "completed": false,
+  "firmware_fault": 5,
+  "fault_name": "FAULT_ENCODER",
+  "evidence": "started mask stayed 2; left sampled 16..18 counts/10ms before 200ms startup deadline; right reached 23..28. Output zero on fault.",
+  "cause": "Ground drive reuses bench startup requirement >=20 counts/10ms within 200ms. Left did not meet it; this does not establish encoder hardware failure.",
+  "final": "host stop acknowledged, idle, motor PWM zero, servo1500",
+  "physical_observation": "pending"
+}

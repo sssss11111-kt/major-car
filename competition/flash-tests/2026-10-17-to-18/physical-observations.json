@@ -1,0 +1,35 @@
+[
+  {
+    "stage": "wireless",
+    "result": "AB1；诊断B和摄像头版双向ASCII正常；初版仍全00。"
+  },
+  {
+    "stage": "left-open-loop",
+    "evidence": "motor-20261017-224014 / 224214",
+    "result": "两次左轮前进并停车、右轮不动。"
+  },
+  {
+    "stage": "servo",
+    "evidence": "servo-20261017-234803 / 234919; servo-20261018-000920 / 000931",
+    "result": "1650us左转，1350us右转，均回正；首次重复低端测试无动作，重插后动作恢复，根因未唯一确定。"
+  },
+  {
+    "stage": "ground",
+    "evidence": "drive-straight-20261018-002321; drive-left-20261018-002802; drive-right-20261018-002842",
+    "result": "1秒直行基本直；M版左转、右转均前进、停车回中。"
+  },
+  {
+    "stage": "straight-measured",
+    "evidence": "drive-straight10-20261018-004327",
+    "result": "用户回顾三次：两次向右偏较多，手动调整前轮后第三次前进360cm、左偏5cm。其余重复测试未完整报告距离，不能补造。",
+    "forward_cm": 360,
+    "lateral_cm": 5,
+    "direction": "left",
+    "drift_ratio": 0.013888888888888888,
+    "average_progress_m_per_s": 0.36
+  },
+  {
+    "stage": "static-vision",
+    "result": "有25条有效采样的基线，也有照片V0及后续8～9/13双边、偏左15～20px；完整w视觉联动与落地循迹未验收。"
+  }
+]

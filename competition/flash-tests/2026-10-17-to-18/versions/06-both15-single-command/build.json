@@ -1,0 +1,11 @@
+{
+  "left_pwm_percent": 15,
+  "right_pwm_percent": 15,
+  "duration_ms": 2000,
+  "actuation": "one motor per command, never both",
+  "host_tests": "ALL TESTS PASSED",
+  "build": "BUILD SUCCESS",
+  "sha256": "c0f9a1f5e3521044731e961ab22262fef69f8667074dfbf2949884ce8183a270",
+  "flashed": true,
+  "readback_verified": true
+}

@@ -1,0 +1,7 @@
+CONNECTED; core halted
+NXP_FLM page=256 RAM=0x200078ec
+FLASH_HEADER=03030303
+Traceback (most recent call last):
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\flash_with_backup.py", line 83, in <module>
+    raise RuntimeError('Unexpected RT1064 flash configuration header; refusing to erase')
+RuntimeError: Unexpected RT1064 flash configuration header; refusing to erase

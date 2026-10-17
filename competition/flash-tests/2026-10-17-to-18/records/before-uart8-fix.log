@@ -1,0 +1,15 @@
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /Fe:<WORKSPACE>\competition\firmware\camera_car\tests\out\test_core.exe /I <WORKSPACE>\competition\firmware\camera_car\demo\user\inc <WORKSPACE>\competition\firmware\camera_car\tests\test_core.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_core.c
+test_core.c
+car_core.c
+正在生成代码...
+<WORKSPACE>\competition\firmware\camera_car\tests\out\test_core.exe
+vision tests: PASS
+control tests: PASS
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /Fe:<WORKSPACE>\competition\firmware\camera_car\tests\out\test_app.exe /I <WORKSPACE>\competition\firmware\camera_car\tests\sdk /I <WORKSPACE>\competition\firmware\camera_car\demo\user\inc <WORKSPACE>\competition\firmware\camera_car\tests\test_app.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_core.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_app.c <WORKSPACE>\competition\firmware\camera_car\demo\user\src\car_servo.c
+test_app.c
+car_core.c
+car_app.c
+car_servo.c
+正在生成代码...
+<WORKSPACE>\competition\firmware\camera_car\tests\out\test_app.exe
+FAIL adapter line 65: uart8_initialized==1 && uart8_rx_enabled==1

@@ -1,0 +1,17 @@
+{
+  "profile": "camera",
+  "feature": "right single-wheel speed bench command 5",
+  "duration_ms": 4000,
+  "target_counts_per_10ms": 80,
+  "target_ramp_ms": 1000,
+  "pwm_cap_percent": 30,
+  "startup_max_ms": 200,
+  "left_output": "always zero in bench mode",
+  "host_tests": "ALL TESTS PASSED",
+  "motor_model": "sanity test passed; not physical validation",
+  "build": "BUILD SUCCESS",
+  "sha256": "ff398c18d8485607a86e951cb701d7a551077488dc8a10f5618c1ac599e2621b",
+  "flashed": true,
+  "physical_validation": "PASS: initial right wheel unloaded 80 counts/10ms, user confirmed forward, broadly smooth, stop and left stationary",
+  "readback_verified": true
+}

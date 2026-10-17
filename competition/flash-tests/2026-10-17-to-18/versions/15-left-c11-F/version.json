@@ -1,0 +1,12 @@
+{
+  "id": "15-left-c11-F",
+  "title": "F：左C11摄像头整合",
+  "firmware_sha256": "9c44808f9dedba25caec9daa73c79f015d010ab94d0557b937d02b42092ac027",
+  "readback_verified": true,
+  "result": "左轮前进正计数，连续两次实测通过。",
+  "source_status": "可追溯到已发布提交05265575493f6a2d6ceccfe5144879d14113565e；不是本次最新源码。",
+  "firmware": "versions/15-left-c11-F/firmware.hex",
+  "build_record": "left-dir-c11-camera-build.json",
+  "flash_record": "left-dir-c11-camera-flash.json",
+  "recovered_by_relink": false
+}

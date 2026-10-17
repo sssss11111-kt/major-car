@@ -1,0 +1,10 @@
+{
+  "branch": "fix/uart8-20261017",
+  "commit": "05265575493f6a2d6ceccfe5144879d14113565e",
+  "verified_files": 17,
+  "left_dir": "C11 HIGH",
+  "left_encoder_sign": -1,
+  "test": "30 percent / 2 seconds, two physical passes",
+  "firmware_sha256": "9c44808f9dedba25caec9daa73c79f015d010ab94d0557b937d02b42092ac027",
+  "private_backup_uploaded": false
+}

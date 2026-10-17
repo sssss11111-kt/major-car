@@ -1,0 +1,7 @@
+{
+  "new_firmware_diagnostic_lines": 2,
+  "last_diagnostic_lines": [
+    "UART8-DIAG v=20261017B cfg_baud=115200 rx=5 tx=4046 err=0 rts=0 drop=0 diag=0 ab=1 pattern=UUUU0123456789\r\n",
+    "UART8-DIAG v=20261017B cfg_baud=115200 rx=7 tx=5213 err=0 rts=0 drop=0 diag=0 ab=1 pattern=UUUU0123456789\r\n"
+  ]
+}

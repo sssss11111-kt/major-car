@@ -1,0 +1,31 @@
+{
+  "feature": "camera-independent timed ground drive",
+  "marker": "20261018L",
+  "commands": {
+    "7": "straight",
+    "8": "left",
+    "9": "right",
+    "d": "read-only profile query"
+  },
+  "mode": 6,
+  "steering_settle_ms": 200,
+  "drive_ms": 1000,
+  "target_counts_per_10ms": 40,
+  "ramp_ms": 500,
+  "pwm_cap": 3000,
+  "startup_pwm": 3000,
+  "startup_timeout_ms": 200,
+  "servo_us": {
+    "straight": 1500,
+    "left": 1650,
+    "right": 1350
+  },
+  "vision_dependency": false,
+  "host_tests": "ALL TESTS PASSED",
+  "arm_build": "BUILD SUCCESS",
+  "sha256": "0b61e4cd606c14e393447c990062fde49d4254585eee2f1805136528104a522a",
+  "flashed": true,
+  "physical_ground_tests": "pending",
+  "limitations": "Physical speed and travel distance uncalibrated; equal encoder targets do not guarantee straight trajectory.",
+  "readback_verified": true
+}

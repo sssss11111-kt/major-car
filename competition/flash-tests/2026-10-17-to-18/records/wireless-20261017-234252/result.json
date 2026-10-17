@@ -1,0 +1,94 @@
+{
+  "time_china": "2026-10-17 23:42:52",
+  "port": "COM6",
+  "baud": 115200,
+  "framing": "8N1",
+  "handshake": "None",
+  "dtr": false,
+  "rts": false,
+  "device_id": "USB\\VID_2E3C&PID_5740\\<USB_INSTANCE>",
+  "commands_sent": [
+    "p",
+    "z",
+    "p",
+    "z"
+  ],
+  "phases": [
+    {
+      "phase": "passive",
+      "duration_ms": 5036,
+      "bytes": 1323,
+      "zero_bytes": 0,
+      "nonzero_bytes": 1323,
+      "status_lines": 10,
+      "first_64_hex": "6D-73-3D-36-37-33-30-20-6D-6F-64-65-3D-30-20-66-61-75-6C-74-3D-30-20-66-72-61-6D-65-73-3D-32-37-31-20-76-61-6C-69-64-3D-30-20-70-61-69-72-3D-30-2F-30-20-74-68-72-3D-32-34-38-20-65-72-72-31-30",
+      "last_status_lines": [
+        "ms=9730 mode=0 fault=0 frames=394 valid=0 pair=0/0 thr=248 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=10230 mode=0 fault=0 frames=416 valid=0 pair=0/0 thr=248 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=10730 mode=0 fault=0 frames=438 valid=0 pair=0/0 thr=248 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=11230 mode=0 fault=0 frames=461 valid=0 pair=0/0 thr=248 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20"
+      ]
+    },
+    {
+      "phase": "query-1",
+      "duration_ms": 2032,
+      "bytes": 684,
+      "zero_bytes": 0,
+      "nonzero_bytes": 684,
+      "status_lines": 5,
+      "first_64_hex": "6D-73-3D-31-31-37-33-30-20-6D-6F-64-65-3D-30-20-66-61-75-6C-74-3D-30-20-66-72-61-6D-65-73-3D-34-38-33-20-76-61-6C-69-64-3D-30-20-70-61-69-72-3D-30-2F-30-20-74-68-72-3D-32-34-38-20-65-72-72-31",
+      "last_status_lines": [
+        "ms=11740 mode=0 fault=0 frames=484 valid=0 pair=0/0 thr=248 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=12230 mode=0 fault=0 frames=506 valid=0 pair=0/0 thr=248 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=12730 mode=0 fault=0 frames=528 valid=0 pair=0/0 thr=248 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=13230 mode=0 fault=0 frames=551 valid=0 pair=0/0 thr=248 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20"
+      ]
+    },
+    {
+      "phase": "query-2",
+      "duration_ms": 2013,
+      "bytes": 789,
+      "zero_bytes": 0,
+      "nonzero_bytes": 789,
+      "status_lines": 4,
+      "first_64_hex": "6C-74-3D-30-20-66-72-61-6D-65-73-3D-35-37-33-20-76-61-6C-69-64-3D-30-20-70-61-69-72-3D-30-2F-30-20-74-68-72-3D-32-34-38-20-65-72-72-31-30-3D-30-20-62-65-6E-63-68-5F-74-61-72-67-65-74-3D-30-20",
+      "last_status_lines": [
+        "ms=14230 mode=0 fault=0 frames=596 valid=0 pair=0/0 thr=248 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=14730 mode=0 fault=0 frames=618 valid=0 pair=0/0 thr=248 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=15230 mode=0 fault=0 frames=641 valid=0 pair=0/0 thr=248 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=15730 mode=0 fault=0 frames=663 valid=0 pair=0/0 thr=248 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20"
+      ]
+    },
+    {
+      "phase": "query-3",
+      "duration_ms": 2014,
+      "bytes": 665,
+      "zero_bytes": 0,
+      "nonzero_bytes": 665,
+      "status_lines": 5,
+      "first_64_hex": "6D-73-3D-31-35-38-30-30-20-6D-6F-64-65-3D-30-20-66-61-75-6C-74-3D-30-20-66-72-61-6D-65-73-3D-36-36-37-20-76-61-6C-69-64-3D-30-20-70-61-69-72-3D-30-2F-30-20-74-68-72-3D-32-34-38-20-65-72-72-31",
+      "last_status_lines": [
+        "ms=16230 mode=0 fault=0 frames=686 valid=0 pair=0/0 thr=248 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=16730 mode=0 fault=0 frames=708 valid=0 pair=0/0 thr=248 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=17230 mode=0 fault=0 frames=731 valid=0 pair=0/0 thr=248 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=17730 mode=0 fault=0 frames=753 valid=0 pair=0/0 thr=248 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20"
+      ]
+    },
+    {
+      "phase": "query-4",
+      "duration_ms": 2025,
+      "bytes": 675,
+      "zero_bytes": 0,
+      "nonzero_bytes": 675,
+      "status_lines": 4,
+      "first_64_hex": "53-45-52-56-4F-2D-52-45-47-20-76-3D-32-30-32-36-31-30-31-37-4A-20-69-70-67-3D-31-35-30-30-30-30-30-30-30-20-6D-75-78-3D-30-30-30-30-30-30-30-31-20-63-74-72-6C-3D-30-34-36-30-20-6D-63-74-72-6C",
+      "last_status_lines": [
+        "ms=18230 mode=0 fault=0 frames=776 valid=0 pair=0/0 thr=248 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=18730 mode=0 fault=0 frames=798 valid=0 pair=0/0 thr=248 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=19230 mode=0 fault=0 frames=821 valid=0 pair=0/0 thr=248 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=19730 mode=0 fault=0 frames=843 valid=0 pair=0/0 thr=248 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20"
+      ]
+    }
+  ],
+  "evidence_directory": "<WORKSPACE>\\repair\\evidence\\wireless-20261017-234252"
+}

@@ -1,0 +1,16 @@
+{
+  "image": "<WORKSPACE>\\repair\\build\\camera\\camera-car-uart8-camera.hex",
+  "image_sha256": "74ff71ccb9d3629f7d758fd4a028b3896b92a193e808fc53ebe55207ee7d9049",
+  "mode": "camera",
+  "target": "mimxrt1064",
+  "frequency": 1000000,
+  "connect": "halt",
+  "backup_complete": true,
+  "program_complete": true,
+  "readback_verified": true,
+  "core_left_halted": true,
+  "backup": "<WORKSPACE>\\repair\\evidence\\before-flash-70000000-4MiB.bin",
+  "backup_sha256": "86249442bc64333ec23a73faee07b5dc0d8b6b6303274d25c32af50ace5288d4",
+  "algorithm": "NXP.MIMXRT1064_DFP.19.0.0/MIMXRT1064_QSPI_4KB_SEC.FLM",
+  "verified_bytes": 65152
+}

@@ -1,0 +1,8 @@
+{
+  "user_observation": "右轮15%、2秒点动有声音或抖动，但未转起来",
+  "rotation_verified": false,
+  "drive_response_observed": true,
+  "automatic_stop_verified_in_telemetry": true,
+  "next_step": "Check right wheel mechanical freedom and abnormal heating before further actuation.",
+  "followup_user_observation": "右轮无卡滞，无明显发热或异味；用户授权准备超过20%的短时测试"
+}

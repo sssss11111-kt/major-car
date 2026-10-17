@@ -1,0 +1,7 @@
+{
+  "source": "user confirmation",
+  "forward": true,
+  "direction": "right",
+  "stopped": true,
+  "front_wheels_returned_to_center": true
+}

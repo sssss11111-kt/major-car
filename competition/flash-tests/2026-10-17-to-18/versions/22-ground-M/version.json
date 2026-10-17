@@ -1,0 +1,12 @@
+{
+  "id": "22-ground-M",
+  "title": "M：落地启动判断修正",
+  "firmware_sha256": "c9f1022154d9370310654ad971ade31f07f8da0a41cc64d862c1372a23899f2d",
+  "readback_verified": true,
+  "result": "连续3次>=5计数确认起转；1秒左转、右转实物通过。",
+  "source_status": "历史单版源码未完整冻结；保留精确HEX、构建/回读记录与版本行为，不以最新源码冒充历史源码。",
+  "firmware": "versions/22-ground-M/firmware.hex",
+  "build_record": "ground-drive-startup-build.json",
+  "flash_record": "ground-drive-startup-flash.json",
+  "recovered_by_relink": false
+}

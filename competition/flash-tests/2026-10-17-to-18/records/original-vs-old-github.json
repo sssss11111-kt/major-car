@@ -1,0 +1,7 @@
+{
+  "reference": "GitHub servo-init-20261015 prebuilt camera HEX",
+  "compared_bytes": 60416,
+  "different_bytes": 35302,
+  "exact_match_on_reference_addresses": false,
+  "note": "A mismatch does not identify the running firmware or prove UART8 support."
+}

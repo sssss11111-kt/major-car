@@ -1,0 +1,236 @@
+{
+  "action": "low",
+  "expected_us": 1350,
+  "failure": null,
+  "command_samples": [
+    {
+      "ms": 248430,
+      "mode": 0,
+      "fault": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1350
+    },
+    {
+      "ms": 248550,
+      "mode": 0,
+      "fault": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1350
+    },
+    {
+      "ms": 248630,
+      "mode": 0,
+      "fault": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1350
+    },
+    {
+      "ms": 248730,
+      "mode": 0,
+      "fault": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1350
+    },
+    {
+      "ms": 248820,
+      "mode": 0,
+      "fault": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1350
+    },
+    {
+      "ms": 248830,
+      "mode": 0,
+      "fault": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1350
+    },
+    {
+      "ms": 248960,
+      "mode": 0,
+      "fault": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1350
+    },
+    {
+      "ms": 249050,
+      "mode": 0,
+      "fault": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1350
+    },
+    {
+      "ms": 249140,
+      "mode": 0,
+      "fault": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1350
+    },
+    {
+      "ms": 249230,
+      "mode": 0,
+      "fault": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1350
+    },
+    {
+      "ms": 249320,
+      "mode": 0,
+      "fault": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1350
+    },
+    {
+      "ms": 249360,
+      "mode": 0,
+      "fault": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1350
+    }
+  ],
+  "automatic_center_observed": true,
+  "last_before_explicit_stop": {
+    "ms": 249920,
+    "mode": 0,
+    "fault": 0,
+    "enc_left": 0,
+    "enc_right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0,
+    "us": 1500
+  },
+  "final": {
+    "ms": 250320,
+    "mode": 0,
+    "fault": 0,
+    "enc_left": 0,
+    "enc_right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0,
+    "us": 1500
+  },
+  "physical_observation": "pending",
+  "commands": [
+    {
+      "command": "p",
+      "utc": "2026-10-17T15:27:22.6524263Z"
+    },
+    {
+      "command": "q",
+      "utc": "2026-10-17T15:27:22.6553371Z"
+    },
+    {
+      "command": "l",
+      "utc": "2026-10-17T15:27:24.1917888Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T15:27:24.1927184Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T15:27:24.3225089Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T15:27:24.4057533Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T15:27:24.5065071Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T15:27:24.5982671Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T15:27:24.7305785Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T15:27:24.8287935Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T15:27:24.9137167Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T15:27:25.0051845Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T15:27:25.1335328Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T15:27:25.2373168Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T15:27:25.2977426Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T15:27:25.4040073Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T15:27:25.5345011Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T15:27:25.6462313Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T15:27:25.6978116Z"
+    },
+    {
+      "command": "s",
+      "utc": "2026-10-17T15:27:25.9068817Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T15:27:25.9071307Z"
+    }
+  ],
+  "evidence": "<WORKSPACE>\\repair\\evidence\\servo-20261017-232722"
+}

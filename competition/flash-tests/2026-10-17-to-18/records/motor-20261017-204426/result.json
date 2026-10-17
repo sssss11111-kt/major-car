@@ -1,0 +1,28 @@
+{
+  "time_china": "2026-10-17 20:44:26",
+  "port": "COM6",
+  "motor": 2,
+  "pulses": 1,
+  "results": [],
+  "failure": "No complete preflight status",
+  "final_status": null,
+  "commands": [
+    {
+      "utc": "2026-10-17T12:44:26.2048517Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-17T12:44:26.2089093Z",
+      "command": "q"
+    },
+    {
+      "utc": "2026-10-17T12:44:27.4461663Z",
+      "command": "s"
+    },
+    {
+      "utc": "2026-10-17T12:44:27.4467746Z",
+      "command": "p"
+    }
+  ],
+  "evidence": "<WORKSPACE>\\repair\\evidence\\motor-20261017-204426"
+}

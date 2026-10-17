@@ -1,0 +1,5 @@
+{
+  "user_observation": "用户说明刚才没有抬起车辆，未取得有效离地观察结果",
+  "motor_rotation_verified": false,
+  "next_step": "Diagnose supply and actual PWM before further actuation"
+}

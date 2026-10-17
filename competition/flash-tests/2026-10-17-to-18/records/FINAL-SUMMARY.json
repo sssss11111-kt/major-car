@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-17 Asia/Shanghai",
+  "bytes": 3285,
+  "zero_bytes": 0,
+  "complete_status_lines": 29,
+  "query_diagnostic_lines": 2,
+  "frames_first": 480,
+  "frames_last": 1065,
+  "uart_rx_in_queries": [
+    5,
+    7
+  ],
+  "uart_errors": 0,
+  "dropped_messages": 0,
+  "auto_baud_ack": true,
+  "camera_mode": true,
+  "motor_commands_sent": false,
+  "firmware_readback_verified_bytes": 65152,
+  "camera_hex_sha256": "329836b3bda102f4ea88bcc484930ff618874549a4a47bc568fccc17fe64def9",
+  "source_sha256": {
+    "demo/user/inc/car_app.h": "b2e72dd02e8c5d68c2de3a93b9dfc830e9049fc973bc960a41dd7b3062e834da",
+    "demo/user/inc/car_config.h": "0d6e1c18806ae4ba106f671dcb9a50a5e78a226a946accb78e15b9b1cc11ba68",
+    "demo/user/src/car_app.c": "da00e76ea3f4aa466eba5abf867d0963c0a4608052fd76b77cd7ebcb019f938d",
+    "demo/user/src/isr.c": "c82ec376db6a2f9d08067a201c8978467dac4ef843965c89c4a7f79e5d51f0f3",
+    "tests/test_app.c": "6974937dcda0aa7795ebef75546518e6b7ca0dfe9e5409ff87b3952483bddd8c",
+    "tests/test_uart8.c": "915a37dfe8fb218827d2a2edce9c731d6868a05217b159870e0cf78bd2b696b8",
+    "tests/run_tests.py": "aaa45a8a73cd7f8be67c9c5458964534ce1bf47dc53d551a21d9c18d99414f1e",
+    "tests/sdk/zf_common_headfile.h": "160a2449ee0797db88c0c7d00807f2c9625a7b18940989e9b0cf5ce81b9aaa54"
+  }
+}

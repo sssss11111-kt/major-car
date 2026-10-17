@@ -1,0 +1,87 @@
+{
+  "time_china": "2026-10-18 00:14:56",
+  "port": "COM6",
+  "baud": 115200,
+  "framing": "8N1",
+  "handshake": "None",
+  "dtr": false,
+  "rts": false,
+  "device_id": "USB\\VID_2E3C&PID_5740\\<USB_INSTANCE>",
+  "commands_sent": [
+    "p",
+    "z",
+    "p",
+    "z"
+  ],
+  "phases": [
+    {
+      "phase": "passive",
+      "duration_ms": 5028,
+      "bytes": 1362,
+      "zero_bytes": 0,
+      "nonzero_bytes": 1362,
+      "status_lines": 10,
+      "first_64_hex": "6D-73-3D-31-39-37-33-30-20-6D-6F-64-65-3D-30-20-66-61-75-6C-74-3D-30-20-66-72-61-6D-65-73-3D-38-33-36-20-76-61-6C-69-64-3D-31-20-70-61-69-72-3D-38-2F-31-33-20-74-68-72-3D-33-30-20-65-72-72-31",
+      "last_status_lines": [
+        "ms=22730 mode=0 fault=0 frames=971 valid=1 pair=9/13 thr=26 err10=-170 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=23230 mode=0 fault=0 frames=994 valid=1 pair=9/13 thr=26 err10=-180 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=23730 mode=0 fault=0 frames=1016 valid=1 pair=9/13 thr=24 err10=-171 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=24230 mode=0 fault=0 frames=1039 valid=1 pair=9/13 thr=22 err10=-154 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20"
+      ]
+    },
+    {
+      "phase": "query-1",
+      "duration_ms": 2015,
+      "bytes": 458,
+      "zero_bytes": 0,
+      "nonzero_bytes": 458,
+      "status_lines": 4,
+      "first_64_hex": "6D-73-3D-32-34-35-38-30-20-6D-6F-64-65-3D-30-20-66-61-75-6C-74-3D-30-20-66-72-61-6D-65-73-3D-31-30-35-35-20-76-61-6C-69-64-3D-31-20-70-61-69-72-3D-39-2F-31-33-20-74-68-72-3D-32-34-20-65-72-72",
+      "last_status_lines": [
+        "ms=24580 mode=0 fault=0 frames=1055 valid=1 pair=9/13 thr=24 err10=-158 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=24730 mode=0 fault=0 frames=1061 valid=1 pair=9/13 thr=24 err10=-169 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=25230 mode=0 fault=0 frames=1084 valid=1 pair=8/13 thr=24 err10=-167 bench_target=0 bench_started=0 enc=1,0 pwm=0,0 us=1500 speed=20",
+        "ms=25730 mode=0 fault=0 frames=1106 valid=1 pai"
+      ]
+    },
+    {
+      "phase": "query-2",
+      "duration_ms": 2026,
+      "bytes": 0,
+      "zero_bytes": 0,
+      "nonzero_bytes": 0,
+      "status_lines": 0,
+      "first_64_hex": "",
+      "last_status_lines": []
+    },
+    {
+      "phase": "query-3",
+      "duration_ms": 2014,
+      "bytes": 360,
+      "zero_bytes": 0,
+      "nonzero_bytes": 360,
+      "status_lines": 2,
+      "first_64_hex": "72-3D-38-2F-31-33-20-74-68-72-3D-32-32-20-65-72-72-31-30-3D-2D-31-36-32-20-62-65-6E-63-68-5F-74-61-72-67-65-74-3D-30-20-62-65-6E-63-68-5F-73-74-61-72-74-65-64-3D-30-20-65-6E-63-3D-38-2C-39-20",
+      "last_status_lines": [
+        "ms=26230 mode=0 fault=0 frames=1129 valid=1 pair=9/13 thr=22 err10=-155 bench_target=0 bench_started=0 enc=4,4 pwm=0,0 us=1500 speed=20",
+        "ms=26730 mode=0 fault=0 frames=1151 valid=1 pair=9/13 thr=20 err10=-154 bench_target=0 bench_started=0 enc=13,13 pwm=0,0 us=1500 spee"
+      ]
+    },
+    {
+      "phase": "query-4",
+      "duration_ms": 2001,
+      "bytes": 1938,
+      "zero_bytes": 0,
+      "nonzero_bytes": 1938,
+      "status_lines": 12,
+      "first_64_hex": "64-3D-32-30-0D-0A-6D-73-3D-32-37-32-33-30-20-6D-6F-64-65-3D-30-20-66-61-75-6C-74-3D-30-20-66-72-61-6D-65-73-3D-31-31-37-34-20-76-61-6C-69-64-3D-31-20-70-61-69-72-3D-38-2F-31-33-20-74-68-72-3D",
+      "last_status_lines": [
+        "ms=30730 mode=0 fault=0 frames=1331 valid=1 pair=8/13 thr=14 err10=-171 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=31230 mode=0 fault=0 frames=1354 valid=1 pair=8/13 thr=16 err10=-164 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=31730 mode=0 fault=0 frames=1376 valid=1 pair=8/13 thr=16 err10=-193 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20",
+        "ms=32230 mode=0 fault=0 frames=1399 valid=1 pair=8/13 thr=18 err10=-196 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20"
+      ]
+    }
+  ],
+  "evidence_directory": "<WORKSPACE>\\repair\\evidence\\wireless-20261018-001456"
+}

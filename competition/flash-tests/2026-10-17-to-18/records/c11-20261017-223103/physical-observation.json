@@ -1,0 +1,7 @@
+{
+  "user_measured_c11_high_v": 3.3,
+  "software_cfg": 1,
+  "software_pad": 0,
+  "conclusion": "Physical C11 HIGH verified by multimeter while pad readback remains LOW. Current pad readback is not a reliable output-voltage check; do not infer C7 damage from that readback.",
+  "low_measurement": "pending"
+}

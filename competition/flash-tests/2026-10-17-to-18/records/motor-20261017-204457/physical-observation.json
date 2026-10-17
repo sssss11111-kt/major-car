@@ -1,0 +1,21 @@
+{
+  "user_confirmation": "右轮没问题了，现在同样的流程测试左轮",
+  "result": "PASS: right motor direction correction and positive feedback confirmed",
+  "configuration": {
+    "dir": "GPIO_LOW",
+    "encoder_sign": 1,
+    "pwm_percent": 30,
+    "duration_ms": 2000
+  },
+  "telemetry": {
+    "right_encoder_min": 271,
+    "right_encoder_max": 333,
+    "left_encoder": 0,
+    "automatic_output_stop": true,
+    "final_pwm": [
+      0,
+      0
+    ]
+  },
+  "left_calibration": "pending"
+}

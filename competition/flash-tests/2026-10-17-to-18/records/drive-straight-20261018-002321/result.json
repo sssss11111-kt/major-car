@@ -1,0 +1,572 @@
+{
+  "time_china": "2026-10-18 00:23:21",
+  "action": "straight",
+  "preflight_only": false,
+  "failure": null,
+  "ack": true,
+  "automatic_stop": true,
+  "active_samples": [
+    {
+      "ms": 52120,
+      "mode": 6,
+      "fault": 0,
+      "target": 0,
+      "started": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1500
+    },
+    {
+      "ms": 52120,
+      "mode": 6,
+      "fault": 0,
+      "target": 0,
+      "started": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1500
+    },
+    {
+      "ms": 52170,
+      "mode": 6,
+      "fault": 0,
+      "target": 0,
+      "started": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1500
+    },
+    {
+      "ms": 52220,
+      "mode": 6,
+      "fault": 0,
+      "target": 0,
+      "started": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1500
+    },
+    {
+      "ms": 52220,
+      "mode": 6,
+      "fault": 0,
+      "target": 0,
+      "started": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1500
+    },
+    {
+      "ms": 52270,
+      "mode": 6,
+      "fault": 0,
+      "target": 0,
+      "started": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1500
+    },
+    {
+      "ms": 52320,
+      "mode": 6,
+      "fault": 0,
+      "target": 0,
+      "started": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 3000,
+      "pwm_right": 3000,
+      "us": 1500
+    },
+    {
+      "ms": 52320,
+      "mode": 6,
+      "fault": 0,
+      "target": 0,
+      "started": 0,
+      "enc_left": 0,
+      "enc_right": 0,
+      "pwm_left": 3000,
+      "pwm_right": 3000,
+      "us": 1500
+    },
+    {
+      "ms": 52370,
+      "mode": 6,
+      "fault": 0,
+      "target": 4,
+      "started": 0,
+      "enc_left": 11,
+      "enc_right": 11,
+      "pwm_left": 3000,
+      "pwm_right": 3000,
+      "us": 1500
+    },
+    {
+      "ms": 52410,
+      "mode": 6,
+      "fault": 0,
+      "target": 7,
+      "started": 0,
+      "enc_left": 19,
+      "enc_right": 19,
+      "pwm_left": 3000,
+      "pwm_right": 3000,
+      "us": 1500
+    },
+    {
+      "ms": 52420,
+      "mode": 6,
+      "fault": 0,
+      "target": 8,
+      "started": 1,
+      "enc_left": 21,
+      "enc_right": 19,
+      "pwm_left": 1445,
+      "pwm_right": 3000,
+      "us": 1500
+    },
+    {
+      "ms": 52470,
+      "mode": 6,
+      "fault": 0,
+      "target": 12,
+      "started": 3,
+      "enc_left": 22,
+      "enc_right": 18,
+      "pwm_left": 1445,
+      "pwm_right": 1466,
+      "us": 1500
+    },
+    {
+      "ms": 52520,
+      "mode": 6,
+      "fault": 0,
+      "target": 16,
+      "started": 3,
+      "enc_left": 19,
+      "enc_right": 17,
+      "pwm_left": 1467,
+      "pwm_right": 1483,
+      "us": 1500
+    },
+    {
+      "ms": 52520,
+      "mode": 6,
+      "fault": 0,
+      "target": 16,
+      "started": 3,
+      "enc_left": 19,
+      "enc_right": 17,
+      "pwm_left": 1467,
+      "pwm_right": 1483,
+      "us": 1500
+    },
+    {
+      "ms": 52570,
+      "mode": 6,
+      "fault": 0,
+      "target": 20,
+      "started": 3,
+      "enc_left": 16,
+      "enc_right": 17,
+      "pwm_left": 1497,
+      "pwm_right": 1500,
+      "us": 1500
+    },
+    {
+      "ms": 52610,
+      "mode": 6,
+      "fault": 0,
+      "target": 23,
+      "started": 3,
+      "enc_left": 15,
+      "enc_right": 15,
+      "pwm_left": 1519,
+      "pwm_right": 1526,
+      "us": 1500
+    },
+    {
+      "ms": 52620,
+      "mode": 6,
+      "fault": 0,
+      "target": 24,
+      "started": 3,
+      "enc_left": 14,
+      "enc_right": 15,
+      "pwm_left": 1528,
+      "pwm_right": 1531,
+      "us": 1500
+    },
+    {
+      "ms": 52670,
+      "mode": 6,
+      "fault": 0,
+      "target": 28,
+      "started": 3,
+      "enc_left": 13,
+      "enc_right": 14,
+      "pwm_left": 1561,
+      "pwm_right": 1563,
+      "us": 1500
+    },
+    {
+      "ms": 52720,
+      "mode": 6,
+      "fault": 0,
+      "target": 32,
+      "started": 3,
+      "enc_left": 15,
+      "enc_right": 17,
+      "pwm_left": 1585,
+      "pwm_right": 1582,
+      "us": 1500
+    },
+    {
+      "ms": 52720,
+      "mode": 6,
+      "fault": 0,
+      "target": 32,
+      "started": 3,
+      "enc_left": 15,
+      "enc_right": 17,
+      "pwm_left": 1585,
+      "pwm_right": 1582,
+      "us": 1500
+    },
+    {
+      "ms": 52770,
+      "mode": 6,
+      "fault": 0,
+      "target": 36,
+      "started": 3,
+      "enc_left": 16,
+      "enc_right": 18,
+      "pwm_left": 1615,
+      "pwm_right": 1612,
+      "us": 1500
+    },
+    {
+      "ms": 52790,
+      "mode": 6,
+      "fault": 0,
+      "target": 37,
+      "started": 3,
+      "enc_left": 17,
+      "enc_right": 18,
+      "pwm_left": 1625,
+      "pwm_right": 1625,
+      "us": 1500
+    },
+    {
+      "ms": 52820,
+      "mode": 6,
+      "fault": 0,
+      "target": 40,
+      "started": 3,
+      "enc_left": 17,
+      "enc_right": 19,
+      "pwm_left": 1648,
+      "pwm_right": 1643,
+      "us": 1500
+    },
+    {
+      "ms": 52870,
+      "mode": 6,
+      "fault": 0,
+      "target": 40,
+      "started": 3,
+      "enc_left": 20,
+      "enc_right": 20,
+      "pwm_left": 1657,
+      "pwm_right": 1660,
+      "us": 1500
+    },
+    {
+      "ms": 52920,
+      "mode": 6,
+      "fault": 0,
+      "target": 40,
+      "started": 3,
+      "enc_left": 20,
+      "enc_right": 19,
+      "pwm_left": 1677,
+      "pwm_right": 1684,
+      "us": 1500
+    },
+    {
+      "ms": 52920,
+      "mode": 6,
+      "fault": 0,
+      "target": 40,
+      "started": 3,
+      "enc_left": 20,
+      "enc_right": 19,
+      "pwm_left": 1677,
+      "pwm_right": 1684,
+      "us": 1500
+    },
+    {
+      "ms": 52970,
+      "mode": 6,
+      "fault": 0,
+      "target": 40,
+      "started": 3,
+      "enc_left": 20,
+      "enc_right": 18,
+      "pwm_left": 1697,
+      "pwm_right": 1710,
+      "us": 1500
+    },
+    {
+      "ms": 52990,
+      "mode": 6,
+      "fault": 0,
+      "target": 40,
+      "started": 3,
+      "enc_left": 20,
+      "enc_right": 18,
+      "pwm_left": 1705,
+      "pwm_right": 1719,
+      "us": 1500
+    },
+    {
+      "ms": 53020,
+      "mode": 6,
+      "fault": 0,
+      "target": 40,
+      "started": 3,
+      "enc_left": 20,
+      "enc_right": 18,
+      "pwm_left": 1716,
+      "pwm_right": 1732,
+      "us": 1500
+    },
+    {
+      "ms": 53070,
+      "mode": 6,
+      "fault": 0,
+      "target": 40,
+      "started": 3,
+      "enc_left": 21,
+      "enc_right": 20,
+      "pwm_left": 1731,
+      "pwm_right": 1745,
+      "us": 1500
+    },
+    {
+      "ms": 53120,
+      "mode": 6,
+      "fault": 0,
+      "target": 40,
+      "started": 3,
+      "enc_left": 21,
+      "enc_right": 22,
+      "pwm_left": 1750,
+      "pwm_right": 1756,
+      "us": 1500
+    },
+    {
+      "ms": 53120,
+      "mode": 6,
+      "fault": 0,
+      "target": 40,
+      "started": 3,
+      "enc_left": 21,
+      "enc_right": 22,
+      "pwm_left": 1750,
+      "pwm_right": 1756,
+      "us": 1500
+    },
+    {
+      "ms": 53170,
+      "mode": 6,
+      "fault": 0,
+      "target": 40,
+      "started": 3,
+      "enc_left": 22,
+      "enc_right": 23,
+      "pwm_left": 1764,
+      "pwm_right": 1770,
+      "us": 1500
+    },
+    {
+      "ms": 53190,
+      "mode": 6,
+      "fault": 0,
+      "target": 40,
+      "started": 3,
+      "enc_left": 22,
+      "enc_right": 23,
+      "pwm_left": 1771,
+      "pwm_right": 1776,
+      "us": 1500
+    },
+    {
+      "ms": 53220,
+      "mode": 6,
+      "fault": 0,
+      "target": 40,
+      "started": 3,
+      "enc_left": 22,
+      "enc_right": 23,
+      "pwm_left": 1782,
+      "pwm_right": 1786,
+      "us": 1500
+    },
+    {
+      "ms": 53270,
+      "mode": 6,
+      "fault": 0,
+      "target": 40,
+      "started": 3,
+      "enc_left": 24,
+      "enc_right": 25,
+      "pwm_left": 1791,
+      "pwm_right": 1794,
+      "us": 1500
+    }
+  ],
+  "last_before_explicit_stop": {
+    "ms": 53800,
+    "mode": 0,
+    "fault": 0,
+    "target": 0,
+    "started": 0,
+    "enc_left": 0,
+    "enc_right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0,
+    "us": 1500
+  },
+  "final": {
+    "ms": 54270,
+    "mode": 0,
+    "fault": 0,
+    "target": 0,
+    "started": 0,
+    "enc_left": 0,
+    "enc_right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0,
+    "us": 1500
+  },
+  "physical_observation": {
+    "source": "user confirmation",
+    "forward": true,
+    "approximately_straight": true,
+    "stopped": true,
+    "distance": "not reported"
+  },
+  "commands": [
+    {
+      "command": "p",
+      "utc": "2026-10-17T16:23:21.3628692Z"
+    },
+    {
+      "command": "q",
+      "utc": "2026-10-17T16:23:21.3669717Z"
+    },
+    {
+      "command": "d",
+      "utc": "2026-10-17T16:23:22.2873570Z"
+    },
+    {
+      "command": "7",
+      "utc": "2026-10-17T16:23:22.9181846Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T16:23:22.9191265Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T16:23:23.0596041Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T16:23:23.1515041Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T16:23:23.2467736Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T16:23:23.3391819Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T16:23:23.4458969Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T16:23:23.5359832Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T16:23:23.6255334Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T16:23:23.7249088Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T16:23:23.8272391Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T16:23:23.9290159Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T16:23:24.0297418Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T16:23:24.1373786Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T16:23:24.2265193Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T16:23:24.3191610Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T16:23:24.4233840Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T16:23:24.5382037Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T16:23:24.6398898Z"
+    },
+    {
+      "command": "s",
+      "utc": "2026-10-17T16:23:24.9166791Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-17T16:23:24.9171368Z"
+    }
+  ],
+  "evidence": "<WORKSPACE>\\repair\\evidence\\drive-straight-20261018-002321"
+}

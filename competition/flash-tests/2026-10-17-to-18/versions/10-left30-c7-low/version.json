@@ -1,0 +1,12 @@
+{
+  "id": "10-left30-c7-low",
+  "title": "左C7 LOW对照",
+  "firmware_sha256": "74ff71ccb9d3629f7d758fd4a028b3896b92a193e808fc53ebe55207ee7d9049",
+  "readback_verified": true,
+  "result": "仍后退；不能仅凭改宏断言实物方向已变。",
+  "source_status": "历史单版源码未完整冻结；保留精确HEX、构建/回读记录与版本行为，不以最新源码冒充历史源码。",
+  "firmware": "versions/10-left30-c7-low/firmware.hex",
+  "build_record": "left-direction-low-build.json",
+  "flash_record": "left-direction-low-flash.json",
+  "recovered_by_relink": false
+}

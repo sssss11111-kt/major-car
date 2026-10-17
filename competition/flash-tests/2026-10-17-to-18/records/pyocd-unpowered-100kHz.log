@@ -1,0 +1,66 @@
+Traceback (most recent call last):
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\probe\cmsis_dap_probe.py", line 540, in read_dp
+    result = self._link.read_reg(reg_id, now=now)
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\probe\pydapaccess\dap_access_cmsis_dap.py", line 1088, in read_reg
+    return read_reg_cb()
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\probe\pydapaccess\dap_access_cmsis_dap.py", line 1082, in read_reg_cb
+    res = transfer.get_result()
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\probe\pydapaccess\dap_access_cmsis_dap.py", line 161, in get_result
+    self.daplink.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\utility\concurrency.py", line 29, in _locking
+    return func(self, *args, **kwargs)
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\probe\pydapaccess\dap_access_cmsis_dap.py", line 887, in flush
+    self._read_packet()
+    ~~~~~~~~~~~~~~~~~^^
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\utility\concurrency.py", line 29, in _locking
+    return func(self, *args, **kwargs)
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\probe\pydapaccess\dap_access_cmsis_dap.py", line 1168, in _read_packet
+    decoded_data = cmd.decode_data(raw_data)
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\probe\pydapaccess\dap_access_cmsis_dap.py", line 484, in decode_data
+    data = self._decode_transfer_block_data(data)
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\probe\pydapaccess\dap_access_cmsis_dap.py", line 453, in _decode_transfer_block_data
+    self._check_response(data[3])
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\probe\pydapaccess\dap_access_cmsis_dap.py", line 372, in _check_response
+    raise DAPAccessIntf.TransferError("SWD/JTAG communication failure (No ACK); " \
+                                      "check USB cable, reduce debugger clock")
+pyocd.probe.pydapaccess.dap_access_api.DAPAccessIntf.TransferError: SWD/JTAG communication failure (No ACK); check USB cable, reduce debugger clock
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\flash_with_backup.py", line 36, in <module>
+    with session:
+         ^^^^^^^
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\core\session.py", line 485, in __enter__
+    self.open()
+    ~~~~~~~~~^^
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\core\session.py", line 662, in open
+    self._board.init()
+    ~~~~~~~~~~~~~~~~^^
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\board\board.py", line 152, in init
+    self.target.init()
+    ~~~~~~~~~~~~~~~~^^
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\coresight\coresight_target.py", line 127, in init
+    super().init()
+    ~~~~~~~~~~~~^^
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\core\soc_target.py", line 174, in init
+    seq.invoke()
+    ~~~~~~~~~~^^
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\utility\sequencer.py", line 213, in invoke
+    resultSequence.invoke()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\utility\sequencer.py", line 208, in invoke
+    resultSequence = call()
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\coresight\dap.py", line 467, in _connect
+    connector.connect()
+    ~~~~~~~~~~~~~~~~~^^
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\coresight\dap.py", line 257, in connect
+    self._idr = self.read_idr()
+                ~~~~~~~~~~~~~^^
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\coresight\dap.py", line 286, in read_idr
+    dpidr = self._probe.read_dp(DP_IDR, now=True)
+  File "D:\����\���ܳ�\major-car-uart8-20261017\repair\tools\pyocd\probe\cmsis_dap_probe.py", line 543, in read_dp
+    raise self._convert_exception(error) from error
+pyocd.core.exceptions.TransferError: SWD/JTAG communication failure (No ACK); check USB cable, reduce debugger clock

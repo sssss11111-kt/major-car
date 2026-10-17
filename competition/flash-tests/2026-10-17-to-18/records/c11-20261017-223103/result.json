@@ -1,0 +1,22 @@
+{
+  "action": "high",
+  "failure": null,
+  "commands": [
+    "p",
+    "q",
+    "u",
+    "q"
+  ],
+  "c11": [
+    "C11-STATIC v=20261017E cfg=1 pad=0 motors=disabled",
+    "C11-STATIC v=20261017E cfg=1 pad=0 motors=disabled",
+    "C11-STATIC v=20261017E cfg=1 pad=0 motors=disabled"
+  ],
+  "registers": [
+    "C7-REG v=20261017D mux=00000005 ctl=00000048 route=00000000 dr2=300cf880 dir2=000c0a80 psr2=3000f000 dr7=3000f000 dir7=00000000 psr7=3000f000"
+  ],
+  "status": [
+    "ms=55500 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 enc=0,0 pwm=0,0 us=1500 speed=20"
+  ],
+  "evidence": "<WORKSPACE>\\repair\\evidence\\c11-20261017-223103"
+}

@@ -1,0 +1,10 @@
+{
+  "user_observation": "左轮方向LOW修正版仍向后转",
+  "left_encoder_active_range": [
+    -304,
+    -258
+  ],
+  "right_encoder_active": 0,
+  "automatic_output_stop": true,
+  "conclusion": "Changing left direction configuration alone did not reverse observed motion. Root cause unresolved. Add configured versus pad direction diagnostics and idle-time GPIO reassertion."
+}

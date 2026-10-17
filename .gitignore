@@ -1,0 +1,7 @@
+repair/tools/
+repair/build/
+repair/release/
+repair/evidence/
+repair/publication-*/
+**/__pycache__/
+competition/firmware/camera_car/tests/out/

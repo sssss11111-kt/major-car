@@ -1,0 +1,19 @@
+{
+  "firmware": "20261017J",
+  "query_only": true,
+  "ipg_hz": 150000000,
+  "prescaler": 64,
+  "frequency_hz": 50.0,
+  "pulse_us": 1499.7333333333333,
+  "mux_mode": 1,
+  "submodule_2_running": true,
+  "channel_A2_enabled": true,
+  "fault_flags": 0,
+  "channel_A_fault_mapping": 0,
+  "motor_pwm": [
+    0,
+    0
+  ],
+  "interpretation": "Register configuration consistent with C30 50 Hz 1500 us; physical output waveform and servo connection not verified.",
+  "next_check": "Measure C30 to GND DC average at disconnected servo socket; expected approximately 0.25 V for 3.3 V 7.5 percent PWM, indicative only."
+}
