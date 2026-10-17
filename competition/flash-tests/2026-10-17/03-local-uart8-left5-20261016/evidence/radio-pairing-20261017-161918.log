@@ -1,0 +1,28 @@
+CONFIG QUERY
+OK
+波特率: 115200
+传输速率: 2Mbps
+接收地址0: 0xFF,0xFF,0xFF,0xFF,0xFF
+发送地址: 0xFF,0xFF,0xFF,0xFF,0xFF
+无线频率: 2.500G
+CRC校验方式: 16位
+自动重发次数: 10次
+自动重发时间间隔: 500微秒
+自动重发次数达到最大值后继续重发本次数据
+只能与V210及以上版本通讯
+固件版本为: V214
+
+波特率设置为115200
+
+设置参数已保存，并且退出命令模式
+ms=73110 mode=0 fault=0 frames=3196 valid=1 pair=10/13 thr=170 err10=-55 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=73610 mode=0 fault=0 frames=3218 valid=1 pair=11/13 thr=174 err10=-76 enc=0,0 pwm=0,0 us=1500 speed=20
+
+POST SAVE VEHICLE QUERY
+ms=74030 mode=0 fault=0 frames=3238 valid=1 pair=10/13 thr=172 err10=-3 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=74110 mode=0 fault=0 frames=3241 valid=1 pair=10/13 thr=172 err10=7 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=74610 mode=0 fault=0 frames=3263 valid=1 pair=10/13 thr=170 err10=76 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=75110 mode=0 fault=0 frames=3286 valid=1 pair=9/13 thr=168 err10=-71 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=75610 mode=0 fault=0 frames=3308 valid=1 pair=8/13 thr=154 err10=-299 enc=0,0 pwm=0,0 us=1500 speed=20
+
+

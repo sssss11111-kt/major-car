@@ -1,0 +1,4 @@
+Load "<LOCAL_PROJECT>\\firmware\\camera_car\\demo\\mdk\\Objects\\rt1064.axf" 
+Erase Done.Programming Done.Verify OK.Application running ...
+RDDI-DAP Error
+Flash Load finished at 00:07:36

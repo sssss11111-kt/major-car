@@ -1,0 +1,19 @@
+PRECHECK
+ms=174910 mode=0 fault=0 frames=7712 valid=0 pair=4/13 thr=178 err10=-216 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=175110 mode=0 fault=0 frames=7721 valid=0 pair=4/13 thr=178 err10=-215 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=175610 mode=0 fault=0 frames=7743 valid=0 pair=4/13 thr=178 err10=-219 enc=0,0 pwm=0,0 us=1500 speed=20
+
+LEFT MOTOR ORIGINAL 5% 1 SECOND OBSERVATION RETRY
+MOTOR TEST 1s at 5%
+ms=176110 mode=2 fault=0 frames=7766 valid=0 pair=4/13 thr=178 err10=-221 enc=0,0 pwm=500,0 us=1500 speed=20
+ms=176610 mode=2 fault=0 frames=7788 valid=0 pair=4/13 thr=178 err10=-214 enc=0,0 pwm=500,0 us=1500 speed=20
+ms=177110 mode=0 fault=0 frames=7811 valid=0 pair=4/13 thr=178 err10=-215 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=177610 mode=0 fault=0 frames=7833 valid=0 pair=5/13 thr=178 err10=-218 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=178110 mode=0 fault=0 frames=7856 valid=0 pair=4/13 thr=178 err10=-212 enc=0,0 pwm=0,0 us=1500 speed=20
+
+POST STOP
+ms=178250 mode=0 fault=0 frames=7862 valid=0 pair=4/13 thr=178 err10=-213 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=178610 mode=0 fault=0 frames=7878 valid=0 pair=4/13 thr=178 err10=-208 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=179110 mode=0 fault=0 frames=7901 valid=0 pair=4/13 thr=178 err10=-209 enc=0,0 pwm=0,0 us=1500 speed=20
+
+

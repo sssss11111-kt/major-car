@@ -1,0 +1,82 @@
+{
+  "base_commit": "56454a2a4b7ce06147e1ce5127a7b0fb6ff648ef",
+  "compiler": "ArmClang 6.7",
+  "host_tests": "MSVC C11",
+  "files": [
+    {
+      "path": "README.md",
+      "size": 1877,
+      "sha256": "94330efed6457384c7275075067b56fa97c0c02d5872203924a95189741a043b"
+    },
+    {
+      "path": "competition/firmware/camera_car/HARDWARE.md",
+      "size": 2907,
+      "sha256": "0dd32104ae18aaa20c6e09fc3b247cf43b1a0f3e72dbdcb20f0c5871ec1db30c"
+    },
+    {
+      "path": "competition/firmware/camera_car/README.md",
+      "size": 7322,
+      "sha256": "bbe2f5e7f5a0b09d11ede12ec0da3b17b92965c13203831f38b1e1f43ec84288"
+    },
+    {
+      "path": "competition/firmware/camera_car/demo/user/inc/car_app.h",
+      "size": 228,
+      "sha256": "b2e72dd02e8c5d68c2de3a93b9dfc830e9049fc973bc960a41dd7b3062e834da"
+    },
+    {
+      "path": "competition/firmware/camera_car/demo/user/inc/car_config.h",
+      "size": 1994,
+      "sha256": "0d6e1c18806ae4ba106f671dcb9a50a5e78a226a946accb78e15b9b1cc11ba68"
+    },
+    {
+      "path": "competition/firmware/camera_car/demo/user/src/car_app.c",
+      "size": 18283,
+      "sha256": "da00e76ea3f4aa466eba5abf867d0963c0a4608052fd76b77cd7ebcb019f938d"
+    },
+    {
+      "path": "competition/firmware/camera_car/demo/user/src/isr.c",
+      "size": 8162,
+      "sha256": "c82ec376db6a2f9d08067a201c8978467dac4ef843965c89c4a7f79e5d51f0f3"
+    },
+    {
+      "path": "competition/firmware/camera_car/tests/run_tests.py",
+      "size": 2970,
+      "sha256": "aaa45a8a73cd7f8be67c9c5458964534ce1bf47dc53d551a21d9c18d99414f1e"
+    },
+    {
+      "path": "competition/firmware/camera_car/tests/sdk/zf_common_headfile.h",
+      "size": 2312,
+      "sha256": "160a2449ee0797db88c0c7d00807f2c9625a7b18940989e9b0cf5ce81b9aaa54"
+    },
+    {
+      "path": "competition/firmware/camera_car/tests/test_app.c",
+      "size": 5604,
+      "sha256": "6974937dcda0aa7795ebef75546518e6b7ca0dfe9e5409ff87b3952483bddd8c"
+    },
+    {
+      "path": "competition/firmware/camera_car/tests/test_uart8.c",
+      "size": 5810,
+      "sha256": "915a37dfe8fb218827d2a2edce9c731d6868a05217b159870e0cf78bd2b696b8"
+    },
+    {
+      "path": "competition/release/uart8-20261017/README.md",
+      "size": 2132,
+      "sha256": "37d1a82ac9691f8a68e0a8c269f1f83dc76950d85e3505ff86dcf9a54cd4d62f"
+    },
+    {
+      "path": "competition/release/uart8-20261017/camera-car-uart8-camera.hex",
+      "size": 183291,
+      "sha256": "329836b3bda102f4ea88bcc484930ff618874549a4a47bc568fccc17fe64def9"
+    },
+    {
+      "path": "competition/release/uart8-20261017/camera-car-uart8-diag.hex",
+      "size": 152286,
+      "sha256": "e81d302c256494456b0cff727c8b8d2935c0e251c64e8e62b5fde7d660690b9a"
+    },
+    {
+      "path": "competition/release/uart8-20261017/camera-car-uart8-mock.hex",
+      "size": 160251,
+      "sha256": "0d095f3de267f153738cb766d08eb60bebbba42f1076b4e1243e3b5b7693d0c8"
+    }
+  ]
+}

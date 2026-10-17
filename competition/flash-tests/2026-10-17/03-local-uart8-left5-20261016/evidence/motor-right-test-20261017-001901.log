@@ -1,0 +1,14 @@
+ms=1145200 mode=0 fault=0 frames=50697 valid=0 pair=4/13 thr=140 err10=272 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=1145610 mode=0 fault=0 frames=50716 valid=0 pair=3/13 thr=142 err10=217 enc=0,0 pwm=0,0 us=1500 speed=20
+
+MOTOR TEST 1s at 5%
+ms=1146110 mode=2 fault=0 frames=50739 valid=0 pair=4/13 thr=144 err10=226 enc=0,0 pwm=0,500 us=1500 speed=20
+ms=1146610 mode=2 fault=0 frames=50761 valid=0 pair=4/13 thr=144 err10=230 enc=0,0 pwm=0,500 us=1500 speed=20
+ms=1147110 mode=0 fault=0 frames=50784 valid=0 pair=3/13 thr=140 err10=192 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=1147610 mode=0 fault=0 frames=50806 valid=0 pair=4/13 thr=138 err10=159 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=1148110 mode=0 fault=0 frames=50829 valid=0 pair=4/13 thr=138 err10=154 enc=0,0 pwm=0,0 us=1500 speed=20
+
+ms=1148200 mode=0 fault=0 frames=50832 valid=0 pair=4/13 thr=138 err10=151 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=1148610 mode=0 fault=0 frames=50851 valid=0 pair=4/13 thr=138 err10=117 enc=0,0 pwm=0,0 us=1500 speed=20
+
+

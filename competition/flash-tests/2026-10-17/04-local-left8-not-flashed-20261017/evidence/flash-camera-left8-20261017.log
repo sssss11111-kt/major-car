@@ -1,0 +1,4 @@
+Load "<LOCAL_PROJECT>\\firmware\\camera_car\\demo\\mdk\\Objects\\rt1064.axf" 
+RDDI-DAP Error
+Error: Flash Download failed  -  Target DLL has been cancelled
+Flash Load finished at 16:29:04

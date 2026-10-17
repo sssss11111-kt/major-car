@@ -1,0 +1,4 @@
+Load "<LOCAL_PROJECT>\\firmware\\camera_car\\demo\\mdk\\ObjectsMock\\rt1064_mock.axf" 
+Erase Done.Programming Done.Verify OK.Application running ...
+RDDI-DAP Error
+Flash Load finished at 22:22:11
