@@ -93,10 +93,10 @@ static void control_tests(void) {
     assert(!control_start(&c,100) && !control_test(&c,1,100));
     cfg.simulated=0; control_init(&c,&cfg); c.heartbeat_ms=100;
     assert(control_test(&c,1,100)); control_tick(&c,110,0,0);
-    assert(c.duty[0]==1500 && c.duty[1]==0);
+    assert(c.duty[0]==3000 && c.duty[1]==0);
     for(uint32_t t=120;t<2100;t+=10) {
         c.heartbeat_ms=t; control_tick(&c,t,0,0);
-        assert(c.mode==CAR_TEST && c.duty[0]==1500 && c.duty[1]==0);
+        assert(c.mode==CAR_TEST && c.duty[0]==3000 && c.duty[1]==0);
     }
     c.heartbeat_ms=2100; control_tick(&c,2100,0,0);
     assert(c.mode==CAR_IDLE && c.duty[0]==0 && c.duty[1]==0);

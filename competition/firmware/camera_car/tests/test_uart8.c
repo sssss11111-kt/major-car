@@ -46,8 +46,17 @@ void uart_init(int ch,uint32_t baud,int txp,int rxp) {
     CHECK(ch==UART_8 && baud==115200 && txp==UART8_TX_D16 && rxp==UART8_RX_D17);initializations++;
 }
 void uart_rx_interrupt(int ch,int on) {CHECK(ch==UART_8 && on && priority1==2 && priority8==2);enabled++;}
-uint8_t gpio_get_level(int p) {CHECK(p==D26);return (uint8_t)rts;}
-void gpio_set_level(int p,uint8_t level) {CHECK(p==D26);rts=level;}
+static uint8_t c11_level;
+uint8_t gpio_get_level(int p) {
+    if(p==C11) return c11_level;
+    if(p==CAR_LEFT_DIR) return CAR_LEFT_FORWARD;
+    if(p==CAR_RIGHT_DIR) return CAR_RIGHT_FORWARD;
+    CHECK(p==D26);return (uint8_t)rts;
+}
+void gpio_set_level(int p,uint8_t level) {
+    if(p==C11) {c11_level=!!level;return;}
+    CHECK(p==D26);rts=level;
+}
 void system_delay_ms(uint32_t ms) {(void)ms;}
 void pwm_set_duty(int pin,uint32_t duty) {duties[pin]=duty;}
 void pwm_init(int pin,int hz,int duty) {(void)hz;duties[pin]=(uint32_t)duty;}
@@ -103,6 +112,10 @@ int main(void) {
     receive("s");for(int i=0;i<4;i++) frame();receive("a");flush();car_app_tick_10ms();
 #if CAR_COMM_DIAGNOSTIC
     CHECK(camera_inits==0 && duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0);
+    receive("u");flush();car_app_tick_10ms();
+    CHECK(c11_level==1 && duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0);
+    receive("v");flush();car_app_tick_10ms();
+    CHECK(c11_level==0 && duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0);
     receive("12aljcgbreE");flush();car_app_tick_10ms();
     CHECK(duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0 && duties[CAR_SERVO_PWM]==750);
 #else

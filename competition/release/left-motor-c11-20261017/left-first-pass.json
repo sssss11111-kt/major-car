@@ -1,0 +1,43 @@
+{
+  "result": "PASS",
+  "user_confirmation": {
+    "left_forward": true,
+    "left_stopped": true,
+    "right_stationary": true
+  },
+  "configuration": {
+    "left_dir_pin": "C11",
+    "left_dir_level": "HIGH",
+    "left_encoder_sign": -1,
+    "right_dir_pin": "C9",
+    "right_dir_level": "LOW",
+    "right_encoder_sign": 1,
+    "test_pwm_percent": 30,
+    "test_duration_ms": 2000
+  },
+  "telemetry": {
+    "left_encoder_active_range": [
+      186,
+      270
+    ],
+    "sample_period_ms": 10,
+    "right_encoder_active": 0,
+    "automatic_output_stop": true,
+    "final_pwm": [
+      0,
+      0
+    ],
+    "final_encoder": [
+      0,
+      0
+    ],
+    "fault": 0
+  },
+  "limits": [
+    "Separate single-wheel bench validation only; loaded driving and speed loop remain unvalidated.",
+    "Current tracking PWM cap is still 20 percent, below successful 30 percent bench start setting.",
+    "GPIO sample readback is not a valid output-voltage acceptance criterion in current setup.",
+    "C7 damage has not been established."
+  ],
+  "firmware_sha256": "9c44808f9dedba25caec9daa73c79f015d010ab94d0557b937d02b42092ac027"
+}

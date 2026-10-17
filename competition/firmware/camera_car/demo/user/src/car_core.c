@@ -158,8 +158,8 @@ void control_tick(control_state_t *s,uint32_t now,int16_t left,int16_t right) {
     }
     if(s->mode==CAR_TEST) {
         if((int32_t)(now-s->test_until)>=0) { control_stop(s); return; }
-        s->duty[0]=s->test_motor==1?1500.0f:0;
-        /* Bench-only right-wheel test: 30%, bounded by test_until and watchdog. */
+        /* Bench-only single-wheel test: 30%, bounded by test_until and watchdog. */
+        s->duty[0]=s->test_motor==1?3000.0f:0;
         s->duty[1]=s->test_motor==2?3000.0f:0;
         return;
     }

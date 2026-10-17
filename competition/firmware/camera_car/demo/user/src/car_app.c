@@ -31,6 +31,9 @@ static volatile uint8_t baud_handshake_active,baud_ack_count,baud_ack[3];
 static uint8_t baud_handshake_result; /* 0 not attempted, 1 verified ACK, 2 failed */
 static uint8_t image_requested,camera_ready;
 static volatile uint8_t outputs_ready;
+#if CAR_COMM_DIAGNOSTIC
+static uint8_t c11_probe_level;
+#endif
 static uint32_t last_screen,last_telemetry;
 #if CAR_SIMULATED
 static uint32_t last_generated;
@@ -183,6 +186,28 @@ static void wireless_diagnostic(void) {
         (unsigned long)serial_tx[1].dropped_lines,(unsigned)CAR_COMM_DIAGNOSTIC,
         (unsigned)baud_handshake_result);
     text_queue(line);
+    snprintf(line,sizeof line,
+        "MOTOR-DIR v=20261017F left=C11 cfg=%u sample=%u right=C9 cfg=%u sample=%u sample_unverified=1\r\n",
+        (unsigned)CAR_LEFT_FORWARD,(unsigned)gpio_get_level(CAR_LEFT_DIR),
+        (unsigned)CAR_RIGHT_FORWARD,(unsigned)gpio_get_level(CAR_RIGHT_DIR));
+    text_queue(line);
+#if defined(__arm__) || defined(__ARM_ARCH)
+    /* GPIO_B0_07 addresses are specified by the SDK IOMUXC definitions.
+       Read only: inspect regular GPIO2 versus fast GPIO7 routing and state. */
+    snprintf(line,sizeof line,
+        "C7-REG v=20261017D mux=%08lx ctl=%08lx route=%08lx dr2=%08lx dir2=%08lx psr2=%08lx dr7=%08lx dir7=%08lx psr7=%08lx\r\n",
+        (unsigned long)*(volatile uint32_t *)0x401F8158u,
+        (unsigned long)*(volatile uint32_t *)0x401F8348u,
+        (unsigned long)IOMUXC_GPR->GPR27,
+        (unsigned long)GPIO2->DR,(unsigned long)GPIO2->GDIR,(unsigned long)GPIO2->PSR,
+        (unsigned long)GPIO7->DR,(unsigned long)GPIO7->GDIR,(unsigned long)GPIO7->PSR);
+    text_queue(line);
+#endif
+#if CAR_COMM_DIAGNOSTIC
+    snprintf(line,sizeof line,"C11-STATIC v=20261017E cfg=%u pad=%u motors=disabled\r\n",
+        (unsigned)c11_probe_level,(unsigned)gpio_get_level(C11));
+    text_queue(line);
+#endif
 }
 static void telemetry(void) {
     char line[220];
@@ -229,6 +254,9 @@ void car_app_init(void) {
     gpio_init(CAR_LEFT_DIR,GPO,CAR_LEFT_FORWARD,GPO_PUSH_PULL);
     gpio_init(CAR_RIGHT_DIR,GPO,CAR_RIGHT_FORWARD,GPO_PUSH_PULL);
     pwm_init(CAR_LEFT_PWM,CAR_MOTOR_HZ,0); pwm_init(CAR_RIGHT_PWM,CAR_MOTOR_HZ,0);
+#if CAR_COMM_DIAGNOSTIC
+    c11_probe_level=0; gpio_init(C11,GPO,GPIO_LOW,GPO_PUSH_PULL);
+#endif
     car_servo_init();
     outputs_ready=1;
     /* Match the uart_init signature: MCU TX first, MCU RX second. */
@@ -262,19 +290,31 @@ static void command(uint8_t byte,uint32_t epoch) {
     /* Also cancel a command already dequeued when an RX stop preempted us. */
     if(epoch!=stop_epoch) { unlock(key); return; }
 #if CAR_COMM_DIAGNOSTIC
-    if(byte!='p' && byte!='q' && byte!='h' && byte!='s' && byte!='S') {
+    if(byte!='p' && byte!='q' && byte!='h' && byte!='s' && byte!='S' && byte!='u' && byte!='v') {
         unlock(key); return;
     }
 #endif
     switch(byte) {
     case 's': case 'S': servo_test_active=0; control_stop(&control); apply_outputs(); break;
+#if CAR_COMM_DIAGNOSTIC
+    case 'u': case 'v':
+        c11_probe_level=(uint8_t)(byte=='u');
+        gpio_set_level(C11,c11_probe_level);
+        text_queue(c11_probe_level?"C11 HIGH; motors disabled\r\n":"C11 LOW; motors disabled\r\n");
+        break;
+#endif
     case 'a':
         if(camera_ready && control_start(&control,milliseconds)) text_queue("START\r\n");
         else text_queue("START REFUSED: idle + 3 valid fresh real frames required\r\n");
         break;
     case '1': case '2':
+        if(control.mode==CAR_IDLE && !control.cfg.simulated) {
+            /* PWM is zero in idle; restore GPIO mux and direction before motion. */
+            gpio_init(CAR_LEFT_DIR,GPO,CAR_LEFT_FORWARD,GPO_PUSH_PULL);
+            gpio_init(CAR_RIGHT_DIR,GPO,CAR_RIGHT_FORWARD,GPO_PUSH_PULL);
+        }
         if(control_test(&control,(uint8_t)(byte-'0'),milliseconds))
-            text_queue(byte=='1'?"LEFT MOTOR TEST 2s at 15%\r\n":"RIGHT MOTOR TEST 2s at 30%\r\n");
+            text_queue(byte=='1'?"LEFT MOTOR TEST 2s at 30%\r\n":"RIGHT MOTOR TEST 2s at 30%\r\n");
         else text_queue("TEST REFUSED\r\n");
         break;
     case '+': if(control.cfg.speed_target<60) control.cfg.speed_target+=5; break;
@@ -292,7 +332,7 @@ static void command(uint8_t byte,uint32_t epoch) {
     switch(byte) {
     case 'h':
 #if CAR_COMM_DIAGNOSTIC
-        text_queue("COMM DIAG: p status; q UART8 diagnostics; s STOP; motion disabled\r\n");
+        text_queue("COMM DIAG: p status; q diagnostics; u C11 HIGH; v C11 LOW; s STOP; motion disabled\r\n");
 #else
         text_queue("a start; s stop/ack; 1/2 motor test; c center,l/j limits; +/- speed\r\no Otsu,t fixed,[/] threshold; g gray,b binary; p status;r camera retry;e/E exposure\r\nq UART8 diagnostics; UART1+UART8 115200\r\n");
 #endif

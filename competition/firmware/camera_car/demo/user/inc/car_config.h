@@ -31,9 +31,10 @@
 #define CAR_LEFT_ENCODER_SIGN (-1)
 #define CAR_RIGHT_ENCODER_SIGN (1)
 #define CAR_LEFT_PWM PWM2_MODULE0_CHA_C6
-#define CAR_LEFT_DIR C7
+#define CAR_LEFT_DIR C11
 #define CAR_RIGHT_PWM PWM2_MODULE1_CHA_C8
 #define CAR_RIGHT_DIR C9
+/* C11 physical HIGH=3.3V / LOW=0V verified; left forward direction pending. */
 #define CAR_LEFT_FORWARD GPIO_HIGH
 /* 2026-10-17 bench recheck: HIGH drove backward with negative encoder counts. */
 #define CAR_RIGHT_FORWARD GPIO_LOW
