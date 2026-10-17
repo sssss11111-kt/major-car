@@ -35,7 +35,8 @@
 #define CAR_RIGHT_PWM PWM2_MODULE1_CHA_C8
 #define CAR_RIGHT_DIR C9
 #define CAR_LEFT_FORWARD GPIO_HIGH
-#define CAR_RIGHT_FORWARD GPIO_HIGH
+/* 2026-10-17 bench recheck: HIGH drove backward with negative encoder counts. */
+#define CAR_RIGHT_FORWARD GPIO_LOW
 #define CAR_MOTOR_HZ 17000
 #define CAR_SERVO_PWM PWM4_MODULE2_CHA_C30
 #define CAR_SERVO_HZ 50

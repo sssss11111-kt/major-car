@@ -273,7 +273,8 @@ static void command(uint8_t byte,uint32_t epoch) {
         else text_queue("START REFUSED: idle + 3 valid fresh real frames required\r\n");
         break;
     case '1': case '2':
-        if(control_test(&control,(uint8_t)(byte-'0'),milliseconds)) text_queue("MOTOR TEST 1s at 5%\r\n");
+        if(control_test(&control,(uint8_t)(byte-'0'),milliseconds))
+            text_queue(byte=='1'?"LEFT MOTOR TEST 2s at 15%\r\n":"RIGHT MOTOR TEST 2s at 30%\r\n");
         else text_queue("TEST REFUSED\r\n");
         break;
     case '+': if(control.cfg.speed_target<60) control.cfg.speed_target+=5; break;

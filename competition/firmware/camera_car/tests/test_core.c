@@ -93,9 +93,37 @@ static void control_tests(void) {
     assert(!control_start(&c,100) && !control_test(&c,1,100));
     cfg.simulated=0; control_init(&c,&cfg); c.heartbeat_ms=100;
     assert(control_test(&c,1,100)); control_tick(&c,110,0,0);
-    assert(c.duty[0]>0 && c.duty[1]==0);
-    c.heartbeat_ms=1101; control_tick(&c,1101,0,0);
-    assert(c.mode==CAR_IDLE && c.duty[0]==0);
+    assert(c.duty[0]==1500 && c.duty[1]==0);
+    for(uint32_t t=120;t<2100;t+=10) {
+        c.heartbeat_ms=t; control_tick(&c,t,0,0);
+        assert(c.mode==CAR_TEST && c.duty[0]==1500 && c.duty[1]==0);
+    }
+    c.heartbeat_ms=2100; control_tick(&c,2100,0,0);
+    assert(c.mode==CAR_IDLE && c.duty[0]==0 && c.duty[1]==0);
+    /* Immediate stop and foreground watchdog still override the longer test. */
+    assert(control_test(&c,1,2200)); c.heartbeat_ms=2200;
+    control_tick(&c,2210,0,0); control_stop(&c);
+    control_tick(&c,2220,0,0);
+    assert(c.mode==CAR_IDLE && c.duty[0]==0 && c.duty[1]==0);
+    assert(control_test(&c,1,2300)); c.heartbeat_ms=2300;
+    control_tick(&c,2401,0,0);
+    assert(c.mode==CAR_FAULT && c.fault==FAULT_FOREGROUND && c.duty[0]==0);
+    control_stop(&c); c.heartbeat_ms=2500;
+    assert(control_test(&c,2,2500)); control_tick(&c,2510,0,0);
+    assert(c.duty[0]==0 && c.duty[1]==3000);
+    for(uint32_t t=2520;t<4500;t+=10) {
+        c.heartbeat_ms=t; control_tick(&c,t,0,0);
+        assert(c.mode==CAR_TEST && c.duty[0]==0 && c.duty[1]==3000);
+    }
+    c.heartbeat_ms=4500; control_tick(&c,4500,0,0);
+    assert(c.mode==CAR_IDLE && c.duty[0]==0 && c.duty[1]==0);
+    assert(control_test(&c,2,4600)); c.heartbeat_ms=4600;
+    control_tick(&c,4610,0,0); control_stop(&c);
+    control_tick(&c,4620,0,0);
+    assert(c.mode==CAR_IDLE && c.duty[0]==0 && c.duty[1]==0);
+    assert(control_test(&c,2,4700)); c.heartbeat_ms=4700;
+    control_tick(&c,4801,0,0);
+    assert(c.mode==CAR_FAULT && c.fault==FAULT_FOREGROUND && c.duty[1]==0);
     control_init(&c,&cfg); feed_good(&c,100); assert(control_start(&c,100));
     vision_result_t f={0}; f.valid=1; f.error=1000;
     control_frame(&c,&f,120); assert(c.servo_us<=1800 && c.servo_us>=1200);

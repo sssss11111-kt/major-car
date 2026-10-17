@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-17",
+  "right": {
+    "dir": "GPIO_LOW",
+    "encoder_sign": 1,
+    "pwm_percent": 30,
+    "duration_ms": 2000,
+    "physical_result": "User confirmed forward rotation and stop; left stationary",
+    "encoder_counts_per_10ms": [
+      271,
+      333
+    ],
+    "automatic_zero_output": true
+  },
+  "host_tests": "ALL TESTS PASSED",
+  "build": "ArmClang 6.7 BUILD SUCCESS",
+  "left": "Unresolved direction issue; not accepted. Snapshot retains historical HIGH direction and 15 percent test; current local diagnosis is separate.",
+  "firmware_note": "Original tested HEX and separately rebuilt snapshot HEX have different hashes. Only original tested HEX has physical forward-direction acceptance. Rebuilt HEX has host tests and compile verification only."
+}

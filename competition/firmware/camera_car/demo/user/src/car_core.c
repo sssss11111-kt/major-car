@@ -138,7 +138,8 @@ int control_start(control_state_t *s,uint32_t now) {
 }
 int control_test(control_state_t *s,uint8_t motor,uint32_t now) {
     if(s->mode!=CAR_IDLE || s->cfg.simulated || motor<1 || motor>2) return 0;
-    zero_outputs(s); s->mode=CAR_TEST; s->test_motor=motor; s->test_until=now+1000;
+    zero_outputs(s); s->mode=CAR_TEST; s->test_motor=motor;
+    s->test_until=now+2000u;
     return 1;
 }
 static float pi_step(control_state_t *s,int wheel,float error) {
@@ -157,8 +158,9 @@ void control_tick(control_state_t *s,uint32_t now,int16_t left,int16_t right) {
     }
     if(s->mode==CAR_TEST) {
         if((int32_t)(now-s->test_until)>=0) { control_stop(s); return; }
-        s->duty[0]=s->test_motor==1?500.0f:0;
-        s->duty[1]=s->test_motor==2?500.0f:0;
+        s->duty[0]=s->test_motor==1?1500.0f:0;
+        /* Bench-only right-wheel test: 30%, bounded by test_until and watchdog. */
+        s->duty[1]=s->test_motor==2?3000.0f:0;
         return;
     }
     if((uint32_t)(now-s->frame_ms)>s->cfg.frame_timeout_ms) {
