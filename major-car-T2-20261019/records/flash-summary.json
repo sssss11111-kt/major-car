@@ -1,0 +1,14 @@
+{
+  "version": "20261019T2",
+  "date": "2026-10-19",
+  "image_sha256": "f47eb663c49f5d27ae995385d6ad114971a84f49a2dfe1466b79f48035a3d417",
+  "backup_complete": true,
+  "backup_matches_T1": true,
+  "backup_bytes": 4194304,
+  "program_complete": true,
+  "readback_verified": true,
+  "verified_bytes": 70400,
+  "core_left_halted": true,
+  "cold_boot_verified": false,
+  "motor_tested": false
+}

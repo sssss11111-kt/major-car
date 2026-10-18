@@ -1,0 +1,212 @@
+--- T1/code/competition/firmware/camera_car/demo/user/inc/car_core.h
++++ T2/code/competition/firmware/camera_car/demo/user/inc/car_core.h
+@@ -26,6 +26,8 @@
+                FAULT_FOREGROUND, FAULT_ENCODER, FAULT_LINK } car_fault_t;
+ typedef struct {
+     float speed_target, speed_kp, speed_ki, pwm_max;
++    /* T2 STEP-01: tracking-only PI bias; zero preserves the 1500 legacy seed. */
++    float tracking_pwm_bias[2];
+     float steer_kp, steer_kd, steer_sign;
+     float servo_center_us, servo_min_us, servo_max_us;
+     uint32_t frame_timeout_ms, heartbeat_timeout_ms;
+--- T1/code/competition/firmware/camera_car/demo/user/inc/car_config.h
++++ T2/code/competition/firmware/camera_car/demo/user/inc/car_config.h
+@@ -51,6 +51,8 @@
+ #define CAR_SPEED_TARGET 20.0f /* encoder counts / 10 ms, not cm/s */
+ #define CAR_SPEED_KP 4.0f /* STEP-01: shared loaded-drive PI seed, requires track validation. */
+ #define CAR_SPEED_KI 20.0f
++#define CAR_TRACK_LEFT_PWM_BIAS 2200.0f /* T2 STEP-01: bench trial, not a PWM floor. */
++#define CAR_TRACK_RIGHT_PWM_BIAS 1500.0f
+ #define CAR_PWM_LIMIT 3000.0f /* STEP-01: bounded startup cap, not constant driving duty. */
+ /* STEP-02: bounded supervised first-track trial; not race/autonomous mode. */
+ #define CAR_TRACK_SETTLE_MS 200u
+--- T1/code/competition/firmware/camera_car/demo/user/src/car_core.c
++++ T2/code/competition/firmware/camera_car/demo/user/src/car_core.c
+@@ -228,7 +228,7 @@
+ /* STEP-01: one wheel controller shared by bench, drive and vision tracking.
+  * It never writes servo_us; visual steering remains owned by control_frame. */
+ static int wheel_speed_step(control_state_t *s,unsigned w,int measured,float target,
+-                            uint32_t elapsed,int loaded,float kp,float ki,float cap) {
++                            uint32_t elapsed,int loaded,float kp,float ki,float cap,float bias) {
+     unsigned bit=1u<<w;
+     if(!(s->bench_started&bit)) {
+         if(loaded) {
+@@ -239,13 +239,15 @@
+         else if(elapsed>=200) {control_fault(s,FAULT_ENCODER);return 0;}
+         else {s->duty[w]=clampf(3000,0,cap);return 1;}
+     }
++    /* T2 STEP-01: bias may be reduced by PI; zero/stop guards stay outside. */
++    bias=clampf(bias>0?bias:1500.0f,0,cap);
+     float error=target-measured;
+     float limit=cap<1500?cap:1500;
+     float candidate=clampf(s->integral[w]+ki*error*.01f,-limit,limit);
+-    float raw=1500.0f+kp*error+candidate;
++    float raw=bias+kp*error+candidate;
+     if((raw>=0 && raw<=cap) || (raw>cap && error<0) || (raw<0 && error>0))
+         s->integral[w]=candidate;
+-    s->duty[w]=clampf(1500.0f+kp*error+s->integral[w],0,cap);
++    s->duty[w]=clampf(bias+kp*error+s->integral[w],0,cap);
+     if(s->duty[w]>=500 && measured<2)s->stalled_ticks[w]++;
+     else s->stalled_ticks[w]=0;
+     if(s->stalled_ticks[w]>=50){control_fault(s,FAULT_ENCODER);return 0;}
+@@ -267,7 +269,7 @@
+         (s->drive_turn>0?s->cfg.servo_min_us:s->cfg.servo_center_us)):s->cfg.servo_center_us;
+     for(unsigned w=0;w<2;w++) {
+         if(!(mask&(1u<<w))){s->duty[w]=0;continue;}
+-        if(!wheel_speed_step(s,w,samples[w],s->bench_target,elapsed,ground,4,20,3000))return;
++        if(!wheel_speed_step(s,w,samples[w],s->bench_target,elapsed,ground,4,20,3000,1500))return;
+     }
+ }
+ void control_tick(control_state_t *s,uint32_t now,int16_t left,int16_t right) {
+@@ -326,5 +328,6 @@
+     int samples[2]={left,right};
+     for(unsigned w=0;w<2;w++)
+         if(!wheel_speed_step(s,w,samples[w],target,now-s->motion_ms,1,
+-                            s->cfg.speed_kp,s->cfg.speed_ki,s->cfg.pwm_max))return;
+-}
++                            s->cfg.speed_kp,s->cfg.speed_ki,s->cfg.pwm_max,
++                            s->cfg.tracking_pwm_bias[w]))return;
++}
+--- T1/code/competition/firmware/camera_car/demo/user/src/car_app.c
++++ T2/code/competition/firmware/camera_car/demo/user/src/car_app.c
+@@ -264,9 +264,10 @@
+ static void tracking_configuration(void) {
+     char line[200];control_config_t cfg;
+     uint32_t key=lock();cfg=control.cfg;unlock(key);
+-    snprintf(line,sizeof line,"TRACK-CFG v=20261018T1 target=%u cap=%u settle=%lu duration=%lu lease=%lu simulated=%u\r\n",
++    snprintf(line,sizeof line,"TRACK-CFG v=20261019T2 target=%u cap=%u settle=%lu duration=%lu lease=%lu simulated=%u left_bias=%u right_bias=%u\r\n",
+         (unsigned)cfg.speed_target,(unsigned)cfg.pwm_max,(unsigned long)cfg.tracking_settle_ms,
+-        (unsigned long)cfg.tracking_duration_ms,(unsigned long)cfg.tracking_lease_ms,(unsigned)cfg.simulated);
++        (unsigned long)cfg.tracking_duration_ms,(unsigned long)cfg.tracking_lease_ms,(unsigned)cfg.simulated,
++        (unsigned)cfg.tracking_pwm_bias[0],(unsigned)cfg.tracking_pwm_bias[1]);
+     text_queue(line);
+ }
+ static void camera_init_once(void) {
+@@ -294,6 +295,9 @@
+     control_config_t cfg={0};
+     cfg.speed_target=CAR_SPEED_TARGET; cfg.speed_kp=CAR_SPEED_KP;
+     cfg.speed_ki=CAR_SPEED_KI; cfg.pwm_max=CAR_PWM_LIMIT;
++    /* T2 STEP-01: only real-image tracking receives the per-wheel bias. */
++    cfg.tracking_pwm_bias[0]=CAR_TRACK_LEFT_PWM_BIAS;
++    cfg.tracking_pwm_bias[1]=CAR_TRACK_RIGHT_PWM_BIAS;
+     cfg.steer_kp=CAR_STEER_KP; cfg.steer_kd=CAR_STEER_KD; cfg.steer_sign=CAR_STEER_SIGN;
+     cfg.servo_center_us=CAR_SERVO_CENTER_US;
+     cfg.servo_min_us=CAR_SERVO_MIN_US; cfg.servo_max_us=CAR_SERVO_MAX_US;
+@@ -330,7 +334,7 @@
+     interrupt_set_priority(LPUART1_IRQn,2);
+     interrupt_set_priority(CSI_IRQn,3);
+     wireless_negotiate_baud();
+-    text_queue("C-CAR RT1064 SeekFree V3.5.5 TRACK20261018T1: h help; s STOP\r\n");
++    text_queue("C-CAR RT1064 SeekFree V3.5.5 TRACK20261019T2: h help; s STOP\r\n");
+     wireless_diagnostic();
+ #if CAR_DISPLAY_ENABLED
+     tft180_set_dir(TFT180_PORTAIT); tft180_init();
+@@ -379,7 +383,7 @@
+             servo_test_active=0;
+             gpio_init(CAR_LEFT_DIR,GPO,CAR_LEFT_FORWARD,GPO_PUSH_PULL);
+             gpio_init(CAR_RIGHT_DIR,GPO,CAR_RIGHT_FORWARD,GPO_PUSH_PULL);
+-            apply_outputs();text_queue("START TRACK-TRIAL v=20261018T1; p renews lease\r\n");
++            apply_outputs();text_queue("START TRACK-TRIAL v=20261019T2; p renews lease\r\n");
+         }
+         else text_queue("START REFUSED: idle + 3 valid fresh real frames required\r\n");
+         break;
+--- T1/code/repair/tracking_trial.py
++++ T2/code/repair/tracking_trial.py
+@@ -37,13 +37,14 @@
+ def parse_config(line):
+     values = fields(line)
+     try:
+-        if not line.startswith('TRACK-CFG ') or values['v'] != '20261018T1':
++        if not line.startswith('TRACK-CFG ') or values['v'] != '20261019T2':
+             raise ValueError('unrecognized firmware')
+         cfg = {key: int(values[key]) for key in
+-               ('target', 'cap', 'settle', 'duration', 'lease', 'simulated')}
++               ('target', 'cap', 'settle', 'duration', 'lease', 'simulated', 'left_bias', 'right_bias')}
+         if not (0 < cfg['target'] <= 40 and 0 < cfg['cap'] <= 3000 and
+                 100 <= cfg['settle'] <= 1000 and 0 < cfg['duration'] <= 5000 and
+-                200 <= cfg['lease'] <= 1000 and cfg['simulated'] == 0):
++                200 <= cfg['lease'] <= 1000 and cfg['simulated'] == 0
++                and cfg['left_bias'] == 2200 and cfg['right_bias'] == 1500):
+             raise ValueError('configuration outside first-trial envelope')
+         return cfg
+     except (KeyError, ValueError) as exc:
+--- T1/code/repair/test_tracking_tool.py
++++ T2/code/repair/test_tracking_tool.py
+@@ -7,7 +7,7 @@
+ from tracking_trial import parse_status, parse_config, check_status, session
+ 
+ LINE = 'ms=100 mode=1 fault=0 frames=8 valid=1 pair=13/13 thr=30 err10=25 bench_target=20 bench_started=3 enc=20,21 pwm=1400,1450 us=1492 speed=20 target10=200 phase=2 quality=100 reject=0 seq=8 cap_age=10 proc_ms=0 used_age=0 drop_frames=0 ready=0 good_frames=3 accepted_age=10 trial_id=1 trial_done=0 trial_ms=100'
+-CFG = 'TRACK-CFG v=20261018T1 target=20 cap=3000 settle=200 duration=3000 lease=500 simulated=0'
++CFG = 'TRACK-CFG v=20261019T2 target=20 cap=3000 settle=200 duration=3000 lease=500 simulated=0 left_bias=2200 right_bias=1500'
+ 
+ class Contracts(unittest.TestCase):
+     @unittest.skipUnless(os.environ.get('TRACK_TEST_TELEMETRY'), 'Full runner supplies actual C telemetry')
+@@ -36,8 +36,9 @@
+                 check_status(parse_status(LINE.replace(token, replacement)))
+     def test_only_identified_bounded_real_trial(self):
+         self.assertEqual(parse_config(CFG)['duration'], 3000)
+-        for token, replacement in [('v=20261018T1','v=20261018T'), ('lease=500','lease=0'),
+-                                   ('duration=3000','duration=0'), ('simulated=0','simulated=1')]:
++        for token, replacement in [('v=20261019T2','v=20261018T'), ('lease=500','lease=0'),
++                                   ('duration=3000','duration=0'), ('simulated=0','simulated=1'),
++                                   ('left_bias=2200','left_bias=3000'), ('right_bias=1500','right_bias=2200')]:
+             with self.subTest(replacement=replacement), self.assertRaises(RuntimeError):
+                 parse_config(CFG.replace(token, replacement))
+ 
+--- T1/code/competition/firmware/camera_car/tests/test_tracking.c
++++ T2/code/competition/firmware/camera_car/tests/test_tracking.c
+@@ -8,6 +8,7 @@
+ static control_config_t config(void) {
+     control_config_t c={0};
+     c.speed_target=20;c.speed_kp=4;c.speed_ki=20;c.pwm_max=3000;
++    c.tracking_pwm_bias[0]=2200;c.tracking_pwm_bias[1]=1500;
+     c.steer_kp=3;c.steer_kd=.08f;c.steer_sign=-1;
+     c.servo_center_us=1500;c.servo_min_us=1350;c.servo_max_us=1650;
+     c.frame_timeout_ms=150;c.heartbeat_timeout_ms=100;
+@@ -23,7 +24,7 @@
+     CHECK(s.duty[0]==3000 && s.duty[1]==3000);
+     float steer=0;
+     for(uint32_t t=280;t<=300;t+=10){frame(&s,t,25);steer=s.servo_us;control_tick(&s,t,6,6);CHECK(fabsf(s.servo_us-steer)<.1f);}
+-    CHECK(s.bench_started==3 && s.duty[0]<2000 && s.duty[0]>0);
++    CHECK(s.bench_started==3 && s.duty[0]<2600 && s.duty[0]>0 && s.duty[1]<2000);
+     CHECK(fabsf(s.servo_us-steer)<.1f); /* Speed update must not center vision steering. */
+     control_stop(&s);ready(&s);CHECK(control_start(&s,60));
+     for(uint32_t t=270;t<=470 && s.mode!=CAR_FAULT;t+=10){frame(&s,t,0);control_tick(&s,t,6,0);}
+@@ -90,4 +91,36 @@
+     }
+     puts("STEP-06 encoder checks during preparation: PASS");
+ }
+-int main(void) {preparation_encoder_tests();capture_age_tests();start_guard_tests();speed_tests();trial_guard_tests();return 0;}
++/* T2 STEP-02: compare identical feedback, verify authority to reduce PWM. */
++static void tracking_bias_tests(void) {
++    control_config_t a=config(),b=config();control_state_t old,boost;
++    a.tracking_pwm_bias[0]=1500;
++    control_init(&old,&a);control_init(&boost,&b);ready(&old);ready(&boost);
++    CHECK(control_start(&old,60) && control_start(&boost,60));
++    for(uint32_t t=270;t<=300;t+=10) {
++        frame(&old,t,0);frame(&boost,t,0);
++        control_tick(&old,t,6,6);control_tick(&boost,t,6,6);
++    }
++    CHECK(fabsf(boost.duty[0]-old.duty[0]-700)<.1f);
++    CHECK(fabsf(boost.duty[1]-old.duty[1])<.1f);
++    frame(&boost,310,0);control_tick(&boost,310,300,300);
++    CHECK(boost.duty[0]<1500); /* No forced minimum when feedback exceeds target. */
++    control_stop(&boost);CHECK(boost.duty[0]==0 && boost.duty[1]==0);
++    control_init(&boost,&b);ready(&boost);CHECK(control_start(&boost,60));
++    for(uint32_t t=270;t<=760;t+=10) {
++        frame(&boost,t,0);control_drive_keepalive(&boost,t);
++        control_tick(&boost,t,6,6);
++        CHECK(boost.duty[0]>=0 && boost.duty[0]<=3000);
++    }
++    for(uint32_t t=770;t<=1260 && boost.mode==CAR_RUNNING;t+=10) {
++        frame(&boost,t,0);control_drive_keepalive(&boost,t);
++        control_tick(&boost,t,0,6);
++    }
++    CHECK(boost.mode==CAR_FAULT && boost.fault==FAULT_ENCODER);
++    CHECK(boost.duty[0]==0 && boost.duty[1]==0);
++    control_init(&boost,&b);ready(&boost);CHECK(control_start(&boost,60));
++    boost.cfg.speed_target=0;frame(&boost,270,0);control_tick(&boost,270,0,0);
++    CHECK(boost.duty[0]==0 && boost.duty[1]==0);
++    puts("T2 bias isolation / overspeed reduction / stall / zero target: PASS");
++}
++int main(void) {tracking_bias_tests();preparation_encoder_tests();capture_age_tests();start_guard_tests();speed_tests();trial_guard_tests();return 0;}

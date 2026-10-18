@@ -1,0 +1,30 @@
+[
+  {
+    "test": "T1左轮30测量-20261019-000339",
+    "evidence": "records/field-tests/T1左轮30测量-20261019-000339"
+  },
+  {
+    "test": "T2版冷启动-20261019-001540",
+    "evidence": "records/field-tests/T2版冷启动-20261019-001540"
+  },
+  {
+    "test": "T2版架空联动-20261019-001552",
+    "evidence": "records/field-tests/T2版架空联动-20261019-001552"
+  },
+  {
+    "test": "T2版重连检查-20261019-002029",
+    "evidence": "records/field-tests/T2版重连检查-20261019-002029"
+  },
+  {
+    "test": "T2版架空联动重测-20261019-002046",
+    "evidence": "records/field-tests/T2版架空联动重测-20261019-002046"
+  },
+  {
+    "test": "T2版地面直弯试跑-20261019-002837",
+    "evidence": "records/field-tests/T2版地面直弯试跑-20261019-002837"
+  },
+  {
+    "test": "T2版地面重新摆位-20261019-003018",
+    "evidence": "records/field-tests/T2版地面重新摆位-20261019-003018"
+  }
+]

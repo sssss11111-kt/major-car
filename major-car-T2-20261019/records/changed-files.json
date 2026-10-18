@@ -1,0 +1,9 @@
+[
+  "competition/firmware/camera_car/demo/user/inc/car_core.h",
+  "competition/firmware/camera_car/demo/user/inc/car_config.h",
+  "competition/firmware/camera_car/demo/user/src/car_core.c",
+  "competition/firmware/camera_car/demo/user/src/car_app.c",
+  "repair/tracking_trial.py",
+  "repair/test_tracking_tool.py",
+  "competition/firmware/camera_car/tests/test_tracking.c"
+]
