@@ -1,0 +1,7 @@
+{
+  "hardware_access": false,
+  "baseline": "74b15e8",
+  "red_exit": 1,
+  "green_exit": 0,
+  "scope": "Actual SDK/callback extraction with host registers; DMA timing is injected"
+}

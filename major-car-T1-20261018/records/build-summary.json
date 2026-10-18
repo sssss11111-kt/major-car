@@ -1,0 +1,26 @@
+{
+  "camera": {
+    "data_bytes": 69120,
+    "start": "0x70000000",
+    "last": "0x70010dff",
+    "sha256": "4c10694ce097b5c3d2291d40f9f88eb4e6cf826420e2b6f2eda4ce3eeee509a2",
+    "warnings": 0,
+    "compiler": "Component: Arm Compiler for Embedded 6.21"
+  },
+  "mock": {
+    "data_bytes": 60744,
+    "start": "0x70000000",
+    "last": "0x7000ed47",
+    "sha256": "4ad24433ca28b2b09221e2e61fc7af6143a0a523449a2dcf2fc3d65215c6ea20",
+    "warnings": 0,
+    "compiler": "Component: Arm Compiler for Embedded 6.21"
+  },
+  "diag": {
+    "data_bytes": 56400,
+    "start": "0x70000000",
+    "last": "0x7000dc4f",
+    "sha256": "3d2f3b51089e42755cfe296070dc9f98078b757897543c483d4bb6a0721d4e15",
+    "warnings": 0,
+    "compiler": "Component: Arm Compiler for Embedded 6.21"
+  }
+}

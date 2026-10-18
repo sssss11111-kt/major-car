@@ -1,0 +1,185 @@
+EEEEEE.EEEE..
+======================================================================
+ERROR: test_early_idle_and_never_moving_are_errors (__main__.Contracts.test_early_idle_and_never_moving_are_errors) (scenario='early')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\test_tracking_tool.py", line 114, in test_early_idle_and_never_moving_are_errors
+    port, result, error = self.exercise(scenario)
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\test_tracking_tool.py", line 92, in exercise
+    result = json.loads((output / 'result.json').read_text())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\USER\\AppData\\Local\\Temp\\tmp3dzqfprk\\trial\\result.json'
+
+======================================================================
+ERROR: test_early_idle_and_never_moving_are_errors (__main__.Contracts.test_early_idle_and_never_moving_are_errors) (scenario='no-motion')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\test_tracking_tool.py", line 114, in test_early_idle_and_never_moving_are_errors
+    port, result, error = self.exercise(scenario)
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\test_tracking_tool.py", line 92, in exercise
+    result = json.loads((output / 'result.json').read_text())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\USER\\AppData\\Local\\Temp\\tmpdl0w1fw2\\trial\\result.json'
+
+======================================================================
+ERROR: test_early_idle_and_never_moving_are_errors (__main__.Contracts.test_early_idle_and_never_moving_are_errors) (scenario='fault')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\test_tracking_tool.py", line 114, in test_early_idle_and_never_moving_are_errors
+    port, result, error = self.exercise(scenario)
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\test_tracking_tool.py", line 92, in exercise
+    result = json.loads((output / 'result.json').read_text())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\USER\\AppData\\Local\\Temp\\tmprc7i78yr\\trial\\result.json'
+
+======================================================================
+ERROR: test_early_idle_and_never_moving_are_errors (__main__.Contracts.test_early_idle_and_never_moving_are_errors) (scenario='stale')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\test_tracking_tool.py", line 114, in test_early_idle_and_never_moving_are_errors
+    port, result, error = self.exercise(scenario)
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\test_tracking_tool.py", line 92, in exercise
+    result = json.loads((output / 'result.json').read_text())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\USER\\AppData\\Local\\Temp\\tmptvn3i79u\\trial\\result.json'
+
+======================================================================
+ERROR: test_early_idle_and_never_moving_are_errors (__main__.Contracts.test_early_idle_and_never_moving_are_errors) (scenario='old-id')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\test_tracking_tool.py", line 114, in test_early_idle_and_never_moving_are_errors
+    port, result, error = self.exercise(scenario)
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\test_tracking_tool.py", line 92, in exercise
+    result = json.loads((output / 'result.json').read_text())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\USER\\AppData\\Local\\Temp\\tmp5pg2mje2\\trial\\result.json'
+
+======================================================================
+ERROR: test_early_idle_and_never_moving_are_errors (__main__.Contracts.test_early_idle_and_never_moving_are_errors) (scenario='refused')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\test_tracking_tool.py", line 114, in test_early_idle_and_never_moving_are_errors
+    port, result, error = self.exercise(scenario)
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\test_tracking_tool.py", line 92, in exercise
+    result = json.loads((output / 'result.json').read_text())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\USER\\AppData\\Local\\Temp\\tmpaigfo4f_\\trial\\result.json'
+
+======================================================================
+ERROR: test_normal_full_trial_and_device_wrap (__main__.Contracts.test_normal_full_trial_and_device_wrap)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\test_tracking_tool.py", line 104, in test_normal_full_trial_and_device_wrap
+    port, result, error = self.exercise(wrap=wrap)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\test_tracking_tool.py", line 92, in exercise
+    result = json.loads((output / 'result.json').read_text())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\USER\\AppData\\Local\\Temp\\tmpmikrz6xi\\trial\\result.json'
+
+======================================================================
+ERROR: test_not_ready_does_not_arm_and_still_saves_result (__main__.Contracts.test_not_ready_does_not_arm_and_still_saves_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\test_tracking_tool.py", line 121, in test_not_ready_does_not_arm_and_still_saves_result
+    port, result, error = self.exercise('not-ready')
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\test_tracking_tool.py", line 92, in exercise
+    result = json.loads((output / 'result.json').read_text())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\USER\\AppData\\Local\\Temp\\tmp79fexnc9\\trial\\result.json'
+
+======================================================================
+ERROR: test_only_identified_bounded_real_trial (__main__.Contracts.test_only_identified_bounded_real_trial)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\tracking_trial.py", line 40, in parse_config
+    raise ValueError('unrecognized firmware')
+ValueError: unrecognized firmware
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\test_tracking_tool.py", line 26, in test_only_identified_bounded_real_trial
+    self.assertEqual(parse_config(CFG)['duration'], 3000)
+                     ^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\tracking_trial.py", line 49, in parse_config
+    raise RuntimeError('Real bounded tracking firmware not confirmed; no start') from exc
+RuntimeError: Real bounded tracking firmware not confirmed; no start
+
+======================================================================
+ERROR: test_preflight_waits_for_three_processed_frames (__main__.Contracts.test_preflight_waits_for_three_processed_frames)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\test_tracking_tool.py", line 96, in test_preflight_waits_for_three_processed_frames
+    port, result, error = self.exercise(run=False)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\repair\test_tracking_tool.py", line 92, in exercise
+    result = json.loads((output / 'result.json').read_text())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\USER\\AppData\\Local\\Temp\\tmph6x8vfj4\\trial\\result.json'
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.027s
+
+FAILED (errors=10)

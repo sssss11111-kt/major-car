@@ -1,0 +1,144 @@
+{
+  "audit_time_utc": "2026-10-18T06:06:38.228134+00:00",
+  "source": "C:\\Users\\USER\\Documents\\ChatGPT\\智能车\\output\\t1-fix-evidence\\original-T-tracking_trial.py",
+  "source_sha256": "2d879dd43947eb3c9c901e2a49984d4901949dd895aeb247ccad55af549851f7",
+  "hardware_access": false,
+  "serial_library_imported_by_probe": false,
+  "configuration": {
+    "settle_ms": 200,
+    "duration_ms": 3000,
+    "lease_ms": 500
+  },
+  "fake_active_period_s": 0.25,
+  "elapsed_since_a_s": 0.34,
+  "session_returned_successfully": true,
+  "bug_reproduced": true,
+  "conclusion": "Session accepts an early return to idle despite no drive phase, target, encoder feedback, or PWM ever being observed.",
+  "stdout": "{\"configuration\": {\"target\": 20, \"cap\": 3000, \"settle\": 200, \"duration\": 3000, \"lease\": 500, \"simulated\": 0}, \"status\": {\"ms\": 0, \"mode\": 0, \"fault\": 0, \"valid\": 1, \"us\": 1500, \"target10\": 0, \"phase\": 0, \"cap_age\": 10, \"enc\": [0, 0], \"pwm\": [0, 0]}}\nTrial ended with zero outputs; physical stopping still requires observation.\n",
+  "commands": [
+    {
+      "time_s": 0.0,
+      "command": "d"
+    },
+    {
+      "time_s": 0.0,
+      "command": "p"
+    },
+    {
+      "time_s": 0.02,
+      "command": "a"
+    },
+    {
+      "time_s": 0.02,
+      "command": "p"
+    },
+    {
+      "time_s": 0.12,
+      "command": "p"
+    },
+    {
+      "time_s": 0.24,
+      "command": "p"
+    },
+    {
+      "time_s": 0.34,
+      "command": "p"
+    },
+    {
+      "time_s": 0.36,
+      "command": "s"
+    }
+  ],
+  "status_rows": [
+    {
+      "ms": 0,
+      "mode": 0,
+      "fault": 0,
+      "valid": 1,
+      "us": 1500,
+      "target10": 0,
+      "phase": 0,
+      "cap_age": 10,
+      "enc": [
+        0,
+        0
+      ],
+      "pwm": [
+        0,
+        0
+      ]
+    },
+    {
+      "ms": 20,
+      "mode": 1,
+      "fault": 0,
+      "valid": 1,
+      "us": 1500,
+      "target10": 0,
+      "phase": 0,
+      "cap_age": 10,
+      "enc": [
+        0,
+        0
+      ],
+      "pwm": [
+        0,
+        0
+      ]
+    },
+    {
+      "ms": 120,
+      "mode": 1,
+      "fault": 0,
+      "valid": 1,
+      "us": 1500,
+      "target10": 0,
+      "phase": 0,
+      "cap_age": 10,
+      "enc": [
+        0,
+        0
+      ],
+      "pwm": [
+        0,
+        0
+      ]
+    },
+    {
+      "ms": 239,
+      "mode": 1,
+      "fault": 0,
+      "valid": 1,
+      "us": 1500,
+      "target10": 0,
+      "phase": 0,
+      "cap_age": 10,
+      "enc": [
+        0,
+        0
+      ],
+      "pwm": [
+        0,
+        0
+      ]
+    },
+    {
+      "ms": 340,
+      "mode": 0,
+      "fault": 0,
+      "valid": 1,
+      "us": 1500,
+      "target10": 0,
+      "phase": 0,
+      "cap_age": 10,
+      "enc": [
+        0,
+        0
+      ],
+      "pwm": [
+        0,
+        0
+      ]
+    }
+  ]
+}

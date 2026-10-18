@@ -1,0 +1,72 @@
+10s drive timeout, lease, stop, no-vision guards: PASS
+ground drive guards/no-vision/timeout: PASS
+static steering guards: PASS
+dual speed bench guards/model: PASS (model is not hardware validation)
+right speed bench guards/model: PASS (model is not hardware validation)
+vision tests: PASS
+control tests: PASS
+STEP-06 encoder checks during preparation: PASS
+STEP-04 capture age/stale rejection/duplicate/wrap: PASS
+STEP-02 visual steering before startup: PASS
+STEP-01 shared tracking speed/startup/steering isolation: PASS
+STEP-02 trial duration/link/wrap/line loss during preparation: PASS
+STEP-06 receipt-time lease, stale capture and copy-race guards: PASS
+STEP-05 image->vision->steering/speed, line loss, trial/lease: PASS (host I/O double)
+hardware adapter tests: PASS (host I/O double, not physical hardware)
+servo initialization/limits/nonfinite/reinitialize tests: PASS
+UART8 IRQ/RX/error-discard, independent TX/backpressure, RTS and diagnostic safety: PASS (diag=0)
+UART8 IRQ/RX/error-discard, independent TX/backpressure, RTS and diagnostic safety: PASS (diag=1)
+UART8 IRQ/RX/error-discard, independent TX/backpressure, RTS and diagnostic safety: PASS (diag=1)
+UART8 IRQ/RX/error-discard, independent TX/backpressure, RTS and diagnostic safety: PASS (diag=0)
+straight                           PASS valid=1 error=   0.50 paired=13/13
+straight_left                      PASS valid=1 error= -23.50 paired=13/13
+straight_right                     PASS valid=1 error=  24.50 paired=13/13
+dim_light                          PASS valid=1 error=   0.50 paired=13/13
+bright_light                       PASS valid=1 error=   0.50 paired=13/13
+sharp_left_curve                   PASS valid=1 error=  -6.26 paired=13/13
+sharp_right_curve                  PASS valid=1 error=   7.26 paired=13/13
+s_bend                             PASS valid=1 error=   8.68 paired=13/13
+horizontal_shadow                  PASS valid=1 error=   0.50 paired=9/13
+severe_shadow                      PASS valid=0 error=   0.50 paired=2/13
+background_reflection              PASS valid=1 error=   0.50 paired=13/13
+reflection_merges_right_edge       PASS valid=0 error=   0.50 paired=2/13
+short_left_boundary_gap            PASS valid=1 error=   0.32 paired=12/13
+short_both_boundary_gaps           PASS valid=1 error=   0.50 paired=12/13
+missing_left_boundary              PASS valid=0 error= -14.50 paired=0/13
+missing_right_boundary             PASS valid=0 error=  15.50 paired=0/13
+all_white                          PASS valid=0 error=   0.00 paired=0/0
+all_black                          PASS valid=0 error=   0.00 paired=0/0
+low_contrast                       PASS valid=0 error=   0.00 paired=0/0
+abrupt_corner_out_of_search        PASS valid=0 error=   0.50 paired=3/13
+gray_noise                         PASS valid=1 error=   0.50 paired=13/13
+isolated_salt_pepper               PASS valid=1 error=   0.50 paired=13/13
+curve_gray_noise                   PASS valid=1 error=   7.26 paired=13/13
+clustered_dark_noise               PASS valid=1 error=   0.50 paired=13/13
+Temporal sequences: PASS (13 moving + 3 lost + 1 recovery frames)
+Scenario suite: 144 accuracy contracts, 8 rejection contracts, 0 characterization cases; 48995 checks, 0 failures
+Visual report: C:\Users\USER\Documents\ChatGPT\���ܳ�\external_refs\major-car-audit-20261018\major-car-����ѭ������-20261018\code\competition\firmware\camera_car\tests\out\vision\report.html
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+PASS: 256 alternating DMA completions never publish next DMA destination
+PASS: completion during real foreground copy rejects injected mixed data, then recovers
+PASS: simultaneous done flags do not falsely publish a frame
+.........
+----------------------------------------------------------------------
+Ran 9 tests in 0.050s
+
+OK
+{"configuration": {"target": 20, "cap": 3000, "settle": 200, "duration": 3000, "lease": 500, "simulated": 0}, "status": {"ms": 420, "mode": 0, "fault": 0, "valid": 1, "us": 1500, "target10": 0, "phase": 0, "cap_age": 10, "ready": 1, "good_frames": 3, "accepted_age": 10, "trial_id": 0, "trial_done": 0, "trial_ms": 0, "enc": [0, 0], "pwm": [0, 0]}}
+{"configuration": {"target": 20, "cap": 3000, "settle": 200, "duration": 3000, "lease": 500, "simulated": 0}, "status": {"ms": 420, "mode": 0, "fault": 0, "valid": 1, "us": 1500, "target10": 0, "phase": 0, "cap_age": 10, "ready": 1, "good_frames": 3, "accepted_age": 10, "trial_id": 0, "trial_done": 0, "trial_ms": 0, "enc": [0, 0], "pwm": [0, 0]}}
+{"configuration": {"target": 20, "cap": 3000, "settle": 200, "duration": 3000, "lease": 500, "simulated": 0}, "status": {"ms": 420, "mode": 0, "fault": 0, "valid": 1, "us": 1500, "target10": 0, "phase": 0, "cap_age": 10, "ready": 1, "good_frames": 3, "accepted_age": 10, "trial_id": 0, "trial_done": 0, "trial_ms": 0, "enc": [0, 0], "pwm": [0, 0]}}
+{"configuration": {"target": 20, "cap": 3000, "settle": 200, "duration": 3000, "lease": 500, "simulated": 0}, "status": {"ms": 420, "mode": 0, "fault": 0, "valid": 1, "us": 1500, "target10": 0, "phase": 0, "cap_age": 10, "ready": 1, "good_frames": 3, "accepted_age": 10, "trial_id": 0, "trial_done": 0, "trial_ms": 0, "enc": [0, 0], "pwm": [0, 0]}}
+{"configuration": {"target": 20, "cap": 3000, "settle": 200, "duration": 3000, "lease": 500, "simulated": 0}, "status": {"ms": 420, "mode": 0, "fault": 0, "valid": 1, "us": 1500, "target10": 0, "phase": 0, "cap_age": 10, "ready": 1, "good_frames": 3, "accepted_age": 10, "trial_id": 0, "trial_done": 0, "trial_ms": 0, "enc": [0, 0], "pwm": [0, 0]}}
+{"configuration": {"target": 20, "cap": 3000, "settle": 200, "duration": 3000, "lease": 500, "simulated": 0}, "status": {"ms": 420, "mode": 0, "fault": 0, "valid": 1, "us": 1500, "target10": 0, "phase": 0, "cap_age": 10, "ready": 1, "good_frames": 3, "accepted_age": 10, "trial_id": 0, "trial_done": 0, "trial_ms": 0, "enc": [0, 0], "pwm": [0, 0]}}
+{"configuration": {"target": 20, "cap": 3000, "settle": 200, "duration": 3000, "lease": 500, "simulated": 0}, "status": {"ms": 420, "mode": 0, "fault": 0, "valid": 1, "us": 1500, "target10": 0, "phase": 0, "cap_age": 10, "ready": 1, "good_frames": 3, "accepted_age": 10, "trial_id": 0, "trial_done": 0, "trial_ms": 0, "enc": [0, 0], "pwm": [0, 0]}}
+Normal expiry and two-wheel feedback observed; physical tracking/stopping still require observation.
+{"configuration": {"target": 20, "cap": 3000, "settle": 200, "duration": 3000, "lease": 500, "simulated": 0}, "status": {"ms": 164, "mode": 0, "fault": 0, "valid": 1, "us": 1500, "target10": 0, "phase": 0, "cap_age": 10, "ready": 1, "good_frames": 3, "accepted_age": 10, "trial_id": 0, "trial_done": 0, "trial_ms": 0, "enc": [0, 0], "pwm": [0, 0]}}
+Normal expiry and two-wheel feedback observed; physical tracking/stopping still require observation.
+{"configuration": {"target": 20, "cap": 3000, "settle": 200, "duration": 3000, "lease": 500, "simulated": 0}, "status": {"ms": 420, "mode": 0, "fault": 0, "valid": 1, "us": 1500, "target10": 0, "phase": 0, "cap_age": 10, "ready": 1, "good_frames": 3, "accepted_age": 10, "trial_id": 0, "trial_done": 0, "trial_ms": 0, "enc": [0, 0], "pwm": [0, 0]}}
+Preflight only. No start sent. --run explicitly starts one bounded trial.

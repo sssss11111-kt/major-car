@@ -1,0 +1,4 @@
+test_csi_buffers.c
+PASS: 256 alternating DMA completions never publish next DMA destination
+PASS: completion during real foreground copy rejects injected mixed data, then recovers
+PASS: simultaneous done flags do not falsely publish a frame

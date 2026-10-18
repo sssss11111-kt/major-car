@@ -1,0 +1,8 @@
+test_csi_buffers.c
+FAIL line 383: (uint32_t)mt9v03x_image != CSI->fb[next_done]
+Traceback (most recent call last):
+  File "C:\Users\USER\AppData\Local\Temp\old-t-csi-341cawel\tests\test_csi_buffers.py", line 176, in <module>
+    subprocess.run([str(exe)],cwd=out,check=True)
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Users\\USER\\AppData\\Local\\Temp\\csi-buffers-usn0vhjo\\test_csi_buffers.exe']' returned non-zero exit status 1.

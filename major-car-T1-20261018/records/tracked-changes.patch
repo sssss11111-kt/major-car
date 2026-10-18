@@ -1,0 +1,639 @@
+diff --git "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/HANDOFF.md" "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/HANDOFF.md"
+index 6e63f46..f69fa9f 100644
+--- "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/HANDOFF.md"
++++ "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/HANDOFF.md"
+@@ -1,4 +1,4 @@
+-> 历史N版交接记录：以下“当前/车上”只代表昨晚记录。本文件夹内源码已修改为T候选，尚未烧录；最新说明见[交付入口](../README.md)。
++> 历史N版交接记录：以下“当前/车上”只代表昨晚记录。本文件夹内源码已修改为T1修复候选，尚未烧录。T1修正CSI缓冲回交、增加就绪及正常结束遥测、收紧工具判定；N版实测结论不能认证T1实车。最新说明见[交付入口](../README.md)。
+ 
+ # 智能车交付与续接｜2026-10-18
+ 
+diff --git "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/README.md" "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/README.md"
+index 621684c..96561fe 100644
+--- "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/README.md"
++++ "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/README.md"
+@@ -1,8 +1,12 @@
+-# RT1064 低速视觉循迹候选 T
++# RT1064 低速视觉循迹修复候选 T1
++
++本地修复版本为20261018T1：修正CSI完成缓冲的回交对象，新增真实SDK缓冲序列回归；遥测增加ready、good_frames、accepted_age、trial_id、trial_done和trial_ms。工具只匹配T1，等待连续3帧就绪，确认同一新试验的双轮闭环反馈与正常到期后才记completed，提前停止/无起转/故障记error并保存result.json。
++
++T1固件和清单以新修复包为准；原目录firmware和records保留的是T版历史产物。T1未烧录、未做实车验收。DRIVE-CFG N仍是独立行驶子系统历史标签。
+ 
+ 完整说明见[交付入口](../README.md)、[逐步修改记录](../修改记录.md)及[实车验收清单](../实车验收清单.md)。
+ 
+-本代码基于N版 `53d6dba`，版本标识20261018T；本轮没有烧录、没有实车验收。旧N版和硬件历史保留在[HANDOFF.md](HANDOFF.md)，不能将其中已测结论视为T版通过。
++本代码基于T版 `74b15e8`，其N基线为 `53d6dba`。旧N版和硬件历史保留在[HANDOFF.md](HANDOFF.md)，不能将其中已测结论视为T1版通过。
+ 
+ - 工程：`competition/firmware/camera_car/demo/mdk/rt1064.uvprojx`。
+ - 参数：`competition/firmware/camera_car/demo/user/inc/car_config.h`。
+diff --git "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/README.md" "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/README.md"
+index bd140a9..303fd9b 100644
+--- "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/README.md"
++++ "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/README.md"
+@@ -1,6 +1,8 @@
+ > STEP-06：完整使用入口及本轮边界见[交付README](../../../../README.md)。
+ 
+-# RT1064 C车模工程｜T版低速视觉循迹候选
++# RT1064 C车模工程｜T1低速视觉循迹修复候选
++
++20261018T1在T版基础上修正CSI完成缓冲回交和试验工具判定，新增ready/good_frames/accepted_age/trial_id/trial_done/trial_ms遥测。完整修复及验证见交付包README。下文保留T版既有功能说明；T1尚未烧录、尚未实车验证。
+ 
+ 更新2026-10-18。完整工程及逐飞V3.5.5/NXP库在本目录，当前源码在N版上完成共享轮速控制、受监护的限时视觉循迹、图像几何质量与采集时间检查。本候选尚未烧录。
+ 
+diff --git "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/demo/user/inc/car_core.h" "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/demo/user/inc/car_core.h"
+index 5fad861..574c9ba 100644
+--- "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/demo/user/inc/car_core.h"
++++ "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/demo/user/inc/car_core.h"
+@@ -46,6 +46,8 @@ typedef struct {
+     uint8_t drive_start_ticks[2];
+     uint8_t drive_lease_active;
+     uint32_t drive_command_ms;
++    uint32_t trial_id, trial_started_ms, trial_elapsed_ms;
++    uint8_t trial_done; /* Only normal tracking expiry sets this; explicit stop/fault clears it. */
+     int8_t drive_turn; /* -1 left, 0 straight, +1 right */
+     uint8_t bench_started; /* bit 0 left feedback detected, bit 1 right */
+ } control_state_t;
+@@ -62,6 +64,7 @@ void control_drive_keepalive(control_state_t *state,uint32_t now);
+ int control_drive_test(control_state_t *state, int turn, uint32_t now);
+ int control_steer_test(control_state_t *state, uint32_t now);
+ int control_start(control_state_t *state, uint32_t now);
++int control_tracking_ready(const control_state_t *state, uint32_t now);
+ void control_stop(control_state_t *state);
+ void control_fault(control_state_t *state, car_fault_t fault);
+ int control_test(control_state_t *state, uint8_t motor, uint32_t now);
+diff --git "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/demo/user/src/car_app.c" "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/demo/user/src/car_app.c"
+index 5b5a8d4..243742e 100644
+--- "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/demo/user/src/car_app.c"
++++ "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/demo/user/src/car_app.c"
+@@ -237,29 +237,34 @@ static void servo_register_diagnostic(void) {
+ }
+ /* STEP-05: coherent control/camera snapshot, at 10 Hz while following. */
+ static void telemetry(void) {
+-    char line[360];control_state_t snapshot;
++    char line[512];control_state_t snapshot;
+     uint32_t key=lock();snapshot=control;
+     uint32_t now=milliseconds,sequence=capture_sequence,age=now-capture_ms;
+     int left=measured_left,right=measured_right;unsigned pulse=(unsigned)car_servo_get_us();
+     unsigned phase=snapshot.mode==CAR_RUNNING?
+         ((int32_t)(now-snapshot.motion_ms)<0?0u:(snapshot.bench_started==3?2u:1u)):3u;
++    unsigned ready=camera_ready && control_tracking_ready(&snapshot,now);
++    uint32_t accepted_age=now-snapshot.frame_ms;
++    uint32_t trial_ms=snapshot.mode==CAR_RUNNING?now-snapshot.trial_started_ms:snapshot.trial_elapsed_ms;
+     unlock(key);
+     snprintf(line,sizeof line,
+-        "ms=%lu mode=%u fault=%u frames=%lu valid=%u pair=%u/%u thr=%u err10=%d bench_target=%u bench_started=%u enc=%d,%d pwm=%u,%u us=%u speed=%u target10=%u phase=%u quality=%u reject=%u seq=%lu cap_age=%lu proc_ms=%lu used_age=%lu drop_frames=%lu\r\n",
++        "ms=%lu mode=%u fault=%u frames=%lu valid=%u pair=%u/%u thr=%u err10=%d bench_target=%u bench_started=%u enc=%d,%d pwm=%u,%u us=%u speed=%u target10=%u phase=%u quality=%u reject=%u seq=%lu cap_age=%lu proc_ms=%lu used_age=%lu drop_frames=%lu ready=%u good_frames=%u accepted_age=%lu trial_id=%lu trial_done=%u trial_ms=%lu\r\n",
+         (unsigned long)now,(unsigned)snapshot.mode,(unsigned)snapshot.fault,
+         (unsigned long)frame_count,result.valid,result.paired_rows,result.scanned_rows,
+         result.threshold,(int)(result.error*10),(unsigned)snapshot.bench_target,
+         (unsigned)snapshot.bench_started,left,right,(unsigned)snapshot.duty[0],(unsigned)snapshot.duty[1],
+         pulse,(unsigned)snapshot.cfg.speed_target,(unsigned)(snapshot.bench_target*10),phase,
+         result.quality,result.rejected_rows,(unsigned long)sequence,(unsigned long)age,
+-        (unsigned long)processing_ms,(unsigned long)last_capture_age,(unsigned long)dropped_frames);
++        (unsigned long)processing_ms,(unsigned long)last_capture_age,(unsigned long)dropped_frames,
++        ready,snapshot.good_frames,(unsigned long)accepted_age,(unsigned long)snapshot.trial_id,
++        snapshot.trial_done,(unsigned long)trial_ms);
+     text_queue(line);
+ }
+ /* STEP-05: identify the trial configuration before any motion command. */
+ static void tracking_configuration(void) {
+     char line[200];control_config_t cfg;
+     uint32_t key=lock();cfg=control.cfg;unlock(key);
+-    snprintf(line,sizeof line,"TRACK-CFG v=20261018T target=%u cap=%u settle=%lu duration=%lu lease=%lu simulated=%u\r\n",
++    snprintf(line,sizeof line,"TRACK-CFG v=20261018T1 target=%u cap=%u settle=%lu duration=%lu lease=%lu simulated=%u\r\n",
+         (unsigned)cfg.speed_target,(unsigned)cfg.pwm_max,(unsigned long)cfg.tracking_settle_ms,
+         (unsigned long)cfg.tracking_duration_ms,(unsigned long)cfg.tracking_lease_ms,(unsigned)cfg.simulated);
+     text_queue(line);
+@@ -325,7 +330,7 @@ void car_app_init(void) {
+     interrupt_set_priority(LPUART1_IRQn,2);
+     interrupt_set_priority(CSI_IRQn,3);
+     wireless_negotiate_baud();
+-    text_queue("C-CAR RT1064 SeekFree V3.5.5 TRACK20261018T: h help; s STOP\r\n");
++    text_queue("C-CAR RT1064 SeekFree V3.5.5 TRACK20261018T1: h help; s STOP\r\n");
+     wireless_diagnostic();
+ #if CAR_DISPLAY_ENABLED
+     tft180_set_dir(TFT180_PORTAIT); tft180_init();
+@@ -374,7 +379,7 @@ static void command(uint8_t byte,uint32_t epoch,uint32_t received) {
+             servo_test_active=0;
+             gpio_init(CAR_LEFT_DIR,GPO,CAR_LEFT_FORWARD,GPO_PUSH_PULL);
+             gpio_init(CAR_RIGHT_DIR,GPO,CAR_RIGHT_FORWARD,GPO_PUSH_PULL);
+-            apply_outputs();text_queue("START TRACK-TRIAL v=20261018T; p renews lease\r\n");
++            apply_outputs();text_queue("START TRACK-TRIAL v=20261018T1; p renews lease\r\n");
+         }
+         else text_queue("START REFUSED: idle + 3 valid fresh real frames required\r\n");
+         break;
+diff --git "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/demo/user/src/car_core.c" "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/demo/user/src/car_core.c"
+index ecdf582..4aa98ce 100644
+--- "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/demo/user/src/car_core.c"
++++ "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/demo/user/src/car_core.c"
+@@ -128,10 +128,12 @@ static void zero_outputs(control_state_t *s) {
+ void control_stop(control_state_t *s) {
+     s->mode=CAR_IDLE; s->fault=FAULT_NONE;
+     s->good_frames=0; s->bad_frames=0; s->derivative=0;
++    s->trial_done=0;s->trial_elapsed_ms=0;
+     zero_outputs(s);
+ }
+ void control_fault(control_state_t *s,car_fault_t f) {
+     s->mode=CAR_FAULT; s->fault=f; s->good_frames=0;
++    s->trial_done=0;s->trial_elapsed_ms=0;
+     zero_outputs(s);
+ }
+ void control_frame(control_state_t *s,const vision_result_t *f,uint32_t now) {
+@@ -190,10 +192,13 @@ int control_steer_test(control_state_t *s,uint32_t now) {
+     zero_outputs(s); s->derivative=0; s->test_until=now+30000u;
+     s->mode=CAR_STEER_TEST; s->fault=FAULT_NONE; return 1;
+ }
++int control_tracking_ready(const control_state_t *s,uint32_t now) {
++    return s->mode==CAR_IDLE && !s->cfg.simulated && s->good_frames>=3 &&
++       (uint32_t)(now-s->frame_ms)<=s->cfg.frame_timeout_ms &&
++       (uint32_t)(now-s->heartbeat_ms)<=s->cfg.heartbeat_timeout_ms;
++}
+ int control_start(control_state_t *s,uint32_t now) {
+-    if(s->mode!=CAR_IDLE || s->cfg.simulated || s->good_frames<3 ||
+-       (uint32_t)(now-s->frame_ms)>s->cfg.frame_timeout_ms ||
+-       (uint32_t)(now-s->heartbeat_ms)>s->cfg.heartbeat_timeout_ms) return 0;
++    if(!control_tracking_ready(s,now)) return 0;
+     /* STEP-02: aim from fresh vision before energizing either wheel. */
+     zero_outputs(s);s->derivative=0;
+     s->servo_us=clampf(s->cfg.servo_center_us+s->cfg.steer_sign*s->cfg.steer_kp*s->error,
+@@ -201,6 +206,7 @@ int control_start(control_state_t *s,uint32_t now) {
+     s->motion_ms=now+s->cfg.tracking_settle_ms;
+     s->test_until=s->motion_ms+s->cfg.tracking_duration_ms;
+     s->drive_lease_active=(uint8_t)(s->cfg.tracking_lease_ms>0);s->drive_command_ms=now;
++    s->trial_id++;s->trial_started_ms=now;s->trial_elapsed_ms=0;s->trial_done=0;
+     s->mode=CAR_RUNNING;s->fault=FAULT_NONE;
+     return 1;
+ }
+@@ -300,7 +306,8 @@ void control_tick(control_state_t *s,uint32_t now,int16_t left,int16_t right) {
+         control_fault(s,FAULT_LINK);return;
+     }
+     if(s->cfg.tracking_duration_ms && (int32_t)(now-s->test_until)>=0) {
+-        control_stop(s);return;
++        uint32_t elapsed=now-s->trial_started_ms;
++        control_stop(s);s->trial_elapsed_ms=elapsed;s->trial_done=1;return;
+     }
+     /* STEP-06 review: validate feedback even during zero-output steering preparation. */
+     if(left< -5 || right< -5 || abs_i(left)>450 || abs_i(right)>450) {
+diff --git "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/libraries/zf_device/zf_device_mt9v03x.c" "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/libraries/zf_device/zf_device_mt9v03x.c"
+index 440e53d..16dc75b 100644
+--- "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/libraries/zf_device/zf_device_mt9v03x.c"
++++ "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/libraries/zf_device/zf_device_mt9v03x.c"
+@@ -396,12 +396,13 @@ void mt9v03x_finished_callback(CSI_Type *base, csi_handle_t *handle, status_t st
+         if(full_buffer_addr == (uint32)mt9v03x_image1[0])
+         {
+             mt9v03x_image = mt9v03x_image1; // image_csi1�ɼ����
+-            csi_add_empty_buffer(&csi_handle, mt9v03x_image2[0]);
++            /* Requeue the completed slot; the opposite slot is the next DMA target. */
++            csi_add_empty_buffer(&csi_handle, mt9v03x_image1[0]);
+         }
+         else if(full_buffer_addr == (uint32)mt9v03x_image2[0])
+         {
+             mt9v03x_image = mt9v03x_image2; // image_csi2�ɼ����
+-            csi_add_empty_buffer(&csi_handle, mt9v03x_image1[0]);
++            csi_add_empty_buffer(&csi_handle, mt9v03x_image2[0]);
+         }
+         mt9v03x_finish_flag = 1;            // �ɼ���ɱ�־λ��һ
+         if(mt9v03x_frame_observer)mt9v03x_frame_observer(); /* STEP-04 */
+diff --git "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/tests/run_tests.py" "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/tests/run_tests.py"
+index e4a8ad5..f61641c 100644
+--- "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/tests/run_tests.py"
++++ "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/tests/run_tests.py"
+@@ -2,8 +2,9 @@
+ from pathlib import Path
+ import subprocess
+ import sys
++import os
+ root = Path(__file__).resolve().parents[1]
+-zig = root / '.tools/ziglang/zig.exe'
++zig = Path(os.environ.get('ZIG', str(root / '.tools/ziglang/zig.exe')))
+ out = root / 'tests/out'
+ out.mkdir(exist_ok=True)
+ exe = out / 'test_core.exe'
+@@ -26,7 +27,8 @@ subprocess.run([str(zig), 'cc', '-std=c99', '-Wall', '-Wextra', '-Werror',
+                str(root/'demo/user/src/car_core.c'), str(root/'demo/user/src/car_app.c'),
+                str(root/'demo/user/src/car_servo.c'),
+                '-o', str(app_exe)], check=True)
+-subprocess.run([str(app_exe)], check=True)
++telemetry_fixture = out / 'telemetry-fixture-zig.txt'
++subprocess.run([str(app_exe),str(telemetry_fixture)], check=True)
+ servo_exe = out / 'test_servo.exe'
+ subprocess.run([str(zig), 'cc', '-std=c99', '-Wall', '-Wextra', '-Werror',
+                '-O1', '-UNDEBUG', '-I', str(root/'tests/sdk'),
+@@ -54,4 +56,6 @@ subprocess.run([str(zig), 'cc', '-std=c99', '-Wall', '-Wextra', '-Werror',
+ subprocess.run([str(scene_exe), str(scene_out)], check=True)
+ subprocess.run([sys.executable,str(root/'tests/render_vision_report.py')], check=True)
+ subprocess.run([sys.executable,str(root/'tests/test_capture.py')], check=True)
++subprocess.run([sys.executable,str(root/'tests/test_csi_buffers.py'),'--cc',str(zig),'--cc-arg','cc'], check=True)
++os.environ['TRACK_TEST_TELEMETRY']=str(telemetry_fixture)
+ subprocess.run([sys.executable,str(root.parents[2]/'repair/test_tracking_tool.py')], check=True)
+diff --git "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/tests/test_app.c" "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/tests/test_app.c"
+index d44b5ba..dfabb65 100644
+--- "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/tests/test_app.c"
++++ "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/tests/test_app.c"
+@@ -63,15 +63,19 @@ void tft180_draw_point(int x,int y,int c) {(void)x;(void)y;(void)c;}
+ static void frame(void) {
+     car_app_tick_10ms(); mt9v03x_finish_flag=1;if(mt9v03x_frame_observer)mt9v03x_frame_observer(); car_app_foreground();
+ }
+-int main(void) {
++int main(int argc,char **argv) {
+     /* RX can fire after debug UART setup, before application PWM initialization. */
+     car_app_uart_rx_isr('s'); car_app_uart_rx_isr('1');
+     for(int y=0;y<120;y++) for(int x=0;x<188;x++) camera[y][x]=(uint8_t)(x>=50 && x<=138?210:30);
+     car_app_init(); CHECK(duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0);
+     CHECK(uart8_initialized==1 && uart8_rx_enabled==1);
+     /* STEP-05: observable timing/quality/phase fields are an integration contract. */
++    for(int flush=0;flush<100;flush++)car_app_foreground(); /* Drain finite startup queue first. */
++    car_app_uart_rx_isr('d');for(int flush=0;flush<100;flush++)car_app_foreground();
+     car_app_uart_rx_isr('p');for(int flush=0;flush<100;flush++)car_app_foreground();
+     tx[tx_len]=0;CHECK(strstr((char*)tx,"cap_age=") && strstr((char*)tx,"phase=") && strstr((char*)tx,"target10="));
++    CHECK(strstr((char*)tx,"ready=0 good_frames=0 accepted_age=") && strstr((char*)tx,"trial_id=0 trial_done=0 trial_ms=0\r\n"));
++    if(argc>1){FILE *fixture=fopen(argv[1],"wb");CHECK(fixture);CHECK(fwrite(tx,1,tx_len,fixture)==tx_len);fclose(fixture);}
+     car_app_foreground(); car_app_tick_10ms();
+     CHECK(duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0 && duties[CAR_SERVO_PWM]==750);
+     car_app_uart_rx_isr('a'); car_app_foreground(); car_app_tick_10ms();
+@@ -186,6 +190,11 @@ int main(void) {
+         feedback_left=feedback_right=(int16_t)(i>=20?20:0);frame();
+     }
+     CHECK(duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0);
++    for(int flush=0;flush<100;flush++)car_app_foreground();
++    unsigned completion_begin=tx_len;
++    car_app_uart_rx_isr('p');for(int flush=0;flush<100;flush++)car_app_foreground();
++    tx[tx_len]=0;CHECK(strstr((char*)tx+completion_begin,"trial_done=1 trial_ms=3200\r\n"));
++    if(argc>1){FILE *fixture=fopen(argv[1],"ab");CHECK(fixture);CHECK(fwrite(tx+completion_begin,1,tx_len-completion_begin,fixture)==tx_len-completion_begin);fclose(fixture);}
+     feedback_left=feedback_right=0;car_app_uart_rx_isr('s');car_app_foreground();
+     for(int i=0;i<4;i++)frame();car_app_uart_rx_isr('a');car_app_foreground();
+     for(int i=0;i<60;i++){feedback_left=feedback_right=(int16_t)(i>=20?20:0);frame();}
+diff --git "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/tests/test_tracking.c" "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/tests/test_tracking.c"
+index 9a8f2e1..b6c9630 100644
+--- "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/tests/test_tracking.c"
++++ "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/competition/firmware/camera_car/tests/test_tracking.c"
+@@ -52,7 +52,13 @@ static void trial_guard_tests(void) {
+     control_init(&s,&c);ready(&s);CHECK(control_start(&s,60));
+     for(uint32_t t=70;t<=3260;t+=10){frame(&s,t,0);control_drive_keepalive(&s,t);control_tick(&s,t,t>=270?20:0,t>=270?20:0);}
+     CHECK(s.mode==CAR_IDLE && s.duty[0]==0 && s.duty[1]==0 && s.servo_us==1500);
+-    control_drive_keepalive(&s,3270);CHECK(s.mode==CAR_IDLE);
++    CHECK(s.trial_done==1 && s.trial_id==1 && s.trial_elapsed_ms==3200);
++    control_drive_keepalive(&s,3270);CHECK(s.mode==CAR_IDLE && s.trial_done==1);
++    control_stop(&s);CHECK(s.trial_done==0 && s.trial_id==1 && !control_tracking_ready(&s,3270));
++    frame(&s,3280,0);frame(&s,3300,0);CHECK(!control_tracking_ready(&s,3300));
++    frame(&s,3320,0);CHECK(control_tracking_ready(&s,3320));CHECK(control_start(&s,3320));
++    CHECK(s.trial_id==2 && s.trial_done==0);
++    control_fault(&s,FAULT_LINE);CHECK(s.trial_done==0 && s.trial_id==2);
+     control_init(&s,&c);uint32_t start=0xffffff80u;
+     frame(&s,start-40,0);frame(&s,start-20,0);frame(&s,start,0);CHECK(control_start(&s,start));
+     for(uint32_t d=10;d<=3200;d+=10){uint32_t t=start+d;frame(&s,t,0);control_drive_keepalive(&s,t);control_tick(&s,t,d>=210?20:0,d>=210?20:0);}
+diff --git "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/repair/build_arm.py" "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/repair/build_arm.py"
+index 5175cf0..1c33769 100644
+--- "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/repair/build_arm.py"
++++ "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/repair/build_arm.py"
+@@ -1,7 +1,8 @@
+-"""Build repo sources with existing ArmClang 6.7, without installing CMSIS Packs.
++"""Build repo sources with the installed ArmClang, without installing CMSIS Packs.
+ 
+ Reuses the checked-in project file list, defines, includes and scatter layout.
+-Does not flash. This is a distinct local toolchain, not the historical 6.21 build.
++Does not flash. The compiler --version is saved in each build log. T1 was built
++with Arm Compiler 6.21; archived T/N files used 6.7 and are not byte-identical.
+ """
+ from pathlib import Path
+ import argparse
+diff --git "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/repair/run-tests.cmd" "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/repair/run-tests.cmd"
+index 1b82805..5ba7fa4 100644
+--- "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/repair/run-tests.cmd"
++++ "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/repair/run-tests.cmd"
+@@ -1,6 +1,13 @@
+ @echo off
+-call "D:\Program file\visual studio\VC\Auxiliary\Build\vcvars64.bat" >nul
+-if errorlevel 1 exit /b 1
++where cl >nul 2>&1
++if errorlevel 1 (
++  for /f "usebackq delims=" %%V in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -find VC\Auxiliary\Build\vcvars64.bat`) do call "%%V" >nul
++)
++where cl >nul 2>&1
++if errorlevel 1 (
++  echo MSVC C compiler not found. Run from a Visual Studio x64 Native Tools prompt.
++  exit /b 1
++)
+ set PYTHONDONTWRITEBYTECODE=1
+ python "%~dp0run_tests.py"
+ exit /b %errorlevel%
+diff --git "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/repair/run_tests.py" "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/repair/run_tests.py"
+index 3785184..121961c 100644
+--- "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/repair/run_tests.py"
++++ "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/repair/run_tests.py"
+@@ -33,7 +33,8 @@ with (evidence/'host-tests.log').open('w',encoding='utf-8') as log:
+     run([build('test_core',[tests/'test_core.c',src/'car_core.c'],[inc])])
+     run([build('test_tracking',[tests/'test_tracking.c',src/'car_core.c'],[inc])])
+     app=[tests/'test_app.c',src/'car_core.c',src/'car_app.c',src/'car_servo.c']
+-    run([build('test_app',app,[tests/'sdk',inc])])
++    telemetry_fixture=out/'telemetry-fixture.txt'
++    run([build('test_app',app,[tests/'sdk',inc]),telemetry_fixture])
+     run([build('test_servo',[tests/'test_servo.c',src/'car_servo.c'],[tests/'sdk',inc])])
+     if (tests/'test_uart8.c').exists():
+         files=[tests/'test_uart8.c',src/'car_core.c',src/'car_app.c',src/'car_servo.c']
+@@ -45,6 +46,8 @@ with (evidence/'host-tests.log').open('w',encoding='utf-8') as log:
+     run([build('test_vision_scenarios',[tests/'test_vision_scenarios.c',src/'car_core.c'],[inc]),vision])
+     run([sys.executable,tests/'render_vision_report.py'])
+     run([sys.executable,tests/'test_capture.py'])
++    run([sys.executable,tests/'test_csi_buffers.py'])
++    os.environ['TRACK_TEST_TELEMETRY']=str(telemetry_fixture)
+     run([sys.executable,BASE/'repair/test_tracking_tool.py'])
+     log.write('ALL TESTS PASSED\n')
+ print('ALL TESTS PASSED; see repair/evidence/host-tests.log')
+diff --git "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/repair/test_tracking_tool.py" "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/repair/test_tracking_tool.py"
+index 1c56190..cbcf466 100644
+--- "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/repair/test_tracking_tool.py"
++++ "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/repair/test_tracking_tool.py"
+@@ -2,13 +2,25 @@
+ import unittest
+ from unittest.mock import patch
+ import tempfile
++import os
+ from pathlib import Path
+ from tracking_trial import parse_status, parse_config, check_status, session
+ 
+-LINE = 'ms=100 mode=1 fault=0 frames=8 valid=1 pair=13/13 thr=30 err10=25 bench_target=20 bench_started=3 enc=20,21 pwm=1400,1450 us=1492 speed=20 target10=200 phase=2 quality=100 reject=0 seq=8 cap_age=10 proc_ms=0 used_age=0 drop_frames=0'
+-CFG = 'TRACK-CFG v=20261018T target=20 cap=3000 settle=200 duration=3000 lease=500 simulated=0'
++LINE = 'ms=100 mode=1 fault=0 frames=8 valid=1 pair=13/13 thr=30 err10=25 bench_target=20 bench_started=3 enc=20,21 pwm=1400,1450 us=1492 speed=20 target10=200 phase=2 quality=100 reject=0 seq=8 cap_age=10 proc_ms=0 used_age=0 drop_frames=0 ready=0 good_frames=3 accepted_age=10 trial_id=1 trial_done=0 trial_ms=100'
++CFG = 'TRACK-CFG v=20261018T1 target=20 cap=3000 settle=200 duration=3000 lease=500 simulated=0'
+ 
+ class Contracts(unittest.TestCase):
++    @unittest.skipUnless(os.environ.get('TRACK_TEST_TELEMETRY'), 'Full runner supplies actual C telemetry')
++    def test_actual_c_telemetry_is_complete_and_parseable(self):
++        lines = Path(os.environ['TRACK_TEST_TELEMETRY']).read_text(encoding='ascii').splitlines()
++        statuses = [parse_status(line) for line in lines if line.startswith('ms=')]
++        self.assertTrue(statuses)
++        self.assertTrue(all(row is not None for row in statuses))
++        self.assertTrue(any(row['trial_done'] == 1 and row['trial_ms'] == 3200 for row in statuses))
++        configs = [parse_config(line) for line in lines if line.startswith('TRACK-CFG ')]
++        self.assertEqual(len(configs), 1)
++        for row in statuses:
++            check_status(row)
+     def test_real_status_fields(self):
+         row = parse_status(LINE)
+         self.assertEqual(row['enc'], (20, 21))
+@@ -24,59 +36,105 @@ class Contracts(unittest.TestCase):
+                 check_status(parse_status(LINE.replace(token, replacement)))
+     def test_only_identified_bounded_real_trial(self):
+         self.assertEqual(parse_config(CFG)['duration'], 3000)
+-        for token, replacement in [('v=20261018T','v=20261018N'), ('lease=500','lease=0'),
++        for token, replacement in [('v=20261018T1','v=20261018T'), ('lease=500','lease=0'),
+                                    ('duration=3000','duration=0'), ('simulated=0','simulated=1')]:
+             with self.subTest(replacement=replacement), self.assertRaises(RuntimeError):
+                 parse_config(CFG.replace(token, replacement))
+ 
+-    def test_session_queries_by_default_and_stops_after_explicit_run(self):
++    def exercise(self, scenario='normal', run=True, wrap=False):
+         class Port:
+             def __init__(self):
+                 self.commands = ''
+                 self.pending = bytearray()
+-                self.now = 0
+-                self.active = False
+-                self.queries = 0
+-                self.bad_feedback = False
++                self.now = 0.0
++                self.start = None
++                self.sequence = 0
+             @property
+             def in_waiting(self):
+                 return len(self.pending)
+             def write(self, data):
+                 self.commands += data.decode()
+-                for char in data.decode():
+-                    if char == 'd':
++                for command in data.decode():
++                    if command == 'd':
+                         self.pending.extend((CFG + '\n').encode())
+-                    elif char == 'a':
+-                        self.active = True
+-                    elif char == 'p':
+-                        self.queries += 1
+-                        line = LINE.replace('ms=100', 'ms=' + str(self.queries * 100))
+-                        if not self.active or self.queries > 4:
+-                            line = line.replace('mode=1', 'mode=0').replace('pwm=1400,1450', 'pwm=0,0').replace('us=1492', 'us=1500')
+-                        if self.active and self.bad_feedback:
+-                            line = line.replace('enc=20,21', 'enc=-6,20')
+-                        self.pending.extend((line + '\n').encode())
++                    elif command == 'a':
++                        if scenario == 'refused':
++                            self.pending.extend(b'START REFUSED: not ready\n')
++                        else:
++                            self.start = self.now
++                    elif command == 'p':
++                        self.sequence += 1
++                        elapsed = 0 if self.start is None else round((self.now-self.start)*1000)
++                        active = self.start is not None and elapsed < (250 if scenario == 'early' else 3200)
++                        done = int(self.start is not None and not active and scenario != 'early')
++                        moving = active and elapsed >= 200 and scenario != 'no-motion'
++                        ready = int(self.start is None and self.sequence >= 3 and scenario != 'not-ready')
++                        mode = int(active)
++                        fault = 0
++                        if self.start is not None and scenario == 'fault':
++                            mode, fault = 3, 6
++                        device_ms = (round(self.now*1000) + (0xffffff00 if wrap else 0)) & 0xffffffff
++                        if scenario == 'stale' and self.start is not None:
++                            device_ms = 100
++                        trial_id = int(self.start is not None)
++                        if scenario == 'old-id' and self.start is not None:
++                            trial_id = 0
++                        line = ('ms=%d mode=%d fault=%d valid=1 us=1500 target10=%d phase=%d '
++                                'cap_age=10 enc=%d,%d pwm=%d,%d ready=%d good_frames=%d '
++                                'accepted_age=10 trial_id=%d trial_done=%d trial_ms=%d\n') % (
++                            device_ms, mode, fault, 200 if moving else 0, 2 if moving else 0,
++                            20 if moving else 0, 21 if moving else 0, 1400 if moving else 0,
++                            1450 if moving else 0, ready, 3 if ready else 1, trial_id, done, elapsed)
++                        self.pending.extend(line.encode())
+             def read(self, count):
+-                self.now += .05
+-                data = bytes(self.pending[:count])
++                self.now += .02
++                result = bytes(self.pending[:count])
+                 del self.pending[:count]
+-                return data
++                return result
++        port = Port()
+         with tempfile.TemporaryDirectory() as directory:
+-            for run, bad in ((False, False), (True, False), (True, True)):
+-                port = Port()
+-                port.bad_feedback = bad
+-                output = Path(directory) / ('trial-%s-%s' % (run, bad))
+-                with patch('tracking_trial.time.monotonic', side_effect=lambda: port.now):
+-                    if bad:
+-                        with self.assertRaises(RuntimeError):
+-                            session(port, output, run)
+-                    else:
+-                        session(port, output, run)
+-                self.assertEqual('a' in port.commands, run)
+-                if run:
+-                    self.assertTrue(port.commands.endswith('s'))
+-                self.assertTrue((output / 'status.csv').is_file())
+-                self.assertTrue((output / 'serial.bin').is_file())
++            output = Path(directory) / 'trial'
++            error = None
++            with patch('tracking_trial.time.monotonic', side_effect=lambda: port.now):
++                try:
++                    session(port, output, run)
++                except RuntimeError as exc:
++                    error = exc
++            import json
++            result = json.loads((output / 'result.json').read_text())
++        return port, result, error
++
++    def test_preflight_waits_for_three_processed_frames(self):
++        port, result, error = self.exercise(run=False)
++        self.assertIsNone(error)
++        self.assertGreaterEqual(port.sequence, 3)
++        self.assertNotIn('a', port.commands)
++        self.assertEqual(result['outcome'], 'preflight')
++
++    def test_normal_full_trial_and_device_wrap(self):
++        for wrap in (False, True):
++            port, result, error = self.exercise(wrap=wrap)
++            self.assertIsNone(error)
++            self.assertEqual(result['outcome'], 'completed')
++            self.assertGreaterEqual(result['completion']['trial_ms'], 3200)
++            self.assertEqual(result['completion']['trial_id'], 1)
++            self.assertTrue(port.commands.endswith('s'))
++
++    def test_early_idle_and_never_moving_are_errors(self):
++        for scenario in ('early', 'no-motion', 'fault', 'stale', 'old-id', 'refused'):
++            with self.subTest(scenario=scenario):
++                port, result, error = self.exercise(scenario)
++                self.assertIsInstance(error, RuntimeError)
++                self.assertEqual(result['outcome'], 'error')
++                self.assertTrue(result['reason'])
++                self.assertTrue(port.commands.endswith('s'))
++
++    def test_not_ready_does_not_arm_and_still_saves_result(self):
++        port, result, error = self.exercise('not-ready')
++        self.assertIsInstance(error, RuntimeError)
++        self.assertNotIn('a', port.commands)
++        self.assertEqual(result['outcome'], 'error')
++
+ 
+ if __name__ == '__main__':
+     unittest.main()
+diff --git "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/repair/tracking_trial.py" "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/repair/tracking_trial.py"
+index 8a23157..c775f87 100644
+--- "a/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/repair/tracking_trial.py"
++++ "b/major-car-\344\275\216\351\200\237\345\276\252\350\277\271\346\225\264\345\220\210-20261018/code/repair/tracking_trial.py"
+@@ -22,7 +22,8 @@ def parse_status(line):
+     try:
+         values = fields(line)
+         row = {key: int(values[key]) for key in
+-               ('ms', 'mode', 'fault', 'valid', 'us', 'target10', 'phase', 'cap_age')}
++               ('ms', 'mode', 'fault', 'valid', 'us', 'target10', 'phase', 'cap_age',
++                'ready', 'good_frames', 'accepted_age', 'trial_id', 'trial_done', 'trial_ms')}
+         for key in ('enc', 'pwm'):
+             pair = tuple(int(v) for v in values[key].split(','))
+             if len(pair) != 2:
+@@ -36,7 +37,7 @@ def parse_status(line):
+ def parse_config(line):
+     values = fields(line)
+     try:
+-        if not line.startswith('TRACK-CFG ') or values['v'] != '20261018T':
++        if not line.startswith('TRACK-CFG ') or values['v'] != '20261018T1':
+             raise ValueError('unrecognized firmware')
+         cfg = {key: int(values[key]) for key in
+                ('target', 'cap', 'settle', 'duration', 'lease', 'simulated')}
+@@ -64,6 +65,7 @@ def session(port, output, run=False):
+     rows, config, latest = [], None, None
+     pending = bytearray()
+     motion_armed = False
++    result = {'outcome': 'error', 'reason': 'Session did not finish', 'hardware_verified': False}
+     raw = (output / 'serial.bin').open('wb')
+ 
+     def send(command):
+@@ -95,23 +97,34 @@ def session(port, output, run=False):
+     try:
+         deadline = time.monotonic() + 2
+         query_at = 0.0
++        send('d')
+         while time.monotonic() < deadline:
+             now = time.monotonic()
+             if now >= query_at:
+-                send('dp')
++                send('p')
+                 query_at = now + .2
+             receive()
+-            if config and latest:
++            if latest:
++                check_status(latest)
++                if latest['mode'] != 0 or any(latest['pwm']):
++                    raise RuntimeError('Idle and zero outputs required')
++            if (config and latest and latest['ready'] == 1 and latest['good_frames'] >= 3
++                    and latest['valid'] == 1 and latest['cap_age'] <= 150
++                    and latest['accepted_age'] <= 150):
+                 break
+         if not config:
+             raise RuntimeError('No identified tracking configuration')
+         check_status(latest)
+         if latest['mode'] != 0 or any(latest['pwm']):
+             raise RuntimeError('Idle and zero outputs required')
+-        if latest['valid'] != 1 or latest['cap_age'] > 150:
+-            raise RuntimeError('Fresh valid real track image required')
++        if (latest['ready'] != 1 or latest['good_frames'] < 3 or latest['valid'] != 1
++                or latest['cap_age'] > 150 or latest['accepted_age'] > 150):
++            raise RuntimeError('Firmware not ready: three fresh processed valid frames required')
++        expected_id = (latest['trial_id'] + 1) & 0xffffffff
+         print(json.dumps({'configuration': config, 'status': latest}, ensure_ascii=False))
+         if not run:
++            result = {'outcome': 'preflight', 'reason': 'Firmware ready; no start sent',
++                      'configuration': config, 'status': latest, 'hardware_verified': False}
+             print('Preflight only. No start sent. --run explicitly starts one bounded trial.')
+             return
+         motion_armed = True  # Also send stop if write/ACK handling fails after this point.
+@@ -119,6 +132,7 @@ def session(port, output, run=False):
+         began = time.monotonic()
+         fresh_at, query_at, last_ms = began, began, latest['ms']
+         active = False
++        moving = False
+         limit = (config['settle'] + config['duration']) / 1000 + 1
+         while time.monotonic() - began < limit:
+             now = time.monotonic()
+@@ -130,17 +144,34 @@ def session(port, output, run=False):
+                 if row['ms'] != last_ms:
+                     fresh_at, last_ms = time.monotonic(), row['ms']
+                 if row['mode'] == 1:
++                    if row['trial_id'] != expected_id:
++                        raise RuntimeError('Unexpected trial identity; no automatic retry')
+                     active = True
++                    if (row['phase'] == 2 and row['target10'] > 0
++                            and all(v > 0 for v in row['enc'])
++                            and all(v > 0 for v in row['pwm'])):
++                        moving = True
+                 elif active:
+                     if any(row['pwm']) or row['us'] != 1500:
+                         raise RuntimeError('Idle without zero PWM and neutral steering')
+-                    print('Trial ended with zero outputs; physical stopping still requires observation.')
++                    if (row['trial_id'] != expected_id or row['trial_done'] != 1
++                            or row['trial_ms'] < config['settle'] + config['duration']):
++                        raise RuntimeError('Trial ended early or without normal-expiry evidence')
++                    if not moving:
++                        raise RuntimeError('No observed two-wheel closed-loop motion; trial not accepted')
++                    result = {'outcome': 'completed', 'reason': 'Normal expiry and motion feedback observed',
++                              'configuration': config, 'completion': row, 'hardware_verified': False}
++                    print('Normal expiry and two-wheel feedback observed; physical tracking/stopping still require observation.')
+                     return
+             if now - fresh_at > .7:
+                 raise RuntimeError('Telemetry stale; stop attempted (vehicle also has local lease)')
+             if not active and now - began > .8:
+                 raise RuntimeError('No active trial observed; no automatic retry')
+         raise RuntimeError('No observed automatic trial completion before deadline')
++    except BaseException as exc:
++        result = {'outcome': 'error', 'reason': str(exc) or type(exc).__name__,
++                  'configuration': config, 'status': latest, 'hardware_verified': False}
++        raise
+     finally:
+         if motion_armed:
+             try:
+@@ -148,6 +179,7 @@ def session(port, output, run=False):
+             except Exception:
+                 pass  # A lost radio cannot guarantee delivery; vehicle-side lease is independent.
+         raw.close()
++        (output / 'result.json').write_text(json.dumps(result, indent=2), encoding='utf-8')
+         (output / 'status.json').write_text(json.dumps(rows, indent=2), encoding='utf-8')
+         if rows:
+             with (output / 'status.csv').open('w', newline='', encoding='utf-8-sig') as file:
