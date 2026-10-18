@@ -1,0 +1,4 @@
+test_tracking.c
+car_core.c
+正在生成代码...
+FAIL tracking:83 s.mode==CAR_FAULT && s.fault==FAULT_ENCODER && s.duty[0]==0 && s.duty[1]==0

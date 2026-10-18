@@ -1,0 +1,5 @@
+test_tracking.c
+car_core.c
+正在生成代码...
+test_tracking.obj : error LNK2019: 无法解析的外部符号 control_frame_at，函数 capture_age_tests 中引用了该符号
+repair\evidence\test_tracking.exe : fatal error LNK1120: 1 个无法解析的外部命令

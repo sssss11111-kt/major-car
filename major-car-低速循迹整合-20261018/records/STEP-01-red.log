@@ -1,0 +1,4 @@
+test_tracking.c
+car_core.c
+正在生成代码...
+FAIL tracking:22 s.duty[0]==3000 && s.duty[1]==3000

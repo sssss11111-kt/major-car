@@ -1,0 +1,7 @@
+test_tracking.c
+car_core.c
+正在生成代码...
+STEP-04 capture age/stale rejection/duplicate/wrap: PASS
+STEP-02 visual steering before startup: PASS
+STEP-01 shared tracking speed/startup/steering isolation: PASS
+STEP-02 trial duration/link/wrap/line loss during preparation: PASS

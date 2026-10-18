@@ -1,0 +1,20 @@
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /Fe:D:\桌面\智能车\major-car-低速循迹整合-20261018\code\competition\firmware\camera_car\tests\out\msvc-ae5z222c\test_core.exe /Fo:D:\桌面\智能车\major-car-低速循迹整合-20261018\code\competition\firmware\camera_car\tests\out\msvc-ae5z222c\test_core\ /I D:\桌面\智能车\major-car-低速循迹整合-20261018\code\competition\firmware\camera_car\demo\user\inc D:\桌面\智能车\major-car-低速循迹整合-20261018\code\competition\firmware\camera_car\tests\test_core.c D:\桌面\智能车\major-car-低速循迹整合-20261018\code\competition\firmware\camera_car\demo\user\src\car_core.c
+test_core.c
+car_core.c
+正在生成代码...
+D:\桌面\智能车\major-car-低速循迹整合-20261018\code\competition\firmware\camera_car\tests\out\msvc-ae5z222c\test_core.exe
+10s drive timeout, lease, stop, no-vision guards: PASS
+ground drive guards/no-vision/timeout: PASS
+static steering guards: PASS
+dual speed bench guards/model: PASS (model is not hardware validation)
+right speed bench guards/model: PASS (model is not hardware validation)
+vision tests: PASS
+control tests: PASS
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /Fe:D:\桌面\智能车\major-car-低速循迹整合-20261018\code\competition\firmware\camera_car\tests\out\msvc-ae5z222c\test_app.exe /Fo:D:\桌面\智能车\major-car-低速循迹整合-20261018\code\competition\firmware\camera_car\tests\out\msvc-ae5z222c\test_app\ /I D:\桌面\智能车\major-car-低速循迹整合-20261018\code\competition\firmware\camera_car\tests\sdk /I D:\桌面\智能车\major-car-低速循迹整合-20261018\code\competition\firmware\camera_car\demo\user\inc D:\桌面\智能车\major-car-低速循迹整合-20261018\code\competition\firmware\camera_car\tests\test_app.c D:\桌面\智能车\major-car-低速循迹整合-20261018\code\competition\firmware\camera_car\demo\user\src\car_core.c D:\桌面\智能车\major-car-低速循迹整合-20261018\code\competition\firmware\camera_car\demo\user\src\car_app.c D:\桌面\智能车\major-car-低速循迹整合-20261018\code\competition\firmware\camera_car\demo\user\src\car_servo.c
+test_app.c
+car_core.c
+car_app.c
+car_servo.c
+正在生成代码...
+D:\桌面\智能车\major-car-低速循迹整合-20261018\code\competition\firmware\camera_car\tests\out\msvc-ae5z222c\test_app.exe
+FAIL adapter line 72: strstr((char*)tx,"cap_age=") && strstr((char*)tx,"phase=") && strstr((char*)tx,"target10=")

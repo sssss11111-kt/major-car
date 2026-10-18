@@ -1,0 +1,4 @@
+test_tracking.c
+car_core.c
+正在生成代码...
+FAIL tracking:37 fabsf(s.servo_us-1425)<.1f
