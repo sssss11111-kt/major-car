@@ -1,0 +1,102 @@
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /D_CRT_SECURE_NO_WARNINGS /Fe:versions/H1\code\competition\firmware\camera_car\tests\out\msvc-dn282zg1\test_sustain.exe /Fo:versions/H1\code\competition\firmware\camera_car\tests\out\msvc-dn282zg1\test_sustain\ /I versions/H1\code\competition\firmware\camera_car\demo\user\inc versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c versions/H1\code\competition\firmware\camera_car\demo\user\src\car_core.c
+test_sustain.c
+
+car_core.c
+
+versions/H1\code\competition\firmware\camera_car\demo\user\src\car_core.c(333): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+versions/H1\code\competition\firmware\camera_car\demo\user\src\car_core.c(334): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+正在生成代码...
+
+versions/H1\code\competition\firmware\camera_car\tests\out\msvc-dn282zg1\test_sustain.exe
+Sustain: kick gate / drop / full-window stats / lost motion / isolation / guards / IDs / wrap PASS
+
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /D_CRT_SECURE_NO_WARNINGS /Fe:versions/H1\code\competition\firmware\camera_car\tests\out\msvc-dn282zg1\test_calibration.exe /Fo:versions/H1\code\competition\firmware\camera_car\tests\out\msvc-dn282zg1\test_calibration\ /I versions/H1\code\competition\firmware\camera_car\demo\user\inc versions/H1\code\competition\firmware\camera_car\tests\test_calibration.c versions/H1\code\competition\firmware\camera_car\demo\user\src\car_core.c
+test_calibration.c
+
+car_core.c
+
+versions/H1\code\competition\firmware\camera_car\demo\user\src\car_core.c(333): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+versions/H1\code\competition\firmware\camera_car\demo\user\src\car_core.c(334): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+正在生成代码...
+
+versions/H1\code\competition\firmware\camera_car\tests\out\msvc-dn282zg1\test_calibration.exe
+Calibration: range / isolation / expiry / lease / heartbeat / feedback / stop / wrap PASS
+
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /D_CRT_SECURE_NO_WARNINGS /Fe:versions/H1\code\competition\firmware\camera_car\tests\out\msvc-dn282zg1\test_core.exe /Fo:versions/H1\code\competition\firmware\camera_car\tests\out\msvc-dn282zg1\test_core\ /I versions/H1\code\competition\firmware\camera_car\demo\user\inc versions/H1\code\competition\firmware\camera_car\tests\test_core.c versions/H1\code\competition\firmware\camera_car\demo\user\src\car_core.c
+test_core.c
+
+car_core.c
+
+versions/H1\code\competition\firmware\camera_car\demo\user\src\car_core.c(333): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+versions/H1\code\competition\firmware\camera_car\demo\user\src\car_core.c(334): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+正在生成代码...
+
+versions/H1\code\competition\firmware\camera_car\tests\out\msvc-dn282zg1\test_core.exe
+10s drive timeout, lease, stop, no-vision guards: PASS
+
+ground drive guards/no-vision/timeout: PASS
+
+static steering guards: PASS
+
+dual speed bench guards/model: PASS (model is not hardware validation)
+
+right speed bench guards/model: PASS (model is not hardware validation)
+
+vision tests: PASS
+
+control tests: PASS
+
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /D_CRT_SECURE_NO_WARNINGS /Fe:versions/H1\code\competition\firmware\camera_car\tests\out\msvc-dn282zg1\test_tracking.exe /Fo:versions/H1\code\competition\firmware\camera_car\tests\out\msvc-dn282zg1\test_tracking\ /I versions/H1\code\competition\firmware\camera_car\demo\user\inc versions/H1\code\competition\firmware\camera_car\tests\test_tracking.c versions/H1\code\competition\firmware\camera_car\demo\user\src\car_core.c
+test_tracking.c
+
+car_core.c
+
+versions/H1\code\competition\firmware\camera_car\demo\user\src\car_core.c(333): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+versions/H1\code\competition\firmware\camera_car\demo\user\src\car_core.c(334): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+正在生成代码...
+
+versions/H1\code\competition\firmware\camera_car\tests\out\msvc-dn282zg1\test_tracking.exe
+T2 bias isolation / overspeed reduction / stall / zero target: PASS
+
+STEP-06 encoder checks during preparation: PASS
+
+STEP-04 capture age/stale rejection/duplicate/wrap: PASS
+
+STEP-02 visual steering before startup: PASS
+
+STEP-01 shared tracking speed/startup/steering isolation: PASS
+
+STEP-02 trial duration/link/wrap/line loss during preparation: PASS
+
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /D_CRT_SECURE_NO_WARNINGS /Fe:versions/H1\code\competition\firmware\camera_car\tests\out\msvc-dn282zg1\test_app.exe /Fo:versions/H1\code\competition\firmware\camera_car\tests\out\msvc-dn282zg1\test_app\ /I versions/H1\code\competition\firmware\camera_car\tests\sdk /I versions/H1\code\competition\firmware\camera_car\demo\user\inc versions/H1\code\competition\firmware\camera_car\tests\test_app.c versions/H1\code\competition\firmware\camera_car\demo\user\src\car_core.c versions/H1\code\competition\firmware\camera_car\demo\user\src\car_app.c versions/H1\code\competition\firmware\camera_car\demo\user\src\car_servo.c
+test_app.c
+
+car_core.c
+
+versions/H1\code\competition\firmware\camera_car\demo\user\src\car_core.c(333): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+versions/H1\code\competition\firmware\camera_car\demo\user\src\car_core.c(334): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+car_app.c
+
+car_servo.c
+
+正在生成代码...
+
+versions/H1\code\competition\firmware\camera_car\tests\out\msvc-dn282zg1\test_app.exe versions/H1\code\competition\firmware\camera_car\tests\out\telemetry-fixture.txt versions/H1\code\competition\firmware\camera_car\tests\out\hold-fixture.txt
+FAIL adapter line 256: duties[CAR_LEFT_PWM]==1800 && duties[CAR_RIGHT_PWM]==0
+
+STEP-06 receipt-time lease, stale capture and copy-race guards: PASS
+
+STEP-05 image->vision->steering/speed, line loss, trial/lease: PASS (host I/O double)
+
+Calibration adapter: selection / isolation / stop / bounds / C3 protocol PASS
+

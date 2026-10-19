@@ -1,0 +1,60 @@
+HOLD-STATE ms=278340 mode=0 fault=0 id=9 phase=0 result=0 total_ms=3200 hold_ms=3000 motor=1 duty=1700 enc=0,0 pwm=0,0 n=200 sum=36689 min=172 max=195 zeros=0 kick_ticks=3
+HOLD-CFG v=20261019H1 selected=1700 step=100 cap=3000 kick=3000 kick_min=200 kick_max=300 hold=3000 lease=500 guard=1500
+ms=278730 mode=0 fault=0 frames=12263 valid=0 pair=2/13 thr=88 err10=178 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=13908 cap_age=10 proc_ms=0 used_age=0 drop_frames=1645 ready=0 good_frames=0 accepted_age=278730 trial_id=0 trial_done=0 trial_ms=0
+UART8-DIAG v=20261017B cfg_baud=115200 rx=834 tx=240892 err=0 rts=0 drop=4 diag=0 ab=1 pattern=UUUU0123456789
+MOTOR-DIR v=20261017I left=C11 cfg=1 sample=0 right=C9 cfg=0 sample=0 sample_unverified=1
+C7-REG v=20261017D mux=00000005 ctl=000010b0 route=00000000 dr2=300cf800 dir2=300c0a00 psr2=0000f000 dr7=0000f000 dir7=00000000 psr7=0000f000
+ms=279230 mode=0 fault=0 frames=12284 valid=0 pair=2/13 thr=88 err10=181 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=13933 cap_age=10 proc_ms=0 used_age=0 drop_frames=1649 ready=0 good_frames=0 accepted_age=279230 trial_id=0 trial_done=0 trial_ms=0
+HOLD-STATE ms=279520 mode=0 fault=0 id=9 phase=0 result=0 total_ms=3200 hold_ms=3000 motor=1 duty=1700 enc=0,0 pwm=0,0 n=200 sum=36689 min=172 max=195 zeros=0 kick_ticks=3
+HOLD-CFG v=20261019H1 selected=1700 step=100 cap=3000 kick=3000 kick_min=200 kick_max=300 hold=3000 lease=500 guard=1500
+ms=279730 mode=0 fault=0 frames=12303 valid=0 pair=2/13 thr=88 err10=179 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=13958 cap_age=10 proc_ms=0 used_age=0 drop_frames=1655 ready=0 good_frames=0 accepted_age=279730 trial_id=0 trial_done=0 trial_ms=0
+ms=280230 mode=0 fault=0 frames=12324 valid=0 pair=2/13 thr=88 err10=176 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=13983 cap_age=10 proc_ms=0 used_age=0 drop_frames=1659 ready=0 good_frames=0 accepted_age=280230 trial_id=0 trial_done=0 trial_ms=0
+ms=280730 mode=0 fault=0 frames=12343 valid=0 pair=2/13 thr=88 err10=175 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=14008 cap_age=10 proc_ms=0 used_age=0 drop_frames=1665 ready=0 good_frames=0 accepted_age=280730 trial_id=0 trial_done=0 trial_ms=0
+HOLD-STATE ms=280970 mode=0 fault=0 id=9 phase=0 result=0 total_ms=3200 hold_ms=3000 motor=1 duty=1700 enc=0,0 pwm=0,0 n=200 sum=36689 min=172 max=195 zeros=0 kick_ticks=3
+HOLD-CFG v=20261019H1 selected=1700 step=100 cap=3000 kick=3000 kick_min=200 kick_max=300 hold=3000 lease=500 guard=1500
+ms=281230 mode=0 fault=0 frames=12364 valid=0 pair=2/13 thr=88 err10=176 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=14033 cap_age=10 proc_ms=0 used_age=0 drop_frames=1669 ready=0 good_frames=0 accepted_age=281230 trial_id=0 trial_done=0 trial_ms=0
+HOLD-START v=20261019H1 motor=2 duty=1700 kick=3000 kick_min=200 kick_max=300 hold=3000 lease=500 guard=1500
+HOLD-STATE ms=281630 mode=8 fault=0 id=10 phase=1 result=0 total_ms=0 hold_ms=0 motor=2 duty=1700 enc=0,0 pwm=0,0 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=0
+ms=281730 mode=8 fault=0 frames=12383 valid=0 pair=2/13 thr=88 err10=178 bench_target=0 bench_started=0 enc=0,215 pwm=0,3000 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=14058 cap_age=10 proc_ms=0 used_age=0 drop_frames=1675 ready=0 good_frames=0 accepted_age=281730 trial_id=0 trial_done=0 trial_ms=0
+HOLD-STATE ms=281750 mode=8 fault=0 id=10 phase=1 result=0 total_ms=120 hold_ms=0 motor=2 duty=1700 enc=0,245 pwm=0,3000 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+HOLD-STATE ms=281850 mode=8 fault=0 id=10 phase=2 result=0 total_ms=220 hold_ms=20 motor=2 duty=1700 enc=0,294 pwm=0,1700 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+HOLD-STATE ms=281940 mode=8 fault=0 id=10 phase=2 result=0 total_ms=310 hold_ms=110 motor=2 duty=1700 enc=0,248 pwm=0,1700 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+HOLD-STATE ms=282030 mode=8 fault=0 id=10 phase=2 result=0 total_ms=400 hold_ms=200 motor=2 duty=1700 enc=0,218 pwm=0,1700 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+HOLD-STATE ms=282160 mode=8 fault=0 id=10 phase=2 result=0 total_ms=530 hold_ms=330 motor=2 duty=1700 enc=0,169 pwm=0,1700 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+ms=282230 mode=8 fault=0 frames=12404 valid=0 pair=2/13 thr=90 err10=181 bench_target=0 bench_started=0 enc=0,170 pwm=0,1700 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=14083 cap_age=10 proc_ms=0 used_age=0 drop_frames=1679 ready=0 good_frames=0 accepted_age=282230 trial_id=0 trial_done=0 trial_ms=0
+HOLD-STATE ms=282260 mode=8 fault=0 id=10 phase=2 result=0 total_ms=630 hold_ms=430 motor=2 duty=1700 enc=0,171 pwm=0,1700 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+HOLD-STATE ms=282350 mode=8 fault=0 id=10 phase=2 result=0 total_ms=720 hold_ms=520 motor=2 duty=1700 enc=0,162 pwm=0,1700 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+HOLD-STATE ms=282440 mode=8 fault=0 id=10 phase=2 result=0 total_ms=810 hold_ms=610 motor=2 duty=1700 enc=0,171 pwm=0,1700 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+HOLD-STATE ms=282530 mode=8 fault=0 id=10 phase=2 result=0 total_ms=900 hold_ms=700 motor=2 duty=1700 enc=0,149 pwm=0,1700 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+HOLD-STATE ms=282660 mode=8 fault=0 id=10 phase=2 result=0 total_ms=1030 hold_ms=830 motor=2 duty=1700 enc=0,147 pwm=0,1700 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+ms=282730 mode=8 fault=0 frames=12423 valid=0 pair=2/13 thr=90 err10=178 bench_target=0 bench_started=0 enc=0,153 pwm=0,1700 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=14108 cap_age=10 proc_ms=0 used_age=0 drop_frames=1685 ready=0 good_frames=0 accepted_age=282730 trial_id=0 trial_done=0 trial_ms=0
+HOLD-STATE ms=282750 mode=8 fault=0 id=10 phase=2 result=0 total_ms=1120 hold_ms=920 motor=2 duty=1700 enc=0,161 pwm=0,1700 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+HOLD-STATE ms=282850 mode=8 fault=0 id=10 phase=2 result=0 total_ms=1220 hold_ms=1020 motor=2 duty=1700 enc=0,149 pwm=0,1700 n=3 sum=472 min=149 max=166 zeros=0 kick_ticks=3
+HOLD-STATE ms=282940 mode=8 fault=0 id=10 phase=2 result=0 total_ms=1310 hold_ms=1110 motor=2 duty=1700 enc=0,162 pwm=0,1700 n=12 sum=1902 min=149 max=168 zeros=0 kick_ticks=3
+HOLD-STATE ms=283040 mode=8 fault=0 id=10 phase=2 result=0 total_ms=1410 hold_ms=1210 motor=2 duty=1700 enc=0,150 pwm=0,1700 n=22 sum=3502 min=149 max=171 zeros=0 kick_ticks=3
+HOLD-STATE ms=283160 mode=8 fault=0 id=10 phase=2 result=0 total_ms=1530 hold_ms=1330 motor=2 duty=1700 enc=0,159 pwm=0,1700 n=34 sum=5427 min=149 max=171 zeros=0 kick_ticks=3
+ms=283230 mode=8 fault=0 frames=12444 valid=0 pair=2/13 thr=90 err10=182 bench_target=0 bench_started=0 enc=0,153 pwm=0,1700 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=14133 cap_age=10 proc_ms=0 used_age=0 drop_frames=1689 ready=0 good_frames=0 accepted_age=283230 trial_id=0 trial_done=0 trial_ms=0
+HOLD-STATE ms=283260 mode=8 fault=0 id=10 phase=2 result=0 total_ms=1630 hold_ms=1430 motor=2 duty=1700 enc=0,163 pwm=0,1700 n=44 sum=7016 min=149 max=171 zeros=0 kick_ticks=3
+HOLD-STATE ms=283350 mode=8 fault=0 id=10 phase=2 result=0 total_ms=1720 hold_ms=1520 motor=2 duty=1700 enc=0,161 pwm=0,1700 n=53 sum=8474 min=149 max=171 zeros=0 kick_ticks=3
+HOLD-STATE ms=283440 mode=8 fault=0 id=10 phase=2 result=0 total_ms=1810 hold_ms=1610 motor=2 duty=1700 enc=0,157 pwm=0,1700 n=62 sum=9902 min=149 max=171 zeros=0 kick_ticks=3
+HOLD-STATE ms=283540 mode=8 fault=0 id=10 phase=2 result=0 total_ms=1910 hold_ms=1710 motor=2 duty=1700 enc=0,161 pwm=0,1700 n=72 sum=11519 min=149 max=171 zeros=0 kick_ticks=3
+HOLD-STATE ms=283630 mode=8 fault=0 id=10 phase=2 result=0 total_ms=2000 hold_ms=1800 motor=2 duty=1700 enc=0,155 pwm=0,1700 n=81 sum=12940 min=149 max=171 zeros=0 kick_ticks=3
+ms=283730 mode=8 fault=0 frames=12463 valid=0 pair=2/13 thr=90 err10=182 bench_target=0 bench_started=0 enc=0,167 pwm=0,1700 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=14158 cap_age=10 proc_ms=0 used_age=0 drop_frames=1695 ready=0 good_frames=0 accepted_age=283730 trial_id=0 trial_done=0 trial_ms=0
+HOLD-STATE ms=283760 mode=8 fault=0 id=10 phase=2 result=0 total_ms=2130 hold_ms=1930 motor=2 duty=1700 enc=0,159 pwm=0,1700 n=94 sum=15028 min=149 max=171 zeros=0 kick_ticks=3
+HOLD-STATE ms=283850 mode=8 fault=0 id=10 phase=2 result=0 total_ms=2220 hold_ms=2020 motor=2 duty=1700 enc=0,169 pwm=0,1700 n=103 sum=16488 min=149 max=171 zeros=0 kick_ticks=3
+HOLD-STATE ms=283940 mode=8 fault=0 id=10 phase=2 result=0 total_ms=2310 hold_ms=2110 motor=2 duty=1700 enc=0,152 pwm=0,1700 n=112 sum=17919 min=149 max=171 zeros=0 kick_ticks=3
+HOLD-STATE ms=284040 mode=8 fault=0 id=10 phase=2 result=0 total_ms=2410 hold_ms=2210 motor=2 duty=1700 enc=0,171 pwm=0,1700 n=122 sum=19534 min=149 max=171 zeros=0 kick_ticks=3
+HOLD-STATE ms=284130 mode=8 fault=0 id=10 phase=2 result=0 total_ms=2500 hold_ms=2300 motor=2 duty=1700 enc=0,152 pwm=0,1700 n=131 sum=20975 min=149 max=171 zeros=0 kick_ticks=3
+ms=284230 mode=8 fault=0 frames=12486 valid=0 pair=2/13 thr=90 err10=182 bench_target=0 bench_started=0 enc=0,172 pwm=0,1700 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=14183 cap_age=20 proc_ms=10 used_age=10 drop_frames=1697 ready=0 good_frames=0 accepted_age=284230 trial_id=0 trial_done=0 trial_ms=0
+HOLD-STATE ms=284260 mode=8 fault=0 id=10 phase=2 result=0 total_ms=2630 hold_ms=2430 motor=2 duty=1700 enc=0,151 pwm=0,1700 n=144 sum=23067 min=149 max=172 zeros=0 kick_ticks=3
+HOLD-STATE ms=284350 mode=8 fault=0 id=10 phase=2 result=0 total_ms=2720 hold_ms=2520 motor=2 duty=1700 enc=0,166 pwm=0,1700 n=153 sum=24523 min=149 max=172 zeros=0 kick_ticks=3
+HOLD-STATE ms=284440 mode=8 fault=0 id=10 phase=2 result=0 total_ms=2810 hold_ms=2610 motor=2 duty=1700 enc=0,155 pwm=0,1700 n=162 sum=25980 min=149 max=172 zeros=0 kick_ticks=3
+HOLD-STATE ms=284540 mode=8 fault=0 id=10 phase=2 result=0 total_ms=2910 hold_ms=2710 motor=2 duty=1700 enc=0,168 pwm=0,1700 n=172 sum=27592 min=149 max=172 zeros=0 kick_ticks=3
+HOLD-STATE ms=284660 mode=8 fault=0 id=10 phase=2 result=0 total_ms=3030 hold_ms=2830 motor=2 duty=1700 enc=0,164 pwm=0,1700 n=184 sum=29529 min=149 max=172 zeros=0 kick_ticks=3
+ms=284730 mode=8 fault=0 frames=12508 valid=0 pair=2/13 thr=90 err10=179 bench_target=0 bench_started=0 enc=0,167 pwm=0,1700 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=14208 cap_age=20 proc_ms=0 used_age=10 drop_frames=1700 ready=0 good_frames=0 accepted_age=284730 trial_id=0 trial_done=0 trial_ms=0
+HOLD-STATE ms=284750 mode=8 fault=0 id=10 phase=2 result=0 total_ms=3120 hold_ms=2920 motor=2 duty=1700 enc=0,163 pwm=0,1700 n=193 sum=30999 min=149 max=172 zeros=0 kick_ticks=3
+HOLD-STATE ms=284850 mode=0 fault=0 id=10 phase=3 result=1 total_ms=3200 hold_ms=3000 motor=2 duty=1700 enc=0,153 pwm=0,0 n=200 sum=32129 min=149 max=172 zeros=0 kick_ticks=3
+HOLD-CFG v=20261019H1 selected=1700 step=100 cap=3000 kick=3000 kick_min=200 kick_max=300 hold=3000 lease=500 guard=1500
+HOLD-STATE ms=284920 mode=0 fault=0 id=10 phase=0 result=0 total_ms=3200 hold_ms=3000 motor=2 duty=1700 enc=0,66 pwm=0,0 n=200 sum=32129 min=149 max=172 zeros=0 kick_ticks=3
+HOLD-CFG v=20261019H1 selected=1700 step=100 cap=3000 kick=3000 kick_min=200 kick_max=300 hold=3000 lease=500 guard=1500
+ms=285230 mode=0 fault=0 frames=12531 valid=0 pair=2/13 thr=90 err10=181 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=14233 cap_age=20 proc_ms=0 used_age=0 drop_frames=1702 ready=0 good_frames=0 accepted_age=285230 trial_id=0 trial_done=0 trial_ms=0

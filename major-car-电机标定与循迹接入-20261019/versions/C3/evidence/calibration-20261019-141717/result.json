@@ -1,0 +1,41 @@
+{
+  "time_china": "2026-10-19 14:17:17",
+  "port": "COM9",
+  "motor": 1,
+  "pulses": 0,
+  "results": [],
+  "failure": null,
+  "final_status": {
+    "ms": 23850,
+    "mode": 0,
+    "fault": 0,
+    "frames": 1012,
+    "enc_left": 0,
+    "enc_right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0
+  },
+  "commands": [
+    {
+      "utc": "2026-10-19T06:17:17.4550358Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-19T06:17:17.9704261Z",
+      "command": "q"
+    },
+    {
+      "utc": "2026-10-19T06:17:18.4737797Z",
+      "command": "D"
+    },
+    {
+      "utc": "2026-10-19T06:17:19.2052553Z",
+      "command": "s"
+    },
+    {
+      "utc": "2026-10-19T06:17:19.2055013Z",
+      "command": "p"
+    }
+  ],
+  "evidence": "versions/C3/evidence/calibration-20261019-141717"
+}

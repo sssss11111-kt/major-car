@@ -1,0 +1,8 @@
+C-CAR RT1064 SeekFree V3.5.5 TRACK20261019G1: h help; s STOP
+UART8-DIAG v=20261017B cfg_baud=115200 rx=0 tx=3 err=0 rts=0 drop=0 diag=0 ab=2 pattern=UUUU0123456789
+MOTOR-DIR v=20261017I left=C11 cfg=12 sample=12 right=C9 cfg=0 sample=0 sample_unverified=1
+CAMERA OK 188x120
+DRIVE-CFG v=20261018N straight=7 left=8 right=9 duration=1000 settle=200 target=40 cap=3000 straight10=0 lease=500
+TRACK-CFG v=20261019G1 target=20 cap=3000 settle=200 duration=3000 lease=500 simulated=0 profile=L3 kp10=10 ki10=200 ff0=570,690 ff10=65,70 closed_cap=1500 kick_min=200 kick_max=300 transfer=1000
+ms=0 mode=0 fault=0 frames=0 valid=0 pair=0/0 thr=0 err10=0 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=0 reject=0 seq=0 cap_age=0 proc_ms=0 used_age=0 drop_frames=0 ready=0 good_frames=0 accepted_age=0 trial_id=0 trial_done=0 trial_ms=0 pi_mask=0
+ms=5290 mode=0 fault=0 frames=415 valid=1 pair=13/13 thr=30 err10=5 bench_target=0 bench_started=0 enc=20,20 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=100 reject=0 seq=415 cap_age=0 proc_ms=0 used_age=0 drop_frames=0 ready=0 good_frames=1 accepted_age=0 trial_id=4 trial_done=1 trial_ms=3200 pi_mask=3

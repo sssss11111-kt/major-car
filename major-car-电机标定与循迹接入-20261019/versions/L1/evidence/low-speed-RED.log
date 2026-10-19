@@ -1,0 +1,107 @@
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /D_CRT_SECURE_NO_WARNINGS /Fe:versions/L1\code\competition\firmware\camera_car\tests\out\msvc-uco8b1ba\test_low_speed.exe /Fo:versions/L1\code\competition\firmware\camera_car\tests\out\msvc-uco8b1ba\test_low_speed\ /I versions/L1\code\competition\firmware\camera_car\demo\user\inc versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c
+test_low_speed.c
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(7): error C2039: "low_kp": 不是 "control_config_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(27): note: 参见“control_config_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(7): error C2039: "low_ki": 不是 "control_config_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(27): note: 参见“control_config_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(7): error C2039: "low_ff_offset": 不是 "control_config_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(27): note: 参见“control_config_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(7): error C2039: "low_ff_offset": 不是 "control_config_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(27): note: 参见“control_config_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(7): error C2039: "low_ff_slope": 不是 "control_config_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(27): note: 参见“control_config_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(7): error C2039: "low_ff_slope": 不是 "control_config_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(27): note: 参见“control_config_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(12): warning C4013: “control_low_test”未定义；假设外部返回 int
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(15): error C2039: "low_confirmed": 不是 "control_state_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(17): error C2039: "low_done": 不是 "control_state_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(17): error C2039: "low_elapsed": 不是 "control_state_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(18): error C2039: "low_n": 不是 "control_state_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(18): error C2039: "low_sum": 不是 "control_state_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(18): error C2039: "low_error2": 不是 "control_state_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(18): error C2039: "low_abs_error": 不是 "control_state_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(18): error C2039: "low_min": 不是 "control_state_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(18): error C2039: "low_max": 不是 "control_state_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(19): error C2039: "low_id": 不是 "control_state_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(19): error C2039: "low_done": 不是 "control_state_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(19): error C2039: "low_id": 不是 "control_state_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(19): error C2039: "low_n": 不是 "control_state_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(23): error C2039: "low_done": 不是 "control_state_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(29): error C2039: "low_done": 不是 "control_state_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(30): error C2065: “CAR_LOW_SPEED”: 未声明的标识符
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(31): error C2039: "low_done": 不是 "control_state_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c(31): error C2039: "low_n": 不是 "control_state_t" 的成员
+
+versions/L1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+car_core.c
+
+versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c(333): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c(334): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+正在生成代码...
+

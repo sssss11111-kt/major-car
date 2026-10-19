@@ -1,0 +1,18 @@
+{
+  "image": "versions/G1/20261019G1-tracking.hex",
+  "image_sha256": "ff91ee6db07075337506ecd6962d5a6dc50160d271bbf6fab88d46f308b58fbc",
+  "mode": "camera",
+  "target": "mimxrt1064",
+  "frequency": 1000000,
+  "connect": "halt",
+  "backup_complete": true,
+  "program_complete": true,
+  "readback_verified": true,
+  "core_left_halted": true,
+  "algorithm": "NXP.MIMXRT1064_DFP.19.0.0/MIMXRT1064_QSPI_4KB_SEC.FLM",
+  "verify_init_header": "46434642",
+  "backup": "LOCAL_ONLY_NOT_PUBLISHED",
+  "backup_sha256": "0ea423e0e40c78409e389881b78c6d49c3004b950f8e3b69339ba0bc50df6360",
+  "baseline_verified_bytes": 72640,
+  "verified_bytes": 73088
+}

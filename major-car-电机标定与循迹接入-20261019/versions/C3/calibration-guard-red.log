@@ -1,0 +1,14 @@
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /D_CRT_SECURE_NO_WARNINGS /Fe:versions/C3\code\competition\firmware\camera_car\tests\out\msvc-vpr4pbxw\test_calibration.exe /Fo:versions/C3\code\competition\firmware\camera_car\tests\out\msvc-vpr4pbxw\test_calibration\ /I versions/C3\code\competition\firmware\camera_car\demo\user\inc versions/C3\code\competition\firmware\camera_car\tests\test_calibration.c versions/C3\code\competition\firmware\camera_car\demo\user\src\car_core.c
+test_calibration.c
+
+car_core.c
+
+versions/C3\code\competition\firmware\camera_car\demo\user\src\car_core.c(293): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+versions/C3\code\competition\firmware\camera_car\demo\user\src\car_core.c(294): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+正在生成代码...
+
+versions/C3\code\competition\firmware\camera_car\tests\out\msvc-vpr4pbxw\test_calibration.exe
+FAIL calibration line 17: high.mode==CAR_CALIBRATION && high.fault==FAULT_NONE
+

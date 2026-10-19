@@ -1,0 +1,13 @@
+HOLD-STATE ms=514020 mode=0 fault=0 id=21 phase=0 result=0 total_ms=1570 hold_ms=1370 motor=1 duty=500 enc=0,0 pwm=0,0 n=38 sum=0 min=0 max=0 zeros=38 kick_ticks=3
+HOLD-CFG v=20261019H1 selected=500 step=100 cap=3000 kick=3000 kick_min=200 kick_max=300 hold=3000 lease=500 guard=1500
+ms=514230 mode=0 fault=0 frames=22641 valid=0 pair=2/13 thr=90 err10=181 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=25688 cap_age=20 proc_ms=0 used_age=0 drop_frames=3047 ready=0 good_frames=0 accepted_age=514230 trial_id=0 trial_done=0 trial_ms=0
+UART8-DIAG v=20261017B cfg_baud=115200 rx=1831 tx=474591 err=0 rts=0 drop=11 diag=0 ab=1 pattern=UUUU0123456789
+MOTOR-DIR v=20261017I left=C11 cfg=1 sample=0 right=C9 cfg=0 sample=0 sample_unverified=1
+C7-REG v=20261017D mux=00000005 ctl=000010b0 route=00000000 dr2=300cf800 dir2=300c0a00 psr2=0000f000 dr7=0000f000 dir7=00000000 psr7=0000f000
+HOLD-STATE ms=515180 mode=0 fault=0 id=21 phase=0 result=0 total_ms=1570 hold_ms=1370 motor=1 duty=500 enc=0,0 pwm=0,0 n=38 sum=0 min=0 max=0 zeros=38 kick_ticks=3
+HOLD-CFG v=20261019H1 selected=500 step=100 cap=3000 kick=3000 kick_min=200 kick_max=300 hold=3000 lease=500 guard=1500
+ms=515230 mode=0 fault=0 frames=22686 valid=0 pair=2/13 thr=92 err10=178 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=25738 cap_age=20 proc_ms=0 used_age=0 drop_frames=3052 ready=0 good_frames=0 accepted_age=515230 trial_id=0 trial_done=0 trial_ms=0
+ms=515730 mode=0 fault=0 frames=22708 valid=0 pair=2/13 thr=92 err10=179 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=25763 cap_age=20 proc_ms=0 used_age=10 drop_frames=3055 ready=0 good_frames=0 accepted_age=515730 trial_id=0 trial_done=0 trial_ms=0
+HOLD-STATE ms=515920 mode=0 fault=0 id=21 phase=0 result=0 total_ms=1570 hold_ms=1370 motor=1 duty=500 enc=0,0 pwm=0,0 n=38 sum=0 min=0 max=0 zeros=38 kick_ticks=3
+HOLD-CFG v=20261019H1 selected=500 step=100 cap=3000 kick=3000 kick_min=200 kick_max=300 hold=3000 lease=500 guard=1500
+ms=516230 mode=0 fault=0 frames=22731 valid=0 pair=2/13 thr=90 err10=178 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=25788 cap_age=20 proc_ms=0 used_age=0 drop_frames=3057 ready=0 good_frames=0 accepted_age=516230 trial_id=0 trial_done=0 trial_ms=0

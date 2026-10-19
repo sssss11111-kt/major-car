@@ -1,0 +1,10 @@
+{
+  "code/competition/firmware/camera_car/demo/user/inc/car_core.h": "4825cff5f9f540feb670bd377d92534181fb6f6ba5e99025392bcfd5d77e952b",
+  "code/competition/firmware/camera_car/demo/user/src/car_core.c": "4efbdea5aef4cf14d67fff3f20eebfa8336ffe46ce1d16f6f7619de546bd09c5",
+  "code/competition/firmware/camera_car/demo/user/src/car_app.c": "53569270108a84c7fe8b9ffd1a31f9f917a2d2252650d9a98cebbcc313f6ebdc",
+  "code/competition/firmware/camera_car/tests/test_calibration.c": "5fc3a4a335d2ae76c108a44b9483b5805705a2154d138be5ab6ed47c4e0b1858",
+  "code/competition/firmware/camera_car/tests/test_app.c": "5e08c145e4222f988f0955c998a5a98f8781302ca5de5ae85345f02d4e7a7b4c",
+  "code/repair/test_calibration.ps1": "6873a0feecb4906a6c42e26d817fb854eb7aa78e9b960544e8696ccd5e652461",
+  "code/repair/flash_with_backup.py": "1812214862f95e91729b1ab7ba3f061aa33ab3272f4ace1c57a492491fb463bd",
+  "run_pair.ps1": "85dab6644a8ddabab2be36a0cdc19444a977f7495fb3f269b188d17032f30d66"
+}

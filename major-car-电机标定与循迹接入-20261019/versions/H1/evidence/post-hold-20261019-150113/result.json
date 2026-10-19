@@ -1,0 +1,46 @@
+{
+  "final": {
+    "ms": 779800,
+    "mode": 0,
+    "fault": 0,
+    "id": 34,
+    "phase": 0,
+    "result": 0,
+    "total_ms": 3200,
+    "hold_ms": 3000,
+    "motor": 2,
+    "duty": 800,
+    "n": 200,
+    "sum": 6190,
+    "min": 23,
+    "max": 38,
+    "zeros": 0,
+    "kick_ticks": 3,
+    "enc_left": 0,
+    "enc_right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0
+  },
+  "commands": [
+    "s",
+    "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+    "H",
+    "H",
+    "H",
+    "H"
+  ],
+  "failure": null,
+  "configuration": {
+    "v": "20261019H1",
+    "selected": 0,
+    "step": 100,
+    "kick_max": 300,
+    "hold": 3000,
+    "lease": 500,
+    "kick_min": 200,
+    "kick": 3000,
+    "cap": 3000,
+    "guard": 1500
+  },
+  "evidence": "versions/H1/evidence/post-hold-20261019-150113"
+}

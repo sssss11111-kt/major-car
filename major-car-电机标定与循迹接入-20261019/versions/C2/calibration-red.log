@@ -1,0 +1,13 @@
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /D_CRT_SECURE_NO_WARNINGS /Fe:versions/C2\code\competition\firmware\camera_car\tests\out\msvc-vfphq6q_\test_calibration.exe /Fo:versions/C2\code\competition\firmware\camera_car\tests\out\msvc-vfphq6q_\test_calibration\ /I versions/C2\code\competition\firmware\camera_car\demo\user\inc versions/C2\code\competition\firmware\camera_car\tests\test_calibration.c versions/C2\code\competition\firmware\camera_car\demo\user\src\car_core.c
+test_calibration.c
+
+versions/C2\code\competition\firmware\camera_car\tests\test_calibration.c(15): warning C4013: “control_calibration_test”未定义；假设外部返回 int
+
+versions/C2\code\competition\firmware\camera_car\tests\test_calibration.c(17): error C2065: “CAR_CALIBRATION”: 未声明的标识符
+
+versions/C2\code\competition\firmware\camera_car\tests\test_calibration.c(41): error C2065: “CAR_CALIBRATION”: 未声明的标识符
+
+car_core.c
+
+正在生成代码...
+

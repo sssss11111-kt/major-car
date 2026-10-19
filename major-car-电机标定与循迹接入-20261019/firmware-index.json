@@ -1,0 +1,58 @@
+[
+  {
+    "version": "C1",
+    "path": "versions/C1/20261019C1-calibration-0to30.hex",
+    "sha256": "3e5cbfb22e772c56ffc10dcf995c702187d9ded3bfe4f9d5a2ba7672ef3b07ca",
+    "effective_bytes": 68800,
+    "flash_status": "compiled_only_not_confirmed_flashed"
+  },
+  {
+    "version": "C2",
+    "path": "versions/C2/20261019C2-calibration-0to70.hex",
+    "sha256": "ae91687ad3842d3f74726cfb01d47eb0ed8a0079f096fb3cee8f78679e4f9cfc",
+    "effective_bytes": 68800,
+    "flash_status": "flashed_and_readback_verified"
+  },
+  {
+    "version": "C3",
+    "path": "versions/C3/20261019C3-calibration-0to70.hex",
+    "sha256": "b794aaecddbc994dc245cab37895fd898f52562d3c97c64aa478f113172ba882",
+    "effective_bytes": 68928,
+    "flash_status": "flashed_and_readback_verified"
+  },
+  {
+    "version": "G1",
+    "path": "versions/G1/20261019G1-tracking.hex",
+    "sha256": "ff91ee6db07075337506ecd6962d5a6dc50160d271bbf6fab88d46f308b58fbc",
+    "effective_bytes": 73088,
+    "flash_status": "flashed_and_readback_verified"
+  },
+  {
+    "version": "H1",
+    "path": "versions/H1/20261019H1-sustain.hex",
+    "sha256": "ea4cae6406b8f98c37d7bc797c25b65e73a1f02eab233d547f9cf37f516de115",
+    "effective_bytes": 70336,
+    "flash_status": "flashed_and_readback_verified"
+  },
+  {
+    "version": "L1",
+    "path": "versions/L1/20261019L1-low-speed.hex",
+    "sha256": "cc8d63c618d0392da3c5d1889a7b4300b10ef9622fae7876c66e4258d1d550cb",
+    "effective_bytes": 72512,
+    "flash_status": "flashed_and_readback_verified"
+  },
+  {
+    "version": "L2",
+    "path": "versions/L2/20261019L2-low-speed.hex",
+    "sha256": "8d26dd9bb407d20bbbf3d65bc054dfbd44de185b4c4cddde0022d702915b1ad7",
+    "effective_bytes": 72576,
+    "flash_status": "flashed_and_readback_verified"
+  },
+  {
+    "version": "L3",
+    "path": "versions/L3/20261019L3-low-speed.hex",
+    "sha256": "a466bc57cdf4a9a5608ca771e2e80bf43bcd48fc6db660d026ea58f918dd8db4",
+    "effective_bytes": 72640,
+    "flash_status": "flashed_and_readback_verified"
+  }
+]

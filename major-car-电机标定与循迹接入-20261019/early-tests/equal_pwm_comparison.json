@@ -1,0 +1,30 @@
+{
+  "Trials": [
+    {
+      "Side": "left",
+      "PWM_percent": 30,
+      "Duration_ms": 2000,
+      "Window": "samples >= 1 second after first mode2 status",
+      "Samples": 9,
+      "Mean": 259.0,
+      "Min": 241.0,
+      "Max": 271.0,
+      "Evidence": "early-tests\\evidence\\motor-20261019-133712"
+    },
+    {
+      "Side": "right",
+      "PWM_percent": 30,
+      "Duration_ms": 2000,
+      "Window": "samples >= 1 second after first mode2 status",
+      "Samples": 9,
+      "Mean": 300.44444444444446,
+      "Min": 296.0,
+      "Max": 314.0,
+      "Evidence": "early-tests\\evidence\\motor-20261019-133739"
+    }
+  ],
+  "Left_vs_right_percent": -13.794378698224852,
+  "Ratio": 0.8620562130177515,
+  "Unit": "encoder counts per 10ms; sample arithmetic mean; not calibrated wheel RPM",
+  "Physical_observation": "pending"
+}

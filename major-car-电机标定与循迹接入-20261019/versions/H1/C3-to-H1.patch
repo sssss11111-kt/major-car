@@ -1,0 +1,480 @@
+--- C3/code/competition/firmware/camera_car/demo/user/inc/car_core.h
++++ H1/code/competition/firmware/camera_car/demo/user/inc/car_core.h
+@@ -21,7 +21,7 @@
+     uint8_t quality, rejected_rows; /* STEP-03: geometry support, not accuracy probability. */
+     float error; /* positive: track center to vehicle right */
+ } vision_result_t;
+-typedef enum { CAR_IDLE, CAR_RUNNING, CAR_TEST, CAR_FAULT, CAR_SPEED_TEST, CAR_STEER_TEST, CAR_DRIVE_TEST, CAR_CALIBRATION } car_mode_t;
++typedef enum { CAR_IDLE, CAR_RUNNING, CAR_TEST, CAR_FAULT, CAR_SPEED_TEST, CAR_STEER_TEST, CAR_DRIVE_TEST, CAR_CALIBRATION, CAR_SUSTAIN } car_mode_t;
+ typedef enum { FAULT_NONE, FAULT_CAMERA, FAULT_FRAME, FAULT_LINE,
+                FAULT_FOREGROUND, FAULT_ENCODER, FAULT_LINK } car_fault_t;
+ typedef struct {
+@@ -53,6 +53,11 @@
+     int8_t drive_turn; /* -1 left, 0 straight, +1 right */
+     uint8_t bench_started; /* bit 0 left feedback detected, bit 1 right */
+     uint16_t calibration_duty;
++    uint16_t sustain_duty,sustain_n,sustain_zeros,sustain_stall_ticks;
++    int16_t sustain_min,sustain_max;
++    int32_t sustain_sum;
++    uint32_t sustain_id,sustain_started,sustain_hold_started,sustain_total_ms,sustain_hold_ms;
++    uint8_t sustain_phase,sustain_result,sustain_kick_ticks;
+ } control_state_t;
+ void vision_config_default(vision_config_t *cfg);
+ void vision_reset(vision_state_t *state);
+@@ -74,6 +79,13 @@
+ #define CAR_CALIBRATION_MAX_DUTY 7000u /* Diagnostic envelope; not a rated hardware limit. */
+ #define CAR_CALIBRATION_ENCODER_LIMIT 1500 /* Counts/10ms; calibration only, not rated motor RPM. */
+ int control_calibration_test(control_state_t *state,uint8_t motor,uint16_t duty,uint32_t now);
++int control_sustain_test(control_state_t *state,uint8_t motor,uint16_t duty,uint32_t now);
++#define CAR_SUSTAIN_KICK_DUTY 3000u
++#define CAR_SUSTAIN_KICK_MIN_MS 200u
++#define CAR_SUSTAIN_KICK_MAX_MS 300u
++#define CAR_SUSTAIN_HOLD_MS 3000u
++#define CAR_SUSTAIN_STATS_AFTER_MS 1000u
++#define CAR_SUSTAIN_LEASE_MS 500u
+ int control_speed_test_right(control_state_t *state, uint32_t now);
+ int control_speed_test(control_state_t *state, uint8_t motor, uint32_t now);
+ void control_tick(control_state_t *state, uint32_t now, int16_t left, int16_t right);
+--- C3/code/competition/firmware/camera_car/demo/user/src/car_core.c
++++ H1/code/competition/firmware/camera_car/demo/user/src/car_core.c
+@@ -126,12 +126,14 @@
+     s->drive_lease_active=0;
+ }
+ void control_stop(control_state_t *s) {
++    s->sustain_phase=0;s->sustain_result=0;
+     s->mode=CAR_IDLE; s->fault=FAULT_NONE;
+     s->good_frames=0; s->bad_frames=0; s->derivative=0;
+     s->trial_done=0;s->trial_elapsed_ms=0;
+     zero_outputs(s);
+ }
+ void control_fault(control_state_t *s,car_fault_t f) {
++    s->sustain_phase=0;s->sustain_result=0;
+     s->mode=CAR_FAULT; s->fault=f; s->good_frames=0;
+     s->trial_done=0;s->trial_elapsed_ms=0;
+     zero_outputs(s);
+@@ -173,7 +175,7 @@
+ }
+ void control_drive_keepalive(control_state_t *s,uint32_t now) {
+     /* STEP-02: p renews both the independent-drive and tracking trial lease. */
+-    if((s->mode==CAR_DRIVE_TEST || s->mode==CAR_RUNNING || s->mode==CAR_CALIBRATION) && s->drive_lease_active)s->drive_command_ms=now;
++    if((s->mode==CAR_DRIVE_TEST || s->mode==CAR_RUNNING || s->mode==CAR_CALIBRATION || s->mode==CAR_SUSTAIN) && s->drive_lease_active)s->drive_command_ms=now;
+ }
+ int control_drive_test(control_state_t *s,int turn,uint32_t now) {
+     if(s->mode!=CAR_IDLE || s->cfg.simulated || turn< -1 || turn>1 ||
+@@ -228,6 +230,16 @@
+     zero_outputs(s); s->mode=CAR_SPEED_TEST; s->test_motor=motor;
+     s->motion_ms=now; s->test_until=now+4000u;
+     return 1;
++}
++int control_sustain_test(control_state_t *s,uint8_t motor,uint16_t duty,uint32_t now) {
++    if(s->mode!=CAR_IDLE || s->cfg.simulated || motor<1 || motor>2 || duty>CAR_SUSTAIN_KICK_DUTY ||
++       (uint32_t)(now-s->heartbeat_ms)>s->cfg.heartbeat_timeout_ms)return 0;
++    zero_outputs(s);s->mode=CAR_SUSTAIN;s->fault=FAULT_NONE;s->test_motor=motor;
++    s->sustain_duty=duty;s->sustain_id++;s->sustain_started=now;s->sustain_hold_started=0;
++    s->sustain_total_ms=s->sustain_hold_ms=0;s->sustain_phase=1;s->sustain_result=0;
++    s->sustain_n=s->sustain_zeros=s->sustain_stall_ticks=0;s->sustain_min=s->sustain_max=0;
++    s->sustain_sum=0;s->sustain_kick_ticks=0;
++    s->drive_lease_active=1;s->drive_command_ms=now;return 1;
+ }
+ int control_speed_test_right(control_state_t *s,uint32_t now) {
+     return control_speed_test(s,2,now);
+@@ -280,10 +292,38 @@
+     }
+ }
+ void control_tick(control_state_t *s,uint32_t now,int16_t left,int16_t right) {
+-    if(s->mode!=CAR_RUNNING && s->mode!=CAR_TEST && s->mode!=CAR_SPEED_TEST && s->mode!=CAR_STEER_TEST && s->mode!=CAR_DRIVE_TEST && s->mode!=CAR_CALIBRATION) { zero_outputs(s); return; }
++    if(s->mode!=CAR_RUNNING && s->mode!=CAR_TEST && s->mode!=CAR_SPEED_TEST && s->mode!=CAR_STEER_TEST && s->mode!=CAR_DRIVE_TEST && s->mode!=CAR_CALIBRATION && s->mode!=CAR_SUSTAIN) { zero_outputs(s); return; }
+     if(s->cfg.simulated) { control_stop(s); return; }
+     if((uint32_t)(now-s->heartbeat_ms)>s->cfg.heartbeat_timeout_ms) {
+         control_fault(s,FAULT_FOREGROUND); return;
++    }
++    if(s->mode==CAR_SUSTAIN) {
++        s->sustain_total_ms=now-s->sustain_started;
++        if((uint32_t)(now-s->drive_command_ms)>=CAR_SUSTAIN_LEASE_MS){control_fault(s,FAULT_LINK);return;}
++        int active=s->test_motor==1?left:right,other=s->test_motor==1?right:left;
++        if(active< -5 || active>CAR_CALIBRATION_ENCODER_LIMIT || abs_i(other)>10){control_fault(s,FAULT_ENCODER);return;}
++        if(s->sustain_phase==1) {
++            if(active>=5){if(s->sustain_kick_ticks<3)s->sustain_kick_ticks++;}
++            else s->sustain_kick_ticks=0;
++            if(s->sustain_total_ms>=CAR_SUSTAIN_KICK_MIN_MS && s->sustain_kick_ticks>=3){
++                s->sustain_phase=2;s->sustain_hold_started=now;
++            }else if(s->sustain_total_ms>=CAR_SUSTAIN_KICK_MAX_MS){control_fault(s,FAULT_ENCODER);return;}
++        }
++        if(s->sustain_phase==2) {
++            s->sustain_hold_ms=now-s->sustain_hold_started;
++            if(s->sustain_hold_ms>=CAR_SUSTAIN_HOLD_MS){control_stop(s);s->sustain_phase=3;s->sustain_result=1;return;}
++            if(active<2)s->sustain_stall_ticks++;else s->sustain_stall_ticks=0;
++            if(s->sustain_hold_ms>=CAR_SUSTAIN_STATS_AFTER_MS){
++                if(!s->sustain_n){s->sustain_min=(int16_t)active;s->sustain_max=(int16_t)active;}
++                if(active<s->sustain_min)s->sustain_min=(int16_t)active;
++                if(active>s->sustain_max)s->sustain_max=(int16_t)active;
++                s->sustain_sum+=active;s->sustain_n++;if(active<2)s->sustain_zeros++;
++            }
++            if(s->sustain_stall_ticks>=50){control_stop(s);s->sustain_phase=3;s->sustain_result=2;return;}
++        }
++        unsigned w=s->test_motor-1u;s->duty[0]=s->duty[1]=0;
++        s->duty[w]=s->sustain_phase==1?(float)CAR_SUSTAIN_KICK_DUTY:s->sustain_duty;
++        return;
+     }
+     if(s->mode==CAR_CALIBRATION) {
+         if((uint32_t)(now-s->drive_command_ms)>=500u){control_fault(s,FAULT_LINK);return;}
+--- C3/code/competition/firmware/camera_car/demo/user/src/car_app.c
++++ H1/code/competition/firmware/camera_car/demo/user/src/car_app.c
+@@ -41,6 +41,7 @@
+ #endif
+ static uint32_t last_screen,last_telemetry;
+ static uint16_t calibration_selected;
++static uint16_t sustain_selected;
+ #if CAR_SIMULATED
+ static uint32_t last_generated;
+ #else
+@@ -271,6 +272,23 @@
+         (unsigned)cfg.tracking_pwm_bias[0],(unsigned)cfg.tracking_pwm_bias[1]);
+     text_queue(line);
+ }
++static void sustain_query(uint32_t received) {
++    control_state_t snap;uint16_t selected;char line[280];
++    uint32_t key=lock();control_drive_keepalive(&control,received);snap=control;selected=sustain_selected;
++    uint32_t now=milliseconds;int left=measured_left,right=measured_right;unlock(key);
++    snprintf(line,sizeof line,"HOLD-STATE ms=%lu mode=%u fault=%u id=%lu phase=%u result=%u total_ms=%lu hold_ms=%lu motor=%u duty=%u enc=%d,%d pwm=%u,%u n=%u sum=%ld min=%d max=%d zeros=%u kick_ticks=%u\r\n",
++        (unsigned long)now,(unsigned)snap.mode,(unsigned)snap.fault,(unsigned long)snap.sustain_id,
++        (unsigned)snap.sustain_phase,(unsigned)snap.sustain_result,(unsigned long)snap.sustain_total_ms,
++        (unsigned long)snap.sustain_hold_ms,(unsigned)snap.test_motor,(unsigned)snap.sustain_duty,
++        left,right,(unsigned)snap.duty[0],(unsigned)snap.duty[1],(unsigned)snap.sustain_n,
++        (long)snap.sustain_sum,(int)snap.sustain_min,(int)snap.sustain_max,(unsigned)snap.sustain_zeros,(unsigned)snap.sustain_kick_ticks);text_queue(line);
++    if(snap.mode!=CAR_SUSTAIN) {
++    snprintf(line,sizeof line,"HOLD-CFG v=20261019H1 selected=%u step=100 cap=%u kick=%u kick_min=%u kick_max=%u hold=%u lease=%u guard=%u\r\n",
++        (unsigned)selected,(unsigned)CAR_SUSTAIN_KICK_DUTY,(unsigned)CAR_SUSTAIN_KICK_DUTY,
++        (unsigned)CAR_SUSTAIN_KICK_MIN_MS,(unsigned)CAR_SUSTAIN_KICK_MAX_MS,(unsigned)CAR_SUSTAIN_HOLD_MS,
++        (unsigned)CAR_SUSTAIN_LEASE_MS,(unsigned)CAR_CALIBRATION_ENCODER_LIMIT);text_queue(line);
++    }
++}
+ static void camera_init_once(void) {
+     uint32_t key=lock(); control_stop(&control); apply_outputs(); unlock(key);
+     servo_test_active=0; frame_count=0; memset(&result,0,sizeof result);
+@@ -354,6 +372,21 @@
+ #endif
+     switch(byte) {
+     case 's': case 'S': servo_test_active=0; control_stop(&control); apply_outputs(); break;
++    case 'I': if(control.mode==CAR_IDLE && sustain_selected<CAR_SUSTAIN_KICK_DUTY)sustain_selected+=100;break;
++    case 'K': if(control.mode==CAR_IDLE && sustain_selected>=100)sustain_selected-=100;break;
++    case 'U': case 'V':
++        if(control.mode==CAR_IDLE && !control.cfg.simulated) {
++            gpio_init(CAR_LEFT_DIR,GPO,CAR_LEFT_FORWARD,GPO_PUSH_PULL);
++            gpio_init(CAR_RIGHT_DIR,GPO,CAR_RIGHT_FORWARD,GPO_PUSH_PULL);
++        }
++        if(control_sustain_test(&control,byte=='U'?1:2,sustain_selected,milliseconds)) {
++            char line[180];servo_test_active=0;apply_outputs();
++            snprintf(line,sizeof line,"HOLD-START v=20261019H1 motor=%u duty=%u kick=%u kick_min=%u kick_max=%u hold=%u lease=%u guard=%u\r\n",
++                byte=='U'?1u:2u,(unsigned)sustain_selected,(unsigned)CAR_SUSTAIN_KICK_DUTY,
++                (unsigned)CAR_SUSTAIN_KICK_MIN_MS,(unsigned)CAR_SUSTAIN_KICK_MAX_MS,(unsigned)CAR_SUSTAIN_HOLD_MS,
++                (unsigned)CAR_SUSTAIN_LEASE_MS,(unsigned)CAR_CALIBRATION_ENCODER_LIMIT);text_queue(line);
++        }else text_queue("HOLD-START REFUSED\r\n");
++        break;
+     case 'P': if(control.mode==CAR_IDLE && calibration_selected<CAR_CALIBRATION_MAX_DUTY)calibration_selected+=500;break;
+     case 'M': if(control.mode==CAR_IDLE && calibration_selected>=500)calibration_selected-=500;break;
+     case 'L': case 'R':
+@@ -436,6 +469,7 @@
+     }
+     unlock(key);
+     switch(byte) {
++    case 'H': sustain_query(received);break;
+     case 'D': {
+         char line[120];
+         snprintf(line,sizeof line,"CAL-CFG v=20261019C3 selected=%u step=500 cap=%u duration=2000 lease=500 guard=%u\r\n",(unsigned)calibration_selected,(unsigned)CAR_CALIBRATION_MAX_DUTY,(unsigned)CAR_CALIBRATION_ENCODER_LIMIT);
+@@ -457,10 +491,10 @@
+     case '[': if(vision_cfg.fixed_threshold>=5) vision_cfg.fixed_threshold-=5; break;
+     case ']': if(vision_cfg.fixed_threshold<=250) vision_cfg.fixed_threshold+=5; break;
+     case 'g': case 'b':
+-        if(control.mode!=CAR_RUNNING && control.mode!=CAR_TEST && control.mode!=CAR_SPEED_TEST && control.mode!=CAR_DRIVE_TEST && control.mode!=CAR_STEER_TEST && control.mode!=CAR_CALIBRATION && images_idle())
++        if(control.mode!=CAR_RUNNING && control.mode!=CAR_TEST && control.mode!=CAR_SPEED_TEST && control.mode!=CAR_DRIVE_TEST && control.mode!=CAR_STEER_TEST && control.mode!=CAR_CALIBRATION && control.mode!=CAR_SUSTAIN && images_idle())
+             image_requested=(uint8_t)(byte=='g'?1:2);
+         break;
+-    case 'r': if(control.mode!=CAR_RUNNING && control.mode!=CAR_TEST && control.mode!=CAR_SPEED_TEST && control.mode!=CAR_DRIVE_TEST && control.mode!=CAR_STEER_TEST && control.mode!=CAR_CALIBRATION) camera_init_once(); break;
++    case 'r': if(control.mode!=CAR_RUNNING && control.mode!=CAR_TEST && control.mode!=CAR_SPEED_TEST && control.mode!=CAR_DRIVE_TEST && control.mode!=CAR_STEER_TEST && control.mode!=CAR_CALIBRATION && control.mode!=CAR_SUSTAIN) camera_init_once(); break;
+     case 'e': case 'E':
+ #if !CAR_SIMULATED
+         if(control.mode==CAR_IDLE && camera_ready) {
+--- C3/code/competition/firmware/camera_car/tests/test_app.c
++++ H1/code/competition/firmware/camera_car/tests/test_app.c
+@@ -247,6 +247,31 @@
+     tx[tx_len]=0;
+     CHECK(strstr((char*)tx+config_begin,"CAL-CFG v=20261019C3 selected=0 step=500 cap=7000 duration=2000 lease=500 guard=1500\r\n"));
+     puts("Calibration adapter: selection / isolation / stop / bounds / C3 protocol PASS");
++    for(int i=0;i<18;i++){car_app_uart_rx_isr('I');car_app_foreground();}
++    car_app_uart_rx_isr('s');car_app_foreground();
++    for(int flush=0;flush<100;flush++)car_app_foreground();unsigned hold_begin=tx_len;
++    car_app_uart_rx_isr('H');for(int flush=0;flush<100;flush++)car_app_foreground();
++    car_app_uart_rx_isr('U');car_app_foreground();feedback_left=20;feedback_right=0;
++    for(int i=0;i<20;i++){if(i%10==0)car_app_uart_rx_isr('H');frame();}
++    CHECK(duties[CAR_LEFT_PWM]==1800 && duties[CAR_RIGHT_PWM]==0);
++    car_app_uart_rx_isr('I');car_app_foreground(); /* Running selection cannot change. */
++    for(int i=0;i<300;i++){if(i%10==0)car_app_uart_rx_isr('H');frame();}
++    CHECK(duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0);
++    car_app_uart_rx_isr('H');for(int flush=0;flush<100;flush++)car_app_foreground();tx[tx_len]=0;
++    if(argc>2){FILE *f=fopen(argv[2],"wb");CHECK(f);CHECK(fwrite(tx+hold_begin,1,tx_len-hold_begin,f)==tx_len-hold_begin);fclose(f);}
++    CHECK(strstr((char*)tx+hold_begin,"HOLD-CFG v=20261019H1 selected=1800 step=100 cap=3000 kick=3000 kick_min=200 kick_max=300 hold=3000 lease=500 guard=1500\r\n"));
++    CHECK(strstr((char*)tx+hold_begin,"phase=3 result=1 total_ms=3200 hold_ms=3000 motor=1 duty=1800 enc=20,0 pwm=0,0 n=200 sum=4000 min=20 max=20 zeros=0 kick_ticks=3\r\n"));
++
++    car_app_uart_rx_isr('s');car_app_foreground();feedback_left=0;
++    for(int i=0;i<30;i++){car_app_uart_rx_isr('K');car_app_foreground();}
++    car_app_uart_rx_isr('V');car_app_foreground();feedback_right=20;
++    for(int i=0;i<20;i++){if(i%10==0)car_app_uart_rx_isr('H');frame();}
++    CHECK(duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0); /* selected zero, after kick */
++    feedback_right=0;for(int i=0;i<50;i++){if(i%10==0)car_app_uart_rx_isr('H');frame();}
++    car_app_uart_rx_isr('H');for(int flush=0;flush<100;flush++)car_app_foreground();tx[tx_len]=0;
++    CHECK(strstr((char*)tx+hold_begin,"phase=3 result=2 total_ms=700 hold_ms=500 motor=2 duty=0"));
++    car_app_uart_rx_isr('s');car_app_foreground();
++    puts("Sustain adapter: H1 protocol / independent selection / drop / normal vs lost / immediate stop PASS");
+     puts("hardware adapter tests: PASS (host I/O double, not physical hardware)");
+     return 0;
+ }
+--- C3/code/competition/firmware/camera_car/tests/test_sustain.c
++++ H1/code/competition/firmware/camera_car/tests/test_sustain.c
+@@ -0,0 +1,42 @@
++#include "car_core.h"
++#include <stdio.h>
++#include <stdlib.h>
++#define CHECK(x) do{if(!(x)){fprintf(stderr,"FAIL sustain %d: %s\n",__LINE__,#x);exit(1);}}while(0)
++static control_state_t fresh(void){control_state_t s;control_config_t c={0};c.servo_center_us=1500;c.heartbeat_timeout_ms=100;control_init(&s,&c);return s;}
++static void step(control_state_t *s,uint32_t t,int active,int other){s->heartbeat_ms=t;control_drive_keepalive(s,t);control_tick(s,t,s->test_motor==1?active:other,s->test_motor==2?active:other);}
++static void kick(control_state_t *s){for(unsigned t=10;t<=200;t+=10)step(s,t,20,0);CHECK(s->sustain_phase==2);}
++int main(void){
++    for(unsigned motor=1;motor<=2;motor++){
++        control_state_t s=fresh();CHECK(control_sustain_test(&s,motor,1800,0));
++        for(unsigned t=10;t<200;t+=10){step(&s,t,20,0);CHECK(s.sustain_phase==1 && s.duty[motor-1]==3000 && s.duty[2-motor]==0);}
++        step(&s,200,20,0);CHECK(s.sustain_phase==2 && s.duty[motor-1]==1800);
++        CHECK(!control_sustain_test(&s,3-motor,2000,200));
++        for(unsigned t=210;t<3200;t+=10)step(&s,t,20,0);
++        step(&s,3200,20,0);CHECK(s.mode==CAR_IDLE && s.sustain_result==1 && s.sustain_phase==3);
++        CHECK(s.sustain_n==200 && s.sustain_sum==4000 && s.sustain_min==20 && s.sustain_max==20 && s.sustain_zeros==0);
++        CHECK(s.duty[0]==0 && s.duty[1]==0 && s.sustain_hold_ms==3000 && s.sustain_total_ms==3200);
++        unsigned id=s.sustain_id;control_stop(&s);CHECK(s.sustain_result==0 && s.sustain_phase==0);
++        CHECK(control_sustain_test(&s,motor,0,3200) && s.sustain_id!=id && s.sustain_n==0);
++    }
++    control_state_t s=fresh();CHECK(control_sustain_test(&s,1,0,0));kick(&s);CHECK(s.duty[0]==0);
++    for(unsigned t=210;t<=700;t+=10)step(&s,t,0,0);
++    CHECK(s.mode==CAR_IDLE && s.sustain_result==2 && s.sustain_phase==3 && s.duty[0]==0);
++    s=fresh();CHECK(control_sustain_test(&s,1,2000,0));
++    for(unsigned t=10;t<=300;t+=10)step(&s,t,t==10?10:0,0);
++    CHECK(s.mode==CAR_FAULT && s.fault==FAULT_ENCODER && s.sustain_result==0);
++    for(unsigned bad=0;bad<3;bad++){
++        s=fresh();CHECK(control_sustain_test(&s,2,2000,0));step(&s,10,bad==0?-6:bad==1?1501:20,bad==2?11:0);
++        CHECK(s.fault==FAULT_ENCODER && s.duty[0]==0 && s.duty[1]==0);
++    }
++    s=fresh();CHECK(!control_sustain_test(&s,1,3001,0) && !control_sustain_test(&s,0,1000,0));
++    s.cfg.simulated=1;CHECK(!control_sustain_test(&s,1,1000,0));
++    s=fresh();CHECK(control_sustain_test(&s,1,1000,0));s.heartbeat_ms=500;control_tick(&s,500,0,0);CHECK(s.fault==FAULT_LINK);
++    s=fresh();CHECK(control_sustain_test(&s,1,1000,0));control_tick(&s,110,0,0);CHECK(s.fault==FAULT_FOREGROUND);
++    s=fresh();CHECK(control_sustain_test(&s,1,1000,0));kick(&s);
++    for(unsigned t=210;t<=3200;t+=10)step(&s,t,t==1500?0:20,0);
++    CHECK(s.sustain_result==1 && s.sustain_n==200 && s.sustain_sum==3980 && s.sustain_min==0 && s.sustain_zeros==1);
++    s=fresh();s.heartbeat_ms=0xfffffff0u;CHECK(control_sustain_test(&s,2,1000,0xfffffff0u));
++    for(unsigned dt=10;dt<=200;dt+=10)step(&s,0xfffffff0u+dt,20,0);
++    CHECK(s.sustain_phase==2 && s.duty[1]==1000);control_stop(&s);CHECK(s.sustain_result==0 && s.duty[1]==0);
++    puts("Sustain: kick gate / drop / full-window stats / lost motion / isolation / guards / IDs / wrap PASS");return 0;
++}
+--- C3/code/repair/run_tests.py
++++ H1/code/repair/run_tests.py
+@@ -30,12 +30,14 @@
+         run(args)
+         return exe
+     inc=root/'demo/user/inc';src=root/'demo/user/src';tests=root/'tests'
++    run([build('test_sustain',[tests/'test_sustain.c',src/'car_core.c'],[inc])])
+     run([build('test_calibration',[tests/'test_calibration.c',src/'car_core.c'],[inc])])
+     run([build('test_core',[tests/'test_core.c',src/'car_core.c'],[inc])])
+     run([build('test_tracking',[tests/'test_tracking.c',src/'car_core.c'],[inc])])
+     app=[tests/'test_app.c',src/'car_core.c',src/'car_app.c',src/'car_servo.c']
+     telemetry_fixture=out/'telemetry-fixture.txt'
+-    run([build('test_app',app,[tests/'sdk',inc]),telemetry_fixture])
++    run([build('test_app',app,[tests/'sdk',inc]),telemetry_fixture,out/'hold-fixture.txt'])
++    run(['powershell','-NoProfile','-ExecutionPolicy','Bypass','-File',BASE/'repair/test_hold_protocol.ps1','-Fixture',out/'hold-fixture.txt'])
+     run([build('test_servo',[tests/'test_servo.c',src/'car_servo.c'],[tests/'sdk',inc])])
+     if (tests/'test_uart8.c').exists():
+         files=[tests/'test_uart8.c',src/'car_core.c',src/'car_app.c',src/'car_servo.c']
+--- C3/code/repair/hold_protocol.ps1
++++ H1/code/repair/hold_protocol.ps1
+@@ -0,0 +1,54 @@
++function Hold-Fields([string]$Line){
++    $d=@{};foreach($m in [regex]::Matches($Line,'(?:^|\s)([a-z_]+)=([^\s]+)')){
++        $k=$m.Groups[1].Value;if($d.ContainsKey($k)){throw 'Duplicate hold field'};$d[$k]=$m.Groups[2].Value
++    };return $d
++}
++function Parse-HoldConfig([string]$Line){
++    if(-not $Line.StartsWith('HOLD-CFG ')){throw 'Not a hold configuration'}
++    $d=Hold-Fields $Line
++    if($d.v -ne '20261019H1'){throw 'Unknown hold firmware'}
++    $expected=@{step=100;cap=3000;kick=3000;kick_min=200;kick_max=300;hold=3000;lease=500;guard=1500}
++    foreach($k in $expected.Keys){if($d[$k] -notmatch '^\d+$' -or [long]$d[$k] -ne $expected[$k]){throw "Unexpected hold config: $k"}}
++    if($d.selected -notmatch '^\d+$' -or [int]$d.selected -gt 3000 -or [int]$d.selected%100 -ne 0){throw 'Invalid hold selection'}
++    $o=[ordered]@{v=$d.v;selected=[int]$d.selected};foreach($k in $expected.Keys){$o[$k]=$expected[$k]}
++    return [pscustomobject]$o
++}
++function Parse-HoldState([string]$Line){
++    if(-not $Line.StartsWith('HOLD-STATE ')){throw 'Not a hold state'}
++    $d=Hold-Fields $Line;$o=[ordered]@{}
++    foreach($k in @('ms','mode','fault','id','phase','result','total_ms','hold_ms','motor','duty','n','sum','min','max','zeros','kick_ticks')){
++        if($d[$k] -notmatch '^-?\d+$'){throw "Missing hold state: $k"};$o[$k]=[long]$d[$k]
++    }
++    foreach($k in @('enc','pwm')){
++        $m=[regex]::Match($d[$k],'^(-?\d+),(-?\d+)$');if(-not $m.Success){throw 'Invalid hold pair'}
++        $o[$k+'_left']=[long]$m.Groups[1].Value;$o[$k+'_right']=[long]$m.Groups[2].Value
++    }
++    return [pscustomobject]$o
++}
++function Get-HoldOutcome($State,[long]$Id,[int]$Motor,[int]$Duty){
++    $s=$State
++    if($s.id -ne $Id -or $s.motor -ne $Motor -or $s.duty -ne $Duty){throw 'Hold identity/side/duty mismatch'}
++    if($s.fault -ne 0 -or $s.mode -notin @(0,8)){throw 'Hold fault or unexpected mode'}
++    $active=if($Motor -eq 1){$s.enc_left}else{$s.enc_right}
++    $other=if($Motor -eq 1){$s.enc_right}else{$s.enc_left}
++    $pwm=if($Motor -eq 1){$s.pwm_left}else{$s.pwm_right}
++    $otherPwm=if($Motor -eq 1){$s.pwm_right}else{$s.pwm_left}
++    if($active -lt -5 -or $active -gt 1500 -or [math]::Abs($other) -gt 10 -or $pwm -lt 0 -or $pwm -gt 3000 -or $otherPwm -ne 0){throw 'Abnormal hold feedback or output'}
++    if($s.kick_ticks -lt 0 -or $s.kick_ticks -gt 3 -or ($s.phase -in @(2,3) -and $s.kick_ticks -ne 3)){throw 'Kick confirmation missing'}
++    if($s.phase -in @(1,2)){
++        if($s.mode -ne 8 -or $s.result -ne 0){throw 'Invalid active hold state'}
++        if($s.phase -eq 1 -and $pwm -ne 3000 -and -not ($s.total_ms -eq 0 -and $pwm -eq 0)){throw 'Unexpected kick output'}
++        if($s.phase -eq 2 -and $pwm -ne $Duty){throw 'Unexpected sustain output'}
++        return 'pending'
++    }
++    if($s.phase -ne 3 -or $s.mode -ne 0 -or $s.pwm_left -ne 0 -or $s.pwm_right -ne 0){throw 'Interrupted hold is not a completed measurement'}
++    if($s.result -eq 2){
++        if($s.hold_ms -lt 500 -or $s.hold_ms -ge 3000){throw 'Invalid lost-motion timing'}
++        return 'lost_motion'
++    }
++    if($s.result -ne 1 -or $s.hold_ms -ne 3000 -or $s.total_ms -lt 3200 -or $s.total_ms -gt 3300 -or $s.n -ne 200){throw 'Incomplete hold window'}
++    $mean=$s.sum/[double]$s.n
++    if($s.min -gt $s.max -or $mean -lt $s.min -or $mean -gt $s.max -or $s.zeros -lt 0 -or $s.zeros -gt $s.n){throw 'Invalid hold statistics'}
++    if($s.min -ge 2 -and $s.zeros -eq 0){return 'continuous'}
++    return 'intermittent'
++}
+--- C3/code/repair/test_hold_protocol.ps1
++++ H1/code/repair/test_hold_protocol.ps1
+@@ -0,0 +1,29 @@
++param([string]$Fixture)
++$ErrorActionPreference='Stop'
++. (Join-Path $PSScriptRoot 'hold_protocol.ps1')
++function Check($value,[string]$label){if(-not $value){throw "FAIL hold protocol: $label"}}
++function Reject([scriptblock]$action,[string]$label){$rejected=$false;try{& $action | Out-Null}catch{$rejected=$true};Check $rejected $label}
++$lines=Get-Content -LiteralPath $Fixture
++$cfgLine=@($lines | Where-Object {$_ -like 'HOLD-CFG *'})[0]
++$c=Parse-HoldConfig $cfgLine;Check ($c.cap -eq 3000 -and $c.selected -eq 1800) 'real C configuration'
++Reject {Parse-HoldConfig ($cfgLine.Replace('20261019H1','20261019C3'))} 'reject old firmware'
++Reject {Parse-HoldConfig ($cfgLine.Replace('guard=1500','guard=0'))} 'reject guard mismatch'
++$states=@($lines | Where-Object {$_ -like 'HOLD-STATE *'} | ForEach-Object {Parse-HoldState $_})
++$done=@($states | Where-Object {$_.result -eq 1})[-1]
++Check ($done.n -eq 200 -and $done.sum -eq 4000 -and $done.hold_ms -eq 3000) 'real full-window statistics'
++Check ($done.kick_ticks -eq 3) 'sticky confirmed kick samples'
++Check ((Get-HoldOutcome $done $done.id 1 1800) -eq 'continuous') 'continuous result'
++$doneLine=@($lines | Where-Object {$_ -like 'HOLD-STATE *' -and $_ -match 'result=1 '})[-1]
++$inter=Parse-HoldState ($doneLine.Replace('min=20','min=0').Replace('zeros=0','zeros=1'))
++Check ((Get-HoldOutcome $inter $inter.id 1 1800) -eq 'intermittent') 'intermittent feedback is not continuous'
++Reject {Get-HoldOutcome $done ($done.id+1) 1 1800} 'old trial identity'
++Reject {Get-HoldOutcome $done $done.id 2 1800} 'wrong side'
++$manual=Parse-HoldState ($doneLine.Replace('phase=3 result=1','phase=0 result=0'))
++Reject {Get-HoldOutcome $manual $manual.id 1 1800} 'manual stop is not completion'
++$bad=Parse-HoldState ($doneLine.Replace('fault=0','fault=5'))
++Reject {Get-HoldOutcome $bad $bad.id 1 1800} 'fault is not completion'
++$badKick=Parse-HoldState ($doneLine.Replace('kick_ticks=3','kick_ticks=2'))
++Reject {Get-HoldOutcome $badKick $badKick.id 1 1800} 'unconfirmed kick cannot pass'
++$lost=Parse-HoldState ($doneLine.Replace('result=1','result=2').Replace('total_ms=3200','total_ms=700').Replace('hold_ms=3000','hold_ms=500').Replace('n=200 sum=4000 min=20 max=20 zeros=0','n=0 sum=0 min=0 max=0 zeros=0'))
++Check ((Get-HoldOutcome $lost $lost.id 1 1800) -eq 'lost_motion') 'lost motion is an expected failed measurement'
++Write-Output 'Hold protocol: real C fixture / version / outcome / interruption / identity PASS'
+--- C3/code/repair/test_hold.ps1
++++ H1/code/repair/test_hold.ps1
+@@ -0,0 +1,75 @@
++param([ValidateSet(1,2)][int]$Motor=1,[ValidateRange(0,30)][int]$DutyPercent=0,[string]$PortName='COM9',[switch]$Run)
++$ErrorActionPreference='Stop'
++. (Join-Path $PSScriptRoot 'hold_protocol.ps1')
++$device=Get-CimInstance Win32_SerialPort | Where-Object DeviceID -eq $PortName
++if(-not $device -or $device.PNPDeviceID -notmatch 'VID_2E3C&PID_5740'){throw 'Wrong wireless USB identity'}
++$stamp=[TimeZoneInfo]::ConvertTimeBySystemTimeZoneId([DateTime]::UtcNow,'China Standard Time').ToString('yyyyMMdd-HHmmss')
++$folder=Join-Path $PSScriptRoot ('evidence\hold-'+$stamp)
++New-Item -ItemType Directory -Path $folder -Force | Out-Null
++$port=[IO.Ports.SerialPort]::new($PortName,115200,[IO.Ports.Parity]::None,8,[IO.Ports.StopBits]::One)
++$port.DtrEnable=$false;$port.RtsEnable=$false;$port.WriteTimeout=300
++$raw=[IO.MemoryStream]::new();$commands=[Collections.Generic.List[object]]::new()
++$failure=$null;$outcome='preflight_only';$completion=$null;$cfg=$null;$pre=$null;$trialId=$null
++$seenKick=$false;$seenHold=$false;$duty=$DutyPercent*100
++function Send([string]$c){$port.Write($c);$commands.Add(@{utc=[DateTime]::UtcNow.ToString('o');command=$c})}
++function Receive([int]$ms){
++    $watch=[Diagnostics.Stopwatch]::StartNew();$buffer=New-Object byte[] 8192
++    while($watch.ElapsedMilliseconds -lt $ms){
++        if($port.BytesToRead){$n=$port.Read($buffer,0,[Math]::Min($buffer.Length,$port.BytesToRead));$raw.Write($buffer,0,$n)}
++        else{Start-Sleep -Milliseconds 5}
++    }
++}
++function Text([int]$offset=0){$b=$raw.ToArray();return [Text.Encoding]::ASCII.GetString($b,$offset,$b.Length-$offset)}
++function States([string]$text){foreach($m in [regex]::Matches($text,'HOLD-STATE [^\r\n]*\r\n')){Parse-HoldState $m.Value}}
++function Config([string]$text){$m=[regex]::Matches($text,'HOLD-CFG [^\r\n]*\r\n');if(-not $m.Count){throw 'No complete H1 config'};return Parse-HoldConfig $m[-1].Value}
++function Idle($s){
++    if(-not $s -or $s.mode -ne 0 -or $s.fault -ne 0 -or $s.pwm_left -ne 0 -or $s.pwm_right -ne 0 -or $s.enc_left -ne 0 -or $s.enc_right -ne 0){throw 'Require idle and zero output/feedback'}
++}
++try{
++    $port.Open();$port.DiscardInBuffer();Send 'H';Receive 650;Send 'q';Receive 500;Send 'H';Receive 650
++    $text=Text;$cfg=Config $text;$states=@(States $text);$pre=$states[-1];Idle $pre
++    if($text -notmatch 'UART8-DIAG[^\r\n]*diag=0 ab=1 ' -or $text -notmatch 'MOTOR-DIR v=20261017I left=C11 cfg=1 sample=[01] right=C9 cfg=0'){throw 'Verified wireless/direction firmware not confirmed'}
++    if($Run){
++        Send ('K'*30);Receive 400;if($DutyPercent){Send ('I'*$DutyPercent);Receive 400}
++        $offset=[int]$raw.Length;Send 'H';Receive 650;$setup=Text $offset;$cfg=Config $setup
++        if($cfg.selected -ne $duty){throw 'Selected hold duty not acknowledged'}
++        $pre=@(States $setup)[-1];Idle $pre;$previousId=$pre.id
++        $offset=[int]$raw.Length;Send $(if($Motor -eq 1){'U'}else{'V'})
++        $clock=[Diagnostics.Stopwatch]::StartNew();$next=0;$lastRx=0;$lastMs=-1
++        while($clock.ElapsedMilliseconds -lt 4600){
++            if($clock.ElapsedMilliseconds -ge $next){Send 'H';$next+=100}
++            Receive 20;$motion=Text $offset
++            if($motion.Contains('HOLD-START REFUSED')){throw 'Hold start refused'}
++            $states=@(States $motion)
++            if($states.Count){
++                $s=$states[-1]
++                if($s.ms -ne $lastMs){$lastMs=$s.ms;$lastRx=$clock.ElapsedMilliseconds}
++                if($s.id -ne $previousId){
++                    if($null -eq $trialId){$trialId=$s.id}
++                    $candidate=Get-HoldOutcome $s $trialId $Motor $duty
++                    $active=if($Motor -eq 1){$s.enc_left}else{$s.enc_right}
++                    $pwm=if($Motor -eq 1){$s.pwm_left}else{$s.pwm_right}
++                    if($s.phase -eq 1 -and $active -ge 5 -and $pwm -eq 3000){$seenKick=$true}
++                    if($s.phase -eq 2){$seenHold=$true;if($s.kick_ticks -eq 3){$seenKick=$true}}
++                    if($candidate -ne 'pending'){$outcome=$candidate;$completion=$s;break}
++                }
++            }
++            if($clock.ElapsedMilliseconds-$lastRx -gt 700){throw 'Hold telemetry stale'}
++        }
++        $ack="HOLD-START v=20261019H1 motor=$Motor duty=$duty kick=3000 kick_min=200 kick_max=300 hold=3000 lease=500 guard=1500"
++        if(-not $completion -or -not $seenKick -or -not $seenHold -or -not (Text $offset).Contains($ack)){throw 'Missing identified kick/drop/automatic outcome evidence'}
++    }
++}catch{$failure=$_.Exception.Message;$outcome='error'}
++finally{
++    if($port.IsOpen){try{Send 's';Send 'H';Receive 450}catch{};$port.Close()};$port.Dispose()
++    [IO.File]::WriteAllBytes((Join-Path $folder 'serial.bin'),$raw.ToArray());$all=@(States (Text));$raw.Dispose()
++    $all | Export-Csv -LiteralPath (Join-Path $folder 'status.csv') -NoTypeInformation -Encoding UTF8
++    $r=[ordered]@{version='20261019H1';motor=$Motor;duty_percent=$DutyPercent;failure=$failure;outcome=$outcome;
++        measurement_complete=($null -ne $completion -and -not $failure);continuous_feedback=($outcome -eq 'continuous');
++        kick_observed=$seenKick;hold_observed=$seenHold;completion=$completion;configuration=$cfg;
++        final=$(if($all.Count){$all[-1]}else{$null});commands=@($commands.ToArray());physical_observation='pending';evidence=$folder}
++    $r | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath (Join-Path $folder 'result.json') -Encoding utf8
++    [pscustomobject]@{motor=$Motor;duty_percent=$DutyPercent;outcome=$outcome;failure=$failure;completion=$completion;final=$r.final;evidence=$folder} | ConvertTo-Json -Depth 4
++}
++if($failure){exit 1}
++exit 0
+--- C3/run_hold_trial.ps1
++++ H1/run_hold_trial.ps1
+@@ -0,0 +1,16 @@
++param([ValidateSet(1,2)][int]$Motor,[ValidateRange(0,30)][int]$DutyPercent)
++$ErrorActionPreference='Stop';$global:LASTEXITCODE=0
++& (Join-Path $PSScriptRoot 'code/repair/test_hold.ps1') -PortName COM9 -Motor $Motor -DutyPercent $DutyPercent -Run | Out-Null
++$ec=$LASTEXITCODE
++$dir=Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot 'code/repair/evidence') -Directory -Filter 'hold-*' | Sort-Object Name -Descending | Select-Object -First 1
++$r=Get-Content -Raw -LiteralPath (Join-Path $dir.FullName 'result.json') | ConvertFrom-Json
++$c=$r.completion;$mean=$null;if($c -and $c.n -gt 0){$mean=$c.sum/[double]$c.n}
++$row=[pscustomobject]@{motor=$Motor;duty_percent=$DutyPercent;outcome=$r.outcome;failure=$r.failure;measurement_complete=$r.measurement_complete;
++    id=$c.id;hold_ms=$c.hold_ms;total_ms=$c.total_ms;n=$c.n;mean=$mean;min=$c.min;max=$c.max;zeros=$c.zeros;
++    kick_ticks=$c.kick_ticks;final=$r.final;evidence=$dir.FullName;physical_observation='pending'}
++$path=Join-Path $PSScriptRoot 'hold-summary.json';$all=@()
++if(Test-Path -LiteralPath $path){$all=@(Get-Content -Raw -LiteralPath $path | ConvertFrom-Json)}
++$all+=@($row);$all | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $path -Encoding utf8
++$row | ConvertTo-Json -Depth 3 -Compress
++if($ec -ne 0 -or $r.failure -or -not $r.measurement_complete){exit 1}
++exit 0

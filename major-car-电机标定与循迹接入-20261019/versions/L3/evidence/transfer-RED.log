@@ -1,0 +1,14 @@
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /D_CRT_SECURE_NO_WARNINGS /Fe:versions/L3\code\competition\firmware\camera_car\tests\out\msvc-lppqwakw\test_low_speed.exe /Fo:versions/L3\code\competition\firmware\camera_car\tests\out\msvc-lppqwakw\test_low_speed\ /I versions/L3\code\competition\firmware\camera_car\demo\user\inc versions/L3\code\competition\firmware\camera_car\tests\test_low_speed.c versions/L3\code\competition\firmware\camera_car\demo\user\src\car_core.c
+test_low_speed.c
+
+car_core.c
+
+versions/L3\code\competition\firmware\camera_car\demo\user\src\car_core.c(389): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+versions/L3\code\competition\firmware\camera_car\demo\user\src\car_core.c(390): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+正在生成代码...
+
+versions/L3\code\competition\firmware\camera_car\tests\out\msvc-lppqwakw\test_low_speed.exe
+LOW FAIL 20: s.duty[0]==3000 && s.duty[1]==3000
+

@@ -1,0 +1,12 @@
+{
+  "code/competition/firmware/camera_car/demo/user/inc/car_core.h": "c0ada4f9c9c0b705741f293717e7b8db561cdb4e8f7833d65ec4fe93ca7ad1d4",
+  "code/competition/firmware/camera_car/demo/user/src/car_core.c": "3d19da9a8ebb892a61db117dce9cc3e0c21db9c961fb2d2a32ca0c0aa55b38b9",
+  "code/competition/firmware/camera_car/demo/user/src/car_app.c": "2f217f5910e418a16b7506b50d707fe764d23f0b615e5e20008bc3ab077af815",
+  "code/competition/firmware/camera_car/tests/test_app.c": "62a17f4b54e5dcaea1d76d388966b4761116472b9f274d83c39050c3c90ca22e",
+  "code/competition/firmware/camera_car/tests/test_sustain.c": "48748fef2ac4aa21c689aef0d3d5a58bcf95170ce2d47d1c0711c543e8a75254",
+  "code/repair/run_tests.py": "ad664c16ddafe18aa8f887a93237811cff87b6621054d3e63df0631ab28250c8",
+  "code/repair/hold_protocol.ps1": "27bbda44912f75e46f69a32294d71ddfce26283895e0bbc8b531c98017cc4972",
+  "code/repair/test_hold_protocol.ps1": "e11927c987d5fdcc3586d8ca9a3b2b0918c39e549621297ae1a259470e0f9a50",
+  "code/repair/test_hold.ps1": "cc6182557becf7113b04231057a600e82858028ded94245049bebb652ee7bcb9",
+  "run_hold_trial.ps1": "12a35fd04408f58e2748c29445fae5bd4b67b57c5d54c4a6adcabd17b06f2a7b"
+}

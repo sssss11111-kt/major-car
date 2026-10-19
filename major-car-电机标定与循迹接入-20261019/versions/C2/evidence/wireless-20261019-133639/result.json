@@ -1,0 +1,93 @@
+{
+  "time_china": "2026-10-19 13:36:39",
+  "port": "COM9",
+  "baud": 115200,
+  "framing": "8N1",
+  "handshake": "None",
+  "dtr": false,
+  "rts": false,
+  "device_id": "USB\\VID_2E3C&PID_5740\\25D37FB75825",
+  "commands_sent": [
+    "p",
+    "q",
+    "p",
+    "q"
+  ],
+  "phases": [
+    {
+      "phase": "passive",
+      "duration_ms": 5018,
+      "bytes": 3076,
+      "zero_bytes": 0,
+      "nonzero_bytes": 3076,
+      "status_lines": 10,
+      "first_64_hex": "6D-73-3D-35-39-32-33-30-20-6D-6F-64-65-3D-30-20-66-61-75-6C-74-3D-30-20-66-72-61-6D-65-73-3D-32-36-30-32-20-76-61-6C-69-64-3D-30-20-70-61-69-72-3D-31-2F-31-33-20-74-68-72-3D-38-34-20-65-72-72",
+      "last_status_lines": [
+        "ms=62230 mode=0 fault=0 frames=2737 valid=0 pair=1/13 thr=86 err10=817 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=7 reject=0 seq=3078 cap_age=20 proc_ms=0 used_age=0 drop_frames=341 ready=0 good_frames=0 accepted_age=62230 trial_id=0 trial_done=0 trial_ms=0",
+        "ms=62730 mode=0 fault=0 frames=2759 valid=0 pair=1/13 thr=86 err10=856 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=7 reject=1 seq=3103 cap_age=20 proc_ms=0 used_age=10 drop_frames=344 ready=0 good_frames=0 accepted_age=62730 trial_id=0 trial_done=0 trial_ms=0",
+        "ms=63230 mode=0 fault=0 frames=2782 valid=0 pair=1/13 thr=86 err10=850 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=7 reject=0 seq=3128 cap_age=20 proc_ms=0 used_age=0 drop_frames=346 ready=0 good_frames=0 accepted_age=63230 trial_id=0 trial_done=0 trial_ms=0",
+        "ms=63730 mode=0 fault=0 frames=2804 valid=0 pair=1/13 thr=86 err10=847 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=7 reject=0 seq=3153 cap_age=20 proc_ms=0 used_age=10 drop_frames=349 ready=0 good_frames=0 accepted_age=63730 trial_id=0 trial_done=0 trial_ms=0"
+      ]
+    },
+    {
+      "phase": "query-1",
+      "duration_ms": 2018,
+      "bytes": 1538,
+      "zero_bytes": 0,
+      "nonzero_bytes": 1538,
+      "status_lines": 5,
+      "first_64_hex": "6D-73-3D-36-34-31-37-30-20-6D-6F-64-65-3D-30-20-66-61-75-6C-74-3D-30-20-66-72-61-6D-65-73-3D-32-38-32-35-20-76-61-6C-69-64-3D-30-20-70-61-69-72-3D-31-2F-31-33-20-74-68-72-3D-38-36-20-65-72-72",
+      "last_status_lines": [
+        "ms=64230 mode=0 fault=0 frames=2827 valid=0 pair=2/13 thr=86 err10=833 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=3178 cap_age=20 proc_ms=0 used_age=0 drop_frames=351 ready=0 good_frames=0 accepted_age=64230 trial_id=0 trial_done=0 trial_ms=0",
+        "ms=64730 mode=0 fault=0 frames=2849 valid=0 pair=2/13 thr=86 err10=835 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=3203 cap_age=20 proc_ms=0 used_age=10 drop_frames=354 ready=0 good_frames=0 accepted_age=64730 trial_id=0 trial_done=0 trial_ms=0",
+        "ms=65230 mode=0 fault=0 frames=2872 valid=0 pair=1/13 thr=86 err10=820 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=7 reject=0 seq=3228 cap_age=20 proc_ms=0 used_age=0 drop_frames=356 ready=0 good_frames=0 accepted_age=65230 trial_id=0 trial_done=0 trial_ms=0",
+        "ms=65730 mode=0 fault=0 frames=2894 valid=0 pair=1/13 thr=86 err10=847 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=7 reject=0 seq=3253 cap_age=20 proc_ms=0 used_age=10 drop_frames=359 ready=0 good_frames=0 accepted_age=65730 trial_id=0 trial_done=0 trial_ms=0"
+      ]
+    },
+    {
+      "phase": "query-2",
+      "duration_ms": 2030,
+      "bytes": 1572,
+      "zero_bytes": 0,
+      "nonzero_bytes": 1572,
+      "status_lines": 4,
+      "first_64_hex": "6D-73-3D-36-36-32-33-30-20-6D-6F-64-65-3D-30-20-66-61-75-6C-74-3D-30-20-66-72-61-6D-65-73-3D-32-39-31-37-20-76-61-6C-69-64-3D-30-20-70-61-69-72-3D-31-2F-31-33-20-74-68-72-3D-38-36-20-65-72-72",
+      "last_status_lines": [
+        "ms=66230 mode=0 fault=0 frames=2917 valid=0 pair=1/13 thr=86 err10=848 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=7 reject=0 seq=3278 cap_age=20 proc_ms=0 used_age=0 drop_frames=361 ready=0 good_frames=0 accepted_age=66230 trial_id=0 trial_done=0 trial_ms=0",
+        "ms=66730 mode=0 fault=0 frames=2939 valid=0 pair=1/13 thr=86 err10=845 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=7 reject=0 seq=3303 cap_age=20 proc_ms=0 used_age=10 drop_frames=364 ready=0 good_frames=0 accepted_age=66730 trial_id=0 trial_done=0 trial_ms=0",
+        "ms=67230 mode=0 fault=0 frames=2962 valid=0 pair=1/13 thr=86 err10=847 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=7 reject=0 seq=3328 cap_age=20 proc_ms=0 used_age=0 drop_frames=366 ready=0 good_frames=0 accepted_age=67230 trial_id=0 trial_done=0 trial_ms=0",
+        "ms=67730 mode=0 fault=0 frames=2984 valid=0 pair=1/13 thr=86 err10=847 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=7 reject=1 seq=3353 cap_age=20 proc_ms=0 used_age=10 drop_frames=369 ready=0 good_frames=0 accepted_age=67730 trial_id=0 trial_done=0 trial_ms=0"
+      ]
+    },
+    {
+      "phase": "query-3",
+      "duration_ms": 2032,
+      "bytes": 1537,
+      "zero_bytes": 0,
+      "nonzero_bytes": 1537,
+      "status_lines": 5,
+      "first_64_hex": "6D-73-3D-36-38-32-33-30-20-6D-6F-64-65-3D-30-20-66-61-75-6C-74-3D-30-20-66-72-61-6D-65-73-3D-33-30-30-37-20-76-61-6C-69-64-3D-30-20-70-61-69-72-3D-31-2F-31-33-20-74-68-72-3D-38-34-20-65-72-72",
+      "last_status_lines": [
+        "ms=68420 mode=0 fault=0 frames=3016 valid=0 pair=1/13 thr=84 err10=817 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=7 reject=0 seq=3388 cap_age=10 proc_ms=0 used_age=0 drop_frames=372 ready=0 good_frames=0 accepted_age=68420 trial_id=0 trial_done=0 trial_ms=0",
+        "ms=68730 mode=0 fault=0 frames=3029 valid=0 pair=1/13 thr=84 err10=851 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=7 reject=1 seq=3403 cap_age=20 proc_ms=0 used_age=10 drop_frames=374 ready=0 good_frames=0 accepted_age=68730 trial_id=0 trial_done=0 trial_ms=0",
+        "ms=69230 mode=0 fault=0 frames=3052 valid=0 pair=1/13 thr=84 err10=817 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=7 reject=0 seq=3428 cap_age=20 proc_ms=0 used_age=0 drop_frames=376 ready=0 good_frames=0 accepted_age=69230 trial_id=0 trial_done=0 trial_ms=0",
+        "ms=69730 mode=0 fault=0 frames=3074 valid=0 pair=1/13 thr=84 err10=815 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=7 reject=0 seq=3453 cap_age=20 proc_ms=0 used_age=10 drop_frames=379 ready=0 good_frames=0 accepted_age=69730 trial_id=0 trial_done=0 trial_ms=0"
+      ]
+    },
+    {
+      "phase": "query-4",
+      "duration_ms": 2030,
+      "bytes": 1283,
+      "zero_bytes": 0,
+      "nonzero_bytes": 1283,
+      "status_lines": 3,
+      "first_64_hex": "6D-73-3D-37-30-32-33-30-20-6D-6F-64-65-3D-30-20-66-61-75-6C-74-3D-30-20-66-72-61-6D-65-73-3D-33-30-39-37-20-76-61-6C-69-64-3D-30-20-70-61-69-72-3D-31-2F-31-33-20-74-68-72-3D-38-36-20-65-72-72",
+      "last_status_lines": [
+        "ms=70230 mode=0 fault=0 frames=3097 valid=0 pair=1/13 thr=86 err10=851 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=7 reject=1 seq=3478 cap_age=20 proc_ms=0 used_age=0 drop_frames=381 ready=0 good_frames=0 accepted_age=70230 trial_id=0 trial_done=0 trial_ms=0",
+        "ms=70730 mode=0 fault=0 frames=3119 valid=0 pair=1/13 thr=86 err10=819 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=7 reject=0 seq=3503 cap_age=20 proc_ms=0 used_age=10 drop_frames=384 ready=0 good_frames=0 accepted_age=70730 trial_id=0 trial_done=0 trial_ms=0",
+        "ms=71230 mode=0 fault=0 frames=3142 valid=0 pair=1/13 thr=86 err10=851 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=7 reject=1 seq=3528 cap_age=20 proc_ms=0 used_age=0 drop_frames=386 ready=0 good_frames=0 accepted_age=71230 trial_id=0 trial_done=0 trial_ms=0"
+      ]
+    }
+  ],
+  "evidence_directory": "[LOCAL_WORKSPACE]\\external_refs\\major-car-review-20261019\\major-car-T2-20261019\\code\\repair\\evidence\\wireless-20261019-133639"
+}

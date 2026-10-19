@@ -1,0 +1,69 @@
+{
+  "time_china": "2026-10-19 13:35:12",
+  "port": "COM9",
+  "baud": 115200,
+  "framing": "8N1",
+  "handshake": "None",
+  "dtr": false,
+  "rts": false,
+  "device_id": "USB\\VID_2E3C&PID_5740\\25D37FB75825",
+  "commands_sent": [
+    "p",
+    "q",
+    "p",
+    "q"
+  ],
+  "phases": [
+    {
+      "phase": "passive",
+      "duration_ms": 5038,
+      "bytes": 0,
+      "zero_bytes": 0,
+      "nonzero_bytes": 0,
+      "status_lines": 0,
+      "first_64_hex": "",
+      "last_status_lines": []
+    },
+    {
+      "phase": "query-1",
+      "duration_ms": 2024,
+      "bytes": 0,
+      "zero_bytes": 0,
+      "nonzero_bytes": 0,
+      "status_lines": 0,
+      "first_64_hex": "",
+      "last_status_lines": []
+    },
+    {
+      "phase": "query-2",
+      "duration_ms": 2029,
+      "bytes": 0,
+      "zero_bytes": 0,
+      "nonzero_bytes": 0,
+      "status_lines": 0,
+      "first_64_hex": "",
+      "last_status_lines": []
+    },
+    {
+      "phase": "query-3",
+      "duration_ms": 2028,
+      "bytes": 0,
+      "zero_bytes": 0,
+      "nonzero_bytes": 0,
+      "status_lines": 0,
+      "first_64_hex": "",
+      "last_status_lines": []
+    },
+    {
+      "phase": "query-4",
+      "duration_ms": 2031,
+      "bytes": 0,
+      "zero_bytes": 0,
+      "nonzero_bytes": 0,
+      "status_lines": 0,
+      "first_64_hex": "",
+      "last_status_lines": []
+    }
+  ],
+  "evidence_directory": "[LOCAL_WORKSPACE]\\external_refs\\major-car-review-20261019\\major-car-T2-20261019\\code\\repair\\evidence\\wireless-20261019-133512"
+}

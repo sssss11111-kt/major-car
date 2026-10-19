@@ -1,0 +1,35 @@
+{
+  "failure": null,
+  "selected_duty": 0,
+  "final": {
+    "ms": 326720,
+    "mode": 0,
+    "fault": 0,
+    "enc_left": 0,
+    "enc_right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0
+  },
+  "commands": [
+    "s",
+    "M",
+    "M",
+    "M",
+    "M",
+    "M",
+    "M",
+    "M",
+    "M",
+    "M",
+    "M",
+    "M",
+    "M",
+    "M",
+    "M",
+    "D",
+    "p",
+    "p",
+    "p"
+  ],
+  "evidence": "versions/C3/evidence/post-sweep-20261019-142218"
+}

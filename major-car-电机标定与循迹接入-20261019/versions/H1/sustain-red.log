@@ -1,0 +1,121 @@
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /D_CRT_SECURE_NO_WARNINGS /Fe:versions/H1\code\competition\firmware\camera_car\tests\out\msvc-gfll8d5z\test_sustain.exe /Fo:versions/H1\code\competition\firmware\camera_car\tests\out\msvc-gfll8d5z\test_sustain\ /I versions/H1\code\competition\firmware\camera_car\demo\user\inc versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c versions/H1\code\competition\firmware\camera_car\demo\user\src\car_core.c
+test_sustain.c
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(7): error C2039: "sustain_phase": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(10): warning C4013: “control_sustain_test”未定义；假设外部返回 int
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(11): error C2039: "sustain_phase": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(12): error C2039: "sustain_phase": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(15): error C2039: "sustain_result": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(15): error C2039: "sustain_phase": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(16): error C2039: "sustain_n": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(16): error C2039: "sustain_sum": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(16): error C2039: "sustain_min": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(16): error C2039: "sustain_max": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(16): error C2039: "sustain_zeros": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(17): error C2039: "sustain_hold_ms": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(17): error C2039: "sustain_total_ms": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(18): error C2039: "sustain_id": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(18): error C2039: "sustain_result": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(18): error C2039: "sustain_phase": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(19): error C2039: "sustain_id": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(19): error C2039: "sustain_n": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(23): error C2039: "sustain_result": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(23): error C2039: "sustain_phase": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(26): error C2039: "sustain_result": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(37): error C2039: "sustain_result": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(37): error C2039: "sustain_n": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(37): error C2039: "sustain_sum": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(37): error C2039: "sustain_min": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(37): error C2039: "sustain_zeros": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(40): error C2039: "sustain_phase": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+versions/H1\code\competition\firmware\camera_car\tests\test_sustain.c(40): error C2039: "sustain_result": 不是 "control_state_t" 的成员
+
+versions/H1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(38): note: 参见“control_state_t”的声明
+
+car_core.c
+
+versions/H1\code\competition\firmware\camera_car\demo\user\src\car_core.c(293): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+versions/H1\code\competition\firmware\camera_car\demo\user\src\car_core.c(294): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+正在生成代码...
+

@@ -1,0 +1,159 @@
+{
+  "version": "20261019L2",
+  "motor": 1,
+  "target": 20,
+  "outcome": "error",
+  "failure": "LOW identity/fault/mode mismatch",
+  "motion_sent": true,
+  "measurement_complete": false,
+  "configuration": {
+    "v": "20261019L2",
+    "duration": "6000",
+    "kp10": "40",
+    "kick_min": "30",
+    "min": "10",
+    "guard": "450",
+    "step": "5",
+    "kick": "3000",
+    "transfer": "1500",
+    "ff0": "470,660",
+    "lease": "500",
+    "ki10": "200",
+    "stats": "3000",
+    "ff10": "65,70",
+    "max": "40",
+    "cap": "1500",
+    "selected": "20",
+    "kick_max": "200"
+  },
+  "completion": null,
+  "final": {
+    "ms": 66580,
+    "mode": 0,
+    "fault": 0,
+    "id": 1,
+    "done": 0,
+    "elapsed": 910,
+    "motor": 1,
+    "target": 20,
+    "confirmed": 1,
+    "regulating": 1,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ],
+    "n": [
+      0,
+      0
+    ],
+    "sum": [
+      0,
+      0
+    ],
+    "e2": [
+      0,
+      0
+    ],
+    "ae": [
+      0,
+      0
+    ],
+    "min": [
+      0,
+      0
+    ],
+    "max": [
+      0,
+      0
+    ]
+  },
+  "final_zero": true,
+  "commands": [
+    {
+      "command": "Q",
+      "utc": "2026-10-19T07:33:57.4068782Z"
+    },
+    {
+      "command": "Q",
+      "utc": "2026-10-19T07:33:58.1061760Z"
+    },
+    {
+      "command": "q",
+      "utc": "2026-10-19T07:33:58.8311936Z"
+    },
+    {
+      "command": "GGGGGG",
+      "utc": "2026-10-19T07:33:59.4860610Z"
+    },
+    {
+      "command": "FF",
+      "utc": "2026-10-19T07:33:59.9408268Z"
+    },
+    {
+      "command": "Q",
+      "utc": "2026-10-19T07:34:00.4048093Z"
+    },
+    {
+      "command": "Q",
+      "utc": "2026-10-19T07:34:01.0617426Z"
+    },
+    {
+      "command": "J",
+      "utc": "2026-10-19T07:34:01.7233185Z"
+    },
+    {
+      "command": "Q",
+      "utc": "2026-10-19T07:34:01.7239858Z"
+    },
+    {
+      "command": "Q",
+      "utc": "2026-10-19T07:34:01.8315965Z"
+    },
+    {
+      "command": "Q",
+      "utc": "2026-10-19T07:34:01.9247340Z"
+    },
+    {
+      "command": "Q",
+      "utc": "2026-10-19T07:34:02.0474580Z"
+    },
+    {
+      "command": "Q",
+      "utc": "2026-10-19T07:34:02.1420636Z"
+    },
+    {
+      "command": "Q",
+      "utc": "2026-10-19T07:34:02.2369493Z"
+    },
+    {
+      "command": "Q",
+      "utc": "2026-10-19T07:34:02.3293855Z"
+    },
+    {
+      "command": "Q",
+      "utc": "2026-10-19T07:34:02.4562384Z"
+    },
+    {
+      "command": "Q",
+      "utc": "2026-10-19T07:34:02.5452249Z"
+    },
+    {
+      "command": "Q",
+      "utc": "2026-10-19T07:34:02.6424294Z"
+    },
+    {
+      "command": "s",
+      "utc": "2026-10-19T07:34:02.7450609Z"
+    },
+    {
+      "command": "Q",
+      "utc": "2026-10-19T07:34:03.7486474Z"
+    }
+  ],
+  "physical_observation": "pending",
+  "evidence": "versions/L2/evidence/low-20261019-153357"
+}

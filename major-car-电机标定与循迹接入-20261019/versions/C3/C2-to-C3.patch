@@ -1,0 +1,150 @@
+--- C2/code/competition/firmware/camera_car/demo/user/inc/car_core.h
++++ C3/code/competition/firmware/camera_car/demo/user/inc/car_core.h
+@@ -72,6 +72,7 @@
+ void control_fault(control_state_t *state, car_fault_t fault);
+ int control_test(control_state_t *state, uint8_t motor, uint32_t now);
+ #define CAR_CALIBRATION_MAX_DUTY 7000u /* Diagnostic envelope; not a rated hardware limit. */
++#define CAR_CALIBRATION_ENCODER_LIMIT 1500 /* Counts/10ms; calibration only, not rated motor RPM. */
+ int control_calibration_test(control_state_t *state,uint8_t motor,uint16_t duty,uint32_t now);
+ int control_speed_test_right(control_state_t *state, uint32_t now);
+ int control_speed_test(control_state_t *state, uint8_t motor, uint32_t now);
+--- C2/code/competition/firmware/camera_car/demo/user/src/car_core.c
++++ C3/code/competition/firmware/camera_car/demo/user/src/car_core.c
+@@ -289,7 +289,7 @@
+         if((uint32_t)(now-s->drive_command_ms)>=500u){control_fault(s,FAULT_LINK);return;}
+         if((int32_t)(now-s->test_until)>=0){control_stop(s);return;}
+         int active=s->test_motor==1?left:right,other=s->test_motor==1?right:left;
+-        if(active< -5 || active>450 || abs_i(other)>10){control_fault(s,FAULT_ENCODER);return;}
++        if(active< -5 || active>CAR_CALIBRATION_ENCODER_LIMIT || abs_i(other)>10){control_fault(s,FAULT_ENCODER);return;}
+         s->duty[0]=s->test_motor==1?s->calibration_duty:0;
+         s->duty[1]=s->test_motor==2?s->calibration_duty:0;
+         return;
+--- C2/code/competition/firmware/camera_car/demo/user/src/car_app.c
++++ C3/code/competition/firmware/camera_car/demo/user/src/car_app.c
+@@ -363,8 +363,9 @@
+         }
+         if(control_calibration_test(&control,byte=='L'?1:2,calibration_selected,milliseconds)) {
+             char line[160];servo_test_active=0;apply_outputs();
+-            snprintf(line,sizeof line,"CAL-START v=20261019C2 motor=%u duty=%u duration=2000 lease=500 cap=%u\r\n",
+-                     byte=='L'?1u:2u,(unsigned)calibration_selected,(unsigned)CAR_CALIBRATION_MAX_DUTY);text_queue(line);
++            snprintf(line,sizeof line,"CAL-START v=20261019C3 motor=%u duty=%u duration=2000 lease=500 cap=%u guard=%u\r\n",
++                     byte=='L'?1u:2u,(unsigned)calibration_selected,(unsigned)CAR_CALIBRATION_MAX_DUTY,
++                     (unsigned)CAR_CALIBRATION_ENCODER_LIMIT);text_queue(line);
+         } else text_queue("CAL-START REFUSED\r\n");
+         break;
+ #if CAR_COMM_DIAGNOSTIC
+@@ -437,7 +438,7 @@
+     switch(byte) {
+     case 'D': {
+         char line[120];
+-        snprintf(line,sizeof line,"CAL-CFG v=20261019C2 selected=%u step=500 cap=%u duration=2000 lease=500\r\n",(unsigned)calibration_selected,(unsigned)CAR_CALIBRATION_MAX_DUTY);
++        snprintf(line,sizeof line,"CAL-CFG v=20261019C3 selected=%u step=500 cap=%u duration=2000 lease=500 guard=%u\r\n",(unsigned)calibration_selected,(unsigned)CAR_CALIBRATION_MAX_DUTY,(unsigned)CAR_CALIBRATION_ENCODER_LIMIT);
+         text_queue(line);break;
+     }
+     case 'h':
+--- C2/code/competition/firmware/camera_car/tests/test_calibration.c
++++ C3/code/competition/firmware/camera_car/tests/test_calibration.c
+@@ -11,6 +11,13 @@
+     s->heartbeat_ms=t;control_drive_keepalive(s,t);control_tick(s,t,l,r);
+ }
+ int main(void) {
++    for(unsigned motor=1;motor<=2;motor++)for(int feedback=453;feedback<=1500;feedback+=1047) {
++        control_state_t high=fresh();CHECK(control_calibration_test(&high,motor,7000,0));
++        tick(&high,10,motor==1?feedback:0,motor==2?feedback:0);
++        CHECK(high.mode==CAR_CALIBRATION && high.fault==FAULT_NONE);
++        CHECK(high.duty[motor-1]==7000 && high.duty[2-motor]==0);
++        control_stop(&high);CHECK(high.duty[0]==0 && high.duty[1]==0);
++    }
+     for(unsigned motor=1;motor<=2;motor++)for(unsigned duty=0;duty<=7000;duty+=500) {
+         control_state_t s=fresh();CHECK(control_calibration_test(&s,motor,duty,0));
+         for(unsigned t=10;t<2000;t+=10) {
+@@ -32,9 +39,13 @@
+     control_tick(&s,110,0,0);CHECK(s.fault==FAULT_FOREGROUND && s.duty[0]==0);
+     for(unsigned bad=0;bad<3;bad++) {
+         s=fresh();CHECK(control_calibration_test(&s,1,3000,0));
+-        tick(&s,10,bad==0?-6:(bad==1?451:0),bad==2?11:0);
++        tick(&s,10,bad==0?-6:(bad==1?1501:0),bad==2?11:0);
+         CHECK(s.mode==CAR_FAULT && s.fault==FAULT_ENCODER && s.duty[0]==0 && s.duty[1]==0);
+     }
++    s=fresh();CHECK(control_calibration_test(&s,2,7000,0));tick(&s,10,0,1501);
++    CHECK(s.fault==FAULT_ENCODER && s.duty[0]==0 && s.duty[1]==0);
++    s=fresh();CHECK(control_speed_test(&s,1,0));tick(&s,10,453,0);
++    CHECK(s.fault==FAULT_ENCODER); /* The old bench threshold is intentionally retained. */
+     s=fresh();CHECK(control_calibration_test(&s,1,3000,0));tick(&s,10,200,0);
+     control_stop(&s);tick(&s,20,0,0);CHECK(s.mode==CAR_IDLE && s.duty[0]==0);
+     s=fresh();s.heartbeat_ms=0xfffffff0u;CHECK(control_calibration_test(&s,2,3000,0xfffffff0u));
+--- C2/code/competition/firmware/camera_car/tests/test_app.c
++++ C3/code/competition/firmware/camera_car/tests/test_app.c
+@@ -245,8 +245,8 @@
+     unsigned config_begin=tx_len;
+     car_app_uart_rx_isr('D');for(int flush=0;flush<100;flush++)car_app_foreground();
+     tx[tx_len]=0;
+-    CHECK(strstr((char*)tx+config_begin,"CAL-CFG v=20261019C2 selected=0 step=500 cap=7000 duration=2000 lease=500\r\n"));
+-    puts("Calibration adapter: selection / isolation / stop / bounds / C2 protocol PASS");
++    CHECK(strstr((char*)tx+config_begin,"CAL-CFG v=20261019C3 selected=0 step=500 cap=7000 duration=2000 lease=500 guard=1500\r\n"));
++    puts("Calibration adapter: selection / isolation / stop / bounds / C3 protocol PASS");
+     puts("hardware adapter tests: PASS (host I/O double, not physical hardware)");
+     return 0;
+ }
+--- C2/code/repair/test_calibration.ps1
++++ C3/code/repair/test_calibration.ps1
+@@ -3,7 +3,7 @@
+ $ErrorActionPreference='Stop'
+ $expectedPwm=$DutyPercent*100
+ $durationMs=2000
+-$expectedAck="CAL-START v=20261019C2 motor=$Motor duty=$expectedPwm duration=2000 lease=500 cap=7000"
++$expectedAck="CAL-START v=20261019C3 motor=$Motor duty=$expectedPwm duration=2000 lease=500 cap=7000 guard=1500"
+ $device=Get-CimInstance Win32_SerialPort | Where-Object DeviceID -eq $PortName
+ if(-not $device -or $device.PNPDeviceID -notmatch 'VID_2E3C&PID_5740'){throw 'Wrong wireless USB port'}
+ $now=[TimeZoneInfo]::ConvertTimeBySystemTimeZoneId([DateTime]::UtcNow,'China Standard Time')
+@@ -50,13 +50,13 @@
+     if($text -notmatch 'MOTOR-DIR v=20261017I left=C11 cfg=1 sample=[01] right=C9 cfg=0 sample=[01] sample_unverified=1'){
+         throw 'Expected C11 left direction camera firmware not confirmed; no motion command sent'
+     }
+-    if($text -notmatch 'CAL-CFG v=20261019C2 selected=\d+ step=500 cap=7000 duration=2000 lease=500'){throw 'Calibration firmware not confirmed; no motion sent'}
++    if($text -notmatch 'CAL-CFG v=20261019C3 selected=\d+ step=500 cap=7000 duration=2000 lease=500 guard=1500'){throw 'Calibration firmware not confirmed; no motion sent'}
+     if($Run){
+         for($step=0;$step -lt 14;$step++){Send-Command 'M';Receive-For 40}
+         for($step=0;$step -lt ($DutyPercent/5);$step++){Send-Command 'P';Receive-For 40}
+         $checkStart=[int]$capture.Length;Send-Command 'D';Receive-For 650
+         $data=$capture.ToArray();$cfgText=[Text.Encoding]::ASCII.GetString($data,$checkStart,$data.Length-$checkStart)
+-        if($cfgText -notmatch ("CAL-CFG v=20261019C2 selected="+$expectedPwm+' step=500 cap=7000 duration=2000 lease=500')){throw 'Selected duty not acknowledged; no start sent'}
++        if($cfgText -notmatch ("CAL-CFG v=20261019C3 selected="+$expectedPwm+' step=500 cap=7000 duration=2000 lease=500 guard=1500')){throw 'Selected duty not acknowledged; no start sent'}
+     }
+     for($pulse=1;$pulse -le $Pulses;$pulse++){
+         $start=$capture.Length
+--- C2/code/repair/flash_with_backup.py
++++ C3/code/repair/flash_with_backup.py
+@@ -109,7 +109,6 @@
+         result.update(backup_complete=True,backup=str(backup),backup_sha256=hashlib.sha256(data).hexdigest())
+         backup_meta.write_text(json.dumps({'sha256':result['backup_sha256'],'size':len(data)},indent=2),encoding='utf-8')
+ 
+-        baseline=base.parents[1]/'external_refs/major-car-review-20261019/major-car-T2-20261019/firmware/20261019T2-camera.hex'
+         # Use the explicitly recorded baseline path supplied by the local runner.
+         baseline=Path(os.environ['SMARTCAR_BASELINE_HEX'])
+         baseline_image=IntelHex(str(baseline));baseline_checked=0
+@@ -117,10 +116,10 @@
+             want=bytes(baseline_image.tobinarray(start=first,end=end-1))
+             offset=first-0x70000000
+             if offset<0 or data[offset:offset+len(want)]!=want:
+-                raise RuntimeError('Current board differs from recorded T2; backup preserved; no erase performed')
++                raise RuntimeError('Current board differs from recorded baseline; backup preserved; no erase performed')
+             baseline_checked+=len(want)
+-        result['baseline_T2_verified_bytes']=baseline_checked
+-        print('BACKUP_T2_MATCH bytes='+str(baseline_checked),flush=True)
++        result['baseline_verified_bytes']=baseline_checked
++        print('BACKUP_BASELINE_MATCH bytes='+str(baseline_checked),flush=True)
+         save()
+         print('BACKUP_COMPLETE '+result['backup_sha256'],flush=True)
+         FileProgrammer(session,chip_erase='sector',smart_flash=False).program(str(image))
+--- C2/run_pair.ps1
++++ C3/run_pair.ps1
+@@ -23,7 +23,7 @@
+     }
+     $trial=@($r.results) | Select-Object -First 1
+     $faults=@($rows | Where-Object {[int]$_.fault -ne 0} | Select-Object -ExpandProperty fault -Unique)
+-    $row=[pscustomobject]@{duty_percent=$DutyPercent;motor=$motor;failure=$r.failure;exit_code=$statusCode;automatic_stop=$trial.automatic_stop_observed;active_samples=$active.Count;late_samples=$late.Count;mean=$measure.Average;min=$measure.Minimum;max=$measure.Maximum;peak=$peak;faults=$faults;final=$r.final_status;evidence=$latest.FullName;physical_observation='pending'}
++    $row=[pscustomobject]@{duty_percent=$DutyPercent;motor=$motor;failure=$r.failure;exit_code=$statusCode;automatic_stop=$trial.automatic_stop_observed;active_samples=$active.Count;late_samples=$late.Count;mean=$measure.Average;min=$measure.Minimum;max=$measure.Maximum;peak=$peak;faults=$faults;final=$r.final_status;evidence=$latest.FullName;physical_observation='pending';firmware_version='20261019C3';encoder_guard=1500}
+     $all+=@($row)
+     $all | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath $summaryPath -Encoding utf8
+     $row | ConvertTo-Json -Depth 4 -Compress

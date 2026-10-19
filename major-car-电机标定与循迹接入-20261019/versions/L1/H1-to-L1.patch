@@ -1,0 +1,440 @@
+--- H1/code/competition/firmware/camera_car/demo/user/inc/car_core.h
++++ L1/code/competition/firmware/camera_car/demo/user/inc/car_core.h
+@@ -21,13 +21,14 @@
+     uint8_t quality, rejected_rows; /* STEP-03: geometry support, not accuracy probability. */
+     float error; /* positive: track center to vehicle right */
+ } vision_result_t;
+-typedef enum { CAR_IDLE, CAR_RUNNING, CAR_TEST, CAR_FAULT, CAR_SPEED_TEST, CAR_STEER_TEST, CAR_DRIVE_TEST, CAR_CALIBRATION, CAR_SUSTAIN } car_mode_t;
++typedef enum { CAR_IDLE, CAR_RUNNING, CAR_TEST, CAR_FAULT, CAR_SPEED_TEST, CAR_STEER_TEST, CAR_DRIVE_TEST, CAR_CALIBRATION, CAR_SUSTAIN, CAR_LOW_SPEED } car_mode_t;
+ typedef enum { FAULT_NONE, FAULT_CAMERA, FAULT_FRAME, FAULT_LINE,
+                FAULT_FOREGROUND, FAULT_ENCODER, FAULT_LINK } car_fault_t;
+ typedef struct {
+     float speed_target, speed_kp, speed_ki, pwm_max;
+     /* T2 STEP-01: tracking-only PI bias; zero preserves the 1500 legacy seed. */
+     float tracking_pwm_bias[2];
++    float low_kp,low_ki,low_ff_offset[2],low_ff_slope[2];
+     float steer_kp, steer_kd, steer_sign;
+     float servo_center_us, servo_min_us, servo_max_us;
+     uint32_t frame_timeout_ms, heartbeat_timeout_ms;
+@@ -58,6 +59,12 @@
+     int32_t sustain_sum;
+     uint32_t sustain_id,sustain_started,sustain_hold_started,sustain_total_ms,sustain_hold_ms;
+     uint8_t sustain_phase,sustain_result,sustain_kick_ticks;
++    uint32_t low_id,low_started,low_elapsed;
++    uint8_t low_done,low_confirmed,low_target;
++    uint16_t low_n[2];
++    int16_t low_min[2],low_max[2];
++    int32_t low_sum[2];
++    uint32_t low_error2[2],low_abs_error[2];
+ } control_state_t;
+ void vision_config_default(vision_config_t *cfg);
+ void vision_reset(vision_state_t *state);
+@@ -80,6 +87,12 @@
+ #define CAR_CALIBRATION_ENCODER_LIMIT 1500 /* Counts/10ms; calibration only, not rated motor RPM. */
+ int control_calibration_test(control_state_t *state,uint8_t motor,uint16_t duty,uint32_t now);
+ int control_sustain_test(control_state_t *state,uint8_t motor,uint16_t duty,uint32_t now);
++int control_low_test(control_state_t *state,uint8_t motor,uint8_t target,uint32_t now);
++#define CAR_LOW_DURATION_MS 6000u
++#define CAR_LOW_STATS_MS 3000u
++#define CAR_LOW_CAP 1500u
++#define CAR_LOW_KICK 3000u
++#define CAR_LOW_LEASE_MS 500u
+ #define CAR_SUSTAIN_KICK_DUTY 3000u
+ #define CAR_SUSTAIN_KICK_MIN_MS 200u
+ #define CAR_SUSTAIN_KICK_MAX_MS 300u
+--- H1/code/competition/firmware/camera_car/demo/user/src/car_app.c
++++ L1/code/competition/firmware/camera_car/demo/user/src/car_app.c
+@@ -42,6 +42,7 @@
+ static uint32_t last_screen,last_telemetry;
+ static uint16_t calibration_selected;
+ static uint16_t sustain_selected;
++static uint8_t low_selected=20;
+ #if CAR_SIMULATED
+ static uint32_t last_generated;
+ #else
+@@ -289,6 +290,22 @@
+         (unsigned)CAR_SUSTAIN_LEASE_MS,(unsigned)CAR_CALIBRATION_ENCODER_LIMIT);text_queue(line);
+     }
+ }
++static void low_query(uint32_t received) {
++    control_state_t s;char line[480];uint8_t selected;
++    uint32_t key=lock();control_drive_keepalive(&control,received);s=control;selected=low_selected;
++    uint32_t now=milliseconds;int left=measured_left,right=measured_right;unlock(key);
++    snprintf(line,sizeof line,"LOW-STATE ms=%lu mode=%u fault=%u id=%lu done=%u elapsed=%lu motor=%u target=%u confirmed=%u enc=%d,%d pwm=%u,%u n=%u,%u sum=%ld,%ld e2=%lu,%lu ae=%lu,%lu min=%d,%d max=%d,%d\r\n",
++        (unsigned long)now,(unsigned)s.mode,(unsigned)s.fault,(unsigned long)s.low_id,s.low_done,
++        (unsigned long)s.low_elapsed,s.test_motor,s.low_target,s.low_confirmed,left,right,
++        (unsigned)s.duty[0],(unsigned)s.duty[1],s.low_n[0],s.low_n[1],(long)s.low_sum[0],(long)s.low_sum[1],
++        (unsigned long)s.low_error2[0],(unsigned long)s.low_error2[1],(unsigned long)s.low_abs_error[0],(unsigned long)s.low_abs_error[1],
++        s.low_min[0],s.low_min[1],s.low_max[0],s.low_max[1]);text_queue(line);
++    if(s.mode!=CAR_LOW_SPEED){
++        snprintf(line,sizeof line,"LOW-CFG v=20261019L1 selected=%u min=10 max=40 step=5 duration=6000 stats=3000 lease=500 kick=3000 kick_min=30 kick_max=200 cap=1500 guard=450 kp10=%u ki10=%u ff0=%u,%u ff10=%u,%u\r\n",
++            selected,(unsigned)(s.cfg.low_kp*10),(unsigned)(s.cfg.low_ki*10),(unsigned)s.cfg.low_ff_offset[0],(unsigned)s.cfg.low_ff_offset[1],
++            (unsigned)(s.cfg.low_ff_slope[0]*10),(unsigned)(s.cfg.low_ff_slope[1]*10));text_queue(line);
++    }
++}
+ static void camera_init_once(void) {
+     uint32_t key=lock(); control_stop(&control); apply_outputs(); unlock(key);
+     servo_test_active=0; frame_count=0; memset(&result,0,sizeof result);
+@@ -317,6 +334,10 @@
+     /* T2 STEP-01: only real-image tracking receives the per-wheel bias. */
+     cfg.tracking_pwm_bias[0]=CAR_TRACK_LEFT_PWM_BIAS;
+     cfg.tracking_pwm_bias[1]=CAR_TRACK_RIGHT_PWM_BIAS;
++    /* L1 candidate from H1 airborne curves; physically tune before tracking adoption. */
++    cfg.low_kp=4;cfg.low_ki=20;
++    cfg.low_ff_offset[0]=430;cfg.low_ff_offset[1]=560;
++    cfg.low_ff_slope[0]=6.5f;cfg.low_ff_slope[1]=7;
+     cfg.steer_kp=CAR_STEER_KP; cfg.steer_kd=CAR_STEER_KD; cfg.steer_sign=CAR_STEER_SIGN;
+     cfg.servo_center_us=CAR_SERVO_CENTER_US;
+     cfg.servo_min_us=CAR_SERVO_MIN_US; cfg.servo_max_us=CAR_SERVO_MAX_US;
+@@ -372,6 +393,19 @@
+ #endif
+     switch(byte) {
+     case 's': case 'S': servo_test_active=0; control_stop(&control); apply_outputs(); break;
++    case 'F': if(control.mode==CAR_IDLE && low_selected<40)low_selected+=5;break;
++    case 'G': if(control.mode==CAR_IDLE && low_selected>10)low_selected-=5;break;
++    case 'J': case 'N': case 'B':
++        if(control.mode==CAR_IDLE && !control.cfg.simulated){
++            gpio_init(CAR_LEFT_DIR,GPO,CAR_LEFT_FORWARD,GPO_PUSH_PULL);
++            gpio_init(CAR_RIGHT_DIR,GPO,CAR_RIGHT_FORWARD,GPO_PUSH_PULL);
++        }
++        if(control_low_test(&control,byte=='J'?1:byte=='N'?2:3,low_selected,milliseconds)){
++            char line[160];servo_test_active=0;apply_outputs();
++            snprintf(line,sizeof line,"LOW-START v=20261019L1 id=%lu motor=%u target=%u duration=6000 lease=500\r\n",
++                (unsigned long)control.low_id,control.test_motor,control.low_target);text_queue(line);
++        }else text_queue("LOW-START REFUSED\r\n");
++        break;
+     case 'I': if(control.mode==CAR_IDLE && sustain_selected<CAR_SUSTAIN_KICK_DUTY)sustain_selected+=100;break;
+     case 'K': if(control.mode==CAR_IDLE && sustain_selected>=100)sustain_selected-=100;break;
+     case 'U': case 'V':
+@@ -470,6 +504,7 @@
+     unlock(key);
+     switch(byte) {
+     case 'H': sustain_query(received);break;
++    case 'Q': low_query(received);break;
+     case 'D': {
+         char line[120];
+         snprintf(line,sizeof line,"CAL-CFG v=20261019C3 selected=%u step=500 cap=%u duration=2000 lease=500 guard=%u\r\n",(unsigned)calibration_selected,(unsigned)CAR_CALIBRATION_MAX_DUTY,(unsigned)CAR_CALIBRATION_ENCODER_LIMIT);
+@@ -491,10 +526,10 @@
+     case '[': if(vision_cfg.fixed_threshold>=5) vision_cfg.fixed_threshold-=5; break;
+     case ']': if(vision_cfg.fixed_threshold<=250) vision_cfg.fixed_threshold+=5; break;
+     case 'g': case 'b':
+-        if(control.mode!=CAR_RUNNING && control.mode!=CAR_TEST && control.mode!=CAR_SPEED_TEST && control.mode!=CAR_DRIVE_TEST && control.mode!=CAR_STEER_TEST && control.mode!=CAR_CALIBRATION && control.mode!=CAR_SUSTAIN && images_idle())
++        if(control.mode!=CAR_RUNNING && control.mode!=CAR_TEST && control.mode!=CAR_SPEED_TEST && control.mode!=CAR_DRIVE_TEST && control.mode!=CAR_STEER_TEST && control.mode!=CAR_CALIBRATION && control.mode!=CAR_SUSTAIN && control.mode!=CAR_LOW_SPEED && images_idle())
+             image_requested=(uint8_t)(byte=='g'?1:2);
+         break;
+-    case 'r': if(control.mode!=CAR_RUNNING && control.mode!=CAR_TEST && control.mode!=CAR_SPEED_TEST && control.mode!=CAR_DRIVE_TEST && control.mode!=CAR_STEER_TEST && control.mode!=CAR_CALIBRATION && control.mode!=CAR_SUSTAIN) camera_init_once(); break;
++    case 'r': if(control.mode!=CAR_RUNNING && control.mode!=CAR_TEST && control.mode!=CAR_SPEED_TEST && control.mode!=CAR_DRIVE_TEST && control.mode!=CAR_STEER_TEST && control.mode!=CAR_CALIBRATION && control.mode!=CAR_SUSTAIN && control.mode!=CAR_LOW_SPEED) camera_init_once(); break;
+     case 'e': case 'E':
+ #if !CAR_SIMULATED
+         if(control.mode==CAR_IDLE && camera_ready) {
+--- H1/code/competition/firmware/camera_car/demo/user/src/car_core.c
++++ L1/code/competition/firmware/camera_car/demo/user/src/car_core.c
+@@ -126,6 +126,7 @@
+     s->drive_lease_active=0;
+ }
+ void control_stop(control_state_t *s) {
++    s->low_done=0;
+     s->sustain_phase=0;s->sustain_result=0;
+     s->mode=CAR_IDLE; s->fault=FAULT_NONE;
+     s->good_frames=0; s->bad_frames=0; s->derivative=0;
+@@ -133,6 +134,7 @@
+     zero_outputs(s);
+ }
+ void control_fault(control_state_t *s,car_fault_t f) {
++    s->low_done=0;
+     s->sustain_phase=0;s->sustain_result=0;
+     s->mode=CAR_FAULT; s->fault=f; s->good_frames=0;
+     s->trial_done=0;s->trial_elapsed_ms=0;
+@@ -175,7 +177,7 @@
+ }
+ void control_drive_keepalive(control_state_t *s,uint32_t now) {
+     /* STEP-02: p renews both the independent-drive and tracking trial lease. */
+-    if((s->mode==CAR_DRIVE_TEST || s->mode==CAR_RUNNING || s->mode==CAR_CALIBRATION || s->mode==CAR_SUSTAIN) && s->drive_lease_active)s->drive_command_ms=now;
++    if((s->mode==CAR_DRIVE_TEST || s->mode==CAR_RUNNING || s->mode==CAR_CALIBRATION || s->mode==CAR_SUSTAIN || s->mode==CAR_LOW_SPEED) && s->drive_lease_active)s->drive_command_ms=now;
+ }
+ int control_drive_test(control_state_t *s,int turn,uint32_t now) {
+     if(s->mode!=CAR_IDLE || s->cfg.simulated || turn< -1 || turn>1 ||
+@@ -243,6 +245,52 @@
+ }
+ int control_speed_test_right(control_state_t *s,uint32_t now) {
+     return control_speed_test(s,2,now);
++}
++int control_low_test(control_state_t *s,uint8_t motor,uint8_t target,uint32_t now) {
++    if(s->mode!=CAR_IDLE || s->cfg.simulated || motor<1 || motor>3 || target<10 || target>40 ||
++       !(s->cfg.low_kp>0 && s->cfg.low_kp<=20 && s->cfg.low_ki>0 && s->cfg.low_ki<=100) ||
++       (uint32_t)(now-s->heartbeat_ms)>s->cfg.heartbeat_timeout_ms)return 0;
++    for(unsigned w=0;w<2;w++)if(!(s->cfg.low_ff_offset[w]>=0 && s->cfg.low_ff_offset[w]<=1000 &&
++       s->cfg.low_ff_slope[w]>0 && s->cfg.low_ff_slope[w]<=20))return 0;
++    zero_outputs(s);s->mode=CAR_LOW_SPEED;s->fault=FAULT_NONE;s->test_motor=motor;
++    s->low_id++;s->low_started=now;s->low_elapsed=0;s->low_done=0;s->low_confirmed=0;s->low_target=target;
++    memset(s->low_n,0,sizeof s->low_n);memset(s->low_sum,0,sizeof s->low_sum);
++    memset(s->low_error2,0,sizeof s->low_error2);memset(s->low_abs_error,0,sizeof s->low_abs_error);
++    memset(s->low_min,0,sizeof s->low_min);memset(s->low_max,0,sizeof s->low_max);
++    s->drive_lease_active=1;s->drive_command_ms=now;return 1;
++}
++static void low_speed_tick(control_state_t *s,uint32_t now,int16_t left,int16_t right) {
++    s->low_elapsed=now-s->low_started;
++    if((uint32_t)(now-s->drive_command_ms)>=CAR_LOW_LEASE_MS){control_fault(s,FAULT_LINK);return;}
++    int samples[2]={left,right};
++    for(unsigned w=0;w<2;w++)if((s->test_motor&(1u<<w))?
++        (samples[w]<-5 || samples[w]>450):(abs_i(samples[w])>10)) {control_fault(s,FAULT_ENCODER);return;}
++    if(s->low_elapsed>=CAR_LOW_DURATION_MS){control_stop(s);s->low_done=1;return;}
++    s->bench_target=s->low_target;
++    for(unsigned w=0;w<2;w++) {
++        unsigned bit=1u<<w;if(!(s->test_motor&bit)){s->duty[w]=0;continue;}
++        int measured=samples[w],error=(int)s->low_target-measured;
++        if(!(s->low_confirmed&bit)) {
++            if(measured>=5){if(s->drive_start_ticks[w]<3)s->drive_start_ticks[w]++;}else s->drive_start_ticks[w]=0;
++            if(s->low_elapsed>=30 && s->drive_start_ticks[w]>=3)s->low_confirmed|=(uint8_t)bit;
++            else if(s->low_elapsed>=200){control_fault(s,FAULT_ENCODER);return;}
++            else {s->duty[w]=CAR_LOW_KICK;continue;}
++        }
++        float ff=s->cfg.low_ff_offset[w]+s->cfg.low_ff_slope[w]*s->low_target;
++        float candidate=clampf(s->integral[w]+s->cfg.low_ki*error*.01f,-500,500);
++        float raw=ff+s->cfg.low_kp*error+candidate;
++        if((raw>=0 && raw<=CAR_LOW_CAP) || (raw>CAR_LOW_CAP && error<0) || (raw<0 && error>0))s->integral[w]=candidate;
++        s->duty[w]=clampf(ff+s->cfg.low_kp*error+s->integral[w],0,CAR_LOW_CAP);
++        if(measured<2)s->stalled_ticks[w]++;else s->stalled_ticks[w]=0;
++        if(s->stalled_ticks[w]>=50){control_fault(s,FAULT_ENCODER);return;}
++        if(s->low_elapsed>=CAR_LOW_STATS_MS) {
++            if(!s->low_n[w])s->low_min[w]=s->low_max[w]=(int16_t)measured;
++            if(measured<s->low_min[w])s->low_min[w]=(int16_t)measured;
++            if(measured>s->low_max[w])s->low_max[w]=(int16_t)measured;
++            s->low_n[w]++;s->low_sum[w]+=measured;
++            s->low_error2[w]+=(uint32_t)(error*error);s->low_abs_error[w]+=(uint32_t)abs_i(error);
++        }
++    }
+ }
+ /* STEP-01: one wheel controller shared by bench, drive and vision tracking.
+  * It never writes servo_us; visual steering remains owned by control_frame. */
+@@ -292,11 +340,12 @@
+     }
+ }
+ void control_tick(control_state_t *s,uint32_t now,int16_t left,int16_t right) {
+-    if(s->mode!=CAR_RUNNING && s->mode!=CAR_TEST && s->mode!=CAR_SPEED_TEST && s->mode!=CAR_STEER_TEST && s->mode!=CAR_DRIVE_TEST && s->mode!=CAR_CALIBRATION && s->mode!=CAR_SUSTAIN) { zero_outputs(s); return; }
++    if(s->mode!=CAR_RUNNING && s->mode!=CAR_TEST && s->mode!=CAR_SPEED_TEST && s->mode!=CAR_STEER_TEST && s->mode!=CAR_DRIVE_TEST && s->mode!=CAR_CALIBRATION && s->mode!=CAR_SUSTAIN && s->mode!=CAR_LOW_SPEED) { zero_outputs(s); return; }
+     if(s->cfg.simulated) { control_stop(s); return; }
+     if((uint32_t)(now-s->heartbeat_ms)>s->cfg.heartbeat_timeout_ms) {
+         control_fault(s,FAULT_FOREGROUND); return;
+     }
++    if(s->mode==CAR_LOW_SPEED){low_speed_tick(s,now,left,right);return;}
+     if(s->mode==CAR_SUSTAIN) {
+         s->sustain_total_ms=now-s->sustain_started;
+         if((uint32_t)(now-s->drive_command_ms)>=CAR_SUSTAIN_LEASE_MS){control_fault(s,FAULT_LINK);return;}
+--- H1/code/competition/firmware/camera_car/tests/test_app.c
++++ L1/code/competition/firmware/camera_car/tests/test_app.c
+@@ -272,6 +272,28 @@
+     CHECK(strstr((char*)tx+hold_begin,"phase=3 result=2 total_ms=700 hold_ms=500 motor=2 duty=0"));
+     car_app_uart_rx_isr('s');car_app_foreground();
+     puts("Sustain adapter: H1 protocol / independent selection / drop / normal vs lost / immediate stop PASS");
++    for(unsigned motor=1;motor<=3;motor++){
++        car_app_uart_rx_isr('s');car_app_foreground();feedback_left=feedback_right=0;
++        for(int flush=0;flush<100;flush++)car_app_foreground();tx_len=tx8_len=0;
++        car_app_uart_rx_isr('Q');for(int flush=0;flush<100;flush++)car_app_foreground();
++        tx[tx_len]=0;CHECK(strstr((char*)tx,"LOW-CFG v=20261019L1 selected=20"));
++        car_app_uart_rx_isr(motor==1?'J':motor==2?'N':'B');car_app_foreground();
++        feedback_left=motor==2?0:20;feedback_right=motor==1?0:20;
++        for(int i=0;i<600;i++){if(i%10==0)car_app_uart_rx_isr('Q');frame();}
++        CHECK(duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0);
++        car_app_uart_rx_isr('Q');for(int flush=0;flush<100;flush++)car_app_foreground();tx[tx_len]=0;
++        CHECK(strstr((char*)tx,"LOW-START v=20261019L1"));CHECK(strstr((char*)tx,"done=1 elapsed=6000"));
++        CHECK(strstr((char*)tx,motor==1?"n=300,0 sum=6000,0":motor==2?"n=0,300 sum=0,6000":"n=300,300 sum=6000,6000"));
++        if(argc>3){FILE *f=fopen(argv[3],motor==1?"wb":"ab");CHECK(f);fwrite(tx,1,tx_len,f);fclose(f);}
++    }
++    car_app_uart_rx_isr('s');car_app_foreground();car_app_uart_rx_isr('B');car_app_foreground();car_app_tick_10ms();
++    car_app_uart_rx_isr('s');CHECK(duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0);car_app_foreground();
++    feedback_left=feedback_right=20;car_app_uart_rx_isr('B');car_app_foreground();
++    for(int i=0;i<63;i++)car_app_uart_rx_isr('Q');
++    for(int i=0;i<7;i++){for(int j=0;j<8;j++)car_app_tick_10ms();car_app_foreground();}
++    CHECK(duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0);
++    car_app_uart_rx_isr('s');car_app_foreground();feedback_left=feedback_right=0;
++    puts("L1 adapter: single / both / real C telemetry fixture / immediate stop PASS");
+     puts("hardware adapter tests: PASS (host I/O double, not physical hardware)");
+     return 0;
+ }
+--- H1/code/competition/firmware/camera_car/tests/test_low_speed.c
++++ L1/code/competition/firmware/camera_car/tests/test_low_speed.c
+@@ -0,0 +1,33 @@
++#include "car_core.h"
++#include <stdio.h>
++#include <stdlib.h>
++#include <math.h>
++#define CHECK(x) do{if(!(x)){fprintf(stderr,"LOW FAIL %d: %s\n",__LINE__,#x);exit(1);}}while(0)
++static control_state_t fresh(void){control_state_t s;control_config_t c={0};c.servo_center_us=1500;c.heartbeat_timeout_ms=100;
++ c.low_kp=4;c.low_ki=20;c.low_ff_offset[0]=430;c.low_ff_offset[1]=560;c.low_ff_slope[0]=6.5f;c.low_ff_slope[1]=7;
++ control_init(&s,&c);return s;}
++static void step(control_state_t *s,uint32_t t,int l,int r){s->heartbeat_ms=t;control_drive_keepalive(s,t);control_tick(s,t,l,r);}
++int main(void){
++ for(unsigned motor=1;motor<=3;motor++){
++  control_state_t s=fresh();CHECK(control_low_test(&s,motor,20,0));
++  step(&s,10,0,0);CHECK(s.duty[0]==(motor==2?0:3000) && s.duty[1]==(motor==1?0:3000));
++  for(unsigned t=20;t<=40;t+=10)step(&s,t,motor==2?0:20,motor==1?0:20);
++  CHECK(s.low_confirmed==motor);CHECK(s.duty[0]==(motor==2?0:560));CHECK(s.duty[1]==(motor==1?0:700));
++  for(unsigned t=50;t<=6000;t+=10)step(&s,t,motor==2?0:20,motor==1?0:20);
++  CHECK(s.mode==CAR_IDLE && s.low_done==1 && s.low_elapsed==6000 && s.duty[0]==0 && s.duty[1]==0);
++  for(unsigned w=0;w<2;w++){CHECK(s.low_n[w]==((motor&(1u<<w))?300:0));if(motor&(1u<<w))CHECK(s.low_sum[w]==6000 && s.low_error2[w]==0 && s.low_abs_error[w]==0 && s.low_min[w]==20 && s.low_max[w]==20);}
++  unsigned id=s.low_id;control_stop(&s);CHECK(!s.low_done);CHECK(control_low_test(&s,motor,30,6000) && s.low_id!=id && !s.low_n[0]);
++ }
++ control_state_t s=fresh();CHECK(!control_low_test(&s,0,20,0)&&!control_low_test(&s,4,20,0)&&!control_low_test(&s,1,0,0)&&!control_low_test(&s,1,41,0));
++ s.cfg.simulated=1;CHECK(!control_low_test(&s,1,20,0));
++ s=fresh();CHECK(control_low_test(&s,3,20,0));for(unsigned t=10;t<=200;t+=10)step(&s,t,20,0);CHECK(s.fault==FAULT_ENCODER && !s.low_done && s.duty[0]==0);
++ for(unsigned bad=0;bad<3;bad++){s=fresh();CHECK(control_low_test(&s,1,20,0));step(&s,10,bad==0?-6:bad==1?451:20,bad==2?11:0);CHECK(s.fault==FAULT_ENCODER);}
++ s=fresh();CHECK(control_low_test(&s,1,20,0));control_tick(&s,110,0,0);CHECK(s.fault==FAULT_FOREGROUND);
++ s=fresh();CHECK(control_low_test(&s,1,20,0));s.heartbeat_ms=500;control_tick(&s,500,20,0);CHECK(s.fault==FAULT_LINK);
++ s=fresh();CHECK(control_low_test(&s,1,20,0));for(unsigned t=10;t<=30;t+=10)step(&s,t,20,0);
++ step(&s,40,100,0);CHECK(s.duty[0]<560);step(&s,50,10,0);CHECK(s.duty[0]>560);
++ for(unsigned t=60;t<=550;t+=10)step(&s,t,0,0);CHECK(s.fault==FAULT_ENCODER && !s.low_done);
++ s=fresh();CHECK(control_low_test(&s,1,20,0));for(unsigned t=10;t<=1000;t+=10)step(&s,t,t<=30?20:450,0);CHECK(s.mode==CAR_LOW_SPEED && fabsf(s.integral[0])<=500 && s.duty[0]==0);
++ s=fresh();s.heartbeat_ms=0xfffffff0u;CHECK(control_low_test(&s,2,20,0xfffffff0u));for(unsigned dt=10;dt<=6000;dt+=10)step(&s,0xfffffff0u+dt,0,20);CHECK(s.low_done && s.low_n[1]==300);
++ puts("Low speed: kick / independent feedforward PI / full statistics / isolation / saturation / stall / lease / wrap PASS");return 0;
++}
+--- H1/code/repair/low_protocol.ps1
++++ L1/code/repair/low_protocol.ps1
+@@ -0,0 +1,38 @@
++function LowFields([string]$line){
++ $d=@{};foreach($m in [regex]::Matches($line,'(?:^|\s)([a-z0-9_]+)=([^\s]+)')){if($d.ContainsKey($m.Groups[1].Value)){throw 'Duplicate LOW field'};$d[$m.Groups[1].Value]=$m.Groups[2].Value};return $d
++}
++function ParseLowConfig([string]$line){
++ if(-not $line.StartsWith('LOW-CFG ')){throw 'Not LOW config'};$d=LowFields $line
++ $expected=@{v='20261019L1';min='10';max='40';step='5';duration='6000';stats='3000';lease='500';kick='3000';kick_min='30';kick_max='200';cap='1500';guard='450';kp10='40';ki10='200';ff0='430,560';ff10='65,70'}
++ foreach($k in $expected.Keys){if($d[$k] -cne $expected[$k]){throw "Unexpected LOW config $k"}}
++ if($d.selected -notmatch '^\d+$' -or [int]$d.selected -lt 10 -or [int]$d.selected -gt 40 -or [int]$d.selected%5){throw 'Invalid LOW target'}
++ return [pscustomobject]$d
++}
++function ParseLowState([string]$line){
++ if(-not $line.StartsWith('LOW-STATE ')){throw 'Not LOW state'};$d=LowFields $line;$o=[ordered]@{}
++ foreach($k in @('ms','mode','fault','id','done','elapsed','motor','target','confirmed')){if($d[$k] -notmatch '^\d+$'){throw "Missing LOW $k"};$o[$k]=[long]$d[$k]}
++ foreach($k in @('enc','pwm','n','sum','e2','ae','min','max')){$m=[regex]::Match($d[$k],'^(-?\d+),(-?\d+)$');if(-not $m.Success){throw "Invalid LOW pair $k"};$o[$k]=@([long]$m.Groups[1].Value,[long]$m.Groups[2].Value)}
++ return [pscustomobject]$o
++}
++function LowOutcome($s,[long]$id,[int]$motor,[int]$target){
++ if($s.id -ne $id -or $s.motor -ne $motor -or $s.target -ne $target -or $s.fault -ne 0 -or $s.mode -notin @(0,9)){throw 'LOW identity/fault/mode mismatch'}
++ if($s.confirmed -band (-bnot $motor)){throw 'Unexpected confirmed wheel'}
++ for($w=0;$w -lt 2;$w++){
++  if($motor -band (1 -shl $w)){
++   if($s.enc[$w] -lt -5 -or $s.enc[$w] -gt 450 -or $s.pwm[$w] -lt 0 -or $s.pwm[$w] -gt 3000){throw 'Abnormal LOW wheel'}
++   if(($s.confirmed -band (1 -shl $w)) -and $s.pwm[$w] -gt 1500){throw 'LOW closed-loop cap exceeded'}
++  }elseif([math]::Abs($s.enc[$w]) -gt 10 -or $s.pwm[$w] -ne 0){throw 'Non-selected LOW wheel moved'}
++ }
++ if($s.mode -eq 9){if($s.done -ne 0){throw 'Active LOW completed'};return 'pending'}
++ if($s.done -ne 1 -or $s.elapsed -ne 6000 -or $s.confirmed -ne $motor -or $s.pwm[0] -ne 0 -or $s.pwm[1] -ne 0){throw 'LOW incomplete/manual stop'}
++ $pass=$true
++ for($w=0;$w -lt 2;$w++){
++  if($motor -band (1 -shl $w)){
++   if($s.n[$w] -ne 300 -or $s.min[$w] -gt $s.max[$w] -or $s.min[$w] -lt -5 -or $s.max[$w] -gt 450 -or $s.e2[$w] -lt 0 -or $s.ae[$w] -lt 0){throw 'Invalid LOW statistics'}
++   $mean=$s.sum[$w]/300.0;$rmse=[math]::Sqrt($s.e2[$w]/300.0)
++   if($mean -lt $s.min[$w] -or $mean -gt $s.max[$w] -or $rmse+0.00001 -lt [math]::Abs($mean-$target) -or $s.ae[$w]/300.0 -gt $rmse+0.00001){throw 'Inconsistent LOW statistics'}
++   if([math]::Abs($mean-$target) -gt [math]::Max(2,$target*.1) -or $rmse -gt [math]::Max(4,$target*.25) -or $s.min[$w] -lt 2 -or $s.max[$w] -gt $target*2){$pass=$false}
++  }else{foreach($k in @('n','sum','e2','ae','min','max')){if($s.$k[$w] -ne 0){throw 'Non-selected wheel statistics'}}}
++ }
++ if($pass){return 'performance_pass'};return 'needs_tuning'
++}
+--- H1/code/repair/run_tests.py
++++ L1/code/repair/run_tests.py
+@@ -30,14 +30,16 @@
+         run(args)
+         return exe
+     inc=root/'demo/user/inc';src=root/'demo/user/src';tests=root/'tests'
++    run([build('test_low_speed',[tests/'test_low_speed.c',src/'car_core.c'],[inc])])
+     run([build('test_sustain',[tests/'test_sustain.c',src/'car_core.c'],[inc])])
+     run([build('test_calibration',[tests/'test_calibration.c',src/'car_core.c'],[inc])])
+     run([build('test_core',[tests/'test_core.c',src/'car_core.c'],[inc])])
+     run([build('test_tracking',[tests/'test_tracking.c',src/'car_core.c'],[inc])])
+     app=[tests/'test_app.c',src/'car_core.c',src/'car_app.c',src/'car_servo.c']
+     telemetry_fixture=out/'telemetry-fixture.txt'
+-    run([build('test_app',app,[tests/'sdk',inc]),telemetry_fixture,out/'hold-fixture.txt'])
++    run([build('test_app',app,[tests/'sdk',inc]),telemetry_fixture,out/'hold-fixture.txt',out/'low-fixture.txt'])
+     run(['powershell','-NoProfile','-ExecutionPolicy','Bypass','-File',BASE/'repair/test_hold_protocol.ps1','-Fixture',out/'hold-fixture.txt'])
++    run(['powershell','-NoProfile','-ExecutionPolicy','Bypass','-File',BASE/'repair/test_low_protocol.ps1','-Fixture',out/'low-fixture.txt'])
+     run([build('test_servo',[tests/'test_servo.c',src/'car_servo.c'],[tests/'sdk',inc])])
+     if (tests/'test_uart8.c').exists():
+         files=[tests/'test_uart8.c',src/'car_core.c',src/'car_app.c',src/'car_servo.c']
+--- H1/code/repair/test_low.ps1
++++ L1/code/repair/test_low.ps1
+@@ -0,0 +1,63 @@
++param([ValidateSet(1,2,3)][int]$Motor=1,[ValidateSet(10,15,20,25,30,35,40)][int]$Target=20,[string]$PortName='COM9',[switch]$Run)
++$ErrorActionPreference='Stop';. (Join-Path $PSScriptRoot 'low_protocol.ps1')
++$dev=Get-CimInstance Win32_SerialPort|Where-Object DeviceID -eq $PortName
++if(-not $dev -or $dev.PNPDeviceID -notmatch 'VID_2E3C&PID_5740'){throw 'Wrong wireless USB identity'}
++$stamp=[TimeZoneInfo]::ConvertTimeBySystemTimeZoneId([DateTime]::UtcNow,'China Standard Time').ToString('yyyyMMdd-HHmmss')
++$dir=Join-Path $PSScriptRoot ('evidence/low-'+$stamp);New-Item -ItemType Directory -Path $dir -Force|Out-Null
++$port=[IO.Ports.SerialPort]::new($PortName,115200,[IO.Ports.Parity]::None,8,[IO.Ports.StopBits]::One)
++$port.DtrEnable=$false;$port.RtsEnable=$false;$port.WriteTimeout=300
++$raw=[IO.MemoryStream]::new();$commands=[Collections.Generic.List[object]]::new()
++$failure=$null;$outcome='preflight_only';$completion=$null;$cfg=$null;$final=$null;$pre=$null;$motionSent=$false;$finalOffset=0
++function Send([string]$c){$port.Write($c);$commands.Add(@{utc=[DateTime]::UtcNow.ToString('o');command=$c})}
++function Receive([int]$ms){$watch=[Diagnostics.Stopwatch]::StartNew();$b=New-Object byte[] 8192;while($watch.ElapsedMilliseconds -lt $ms){if($port.BytesToRead){$n=$port.Read($b,0,[Math]::Min($b.Length,$port.BytesToRead));$raw.Write($b,0,$n)}else{Start-Sleep -Milliseconds 5}}}
++function Text([int]$offset=0){$b=$raw.ToArray();return [Text.Encoding]::ASCII.GetString($b,$offset,$b.Length-$offset)}
++function States([string]$text){foreach($m in [regex]::Matches($text,'LOW-STATE [^\r\n]*\r\n')){ParseLowState $m.Value}}
++function Idle($s){if(-not $s -or $s.mode -ne 0 -or $s.fault -ne 0 -or $s.pwm[0] -ne 0 -or $s.pwm[1] -ne 0 -or $s.enc[0] -ne 0 -or $s.enc[1] -ne 0){throw 'Require idle zero output/feedback'}}
++function QueryIdle {
++ # H1 evidence showed an isolated missing config packet. Repeat queries only,
++ # never retry a motion command. Reject malformed or changed profiles immediately.
++ $offset=[int]$raw.Length
++ for($i=0;$i -lt 3;$i++){
++  Send 'Q';Receive 650;$t=Text $offset;$matchesCfg=[regex]::Matches($t,'LOW-CFG [^\r\n]*\r\n');$ss=@(States $t)
++  if($matchesCfg.Count -and $ss.Count){$c=ParseLowConfig $matchesCfg[-1].Value;Idle $ss[-1];return @{config=$c;state=$ss[-1]}}
++ };throw 'No complete idle L1 config/state'
++}
++try{
++ $port.Open();$port.DiscardInBuffer();$q=QueryIdle;$cfg=$q.config;$pre=$q.state
++ Send 'q';Receive 650;$t=Text
++ if($t -notmatch 'UART8-DIAG[^\r\n]*diag=0 ab=1 ' -or $t -notmatch 'MOTOR-DIR v=20261017I left=C11 cfg=1 sample=[01] right=C9 cfg=0'){throw 'Wireless/direction profile not confirmed'}
++ if($Run){
++  Send ('G'*6);Receive 450;if($Target -gt 10){Send ('F'*(($Target-10)/5));Receive 450}
++  $q=QueryIdle;$cfg=$q.config;$pre=$q.state;if([int]$cfg.selected -ne $Target){throw 'LOW selected target not acknowledged'}
++  $previous=$pre.id;$id=$null;$offset=[int]$raw.Length
++  Send $(if($Motor -eq 1){'J'}elseif($Motor -eq 2){'N'}else{'B'});$motionSent=$true
++  $watch=[Diagnostics.Stopwatch]::StartNew();$next=0;$lastRx=0;$lastMs=-1
++  while($watch.ElapsedMilliseconds -lt 7500){
++   if($watch.ElapsedMilliseconds -ge $next){Send 'Q';$next+=100};Receive 20;$t=Text $offset
++   if($t.Contains('LOW-START REFUSED')){throw 'LOW start refused'}
++   $ss=@(States $t)
++   if($ss.Count){$s=$ss[-1];if($s.ms -ne $lastMs){$lastMs=$s.ms;$lastRx=$watch.ElapsedMilliseconds}
++    if($s.id -ne $previous){if($null -eq $id){$id=$s.id;if($id -ne (($previous+1)%4294967296)){throw 'Unexpected new LOW identity'}}
++     $candidate=LowOutcome $s $id $Motor $Target
++     if($candidate -ne 'pending'){$completion=$s;$outcome=$candidate;break}
++    }
++   }
++   if($watch.ElapsedMilliseconds-$lastRx -gt 700){throw 'LOW telemetry stale'}
++  }
++  $ack="LOW-START v=20261019L1 id=$id motor=$Motor target=$Target duration=6000 lease=500"
++  if(-not $completion -or -not (Text $offset).Contains($ack)){throw 'Missing LOW identified start/completion'}
++ }
++}catch{$failure=$_.Exception.Message;$outcome='error'}
++finally{
++ $finalOffset=[int]$raw.Length
++ if($port.IsOpen){try{Send 's';Receive 1000;$finalOffset=[int]$raw.Length;Send 'Q';Receive 650}catch{};$port.Close()};$port.Dispose()
++ [IO.File]::WriteAllBytes((Join-Path $dir 'serial.bin'),$raw.ToArray())
++ try{$ss=@(States (Text $finalOffset));if($ss.Count){$final=$ss[-1]}}catch{if(-not $failure){$failure=$_.Exception.Message;$outcome='error'}}
++ $zero=$final -and $final.mode -eq 0 -and $final.fault -eq 0 -and $final.pwm[0] -eq 0 -and $final.pwm[1] -eq 0 -and $final.enc[0] -eq 0 -and $final.enc[1] -eq 0
++ if(-not $failure -and -not $zero){$failure='Final zero output/feedback not confirmed';$outcome='error'}
++ $raw.Dispose()
++ $r=[ordered]@{version='20261019L1';motor=$Motor;target=$Target;outcome=$outcome;failure=$failure;motion_sent=$motionSent;measurement_complete=($null -ne $completion -and -not $failure);configuration=$cfg;completion=$completion;final=$final;final_zero=$zero;commands=@($commands.ToArray());physical_observation='pending';evidence=$dir}
++ $r|ConvertTo-Json -Depth 7|Set-Content (Join-Path $dir 'result.json') -Encoding utf8
++ [pscustomobject]@{outcome=$outcome;failure=$failure;completion=$completion;final_zero=$zero;evidence=$dir}|ConvertTo-Json -Depth 5
++}
++if($failure){exit 1};exit 0
+--- H1/code/repair/test_low_protocol.ps1
++++ L1/code/repair/test_low_protocol.ps1
+@@ -0,0 +1,20 @@
++param([string]$Fixture)
++$ErrorActionPreference='Stop';. (Join-Path $PSScriptRoot 'low_protocol.ps1')
++function Check($condition){if(-not $condition){throw 'LOW protocol assertion'}}
++function Reject([scriptblock]$fn){$failed=$false;try{& $fn|Out-Null}catch{$failed=$true};Check $failed}
++$text=Get-Content -Raw -LiteralPath $Fixture
++$configs=[regex]::Matches($text,'LOW-CFG [^\r\n]*\r\n');Check ($configs.Count -ge 3)
++$cfg=ParseLowConfig $configs[0].Value;Check ($cfg.selected -eq 20)
++Reject {ParseLowConfig ($configs[0].Value.Replace('guard=450','guard=1500'))}
++Reject {ParseLowConfig ($configs[0].Value.Replace('20261019L1','20261019H1'))}
++$done=@(foreach($m in [regex]::Matches($text,'LOW-STATE [^\r\n]*\r\n')){$s=ParseLowState $m.Value;if($s.done -eq 1){$s}})
++foreach($motor in @(1,2,3)){
++ $s=@($done|Where-Object motor -eq $motor)[-1];Check ($null -ne $s)
++ Check ((LowOutcome $s $s.id $motor 20) -eq 'performance_pass')
++ Reject {LowOutcome $s ($s.id+1) $motor 20}
++ $bad=ParseLowState (([regex]::Matches($text,'LOW-STATE [^\r\n]*\r\n')|Where-Object Value -Match "done=1 elapsed=6000 motor=$motor ")[-1].Value)
++ $bad.done=0;Reject {LowOutcome $bad $bad.id $motor 20}
++}
++$s=$done[-1];$s.e2[0]=30000;Check ((LowOutcome $s $s.id 3 20) -eq 'needs_tuning')
++$s.fault=5;Reject {LowOutcome $s $s.id 3 20}
++'LOW actual-C-fixture protocol / profile / identity / incomplete / tuning / fault PASS'

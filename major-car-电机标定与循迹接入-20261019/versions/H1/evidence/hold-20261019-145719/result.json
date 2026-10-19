@@ -1,0 +1,239 @@
+{
+  "version": "20261019H1",
+  "motor": 1,
+  "duty_percent": 6,
+  "failure": null,
+  "outcome": "continuous",
+  "measurement_complete": true,
+  "continuous_feedback": true,
+  "kick_observed": true,
+  "hold_observed": true,
+  "completion": {
+    "ms": 549320,
+    "mode": 0,
+    "fault": 0,
+    "id": 22,
+    "phase": 3,
+    "result": 1,
+    "total_ms": 3200,
+    "hold_ms": 3000,
+    "motor": 1,
+    "duty": 600,
+    "n": 200,
+    "sum": 4999,
+    "min": 15,
+    "max": 34,
+    "zeros": 0,
+    "kick_ticks": 3,
+    "enc_left": 33,
+    "enc_right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0
+  },
+  "configuration": {
+    "v": "20261019H1",
+    "selected": 600,
+    "hold": 3000,
+    "kick_min": 200,
+    "kick_max": 300,
+    "kick": 3000,
+    "guard": 1500,
+    "cap": 3000,
+    "step": 100,
+    "lease": 500
+  },
+  "final": {
+    "ms": 549390,
+    "mode": 0,
+    "fault": 0,
+    "id": 22,
+    "phase": 0,
+    "result": 0,
+    "total_ms": 3200,
+    "hold_ms": 3000,
+    "motor": 1,
+    "duty": 600,
+    "n": 200,
+    "sum": 4999,
+    "min": 15,
+    "max": 34,
+    "zeros": 0,
+    "kick_ticks": 3,
+    "enc_left": -1,
+    "enc_right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0
+  },
+  "commands": [
+    {
+      "utc": "2026-10-19T06:57:19.1788701Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:19.8426493Z",
+      "command": "q"
+    },
+    {
+      "utc": "2026-10-19T06:57:20.3572217Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:21.0813890Z",
+      "command": "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKK"
+    },
+    {
+      "utc": "2026-10-19T06:57:21.4860138Z",
+      "command": "IIIIII"
+    },
+    {
+      "utc": "2026-10-19T06:57:21.8930669Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:22.5525850Z",
+      "command": "U"
+    },
+    {
+      "utc": "2026-10-19T06:57:22.5533003Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:22.6581505Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:22.7797256Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:22.8736201Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:22.9682024Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:23.0620692Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:23.1562551Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:23.2819528Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:23.3576589Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:23.4867219Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:23.5806150Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:23.6700382Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:23.7658341Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:23.8621826Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:23.9554549Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:24.0775983Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:24.1716102Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:24.2646973Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:24.3593244Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:24.4559958Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:24.5782837Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:24.6741778Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:24.7678375Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:24.8601119Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:24.9565404Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:25.0789143Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:25.1740753Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:25.2649715Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:25.3581928Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:25.4543580Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:25.5822540Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:25.6750303Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:25.7652677Z",
+      "command": "H"
+    },
+    {
+      "utc": "2026-10-19T06:57:25.8655886Z",
+      "command": "s"
+    },
+    {
+      "utc": "2026-10-19T06:57:25.8657115Z",
+      "command": "H"
+    }
+  ],
+  "physical_observation": "pending",
+  "evidence": "versions/H1/evidence/hold-20261019-145719"
+}

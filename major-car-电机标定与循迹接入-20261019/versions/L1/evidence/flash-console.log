@@ -1,0 +1,19 @@
+CONNECTED; core halted
+NXP_FLM page=256 RAM=0x200078ec
+FLASH_HEADER=f3d15bf6
+FLASH_HEADER_AFTER_VERIFY_INIT=46434642
+BACKUP_BYTES=524288
+BACKUP_BYTES=1048576
+BACKUP_BYTES=1572864
+BACKUP_BYTES=2097152
+BACKUP_BYTES=2621440
+BACKUP_BYTES=3145728
+BACKUP_BYTES=3670016
+BACKUP_BYTES=4194304
+BACKUP_BASELINE_MATCH bytes=70336
+BACKUP_COMPLETE 8bbecb04801e0c3f917842ea037b8f6a70c88fc125e40da2c7705a4194247047
+[---|---|---|---|---|---|---|---|---|----]
+[========================================]
+[---|---|---|---|---|---|---|---|---|----]
+[========================================]
+FLASH_READBACK_VERIFIED bytes=72512; CORE_HALTED; battery cold boot required

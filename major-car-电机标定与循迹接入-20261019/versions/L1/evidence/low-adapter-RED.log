@@ -1,0 +1,118 @@
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /D_CRT_SECURE_NO_WARNINGS /Fe:versions/L1\code\competition\firmware\camera_car\tests\out\msvc-r2h6292r\test_low_speed.exe /Fo:versions/L1\code\competition\firmware\camera_car\tests\out\msvc-r2h6292r\test_low_speed\ /I versions/L1\code\competition\firmware\camera_car\demo\user\inc versions/L1\code\competition\firmware\camera_car\tests\test_low_speed.c versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c
+test_low_speed.c
+
+car_core.c
+
+versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c(382): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c(383): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+正在生成代码...
+
+versions/L1\code\competition\firmware\camera_car\tests\out\msvc-r2h6292r\test_low_speed.exe
+Low speed: kick / independent feedforward PI / full statistics / isolation / saturation / stall / lease / wrap PASS
+
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /D_CRT_SECURE_NO_WARNINGS /Fe:versions/L1\code\competition\firmware\camera_car\tests\out\msvc-r2h6292r\test_sustain.exe /Fo:versions/L1\code\competition\firmware\camera_car\tests\out\msvc-r2h6292r\test_sustain\ /I versions/L1\code\competition\firmware\camera_car\demo\user\inc versions/L1\code\competition\firmware\camera_car\tests\test_sustain.c versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c
+test_sustain.c
+
+car_core.c
+
+versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c(382): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c(383): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+正在生成代码...
+
+versions/L1\code\competition\firmware\camera_car\tests\out\msvc-r2h6292r\test_sustain.exe
+Sustain: kick gate / drop / full-window stats / lost motion / isolation / guards / IDs / wrap PASS
+
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /D_CRT_SECURE_NO_WARNINGS /Fe:versions/L1\code\competition\firmware\camera_car\tests\out\msvc-r2h6292r\test_calibration.exe /Fo:versions/L1\code\competition\firmware\camera_car\tests\out\msvc-r2h6292r\test_calibration\ /I versions/L1\code\competition\firmware\camera_car\demo\user\inc versions/L1\code\competition\firmware\camera_car\tests\test_calibration.c versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c
+test_calibration.c
+
+car_core.c
+
+versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c(382): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c(383): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+正在生成代码...
+
+versions/L1\code\competition\firmware\camera_car\tests\out\msvc-r2h6292r\test_calibration.exe
+Calibration: range / isolation / expiry / lease / heartbeat / feedback / stop / wrap PASS
+
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /D_CRT_SECURE_NO_WARNINGS /Fe:versions/L1\code\competition\firmware\camera_car\tests\out\msvc-r2h6292r\test_core.exe /Fo:versions/L1\code\competition\firmware\camera_car\tests\out\msvc-r2h6292r\test_core\ /I versions/L1\code\competition\firmware\camera_car\demo\user\inc versions/L1\code\competition\firmware\camera_car\tests\test_core.c versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c
+test_core.c
+
+car_core.c
+
+versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c(382): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c(383): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+正在生成代码...
+
+versions/L1\code\competition\firmware\camera_car\tests\out\msvc-r2h6292r\test_core.exe
+10s drive timeout, lease, stop, no-vision guards: PASS
+
+ground drive guards/no-vision/timeout: PASS
+
+static steering guards: PASS
+
+dual speed bench guards/model: PASS (model is not hardware validation)
+
+right speed bench guards/model: PASS (model is not hardware validation)
+
+vision tests: PASS
+
+control tests: PASS
+
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /D_CRT_SECURE_NO_WARNINGS /Fe:versions/L1\code\competition\firmware\camera_car\tests\out\msvc-r2h6292r\test_tracking.exe /Fo:versions/L1\code\competition\firmware\camera_car\tests\out\msvc-r2h6292r\test_tracking\ /I versions/L1\code\competition\firmware\camera_car\demo\user\inc versions/L1\code\competition\firmware\camera_car\tests\test_tracking.c versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c
+test_tracking.c
+
+car_core.c
+
+versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c(382): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c(383): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+正在生成代码...
+
+versions/L1\code\competition\firmware\camera_car\tests\out\msvc-r2h6292r\test_tracking.exe
+T2 bias isolation / overspeed reduction / stall / zero target: PASS
+
+STEP-06 encoder checks during preparation: PASS
+
+STEP-04 capture age/stale rejection/duplicate/wrap: PASS
+
+STEP-02 visual steering before startup: PASS
+
+STEP-01 shared tracking speed/startup/steering isolation: PASS
+
+STEP-02 trial duration/link/wrap/line loss during preparation: PASS
+
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /D_CRT_SECURE_NO_WARNINGS /Fe:versions/L1\code\competition\firmware\camera_car\tests\out\msvc-r2h6292r\test_app.exe /Fo:versions/L1\code\competition\firmware\camera_car\tests\out\msvc-r2h6292r\test_app\ /I versions/L1\code\competition\firmware\camera_car\tests\sdk /I versions/L1\code\competition\firmware\camera_car\demo\user\inc versions/L1\code\competition\firmware\camera_car\tests\test_app.c versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c versions/L1\code\competition\firmware\camera_car\demo\user\src\car_app.c versions/L1\code\competition\firmware\camera_car\demo\user\src\car_servo.c
+test_app.c
+
+car_core.c
+
+versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c(382): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+versions/L1\code\competition\firmware\camera_car\demo\user\src\car_core.c(383): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+car_app.c
+
+car_servo.c
+
+正在生成代码...
+
+versions/L1\code\competition\firmware\camera_car\tests\out\msvc-r2h6292r\test_app.exe versions/L1\code\competition\firmware\camera_car\tests\out\telemetry-fixture.txt versions/L1\code\competition\firmware\camera_car\tests\out\hold-fixture.txt versions/L1\code\competition\firmware\camera_car\tests\out\low-fixture.txt
+FAIL adapter line 279: strstr((char*)tx,"LOW-CFG v=20261019L1 selected=20")
+
+STEP-06 receipt-time lease, stale capture and copy-race guards: PASS
+
+STEP-05 image->vision->steering/speed, line loss, trial/lease: PASS (host I/O double)
+
+Calibration adapter: selection / isolation / stop / bounds / C3 protocol PASS
+
+Sustain adapter: H1 protocol / independent selection / drop / normal vs lost / immediate stop PASS
+

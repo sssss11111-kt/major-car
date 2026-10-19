@@ -1,0 +1,10 @@
+{
+  "failed_attempt": "evidence/hold-20261019-145622",
+  "failure": "No complete H1 config",
+  "motion_command_sent": false,
+  "trial_id_unchanged": 21,
+  "outputs_zero": true,
+  "recovery": "Independent read-only preflight passed",
+  "recovery_evidence": "evidence/hold-20261019-145650",
+  "resumption": "Planned 6 percent fine search; no firmware or protection changes"
+}

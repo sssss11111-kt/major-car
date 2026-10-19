@@ -1,0 +1,8 @@
+code/repair/tools/
+code/repair/build/
+code/repair/evidence/
+**/tests/out/
+**/__pycache__/
+*.pyc
+**/local-probe.json
+**/before-flash-70000000-4MiB.bin

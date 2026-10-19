@@ -1,0 +1,42 @@
+[
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/inc/car_core.h",
+    "sha256": "cd54535a44415ae87b5f34ba518b6f08ed67a2aa1121fad28dd6e21a86ab14fc",
+    "added": false
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/src/car_app.c",
+    "sha256": "4208145ecc30be73c0087a3f86fd09e5035a8c1dbd641ba10ba3e1880d4faa78",
+    "added": false
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/src/car_core.c",
+    "sha256": "a0cd1b56bfcf10514d2bbb100a618f9611f2b9903e9cf3420495ad5430a5c529",
+    "added": false
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/test_app.c",
+    "sha256": "f4889a4b2b21ae343c1a059f77b84af2c512452e9e33d6a5f7c8b2553de3f76c",
+    "added": false
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/test_low_speed.c",
+    "sha256": "86235306369d16b39c223f4c1b1b30617c683d196fdb30b0aaaff27ae5c9dc39",
+    "added": false
+  },
+  {
+    "path": "code/repair/low_protocol.ps1",
+    "sha256": "a3a80a183aa93d4597a6cb30ceecb1d614e92ecea8d0221cd923725915e1a612",
+    "added": false
+  },
+  {
+    "path": "code/repair/test_low.ps1",
+    "sha256": "9dfd9e0bd2ff100becf0c2399ebd7a242250c9fcdb10ed44248b78f8c5c0c2f8",
+    "added": false
+  },
+  {
+    "path": "code/repair/test_low_protocol.ps1",
+    "sha256": "c8d67516cac70f1e7fbb243881d8cde2abc071a8e519f77a8cd4f2324a9960bf",
+    "added": false
+  }
+]

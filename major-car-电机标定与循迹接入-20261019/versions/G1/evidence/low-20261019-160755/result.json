@@ -1,0 +1,37 @@
+{
+  "version": "20261019L3",
+  "motor": 1,
+  "target": 20,
+  "outcome": "error",
+  "failure": "No complete idle L1 config/state",
+  "motion_sent": false,
+  "measurement_complete": false,
+  "configuration": null,
+  "completion": null,
+  "final": null,
+  "final_zero": false,
+  "commands": [
+    {
+      "command": "Q",
+      "utc": "2026-10-19T08:07:55.9463502Z"
+    },
+    {
+      "command": "Q",
+      "utc": "2026-10-19T08:07:56.6251510Z"
+    },
+    {
+      "command": "Q",
+      "utc": "2026-10-19T08:07:57.2800779Z"
+    },
+    {
+      "command": "s",
+      "utc": "2026-10-19T08:07:57.9651517Z"
+    },
+    {
+      "command": "Q",
+      "utc": "2026-10-19T08:07:58.9694603Z"
+    }
+  ],
+  "physical_observation": "pending",
+  "evidence": "versions/G1/evidence/low-20261019-160755"
+}

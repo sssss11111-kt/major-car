@@ -1,0 +1,18 @@
+{
+  "image": "versions/C2/20261019C2-calibration-0to70.hex",
+  "image_sha256": "ae91687ad3842d3f74726cfb01d47eb0ed8a0079f096fb3cee8f78679e4f9cfc",
+  "mode": "camera",
+  "target": "mimxrt1064",
+  "frequency": 1000000,
+  "connect": "halt",
+  "backup_complete": true,
+  "program_complete": true,
+  "readback_verified": true,
+  "core_left_halted": true,
+  "algorithm": "NXP.MIMXRT1064_DFP.19.0.0/MIMXRT1064_QSPI_4KB_SEC.FLM",
+  "verify_init_header": "46434642",
+  "backup": "LOCAL_ONLY_NOT_PUBLISHED",
+  "backup_sha256": "0011e645af30b67e87eabf1c349edd870c5710bde422e62359faf20b55f6632f",
+  "baseline_T2_verified_bytes": 70400,
+  "verified_bytes": 68800
+}

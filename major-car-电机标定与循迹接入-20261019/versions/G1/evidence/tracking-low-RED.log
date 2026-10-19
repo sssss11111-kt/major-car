@@ -1,0 +1,15 @@
+cl /nologo /std:c11 /W3 /O1 /UNDEBUG /D_CRT_SECURE_NO_WARNINGS /Fe:versions/G1\code\competition\firmware\camera_car\tests\out\msvc-xaxuq5f6\test_tracking_low.exe /Fo:versions/G1\code\competition\firmware\camera_car\tests\out\msvc-xaxuq5f6\test_tracking_low\ /I versions/G1\code\competition\firmware\camera_car\demo\user\inc versions/G1\code\competition\firmware\camera_car\tests\test_tracking_low.c versions/G1\code\competition\firmware\camera_car\demo\user\src\car_core.c
+test_tracking_low.c
+
+versions/G1\code\competition\firmware\camera_car\tests\test_tracking_low.c(7): error C2039: "tracking_low_speed": 不是 "control_config_t" 的成员
+
+versions/G1\code\competition\firmware\camera_car\demo\user\inc\car_core.h(27): note: 参见“control_config_t”的声明
+
+car_core.c
+
+versions/G1\code\competition\firmware\camera_car\demo\user\src\car_core.c(390): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+versions/G1\code\competition\firmware\camera_car\demo\user\src\car_core.c(391): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+
+正在生成代码...
+

@@ -1,0 +1,191 @@
+--- L2/code/competition/firmware/camera_car/demo/user/src/car_app.c
++++ L3/code/competition/firmware/camera_car/demo/user/src/car_app.c
+@@ -301,7 +301,7 @@
+         (unsigned long)s.low_error2[0],(unsigned long)s.low_error2[1],(unsigned long)s.low_abs_error[0],(unsigned long)s.low_abs_error[1],
+         s.low_min[0],s.low_min[1],s.low_max[0],s.low_max[1]);text_queue(line);
+     if(s.mode!=CAR_LOW_SPEED){
+-        snprintf(line,sizeof line,"LOW-CFG v=20261019L2 selected=%u min=10 max=40 step=5 duration=6000 stats=3000 lease=500 kick=3000 kick_min=30 kick_max=200 cap=1500 guard=450 transfer=1500 kp10=%u ki10=%u ff0=%u,%u ff10=%u,%u\r\n",
++        snprintf(line,sizeof line,"LOW-CFG v=20261019L3 selected=%u min=10 max=40 step=5 duration=6000 stats=3000 lease=500 kick=3000 kick_min=200 kick_max=300 cap=1500 guard=450 transfer=1000 kp10=%u ki10=%u ff0=%u,%u ff10=%u,%u\r\n",
+             selected,(unsigned)(s.cfg.low_kp*10),(unsigned)(s.cfg.low_ki*10),(unsigned)s.cfg.low_ff_offset[0],(unsigned)s.cfg.low_ff_offset[1],
+             (unsigned)(s.cfg.low_ff_slope[0]*10),(unsigned)(s.cfg.low_ff_slope[1]*10));text_queue(line);
+     }
+@@ -335,8 +335,8 @@
+     cfg.tracking_pwm_bias[0]=CAR_TRACK_LEFT_PWM_BIAS;
+     cfg.tracking_pwm_bias[1]=CAR_TRACK_RIGHT_PWM_BIAS;
+     /* L1 candidate from H1 airborne curves; physically tune before tracking adoption. */
+-    cfg.low_kp=4;cfg.low_ki=20;
+-    cfg.low_ff_offset[0]=470;cfg.low_ff_offset[1]=660;
++    cfg.low_kp=1;cfg.low_ki=20;
++    cfg.low_ff_offset[0]=570;cfg.low_ff_offset[1]=690;
+     cfg.low_ff_slope[0]=6.5f;cfg.low_ff_slope[1]=7;
+     cfg.steer_kp=CAR_STEER_KP; cfg.steer_kd=CAR_STEER_KD; cfg.steer_sign=CAR_STEER_SIGN;
+     cfg.servo_center_us=CAR_SERVO_CENTER_US;
+@@ -402,7 +402,7 @@
+         }
+         if(control_low_test(&control,byte=='J'?1:byte=='N'?2:3,low_selected,milliseconds)){
+             char line[160];servo_test_active=0;apply_outputs();
+-            snprintf(line,sizeof line,"LOW-START v=20261019L2 id=%lu motor=%u target=%u duration=6000 lease=500\r\n",
++            snprintf(line,sizeof line,"LOW-START v=20261019L3 id=%lu motor=%u target=%u duration=6000 lease=500\r\n",
+                 (unsigned long)control.low_id,control.test_motor,control.low_target);text_queue(line);
+         }else text_queue("LOW-START REFUSED\r\n");
+         break;
+--- L2/code/competition/firmware/camera_car/demo/user/src/car_core.c
++++ L3/code/competition/firmware/camera_car/demo/user/src/car_core.c
+@@ -273,21 +273,22 @@
+         if(!(s->low_confirmed&bit)) {
+             if(measured>=5){if(s->drive_start_ticks[w]<3)s->drive_start_ticks[w]++;}else s->drive_start_ticks[w]=0;
+             if(s->low_elapsed>=30 && s->drive_start_ticks[w]>=3)s->low_confirmed|=(uint8_t)bit;
+-            else if(s->low_elapsed>=200){control_fault(s,FAULT_ENCODER);return;}
++            else if(s->low_elapsed>=300){control_fault(s,FAULT_ENCODER);return;}
+             else {s->duty[w]=CAR_LOW_KICK;continue;}
+         }
++        if(s->low_elapsed<200){s->duty[w]=CAR_LOW_KICK;continue;}
+         float ff=s->cfg.low_ff_offset[w]+s->cfg.low_ff_slope[w]*s->low_target;
+-        /* L2: kick overspeed is a transfer transient, not steady-state PI error.
+-         * Sustain feedforward until near target; never bank a negative kick integral. */
+-        if(!(s->low_regulating&bit)) {
+-            if(measured<=s->low_target+5)s->low_regulating|=(uint8_t)bit;
+-            else if(s->low_elapsed>=1500){control_fault(s,FAULT_ENCODER);return;}
+-            else{s->duty[w]=clampf(ff,0,CAR_LOW_CAP);s->integral[w]=0;continue;}
+-        }
+-        float candidate=clampf(s->integral[w]+s->cfg.low_ki*error*.01f,-500,500);
+-        float raw=ff+s->cfg.low_kp*error+candidate;
+-        if((raw>=0 && raw<=CAR_LOW_CAP) || (raw>CAR_LOW_CAP && error<0) || (raw<0 && error>0))s->integral[w]=candidate;
+-        s->duty[w]=clampf(ff+s->cfg.low_kp*error+s->integral[w],0,CAR_LOW_CAP);
++        /* L3: settle on measured feedforward, then match the existing output
++         * on PI entry. Stall/feedback guards apply throughout this transfer. */
++        if(s->low_elapsed<1000){s->duty[w]=clampf(ff,0,CAR_LOW_CAP);s->integral[w]=0;}
++        else {
++            int entering=!(s->low_regulating&bit);
++            if(entering){s->low_regulating|=(uint8_t)bit;s->integral[w]=clampf(-s->cfg.low_kp*error,-500,500);}
++            float candidate=clampf(s->integral[w]+(entering?0:s->cfg.low_ki*error*.01f),-500,500);
++            float raw=ff+s->cfg.low_kp*error+candidate;
++            if((raw>=0 && raw<=CAR_LOW_CAP) || (raw>CAR_LOW_CAP && error<0) || (raw<0 && error>0))s->integral[w]=candidate;
++            s->duty[w]=clampf(ff+s->cfg.low_kp*error+s->integral[w],0,CAR_LOW_CAP);
++        }
+         if(measured<2)s->stalled_ticks[w]++;else s->stalled_ticks[w]=0;
+         if(s->stalled_ticks[w]>=50){control_fault(s,FAULT_ENCODER);return;}
+         if(s->low_elapsed>=CAR_LOW_STATS_MS) {
+--- L2/code/competition/firmware/camera_car/tests/test_app.c
++++ L3/code/competition/firmware/camera_car/tests/test_app.c
+@@ -276,13 +276,13 @@
+         car_app_uart_rx_isr('s');car_app_foreground();feedback_left=feedback_right=0;
+         for(int flush=0;flush<100;flush++)car_app_foreground();tx_len=tx8_len=0;
+         car_app_uart_rx_isr('Q');for(int flush=0;flush<100;flush++)car_app_foreground();
+-        tx[tx_len]=0;CHECK(strstr((char*)tx,"LOW-CFG v=20261019L2 selected=20"));
++        tx[tx_len]=0;CHECK(strstr((char*)tx,"LOW-CFG v=20261019L3 selected=20"));
+         car_app_uart_rx_isr(motor==1?'J':motor==2?'N':'B');car_app_foreground();
+         feedback_left=motor==2?0:20;feedback_right=motor==1?0:20;
+         for(int i=0;i<600;i++){if(i%10==0)car_app_uart_rx_isr('Q');frame();}
+         CHECK(duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0);
+         car_app_uart_rx_isr('Q');for(int flush=0;flush<100;flush++)car_app_foreground();tx[tx_len]=0;
+-        CHECK(strstr((char*)tx,"LOW-START v=20261019L2"));CHECK(strstr((char*)tx,"done=1 elapsed=6000"));
++        CHECK(strstr((char*)tx,"LOW-START v=20261019L3"));CHECK(strstr((char*)tx,"done=1 elapsed=6000"));
+         CHECK(strstr((char*)tx,motor==1?"n=300,0 sum=6000,0":motor==2?"n=0,300 sum=0,6000":"n=300,300 sum=6000,6000"));
+         if(argc>3){FILE *f=fopen(argv[3],motor==1?"wb":"ab");CHECK(f);fwrite(tx,1,tx_len,f);fclose(f);}
+     }
+--- L2/code/competition/firmware/camera_car/tests/test_low_speed.c
++++ L3/code/competition/firmware/camera_car/tests/test_low_speed.c
+@@ -16,15 +16,19 @@
+   step(&s,210,20,0);CHECK(s.duty[0]==560);
+  }
+  {control_state_t s=fresh();CHECK(control_low_test(&s,3,20,0));
+-  for(unsigned t=10;t<1500;t+=10)step(&s,t,100,20);
+-  CHECK(s.low_regulating==2 && s.integral[0]==0 && s.duty[0]==560);
+-  step(&s,1500,100,20);CHECK(s.fault==FAULT_ENCODER && !s.low_done && s.duty[0]==0 && s.duty[1]==0);
++  for(unsigned t=10;t<1000;t+=10){step(&s,t,t<200?100:28,20);
++   if(t<200)CHECK(s.duty[0]==3000 && s.duty[1]==3000);
++   else CHECK(s.duty[0]==560 && s.duty[1]==700 && s.integral[0]==0);
++  }
++  CHECK(s.low_regulating==0);step(&s,1000,28,20);
++  CHECK(s.low_regulating==3 && s.duty[0]==560 && s.duty[1]==700);
++  step(&s,1010,28,20);CHECK(s.duty[0]<560 && s.duty[0]>550);
+  }
+  for(unsigned motor=1;motor<=3;motor++){
+   control_state_t s=fresh();CHECK(control_low_test(&s,motor,20,0));
+   step(&s,10,0,0);CHECK(s.duty[0]==(motor==2?0:3000) && s.duty[1]==(motor==1?0:3000));
+   for(unsigned t=20;t<=40;t+=10)step(&s,t,motor==2?0:20,motor==1?0:20);
+-  CHECK(s.low_confirmed==motor);CHECK(s.duty[0]==(motor==2?0:560));CHECK(s.duty[1]==(motor==1?0:700));
++  CHECK(s.low_confirmed==motor);CHECK(s.duty[0]==(motor==2?0:3000));CHECK(s.duty[1]==(motor==1?0:3000));
+   for(unsigned t=50;t<=6000;t+=10)step(&s,t,motor==2?0:20,motor==1?0:20);
+   CHECK(s.mode==CAR_IDLE && s.low_done==1 && s.low_elapsed==6000 && s.duty[0]==0 && s.duty[1]==0);
+   for(unsigned w=0;w<2;w++){CHECK(s.low_n[w]==((motor&(1u<<w))?300:0));if(motor&(1u<<w))CHECK(s.low_sum[w]==6000 && s.low_error2[w]==0 && s.low_abs_error[w]==0 && s.low_min[w]==20 && s.low_max[w]==20);}
+@@ -32,14 +36,17 @@
+  }
+  control_state_t s=fresh();CHECK(!control_low_test(&s,0,20,0)&&!control_low_test(&s,4,20,0)&&!control_low_test(&s,1,0,0)&&!control_low_test(&s,1,41,0));
+  s.cfg.simulated=1;CHECK(!control_low_test(&s,1,20,0));
+- s=fresh();CHECK(control_low_test(&s,3,20,0));for(unsigned t=10;t<=200;t+=10)step(&s,t,20,0);CHECK(s.fault==FAULT_ENCODER && !s.low_done && s.duty[0]==0);
++ s=fresh();CHECK(control_low_test(&s,3,20,0));for(unsigned t=10;t<=300;t+=10)step(&s,t,20,0);CHECK(s.fault==FAULT_ENCODER && !s.low_done && s.duty[0]==0);
+  for(unsigned bad=0;bad<3;bad++){s=fresh();CHECK(control_low_test(&s,1,20,0));step(&s,10,bad==0?-6:bad==1?451:20,bad==2?11:0);CHECK(s.fault==FAULT_ENCODER);}
+  s=fresh();CHECK(control_low_test(&s,1,20,0));control_tick(&s,110,0,0);CHECK(s.fault==FAULT_FOREGROUND);
+  s=fresh();CHECK(control_low_test(&s,1,20,0));s.heartbeat_ms=500;control_tick(&s,500,20,0);CHECK(s.fault==FAULT_LINK);
+- s=fresh();CHECK(control_low_test(&s,1,20,0));for(unsigned t=10;t<=30;t+=10)step(&s,t,20,0);
+- step(&s,40,100,0);CHECK(s.duty[0]<560);step(&s,50,10,0);CHECK(s.duty[0]>560);
+- for(unsigned t=60;t<=550;t+=10)step(&s,t,0,0);CHECK(s.fault==FAULT_ENCODER && !s.low_done);
+- s=fresh();CHECK(control_low_test(&s,1,20,0));for(unsigned t=10;t<=1000;t+=10)step(&s,t,t<=30?20:450,0);CHECK(s.mode==CAR_LOW_SPEED && fabsf(s.integral[0])<=500 && s.duty[0]==0);
++ s=fresh();CHECK(control_low_test(&s,1,20,0));for(unsigned t=10;t<=1000;t+=10)step(&s,t,20,0);
++ step(&s,1010,100,0);CHECK(s.duty[0]<560);step(&s,1020,10,0);CHECK(s.duty[0]>560);
++ for(unsigned t=1030;t<=1520;t+=10)step(&s,t,0,0);CHECK(s.fault==FAULT_ENCODER && !s.low_done);
++ s=fresh();CHECK(control_low_test(&s,1,20,0));for(unsigned t=10;t<=1000;t+=10)step(&s,t,20,0);
++ for(unsigned t=1010;t<=2000;t+=10)step(&s,t,450,0);CHECK(s.mode==CAR_LOW_SPEED && fabsf(s.integral[0])<=500 && s.duty[0]==0);
++ s=fresh();CHECK(control_low_test(&s,1,20,0));for(unsigned t=10;t<300;t+=10)step(&s,t,20,0);
++ for(unsigned t=300;t<=790;t+=10)step(&s,t,0,0);CHECK(s.fault==FAULT_ENCODER && !s.low_regulating);
+  s=fresh();s.heartbeat_ms=0xfffffff0u;CHECK(control_low_test(&s,2,20,0xfffffff0u));for(unsigned dt=10;dt<=6000;dt+=10)step(&s,0xfffffff0u+dt,0,20);CHECK(s.low_done && s.low_n[1]==300);
+  puts("Low speed: kick / independent feedforward PI / full statistics / isolation / saturation / stall / lease / wrap PASS");return 0;
+ }
+--- L2/code/repair/low_protocol.ps1
++++ L3/code/repair/low_protocol.ps1
+@@ -3,7 +3,7 @@
+ }
+ function ParseLowConfig([string]$line){
+  if(-not $line.StartsWith('LOW-CFG ')){throw 'Not LOW config'};$d=LowFields $line
+- $expected=@{v='20261019L2';min='10';max='40';step='5';duration='6000';stats='3000';lease='500';kick='3000';kick_min='30';kick_max='200';cap='1500';guard='450';kp10='40';ki10='200';transfer='1500';ff0='470,660';ff10='65,70'}
++ $expected=@{v='20261019L3';min='10';max='40';step='5';duration='6000';stats='3000';lease='500';kick='3000';kick_min='200';kick_max='300';cap='1500';guard='450';kp10='10';ki10='200';transfer='1000';ff0='570,690';ff10='65,70'}
+  foreach($k in $expected.Keys){if($d[$k] -cne $expected[$k]){throw "Unexpected LOW config $k"}}
+  if($d.selected -notmatch '^\d+$' -or [int]$d.selected -lt 10 -or [int]$d.selected -gt 40 -or [int]$d.selected%5){throw 'Invalid LOW target'}
+  return [pscustomobject]$d
+@@ -20,7 +20,7 @@
+  for($w=0;$w -lt 2;$w++){
+   if($motor -band (1 -shl $w)){
+    if($s.enc[$w] -lt -5 -or $s.enc[$w] -gt 450 -or $s.pwm[$w] -lt 0 -or $s.pwm[$w] -gt 3000){throw 'Abnormal LOW wheel'}
+-   if(($s.confirmed -band (1 -shl $w)) -and $s.pwm[$w] -gt 1500){throw 'LOW closed-loop cap exceeded'}
++   if(($s.confirmed -band (1 -shl $w)) -and $s.elapsed -ge 200 -and $s.pwm[$w] -gt 1500){throw 'LOW closed-loop cap exceeded'}
+   }elseif([math]::Abs($s.enc[$w]) -gt 10 -or $s.pwm[$w] -ne 0){throw 'Non-selected LOW wheel moved'}
+  }
+  if($s.mode -eq 9){if($s.done -ne 0){throw 'Active LOW completed'};return 'pending'}
+--- L2/code/repair/test_low.ps1
++++ L3/code/repair/test_low.ps1
+@@ -44,7 +44,7 @@
+    }
+    if($watch.ElapsedMilliseconds-$lastRx -gt 700){throw 'LOW telemetry stale'}
+   }
+-  $ack="LOW-START v=20261019L2 id=$id motor=$Motor target=$Target duration=6000 lease=500"
++  $ack="LOW-START v=20261019L3 id=$id motor=$Motor target=$Target duration=6000 lease=500"
+   if(-not $completion -or -not (Text $offset).Contains($ack)){throw 'Missing LOW identified start/completion'}
+  }
+ }catch{$failure=$_.Exception.Message;$outcome='error'}
+@@ -56,7 +56,7 @@
+  $zero=$final -and $final.mode -eq 0 -and $final.fault -eq 0 -and $final.pwm[0] -eq 0 -and $final.pwm[1] -eq 0 -and $final.enc[0] -eq 0 -and $final.enc[1] -eq 0
+  if(-not $failure -and -not $zero){$failure='Final zero output/feedback not confirmed';$outcome='error'}
+  $raw.Dispose()
+- $r=[ordered]@{version='20261019L2';motor=$Motor;target=$Target;outcome=$outcome;failure=$failure;motion_sent=$motionSent;measurement_complete=($null -ne $completion -and -not $failure);configuration=$cfg;completion=$completion;final=$final;final_zero=$zero;commands=@($commands.ToArray());physical_observation='pending';evidence=$dir}
++ $r=[ordered]@{version='20261019L3';motor=$Motor;target=$Target;outcome=$outcome;failure=$failure;motion_sent=$motionSent;measurement_complete=($null -ne $completion -and -not $failure);configuration=$cfg;completion=$completion;final=$final;final_zero=$zero;commands=@($commands.ToArray());physical_observation='pending';evidence=$dir}
+  $r|ConvertTo-Json -Depth 7|Set-Content (Join-Path $dir 'result.json') -Encoding utf8
+  [pscustomobject]@{outcome=$outcome;failure=$failure;completion=$completion;final_zero=$zero;evidence=$dir}|ConvertTo-Json -Depth 5
+ }
+--- L2/code/repair/test_low_protocol.ps1
++++ L3/code/repair/test_low_protocol.ps1
+@@ -6,8 +6,12 @@
+ $configs=[regex]::Matches($text,'LOW-CFG [^\r\n]*\r\n');Check ($configs.Count -ge 3)
+ $cfg=ParseLowConfig $configs[0].Value;Check ($cfg.selected -eq 20)
+ Reject {ParseLowConfig ($configs[0].Value.Replace('guard=450','guard=1500'))}
+-Reject {ParseLowConfig ($configs[0].Value.Replace('20261019L2','20261019H1'))}
++Reject {ParseLowConfig ($configs[0].Value.Replace('20261019L3','20261019H1'))}
+ $done=@(foreach($m in [regex]::Matches($text,'LOW-STATE [^\r\n]*\r\n')){$s=ParseLowState $m.Value;if($s.done -eq 1){$s}})
++foreach($m in [regex]::Matches($text,'LOW-STATE [^\r\n]*\r\n')){
++ $active=ParseLowState $m.Value
++ if($active.mode -eq 9){Check ((LowOutcome $active $active.id $active.motor $active.target) -eq 'pending')}
++}
+ foreach($motor in @(1,2,3)){
+  $s=@($done|Where-Object motor -eq $motor)[-1];Check ($null -ne $s)
+  Check ((LowOutcome $s $s.id $motor 20) -eq 'performance_pass')

@@ -1,0 +1,30 @@
+{
+  "time_china": "2026-10-19 13:25:48",
+  "motor": 1,
+  "failure": "No complete preflight status",
+  "ack": false,
+  "automatic_stop": false,
+  "active_samples": [],
+  "last_before_explicit_stop": null,
+  "final": null,
+  "physical_observation": "pending",
+  "commands": [
+    {
+      "utc": "2026-10-19T05:25:49.0031025Z",
+      "command": "p"
+    },
+    {
+      "utc": "2026-10-19T05:25:49.0060682Z",
+      "command": "q"
+    },
+    {
+      "utc": "2026-10-19T05:25:50.8280425Z",
+      "command": "s"
+    },
+    {
+      "utc": "2026-10-19T05:25:50.8282953Z",
+      "command": "p"
+    }
+  ],
+  "evidence": "early-tests\\evidence\\left-speed-20261019-132548"
+}

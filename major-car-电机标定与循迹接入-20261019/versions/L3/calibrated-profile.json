@@ -1,0 +1,30 @@
+{
+  "version": "20261019L3",
+  "scope": "airborne_short_duration_diagnostic",
+  "feedback_unit": "encoder_counts_per_10ms",
+  "default_target": 20,
+  "tested_targets": [
+    20,
+    30
+  ],
+  "sample_interval_ms": 10,
+  "kp": 1,
+  "ki_per_second": 20,
+  "integral_limit": 500,
+  "left_ff_offset": 570,
+  "left_ff_slope": 6.5,
+  "right_ff_offset": 690,
+  "right_ff_slope": 7,
+  "pwm_full_scale": 10000,
+  "kick_pwm": 3000,
+  "kick_min_ms": 200,
+  "kick_max_ms": 300,
+  "feedforward_transfer_until_ms": 1000,
+  "pi_entry_integral": "clamp(-kp * (target - measured), -500, 500)",
+  "closed_loop_pwm_cap": 1500,
+  "performance_window_samples": 300,
+  "trial_duration_ms": 6000,
+  "tracking_adopted": false,
+  "ground_validated": false,
+  "limitation": "One of four dual20 trials exceeded right-wheel RMSE by 0.097; subsequent three consecutive trials passed. No claim of long-term reliability."
+}

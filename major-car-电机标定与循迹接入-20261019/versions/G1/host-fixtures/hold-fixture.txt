@@ -1,0 +1,36 @@
+HOLD-STATE ms=7220 mode=0 fault=0 id=0 phase=0 result=0 total_ms=0 hold_ms=0 motor=2 duty=0 enc=0,0 pwm=0,0 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=0
+HOLD-CFG v=20261019H1 selected=1800 step=100 cap=3000 kick=3000 kick_min=200 kick_max=300 hold=3000 lease=500 guard=1500
+HOLD-START v=20261019H1 motor=1 duty=1800 kick=3000 kick_min=200 kick_max=300 hold=3000 lease=500 guard=1500
+HOLD-STATE ms=7230 mode=8 fault=0 id=1 phase=1 result=0 total_ms=10 hold_ms=0 motor=1 duty=1800 enc=20,0 pwm=3000,0 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=1
+HOLD-STATE ms=7330 mode=8 fault=0 id=1 phase=1 result=0 total_ms=110 hold_ms=0 motor=1 duty=1800 enc=20,0 pwm=3000,0 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+HOLD-STATE ms=7430 mode=8 fault=0 id=1 phase=2 result=0 total_ms=210 hold_ms=10 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+HOLD-STATE ms=7530 mode=8 fault=0 id=1 phase=2 result=0 total_ms=310 hold_ms=110 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+HOLD-STATE ms=7630 mode=8 fault=0 id=1 phase=2 result=0 total_ms=410 hold_ms=210 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+HOLD-STATE ms=7730 mode=8 fault=0 id=1 phase=2 result=0 total_ms=510 hold_ms=310 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+HOLD-STATE ms=7830 mode=8 fault=0 id=1 phase=2 result=0 total_ms=610 hold_ms=410 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+HOLD-STATE ms=7930 mode=8 fault=0 id=1 phase=2 result=0 total_ms=710 hold_ms=510 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+HOLD-STATE ms=8030 mode=8 fault=0 id=1 phase=2 result=0 total_ms=810 hold_ms=610 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+HOLD-STATE ms=8130 mode=8 fault=0 id=1 phase=2 result=0 total_ms=910 hold_ms=710 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+HOLD-STATE ms=8230 mode=8 fault=0 id=1 phase=2 result=0 total_ms=1010 hold_ms=810 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+HOLD-STATE ms=8330 mode=8 fault=0 id=1 phase=2 result=0 total_ms=1110 hold_ms=910 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=0 sum=0 min=0 max=0 zeros=0 kick_ticks=3
+HOLD-STATE ms=8430 mode=8 fault=0 id=1 phase=2 result=0 total_ms=1210 hold_ms=1010 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=2 sum=40 min=20 max=20 zeros=0 kick_ticks=3
+HOLD-STATE ms=8530 mode=8 fault=0 id=1 phase=2 result=0 total_ms=1310 hold_ms=1110 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=12 sum=240 min=20 max=20 zeros=0 kick_ticks=3
+HOLD-STATE ms=8630 mode=8 fault=0 id=1 phase=2 result=0 total_ms=1410 hold_ms=1210 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=22 sum=440 min=20 max=20 zeros=0 kick_ticks=3
+HOLD-STATE ms=8730 mode=8 fault=0 id=1 phase=2 result=0 total_ms=1510 hold_ms=1310 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=32 sum=640 min=20 max=20 zeros=0 kick_ticks=3
+HOLD-STATE ms=8830 mode=8 fault=0 id=1 phase=2 result=0 total_ms=1610 hold_ms=1410 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=42 sum=840 min=20 max=20 zeros=0 kick_ticks=3
+HOLD-STATE ms=8930 mode=8 fault=0 id=1 phase=2 result=0 total_ms=1710 hold_ms=1510 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=52 sum=1040 min=20 max=20 zeros=0 kick_ticks=3
+HOLD-STATE ms=9030 mode=8 fault=0 id=1 phase=2 result=0 total_ms=1810 hold_ms=1610 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=62 sum=1240 min=20 max=20 zeros=0 kick_ticks=3
+HOLD-STATE ms=9130 mode=8 fault=0 id=1 phase=2 result=0 total_ms=1910 hold_ms=1710 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=72 sum=1440 min=20 max=20 zeros=0 kick_ticks=3
+HOLD-STATE ms=9230 mode=8 fault=0 id=1 phase=2 result=0 total_ms=2010 hold_ms=1810 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=82 sum=1640 min=20 max=20 zeros=0 kick_ticks=3
+HOLD-STATE ms=9330 mode=8 fault=0 id=1 phase=2 result=0 total_ms=2110 hold_ms=1910 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=92 sum=1840 min=20 max=20 zeros=0 kick_ticks=3
+HOLD-STATE ms=9430 mode=8 fault=0 id=1 phase=2 result=0 total_ms=2210 hold_ms=2010 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=102 sum=2040 min=20 max=20 zeros=0 kick_ticks=3
+HOLD-STATE ms=9530 mode=8 fault=0 id=1 phase=2 result=0 total_ms=2310 hold_ms=2110 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=112 sum=2240 min=20 max=20 zeros=0 kick_ticks=3
+HOLD-STATE ms=9630 mode=8 fault=0 id=1 phase=2 result=0 total_ms=2410 hold_ms=2210 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=122 sum=2440 min=20 max=20 zeros=0 kick_ticks=3
+HOLD-STATE ms=9730 mode=8 fault=0 id=1 phase=2 result=0 total_ms=2510 hold_ms=2310 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=132 sum=2640 min=20 max=20 zeros=0 kick_ticks=3
+HOLD-STATE ms=9830 mode=8 fault=0 id=1 phase=2 result=0 total_ms=2610 hold_ms=2410 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=142 sum=2840 min=20 max=20 zeros=0 kick_ticks=3
+HOLD-STATE ms=9930 mode=8 fault=0 id=1 phase=2 result=0 total_ms=2710 hold_ms=2510 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=152 sum=3040 min=20 max=20 zeros=0 kick_ticks=3
+HOLD-STATE ms=10030 mode=8 fault=0 id=1 phase=2 result=0 total_ms=2810 hold_ms=2610 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=162 sum=3240 min=20 max=20 zeros=0 kick_ticks=3
+HOLD-STATE ms=10130 mode=8 fault=0 id=1 phase=2 result=0 total_ms=2910 hold_ms=2710 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=172 sum=3440 min=20 max=20 zeros=0 kick_ticks=3
+HOLD-STATE ms=10230 mode=8 fault=0 id=1 phase=2 result=0 total_ms=3010 hold_ms=2810 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=182 sum=3640 min=20 max=20 zeros=0 kick_ticks=3
+HOLD-STATE ms=10330 mode=8 fault=0 id=1 phase=2 result=0 total_ms=3110 hold_ms=2910 motor=1 duty=1800 enc=20,0 pwm=1800,0 n=192 sum=3840 min=20 max=20 zeros=0 kick_ticks=3
+HOLD-STATE ms=10420 mode=0 fault=0 id=1 phase=3 result=1 total_ms=3200 hold_ms=3000 motor=1 duty=1800 enc=20,0 pwm=0,0 n=200 sum=4000 min=20 max=20 zeros=0 kick_ticks=3

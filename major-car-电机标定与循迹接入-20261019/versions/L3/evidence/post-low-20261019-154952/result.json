@@ -1,0 +1,77 @@
+{
+  "failure": null,
+  "configuration": {
+    "ki10": "200",
+    "selected": "20",
+    "max": "40",
+    "step": "5",
+    "cap": "1500",
+    "min": "10",
+    "ff0": "570,690",
+    "stats": "3000",
+    "transfer": "1000",
+    "kick_max": "300",
+    "kick_min": "200",
+    "lease": "500",
+    "ff10": "65,70",
+    "duration": "6000",
+    "kp10": "10",
+    "v": "20261019L3",
+    "guard": "450",
+    "kick": "3000"
+  },
+  "final": {
+    "ms": 329430,
+    "mode": 0,
+    "fault": 0,
+    "id": 7,
+    "done": 0,
+    "elapsed": 6000,
+    "motor": 3,
+    "target": 30,
+    "confirmed": 3,
+    "regulating": 3,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ],
+    "n": [
+      300,
+      300
+    ],
+    "sum": [
+      9089,
+      9061
+    ],
+    "e2": [
+      3401,
+      3669
+    ],
+    "ae": [
+      819,
+      903
+    ],
+    "min": [
+      23,
+      22
+    ],
+    "max": [
+      39,
+      37
+    ]
+  },
+  "commands": [
+    "s",
+    "GGGGGG",
+    "FF",
+    "Q",
+    "Q",
+    "Q",
+    "Q"
+  ],
+  "evidence": "versions/L3/evidence/post-low-20261019-154952"
+}

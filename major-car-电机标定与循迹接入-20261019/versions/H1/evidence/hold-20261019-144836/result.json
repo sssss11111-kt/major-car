@@ -1,0 +1,70 @@
+{
+  "version": "20261019H1",
+  "motor": 1,
+  "duty_percent": 0,
+  "failure": null,
+  "outcome": "preflight_only",
+  "measurement_complete": false,
+  "continuous_feedback": false,
+  "kick_observed": false,
+  "hold_observed": false,
+  "completion": null,
+  "configuration": {
+    "v": "20261019H1",
+    "selected": 0,
+    "kick": 3000,
+    "cap": 3000,
+    "kick_min": 200,
+    "hold": 3000,
+    "kick_max": 300,
+    "guard": 1500,
+    "lease": 500,
+    "step": 100
+  },
+  "final": {
+    "ms": 22220,
+    "mode": 0,
+    "fault": 0,
+    "id": 0,
+    "phase": 0,
+    "result": 0,
+    "total_ms": 0,
+    "hold_ms": 0,
+    "motor": 0,
+    "duty": 0,
+    "n": 0,
+    "sum": 0,
+    "min": 0,
+    "max": 0,
+    "zeros": 0,
+    "kick_ticks": 0,
+    "enc_left": 0,
+    "enc_right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0
+  },
+  "commands": [
+    {
+      "command": "H",
+      "utc": "2026-10-19T06:48:36.7823464Z"
+    },
+    {
+      "command": "q",
+      "utc": "2026-10-19T06:48:37.4505307Z"
+    },
+    {
+      "command": "H",
+      "utc": "2026-10-19T06:48:37.9546550Z"
+    },
+    {
+      "command": "s",
+      "utc": "2026-10-19T06:48:38.7090382Z"
+    },
+    {
+      "command": "H",
+      "utc": "2026-10-19T06:48:38.7093314Z"
+    }
+  ],
+  "physical_observation": "pending",
+  "evidence": "versions/H1/evidence/hold-20261019-144836"
+}

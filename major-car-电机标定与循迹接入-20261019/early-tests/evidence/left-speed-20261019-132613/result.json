@@ -1,0 +1,56 @@
+{
+  "time_china": "2026-10-19 13:26:13",
+  "motor": 1,
+  "failure": "Abnormal mode, output or encoder feedback; stop sent",
+  "ack": false,
+  "automatic_stop": false,
+  "active_samples": [],
+  "last_before_explicit_stop": null,
+  "final": {
+    "ms": 164420,
+    "mode": 0,
+    "fault": 0,
+    "target": 0,
+    "started": 0,
+    "enc_left": 0,
+    "enc_right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0
+  },
+  "physical_observation": "pending",
+  "commands": [
+    {
+      "command": "p",
+      "utc": "2026-10-19T05:26:13.1350142Z"
+    },
+    {
+      "command": "q",
+      "utc": "2026-10-19T05:26:13.1375791Z"
+    },
+    {
+      "command": "4",
+      "utc": "2026-10-19T05:26:14.9632364Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-19T05:26:14.9641593Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-19T05:26:15.2062343Z"
+    },
+    {
+      "command": "s",
+      "utc": "2026-10-19T05:26:15.2991181Z"
+    },
+    {
+      "command": "s",
+      "utc": "2026-10-19T05:26:15.3049746Z"
+    },
+    {
+      "command": "p",
+      "utc": "2026-10-19T05:26:15.3052224Z"
+    }
+  ],
+  "evidence": "early-tests\\evidence\\left-speed-20261019-132613"
+}

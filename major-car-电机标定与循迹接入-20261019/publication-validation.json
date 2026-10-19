@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-19",
+  "timezone": "Asia/Shanghai",
+  "archive_host_regression": "passed",
+  "archive_arm_camera_build": "passed",
+  "rebuilt_hex_sha256": "e6f602ab49e96b4ad58f26564e9549c2b787c558442201c612a5bff43b6518f8",
+  "actual_burned_G1_sha256": "ff91ee6db07075337506ecd6962d5a6dc50160d271bbf6fab88d46f308b58fbc",
+  "rebuilt_hex_matches_burned_G1": false,
+  "archive_integrity": "passed",
+  "hardware_actions_during_publication": false,
+  "third_goal_completed": false,
+  "pending": "Real straight-track static vision/steering and bounded ground tracking acceptance",
+  "rebuild_note": "Rebuilt HEX differs from actual burned HEX; vendor zf_assert embeds __FILE__, and recorded image strings contain different build-directory paths. The exact burned image is preserved separately and is authoritative for readback.",
+  "archive_verification_scope": "8 HEX checksums/effective sizes; 7 flash readback records; 30 sweep successes; H1 34 valid/1 aborted; L3 7 complete including retained nonpass and final3 dual20 passes; G1 not ground-tested; public and original raw-serial SHA checks"
+}

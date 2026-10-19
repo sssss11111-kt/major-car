@@ -1,0 +1,9 @@
+ms=22220 mode=0 fault=0 frames=938 valid=0 pair=2/13 thr=88 err10=215 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=1077 cap_age=10 proc_ms=0 used_age=0 drop_frames=139 ready=0 good_frames=0 accepted_age=22220 trial_id=0 trial_done=0 trial_ms=0
+UART8-DIAG v=20261017B cfg_baud=115200 rx=4 tx=13505 err=0 rts=0 drop=1 diag=0 ab=1 pattern=UUUU0123456789
+MOTOR-DIR v=20261017I left=C11 cfg=1 sample=0 right=C9 cfg=0 sample=0 sample_unverified=1
+C7-REG v=20261017D mux=00000005 ctl=000010b0 route=00000000 dr2=300cf800 dir2=300c0a00 psr2=0000f000 dr7=0000f000 dir7=00000000 psr7=0000f000
+ms=22720 mode=0 fault=0 frames=959 valid=0 pair=2/13 thr=86 err10=215 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=15 reject=1 seq=1102 cap_age=10 proc_ms=0 used_age=0 drop_frames=141 ready=0 good_frames=0 accepted_age=22720 trial_id=0 trial_done=0 trial_ms=0
+CAL-CFG v=20261019C3 selected=0 step=500 cap=7000 duration=2000 lease=500 guard=1500
+ms=23220 mode=0 fault=0 frames=983 valid=0 pair=2/13 thr=86 err10=215 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=15 reject=0 seq=1127 cap_age=10 proc_ms=0 used_age=0 drop_frames=144 ready=0 good_frames=0 accepted_age=23220 trial_id=0 trial_done=0 trial_ms=0
+ms=23720 mode=0 fault=0 frames=1004 valid=0 pair=2/13 thr=86 err10=214 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=15 reject=1 seq=1152 cap_age=10 proc_ms=0 used_age=0 drop_frames=146 ready=0 good_frames=0 accepted_age=23720 trial_id=0 trial_done=0 trial_ms=0
+ms=23850 mode=0 fault=0 frames=1012 valid=0 pair=2/13 thr=86 err10=214 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=15 reject=1 seq=1159 cap_age=0 proc_ms=0 used_age=0 drop_frames=147 ready=0 good_frames=0 accepted_age=23850 trial_id=0 trial_done=0 trial_ms=0

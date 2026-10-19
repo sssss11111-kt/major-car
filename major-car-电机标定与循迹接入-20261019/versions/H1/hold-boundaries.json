@@ -1,0 +1,14 @@
+{
+  "1": {
+    "minimum_repeated_continuous_percent": 6,
+    "adjacent_lower_repeated_failed": true,
+    "adjacent_lower_mixed": false,
+    "confirmed": true
+  },
+  "2": {
+    "minimum_repeated_continuous_percent": 8,
+    "adjacent_lower_repeated_failed": false,
+    "adjacent_lower_mixed": true,
+    "confirmed": true
+  }
+}
