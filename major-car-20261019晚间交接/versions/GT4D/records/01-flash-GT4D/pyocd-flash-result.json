@@ -1,0 +1,17 @@
+{
+  "image": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-\u901a\u4fe1\u8bca\u65ad-GT4D-20261019\\firmware\\20261019GT4D-communication-diagnostics.hex",
+  "image_sha256": "8c686e002970a12f1b0ef3851b4a456affc23998c75e2512314109380e645ff7",
+  "mode": "camera",
+  "target": "mimxrt1064",
+  "frequency": 1000000,
+  "connect": "halt",
+  "backup_complete": true,
+  "program_complete": true,
+  "readback_verified": true,
+  "core_left_halted": true,
+  "algorithm": "NXP.MIMXRT1064_DFP.19.0.0/MIMXRT1064_QSPI_4KB_SEC.FLM",
+  "baseline_verified_bytes": 76480,
+  "backup": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-\u901a\u4fe1\u8bca\u65ad-GT4D-20261019\\records\\01-flash-GT4D\\before-flash-70000000-4MiB.bin",
+  "backup_sha256": "b394760aa00c1eaee12af03d369d8fed8c5fdeaa0ae4e5658d9489eebd2cb126",
+  "verified_bytes": 76608
+}

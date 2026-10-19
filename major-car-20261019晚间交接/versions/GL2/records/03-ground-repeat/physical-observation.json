@@ -1,0 +1,6 @@
+{
+  "statement": "用户：行驶到自动停止，都没问题，没变化，可以下一步测试。",
+  "automatic_stop_confirmed": true,
+  "no_change_reported": true,
+  "new_reset_position_confirmation": "pending"
+}

@@ -1,0 +1,5 @@
+DRIVE-CFG v=20261018N straight=7 left=8 right=9 duration=1000 settle=200 target=40 cap=3000 straight10=0 lease=500
+ms=1898720 mode=0 fault=0 frames=84429 valid=1 pair=12/13 thr=190 err10=24 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=1898730 mode=0 fault=0 frames=84430 valid=1 pair=12/13 thr=190 err10=22 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=1899230 mode=0 fault=0 frames=84453 valid=1 pair=12/13 thr=190 err10=23 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=1899730 mode=0 fault=0 frames=84475 valid=1 pair=12/13 thr=190 err10=23 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20

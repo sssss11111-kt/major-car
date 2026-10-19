@@ -1,0 +1,38 @@
+{
+  "outcome": "error",
+  "reason": "Idle and zero outputs required",
+  "configuration": {
+    "target": 20,
+    "cap": 3000,
+    "settle": 200,
+    "duration": 3000,
+    "lease": 500,
+    "simulated": 0
+  },
+  "status": {
+    "ms": 224540,
+    "mode": 0,
+    "fault": 0,
+    "valid": 0,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 0,
+    "accepted_age": 4370,
+    "trial_id": 0,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "pi_mask": 0,
+    "enc": [
+      1,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  "hardware_verified": false
+}

@@ -1,0 +1,37 @@
+GROUND-STATE ms=28120 mode=0 fault=0 id=0 phase=0 done=0 elapsed=0 duty=0 enc=0,0 pwm=0,0 us=1500 n=0,0 sum=0,0 min=0,0 max=0,0 e2=0,0 regulating=0 target=20
+GROUND-CFG v=20261019GL2 selected=0 min=0 max=0 step=0 settle=200 kick=3000 kick_min=200 kick_max=300 hold=1500 total=2000 lease=500 guard=120 us=1500 target=20 cap=1500 kp10=40 ki10=200 ff=1206,1198 transfer=200 entry=ff simulated=0
+GROUND-START v=20261019GL2 id=1 target=20 duty=0
+GROUND-STATE ms=28160 mode=10 fault=0 id=1 phase=0 done=0 elapsed=0 duty=0 enc=0,0 pwm=0,0 us=1500 n=0,0 sum=0,0 min=0,0 max=0,0 e2=0,0 regulating=0 target=20
+ms=28230 mode=10 fault=0 frames=1219 valid=0 pair=8/13 thr=212 err10=-11 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=61 reject=5 seq=1377 cap_age=20 proc_ms=0 used_age=0 drop_frames=158 ready=0 good_frames=0 accepted_age=27290 trial_id=0 trial_done=0 trial_ms=0 pi_mask=0
+GROUND-STATE ms=28320 mode=10 fault=0 id=1 phase=0 done=0 elapsed=160 duty=0 enc=0,0 pwm=0,0 us=1500 n=0,0 sum=0,0 min=0,0 max=0,0 e2=0,0 regulating=0 target=20
+GROUND-STATE ms=28370 mode=10 fault=0 id=1 phase=1 done=0 elapsed=210 duty=0 enc=1,0 pwm=3000,3000 us=1500 n=0,0 sum=0,0 min=0,0 max=0,0 e2=0,0 regulating=0 target=20
+GROUND-STATE ms=28520 mode=10 fault=0 id=1 phase=1 done=0 elapsed=360 duty=0 enc=25,23 pwm=3000,3000 us=1500 n=0,0 sum=0,0 min=0,0 max=0,0 e2=0,0 regulating=0 target=20
+GROUND-STATE ms=28610 mode=10 fault=0 id=1 phase=2 done=0 elapsed=450 duty=0 enc=29,31 pwm=1207,1190 us=1500 n=0,0 sum=0,0 min=0,0 max=0,0 e2=0,0 regulating=3 target=20
+GROUND-STATE ms=28720 mode=10 fault=0 id=1 phase=2 done=0 elapsed=560 duty=0 enc=28,25 pwm=1195,1200 us=1500 n=0,0 sum=0,0 min=0,0 max=0,0 e2=0,0 regulating=3 target=20
+ms=28730 mode=10 fault=0 frames=1241 valid=0 pair=8/13 thr=212 err10=-18 bench_target=20 bench_started=3 enc=31,26 pwm=1181,1194 us=1500 speed=20 target10=200 phase=3 quality=61 reject=5 seq=1402 cap_age=20 proc_ms=0 used_age=10 drop_frames=161 ready=0 good_frames=0 accepted_age=27790 trial_id=0 trial_done=0 trial_ms=0 pi_mask=3
+GROUND-STATE ms=28840 mode=10 fault=0 id=1 phase=2 done=0 elapsed=680 duty=0 enc=29,28 pwm=1171,1170 us=1500 n=0,0 sum=0,0 min=0,0 max=0,0 e2=0,0 regulating=3 target=20
+GROUND-STATE ms=28940 mode=10 fault=0 id=1 phase=2 done=0 elapsed=780 duty=0 enc=26,27 pwm=1170,1161 us=1500 n=0,0 sum=0,0 min=0,0 max=0,0 e2=0,0 regulating=3 target=20
+GROUND-STATE ms=29070 mode=10 fault=0 id=1 phase=2 done=0 elapsed=910 duty=0 enc=22,21 pwm=1176,1173 us=1500 n=0,0 sum=0,0 min=0,0 max=0,0 e2=0,0 regulating=3 target=20
+GROUND-STATE ms=29190 mode=10 fault=0 id=1 phase=2 done=0 elapsed=1030 duty=0 enc=21,22 pwm=1174,1166 us=1500 n=0,0 sum=0,0 min=0,0 max=0,0 e2=0,0 regulating=3 target=20
+ms=29230 mode=10 fault=0 frames=1264 valid=0 pair=8/13 thr=212 err10=-36 bench_target=20 bench_started=3 enc=23,21 pwm=1164,1169 us=1500 speed=20 target10=200 phase=3 quality=61 reject=5 seq=1427 cap_age=20 proc_ms=0 used_age=0 drop_frames=163 ready=0 good_frames=0 accepted_age=28290 trial_id=0 trial_done=0 trial_ms=0 pi_mask=3
+GROUND-STATE ms=29320 mode=10 fault=0 id=1 phase=2 done=0 elapsed=1160 duty=0 enc=21,21 pwm=1168,1165 us=1500 n=0,0 sum=0,0 min=0,0 max=0,0 e2=0,0 regulating=3 target=20
+GROUND-STATE ms=29430 mode=10 fault=0 id=1 phase=2 done=0 elapsed=1270 duty=0 enc=21,22 pwm=1165,1158 us=1500 n=0,0 sum=0,0 min=0,0 max=0,0 e2=0,0 regulating=3 target=20
+GROUND-STATE ms=29540 mode=10 fault=0 id=1 phase=2 done=0 elapsed=1380 duty=0 enc=19,18 pwm=1173,1174 us=1500 n=0,0 sum=0,0 min=0,0 max=0,0 e2=0,0 regulating=3 target=20
+GROUND-STATE ms=29650 mode=10 fault=0 id=1 phase=2 done=0 elapsed=1490 duty=0 enc=18,18 pwm=1180,1179 us=1500 n=10,10 sum=189,177 min=18,17 max=23,18 e2=33,55 regulating=3 target=20
+ms=29730 mode=10 fault=0 frames=1286 valid=0 pair=8/13 thr=212 err10=-51 bench_target=20 bench_started=3 enc=20,19 pwm=1173,1177 us=1500 speed=20 target10=200 phase=3 quality=61 reject=5 seq=1452 cap_age=20 proc_ms=0 used_age=10 drop_frames=166 ready=0 good_frames=0 accepted_age=28790 trial_id=0 trial_done=0 trial_ms=0 pi_mask=3
+GROUND-STATE ms=29790 mode=10 fault=0 id=1 phase=2 done=0 elapsed=1630 duty=0 enc=21,18 pwm=1168,1182 us=1500 n=24,24 sum=465,443 min=18,17 max=23,20 e2=41,73 regulating=3 target=20
+GROUND-STATE ms=29860 mode=10 fault=0 id=1 phase=2 done=0 elapsed=1700 duty=0 enc=21,18 pwm=1170,1183 us=1500 n=31,31 sum=599,576 min=15,17 max=23,20 e2=77,84 regulating=3 target=20
+GROUND-STATE ms=29970 mode=10 fault=0 id=1 phase=2 done=0 elapsed=1810 duty=0 enc=19,20 pwm=1179,1175 us=1500 n=42,42 sum=813,798 min=15,17 max=23,21 e2=85,88 regulating=3 target=20
+GROUND-STATE ms=30120 mode=0 fault=0 id=1 phase=3 done=1 elapsed=1900 duty=0 enc=-2,13 pwm=0,0 us=1500 n=50,50 sum=957,946 min=15,17 max=23,21 e2=119,108 regulating=3 target=20
+GROUND-CFG v=20261019GL2 selected=0 min=0 max=0 step=0 settle=200 kick=3000 kick_min=200 kick_max=300 hold=1500 total=2000 lease=500 guard=120 us=1500 target=20 cap=1500 kp10=40 ki10=200 ff=1206,1198 transfer=200 entry=ff simulated=0
+GROUND-STATE ms=30190 mode=0 fault=0 id=1 phase=3 done=0 elapsed=1900 duty=0 enc=10,10 pwm=0,0 us=1500 n=50,50 sum=957,946 min=15,17 max=23,21 e2=119,108 regulating=3 target=20
+GROUND-CFG v=20261019GL2 selected=0 min=0 max=0 step=0 settle=200 kick=3000 kick_min=200 kick_max=300 hold=1500 total=2000 lease=500 guard=120 us=1500 target=20 cap=1500 kp10=40 ki10=200 ff=1206,1198 transfer=200 entry=ff simulated=0
+ms=30230 mode=0 fault=0 frames=1309 valid=0 pair=8/13 thr=212 err10=-66 bench_target=0 bench_started=0 enc=9,6 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=61 reject=5 seq=1477 cap_age=20 proc_ms=0 used_age=0 drop_frames=168 ready=0 good_frames=0 accepted_age=29290 trial_id=0 trial_done=0 trial_ms=0 pi_mask=3
+GROUND-STATE ms=30410 mode=0 fault=0 id=1 phase=3 done=0 elapsed=1900 duty=0 enc=-1,-1 pwm=0,0 us=1500 n=50,50 sum=957,946 min=15,17 max=23,21 e2=119,108 regulating=3 target=20
+GROUND-CFG v=20261019GL2 selected=0 min=0 max=0 step=0 settle=200 kick=3000 kick_min=200 kick_max=300 hold=1500 total=2000 lease=500 guard=120 us=1500 target=20 cap=1500 kp10=40 ki10=200 ff=1206,1198 transfer=200 entry=ff simulated=0
+GROUND-STATE ms=30670 mode=0 fault=0 id=1 phase=3 done=0 elapsed=1900 duty=0 enc=0,0 pwm=0,0 us=1500 n=50,50 sum=957,946 min=15,17 max=23,21 e2=119,108 regulating=3 target=20
+GROUND-CFG v=20261019GL2 selected=0 min=0 max=0 step=0 settle=200 kick=3000 kick_min=200 kick_max=300 hold=1500 total=2000 lease=500 guard=120 us=1500 target=20 cap=1500 kp10=40 ki10=200 ff=1206,1198 transfer=200 entry=ff simulated=0
+GROUND-STATE ms=30950 mode=0 fault=0 id=1 phase=3 done=0 elapsed=1900 duty=0 enc=0,0 pwm=0,0 us=1500 n=50,50 sum=957,946 min=15,17 max=23,21 e2=119,108 regulating=3 target=20
+GROUND-CFG v=20261019GL2 selected=0 min=0 max=0 step=0 settle=200 kick=3000 kick_min=200 kick_max=300 hold=1500 total=2000 lease=500 guard=120 us=1500 target=20 cap=1500 kp10=40 ki10=200 ff=1206,1198 transfer=200 entry=ff simulated=0
+GROUND-STATE ms=31220 mode=0 fault=0 id=1 phase=3 done=0 elapsed=1900 duty=0 enc=0,0 pwm=0,0 us=1500 n=50,50 sum=957,946 min=15,17 max=23,21 e2=119,108 regulating=3 target=20
+GROUND-CFG v=20261019GL2 selected=0 min=0 max=0 step=0 settle=200 kick=3000 kick_min=200 kick_max=300 hold=1500 total=2000 lease=500 guard=120 us=1500 target=20 cap=1500 kp10=40 ki10=200 ff=1206,1198 transfer=200 entry=ff simulated=0

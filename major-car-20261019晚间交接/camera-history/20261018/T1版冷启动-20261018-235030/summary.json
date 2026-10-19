@@ -1,0 +1,18 @@
+{
+  "version": "20261018T1",
+  "rows": 15,
+  "all_idle_no_fault_zero_pwm_encoder_neutral": true,
+  "valid_rows": 15,
+  "ready_rows": 15,
+  "accepted_age_max_ms": 20,
+  "cap_age_max_ms": 20,
+  "pair_values": [
+    "12/13",
+    "13/13"
+  ],
+  "err10_min": 61,
+  "err10_max": 63,
+  "gray_changed_pixels": 6410,
+  "gray_pixels": 22560,
+  "motor_started": false
+}

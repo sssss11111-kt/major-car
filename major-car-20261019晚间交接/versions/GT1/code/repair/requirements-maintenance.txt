@@ -1,0 +1,3 @@
+pyocd==0.45.1
+intelhex==2.3.0
+pyserial==3.5

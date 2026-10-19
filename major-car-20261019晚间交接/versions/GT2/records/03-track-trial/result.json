@@ -1,0 +1,48 @@
+{
+  "outcome": "completed",
+  "reason": "Normal expiry and motion feedback observed",
+  "configuration": {
+    "target": 20,
+    "cap": 3000,
+    "settle": 200,
+    "duration": 3000,
+    "lease": 500,
+    "simulated": 0
+  },
+  "completion": {
+    "ms": 41170,
+    "mode": 0,
+    "fault": 0,
+    "valid": 1,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 1,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 1,
+    "trial_ms": 3200,
+    "pi_mask": 3,
+    "enc": [
+      21,
+      22
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  "hardware_verified": false,
+  "physical_observation": {
+    "user_statement": "20cm左右，往右偏了3cm，正常停稳",
+    "forward_distance_cm_approx": 20,
+    "right_offset_cm_approx": 3,
+    "normal_stop_confirmed": true,
+    "track_contact_or_exit": "not stated",
+    "measurement_method": "user approximate report; no independently verified video/scale",
+    "centerline_tracking_accepted": false
+  },
+  "physical_track_acceptance": false
+}

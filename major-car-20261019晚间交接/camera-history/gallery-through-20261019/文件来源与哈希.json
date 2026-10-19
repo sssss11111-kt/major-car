@@ -1,0 +1,857 @@
+[
+  {
+    "source": "D:\\桌面\\智能车\\major-car-C15按键测试-GT5-20261019\\records\\03-cleaned-camera-images\\normal\\20261019-215403-969309-01.pgm",
+    "saved": "原始文件/major-car-C15按键测试-GT5-20261019/records/03-cleaned-camera-images/normal/20261019-215403-969309-01.pgm",
+    "sha256": "0a10a1022f60e72e458d426ba25eb15c1316e05c02af3f8f014e4e3e46060907"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-C15按键测试-GT5-20261019\\records\\03-cleaned-camera-images\\normal\\20261019-215403-969309-01.png",
+    "saved": "原始文件/major-car-C15按键测试-GT5-20261019/records/03-cleaned-camera-images/normal/20261019-215403-969309-01.png",
+    "sha256": "24aeca5536be4179cd2a402b2bd16d8be8fb615de77ed510adb7b19e6d532dcc"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-C15按键测试-GT5-20261019\\records\\03-cleaned-camera-images\\normal\\20261019-215406-586473-02.pgm",
+    "saved": "原始文件/major-car-C15按键测试-GT5-20261019/records/03-cleaned-camera-images/normal/20261019-215406-586473-02.pgm",
+    "sha256": "12bfda1e85907f2cd4722fb33152c85f6002c799f7977c4a7e3131f3d9dffc04"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-C15按键测试-GT5-20261019\\records\\03-cleaned-camera-images\\normal\\20261019-215406-586473-02.png",
+    "saved": "原始文件/major-car-C15按键测试-GT5-20261019/records/03-cleaned-camera-images/normal/20261019-215406-586473-02.png",
+    "sha256": "ad62966be6360a148ff1d0d8e35175a59e99f85ba4f3815ab55998cbab3bd8c7"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-C15按键测试-GT5-20261019\\records\\05-adjusted-camera-images\\normal\\20261019-215550-570736-01.pgm",
+    "saved": "原始文件/major-car-C15按键测试-GT5-20261019/records/05-adjusted-camera-images/normal/20261019-215550-570736-01.pgm",
+    "sha256": "60459cde2629ec45d84567b50be08efa71dd5b66d1b18c3ec7aec88f70667d3f"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-C15按键测试-GT5-20261019\\records\\05-adjusted-camera-images\\normal\\20261019-215550-570736-01.png",
+    "saved": "原始文件/major-car-C15按键测试-GT5-20261019/records/05-adjusted-camera-images/normal/20261019-215550-570736-01.png",
+    "sha256": "2126cecfac34d4b994c66a11439cf72985bb68c4d42c5e32d3a6280040d7512f"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-C15按键测试-GT5-20261019\\records\\05-adjusted-camera-images\\normal\\20261019-215554-838621-02.pgm",
+    "saved": "原始文件/major-car-C15按键测试-GT5-20261019/records/05-adjusted-camera-images/normal/20261019-215554-838621-02.pgm",
+    "sha256": "bcc15700dd135b866b3f160babc7f11d5152743de005f9ee9581d637c77eb7f1"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-C15按键测试-GT5-20261019\\records\\05-adjusted-camera-images\\normal\\20261019-215554-838621-02.png",
+    "saved": "原始文件/major-car-C15按键测试-GT5-20261019/records/05-adjusted-camera-images/normal/20261019-215554-838621-02.png",
+    "sha256": "7b06ba3f6f1f3b6bec4191db270e15a316355391bc03fdf6ef0ae040498b7ac2"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-G1-完整下载-20261019\\major-car-c3682dd44872d2dd13b5900b3424d26427f4c492\\major-car-T2-20261019\\records\\field-tests\\T2版地面直弯试跑-20261019-002837\\capture\\binary.pgm",
+    "saved": "原始文件/major-car-G1-完整下载-20261019/major-car-c3682dd44872d2dd13b5900b3424d26427f4c492/major-car-T2-20261019/records/field-tests/T2版地面直弯试跑-20261019-002837/capture/binary.pgm",
+    "sha256": "cfdc0d067f68fe2962a7d91a17a7ab93a1896111ca7574ba92d6e804e04c4413"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-G1-完整下载-20261019\\major-car-c3682dd44872d2dd13b5900b3424d26427f4c492\\major-car-T2-20261019\\records\\field-tests\\T2版地面直弯试跑-20261019-002837\\capture\\gray-repeat.pgm",
+    "saved": "原始文件/major-car-G1-完整下载-20261019/major-car-c3682dd44872d2dd13b5900b3424d26427f4c492/major-car-T2-20261019/records/field-tests/T2版地面直弯试跑-20261019-002837/capture/gray-repeat.pgm",
+    "sha256": "3ffb3dc61c7910c0109d362d693ebf4bb334afa43d973068435aa5b7f154e281"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-G1-完整下载-20261019\\major-car-c3682dd44872d2dd13b5900b3424d26427f4c492\\major-car-T2-20261019\\records\\field-tests\\T2版地面直弯试跑-20261019-002837\\capture\\gray.pgm",
+    "saved": "原始文件/major-car-G1-完整下载-20261019/major-car-c3682dd44872d2dd13b5900b3424d26427f4c492/major-car-T2-20261019/records/field-tests/T2版地面直弯试跑-20261019-002837/capture/gray.pgm",
+    "sha256": "bf09c152da64a1a0ca37026b34148ad2553895b2e39228579aa8b72bdcce78b6"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-地面视觉循迹-GT1-20261019\\records\\03-preflight-images\\binary.pgm",
+    "saved": "原始文件/major-car-地面视觉循迹-GT1-20261019/records/03-preflight-images/binary.pgm",
+    "sha256": "2873e20ab7c1c511b10fced95443afb591b357cb86cd970c7ae50850e59136bb"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-地面视觉循迹-GT1-20261019\\records\\03-preflight-images\\binary.png",
+    "saved": "原始文件/major-car-地面视觉循迹-GT1-20261019/records/03-preflight-images/binary.png",
+    "sha256": "ebe1280eadf801397e664fb612fc4862fb0a0c2e124119a72f4ebc034ac45c0a"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-地面视觉循迹-GT1-20261019\\records\\03-preflight-images\\gray.pgm",
+    "saved": "原始文件/major-car-地面视觉循迹-GT1-20261019/records/03-preflight-images/gray.pgm",
+    "sha256": "e3cb291ca675944ca218b725f228e540e8d30fb97dcb2d0b146ca914712ccfd7"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-地面视觉循迹-GT1-20261019\\records\\03-preflight-images\\gray.png",
+    "saved": "原始文件/major-car-地面视觉循迹-GT1-20261019/records/03-preflight-images/gray.png",
+    "sha256": "cebb246c79a53225754d491595c6b56c31b2f2c795e78b7b87e54b10259a157b"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-地面视觉循迹-GT1-20261019\\records\\05-adjusted-images\\binary.pgm",
+    "saved": "原始文件/major-car-地面视觉循迹-GT1-20261019/records/05-adjusted-images/binary.pgm",
+    "sha256": "dc85cd43779c612155278d0093f64ad92b457d5617bcc6866c5f0f1335ece8c0"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-地面视觉循迹-GT1-20261019\\records\\05-adjusted-images\\binary.png",
+    "saved": "原始文件/major-car-地面视觉循迹-GT1-20261019/records/05-adjusted-images/binary.png",
+    "sha256": "813815d2a78df033e234df6bc0a6c0a44aeb6e5ae3c42895483e8544dbcc871b"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-地面视觉循迹-GT1-20261019\\records\\05-adjusted-images\\gray.pgm",
+    "saved": "原始文件/major-car-地面视觉循迹-GT1-20261019/records/05-adjusted-images/gray.pgm",
+    "sha256": "a6a6c0a4fd89b98340fed7388adf42cea052f7c321145a4640624c6720bcc441"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-地面视觉循迹-GT1-20261019\\records\\05-adjusted-images\\gray.png",
+    "saved": "原始文件/major-car-地面视觉循迹-GT1-20261019/records/05-adjusted-images/gray.png",
+    "sha256": "2a34fd0d836d0d4b4b16f98e4cbf5bebfb7b13fe66340d04eebb4d6c89acc228"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-地面视觉循迹-GT1-20261019\\records\\09-stationary\\gray0.pgm",
+    "saved": "原始文件/major-car-地面视觉循迹-GT1-20261019/records/09-stationary/gray0.pgm",
+    "sha256": "fd1fd9c6cf98e0e35f2acc7dc23ef70ad71b8b712f3df549d89ea987020b8bd2"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-地面视觉循迹-GT1-20261019\\records\\09-stationary\\gray0.png",
+    "saved": "原始文件/major-car-地面视觉循迹-GT1-20261019/records/09-stationary/gray0.png",
+    "sha256": "52de0fe6ed4566a9af0f59a9fc7edb77255bb9c2017bee47a090137600aa4aab"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-地面视觉循迹-GT1-20261019\\records\\09-stationary\\gray1.pgm",
+    "saved": "原始文件/major-car-地面视觉循迹-GT1-20261019/records/09-stationary/gray1.pgm",
+    "sha256": "b48ebb4934b9f004bfc83aa7ab1215ccb372e2569a0a55fd7626af29393dbd1a"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-地面视觉循迹-GT1-20261019\\records\\09-stationary\\gray1.png",
+    "saved": "原始文件/major-car-地面视觉循迹-GT1-20261019/records/09-stationary/gray1.png",
+    "sha256": "264fa6d970d32592ae2e02b938fe36761f78bd6025ab5292fd3d81aaccaeb643"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-地面视觉循迹-GT1-20261019\\records\\09-stationary\\gray2.pgm",
+    "saved": "原始文件/major-car-地面视觉循迹-GT1-20261019/records/09-stationary/gray2.pgm",
+    "sha256": "83121d569fc9bdbe4771ae8cfcd8383ac1493591a31e991e894337e96d3a6a1e"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-地面视觉循迹-GT1-20261019\\records\\09-stationary\\gray2.png",
+    "saved": "原始文件/major-car-地面视觉循迹-GT1-20261019/records/09-stationary/gray2.png",
+    "sha256": "2e1ce9a6350bd1ca8bec177c00156cbe340d4e62749c69478e63b58dbb966aad"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\02-coldboot-camera\\gray-01.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/02-coldboot-camera/gray-01.pgm",
+    "sha256": "7d017144cd5ad5105b1ea852522bb86447a24554833c162fb7f2be3270b9213b"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\02-coldboot-camera\\gray-01.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/02-coldboot-camera/gray-01.png",
+    "sha256": "1dd0d756c59d7de069235719eee8c7c7ee9a42c4ac01752fa55524d74f06fba5"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\02-coldboot-camera\\gray-02.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/02-coldboot-camera/gray-02.pgm",
+    "sha256": "7d4d5d1b847add6b2d34bbd1f5685ffe277f3a8783933f0d4af3aef9e339cb0b"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\02-coldboot-camera\\gray-02.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/02-coldboot-camera/gray-02.png",
+    "sha256": "8905ed4c30ca7d78300d34e816f42529e838dfdac80c2d392070db3648119642"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\02-coldboot-camera\\gray-03.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/02-coldboot-camera/gray-03.pgm",
+    "sha256": "a5b2f3578aede490f850043e513e64c7888377822e67fa2f6a3317765e2254d0"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\02-coldboot-camera\\gray-03.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/02-coldboot-camera/gray-03.png",
+    "sha256": "05df16f0a328e3664460670c68e6414988f165bf50e49cc41c5a0769eb803ff4"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\03-fixed-focus-baseline\\gray-01.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/03-fixed-focus-baseline/gray-01.pgm",
+    "sha256": "8accd62e53e2cdf450325732e8c9076e2b172ad247df20cf88ef3891beb34bc1"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\03-fixed-focus-baseline\\gray-01.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/03-fixed-focus-baseline/gray-01.png",
+    "sha256": "a532e418ce83ef5cd33f44325bfc3216bee24947e010622bb34eb75d4efe7f4c"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\03-fixed-focus-baseline\\gray-02.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/03-fixed-focus-baseline/gray-02.pgm",
+    "sha256": "c5bb39bd34def8ad158cdd307c32c4b4cc8cead3a61828539a9a24fa84f450b4"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\03-fixed-focus-baseline\\gray-02.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/03-fixed-focus-baseline/gray-02.png",
+    "sha256": "24ab164e6949332ce301d80532419dcecbefd52f5621f0c57dc1e21e9b40c17c"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\03-fixed-focus-baseline\\gray-03.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/03-fixed-focus-baseline/gray-03.pgm",
+    "sha256": "ba249a8efbfffbb3a37ca3be3e07ed703cfe116503e4db8be30b97dc77ae2fcf"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\03-fixed-focus-baseline\\gray-03.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/03-fixed-focus-baseline/gray-03.png",
+    "sha256": "1a0a6f77c86f633826d704c4ffda81de5ad5d0ad17deb7b2887e3a5c7e2932ac"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\04-focus-step1\\gray-01.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/04-focus-step1/gray-01.pgm",
+    "sha256": "2be196c7b3609633e8946529354a6f2a239bb994c538af3c975e154eeb99fe71"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\04-focus-step1\\gray-01.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/04-focus-step1/gray-01.png",
+    "sha256": "8302965e7a8985388af872871545a5b6306321488aace3c7a2107efbdebea644"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\04-focus-step1\\gray-02.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/04-focus-step1/gray-02.pgm",
+    "sha256": "fb7f23dc9cb49458e797542fc6a91ece41f0e6421e0f3e64b065b6140ff963e4"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\04-focus-step1\\gray-02.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/04-focus-step1/gray-02.png",
+    "sha256": "c7cf14af6bab6fdc17540169a1d974e31ea790e4e3563b9525d70a6729be28f8"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\04-focus-step1\\gray-03.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/04-focus-step1/gray-03.pgm",
+    "sha256": "6e3526df838c28bca62c32c036d8b2924d86003fb7df3c07647ca3e14cbe1f9c"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\04-focus-step1\\gray-03.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/04-focus-step1/gray-03.png",
+    "sha256": "f997dd5379a732cde4f17c19633ce9f23838a357cd024e70e7044e9847c19621"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\05-focus-restored\\gray-01.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/05-focus-restored/gray-01.pgm",
+    "sha256": "4c08200e008d4fb2613df768eb5c7997bc09ce139aee8c95f15b7449aedf06fc"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\05-focus-restored\\gray-01.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/05-focus-restored/gray-01.png",
+    "sha256": "b9d2a9c1598ae8b9994f6539e45e46db6a235c8f3c1eaa7d6baf19fcd4ca245e"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\05-focus-restored\\gray-02.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/05-focus-restored/gray-02.pgm",
+    "sha256": "4f32107f6d43298cdd42a599530644f3ba958f6197a9cc7afd7a07e20518a508"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\05-focus-restored\\gray-02.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/05-focus-restored/gray-02.png",
+    "sha256": "e7f51f094f4f0a6f94424b3792de42ac8b7c924c768200b81cff15ae5844c5e5"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\06-focus-reverse\\gray-01.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/06-focus-reverse/gray-01.pgm",
+    "sha256": "6a80e478f584a77f90a8d85f596a81c3492e966c4d6be682b4eae6b754a858f5"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\06-focus-reverse\\gray-01.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/06-focus-reverse/gray-01.png",
+    "sha256": "01855eed52a566b65630fe0d6de62531b66083ad3a89f65275c7e6619324db60"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\06-focus-reverse\\gray-02.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/06-focus-reverse/gray-02.pgm",
+    "sha256": "be15a8185c7c5948da8ec0ddb6371360885317f4fc63ef9d09000d873bede0f4"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\06-focus-reverse\\gray-02.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/06-focus-reverse/gray-02.png",
+    "sha256": "19144b7e698a0f4aae84e4a08ddddb860a261ba4f190d6e0e1995f8f719c1303"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\06-focus-reverse\\gray-03.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/06-focus-reverse/gray-03.pgm",
+    "sha256": "1dab67db6462537df4979d72c6fe0ca753ddc37e4d6399ca4a155e4a56f67f73"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\06-focus-reverse\\gray-03.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/06-focus-reverse/gray-03.png",
+    "sha256": "4e2cf6d81c74872aeaeda0e7659e3297eb69bd2693820517cc9a2888ecc8beba"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\07-focus-reverse-step2\\gray-01.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/07-focus-reverse-step2/gray-01.pgm",
+    "sha256": "f70b100ce06754276162f9b0314fb77b0ebe74a778b6e6a846296b99e7e4712e"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\07-focus-reverse-step2\\gray-01.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/07-focus-reverse-step2/gray-01.png",
+    "sha256": "dc99aa05e115185fb61500bd46d483a62ab779f8cb84cc86b4fbc54fcf6bcb30"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\07-focus-reverse-step2\\gray-02.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/07-focus-reverse-step2/gray-02.pgm",
+    "sha256": "7229f9a98927747ad33db982c36bfeb025610b5698ef729eae32cbebde6bb905"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\07-focus-reverse-step2\\gray-02.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/07-focus-reverse-step2/gray-02.png",
+    "sha256": "78e5f19de4c83318120c2fab89412441e970df3644f88b385b32266b8f57cd9c"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\07-focus-reverse-step2\\gray-03.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/07-focus-reverse-step2/gray-03.pgm",
+    "sha256": "535e59903452b1ae0dd54a552116b3aadc4a47bc3909e12bb9076940cce80bc4"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\07-focus-reverse-step2\\gray-03.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/07-focus-reverse-step2/gray-03.png",
+    "sha256": "5d68b045e468d5b4edbca832c24556d174422d7d5546a237f048e657e62e2798"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\08-focus-clear\\gray-01.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/08-focus-clear/gray-01.pgm",
+    "sha256": "aaa6f1bfe4fbbd6b079b913f55b97f1446e3068251a31ddd6038bea9ef377a4f"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\08-focus-clear\\gray-01.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/08-focus-clear/gray-01.png",
+    "sha256": "4956ed2f8197ce403ed8e91ef0d3cf4b00a0e1753b13e267537145b37e802143"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\08-focus-clear\\gray-02.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/08-focus-clear/gray-02.pgm",
+    "sha256": "ad65b2b59aff29501c96a8d43bfa6b10169270a01b0de7cbf089382e3a47f918"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\08-focus-clear\\gray-02.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/08-focus-clear/gray-02.png",
+    "sha256": "344544ccd874690f20d65026e25ab898a8505a070a5d01e2f50f380578c25116"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\08-focus-clear\\gray-03.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/08-focus-clear/gray-03.pgm",
+    "sha256": "281550a4d80416aa72434935be969884f3b624bfb580acf924d96bb3c7f95e95"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\08-focus-clear\\gray-03.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/08-focus-clear/gray-03.png",
+    "sha256": "621d0c2f55cf645e1ee88b6310e5364c3040a04647f40422768e7cc10dfdf595"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\09-focus-target\\gray-01.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/09-focus-target/gray-01.pgm",
+    "sha256": "4bf98244a13dc815ea0b94bf7de680550a0c228a150a84499a99498638a05f3c"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\09-focus-target\\gray-01.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/09-focus-target/gray-01.png",
+    "sha256": "3da97e60401dfee655494bfa700fc9aa5d6bbb8d72d289596c2b684fc408b078"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\09-focus-target\\gray-02.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/09-focus-target/gray-02.pgm",
+    "sha256": "ce727b2f7e608c24f4bb24b7f3066c8de82e212c4fd241e682d6d3fa98b268bc"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\09-focus-target\\gray-02.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/09-focus-target/gray-02.png",
+    "sha256": "4ad6574ca452f8b047c313b0075568d7b09f44b9e6aaa9b8fc1a337991af8f64"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\09-focus-target\\gray-03.pgm",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/09-focus-target/gray-03.pgm",
+    "sha256": "1b921e3d90420288fc963595dc68e5b9e7310dd17e53510f204dee5fab58331b"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-灰度彩标调试-GT6-20261019\\records\\09-focus-target\\gray-03.png",
+    "saved": "原始文件/major-car-灰度彩标调试-GT6-20261019/records/09-focus-target/gray-03.png",
+    "sha256": "a1f305aef3bf5d33f8acb4b60f328d2e50b40316d0a31037f4eedce660c07730"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-联动增驱测试-T2-20261019\\records\\field-tests\\T2版地面直弯试跑-20261019-002837\\capture\\binary.pgm",
+    "saved": "原始文件/major-car-联动增驱测试-T2-20261019/records/field-tests/T2版地面直弯试跑-20261019-002837/capture/binary.pgm",
+    "sha256": "cfdc0d067f68fe2962a7d91a17a7ab93a1896111ca7574ba92d6e804e04c4413"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-联动增驱测试-T2-20261019\\records\\field-tests\\T2版地面直弯试跑-20261019-002837\\capture\\gray-repeat.pgm",
+    "saved": "原始文件/major-car-联动增驱测试-T2-20261019/records/field-tests/T2版地面直弯试跑-20261019-002837/capture/gray-repeat.pgm",
+    "sha256": "3ffb3dc61c7910c0109d362d693ebf4bb334afa43d973068435aa5b7f154e281"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-联动增驱测试-T2-20261019\\records\\field-tests\\T2版地面直弯试跑-20261019-002837\\capture\\gray.pgm",
+    "saved": "原始文件/major-car-联动增驱测试-T2-20261019/records/field-tests/T2版地面直弯试跑-20261019-002837/capture/gray.pgm",
+    "sha256": "bf09c152da64a1a0ca37026b34148ad2553895b2e39228579aa8b72bdcce78b6"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-通信诊断-GT4D-20261019\\records\\08-stop-position-images\\normal\\20261019-213842-648997-01.pgm",
+    "saved": "原始文件/major-car-通信诊断-GT4D-20261019/records/08-stop-position-images/normal/20261019-213842-648997-01.pgm",
+    "sha256": "6b0a2d0ff31fb81ed8b7c3069fd8e4f33577df4ddd471b84dd53e30c5f9cd4c2"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-通信诊断-GT4D-20261019\\records\\08-stop-position-images\\normal\\20261019-213842-648997-01.png",
+    "saved": "原始文件/major-car-通信诊断-GT4D-20261019/records/08-stop-position-images/normal/20261019-213842-648997-01.png",
+    "sha256": "4b9bf562b396c8d7d7c879de8d8acd42310defb2a737a1d6eb45300aa316b99a"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-通信诊断-GT4D-20261019\\records\\08-stop-position-images\\normal\\20261019-213845-251165-02.pgm",
+    "saved": "原始文件/major-car-通信诊断-GT4D-20261019/records/08-stop-position-images/normal/20261019-213845-251165-02.pgm",
+    "sha256": "5f2f61eef0f3397cc860fdc66c41deb6b1af8281d733eead421fb346afcbe441"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-通信诊断-GT4D-20261019\\records\\08-stop-position-images\\normal\\20261019-213845-251165-02.png",
+    "saved": "原始文件/major-car-通信诊断-GT4D-20261019/records/08-stop-position-images/normal/20261019-213845-251165-02.png",
+    "sha256": "f287d45d834aee3848fec5f86ca2a54e8cd60dbcadacdc9dd363d711ec2f0055"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-通信诊断-GT4D-20261019\\records\\08-stop-position-images\\normal\\20261019-213847-855812-03.pgm",
+    "saved": "原始文件/major-car-通信诊断-GT4D-20261019/records/08-stop-position-images/normal/20261019-213847-855812-03.pgm",
+    "sha256": "0eb4c0086cc98b40061b37dba208aa4975b42e78c8aadbb64d547dcc60f41523"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\major-car-通信诊断-GT4D-20261019\\records\\08-stop-position-images\\normal\\20261019-213847-855812-03.png",
+    "saved": "原始文件/major-car-通信诊断-GT4D-20261019/records/08-stop-position-images/normal/20261019-213847-855812-03.png",
+    "sha256": "38d7b97c070911c16f4b01263d5e78512c3812eec99695af5c3a60e646eb1d97"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\binary.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/binary.pgm",
+    "sha256": "da22700a2feaa64e52c548d5f51a3db6f2e377aacfd9439b7a9227d361f4c521"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\binary.png",
+    "saved": "原始文件/摄像头现场检查-20261018/binary.png",
+    "sha256": "85f54f7cac134abd798916922f4bc61a992f7f33fbed8487445838369728b9a1"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\gray-repeat.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/gray-repeat.pgm",
+    "sha256": "2830ff913b9a7bea2c061769412961f3acf9486918616dfaf701b4164c2989d9"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\gray-repeat.png",
+    "saved": "原始文件/摄像头现场检查-20261018/gray-repeat.png",
+    "sha256": "c361e0d47ff395bd2236876f77d24e388f605fea0be5a604776577ff44f49513"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\gray.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/gray.pgm",
+    "sha256": "9e8e6e21593c99dca92d57a997349787855f5a669b26a19b99148784e31e3266"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\gray.png",
+    "saved": "原始文件/摄像头现场检查-20261018/gray.png",
+    "sha256": "7001b7d588838b0f35a772d9a5a9552f5a275a3819b05b03c85f9c28a4a7bcaa"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\overlay-n.png",
+    "saved": "原始文件/摄像头现场检查-20261018/overlay-n.png",
+    "sha256": "1330d9f675ec5e0384c3efb4e2f046e6b4eb19536895de614a7beda36e552435"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\overlay-t.png",
+    "saved": "原始文件/摄像头现场检查-20261018/overlay-t.png",
+    "sha256": "1330d9f675ec5e0384c3efb4e2f046e6b4eb19536895de614a7beda36e552435"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\T1版冷启动-20261018-235030\\capture\\binary.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/T1版冷启动-20261018-235030/capture/binary.pgm",
+    "sha256": "e3ccf65c617b78d30965f55a603307f647e53c921dfe2fa990aa477eda09a6ec"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\T1版冷启动-20261018-235030\\capture\\gray-repeat.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/T1版冷启动-20261018-235030/capture/gray-repeat.pgm",
+    "sha256": "f0a20ee07977c257ff4bb45fcd319ad4e16a09533098b72e02bae2f976498c90"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\T1版冷启动-20261018-235030\\capture\\gray.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/T1版冷启动-20261018-235030/capture/gray.pgm",
+    "sha256": "7f6939c95aebf096739cf0487e753b45f747f0b0f0688547d157da88670b8ca2"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\T2版地面直弯试跑-20261019-002837\\capture\\binary.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/T2版地面直弯试跑-20261019-002837/capture/binary.pgm",
+    "sha256": "cfdc0d067f68fe2962a7d91a17a7ab93a1896111ca7574ba92d6e804e04c4413"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\T2版地面直弯试跑-20261019-002837\\capture\\gray-preview.png",
+    "saved": "原始文件/摄像头现场检查-20261018/T2版地面直弯试跑-20261019-002837/capture/gray-preview.png",
+    "sha256": "380dd501c6467153869f4b392effcec23b33a07c9646ed9260b3f7d2e9f37ee9"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\T2版地面直弯试跑-20261019-002837\\capture\\gray-repeat.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/T2版地面直弯试跑-20261019-002837/capture/gray-repeat.pgm",
+    "sha256": "3ffb3dc61c7910c0109d362d693ebf4bb334afa43d973068435aa5b7f154e281"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\T2版地面直弯试跑-20261019-002837\\capture\\gray.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/T2版地面直弯试跑-20261019-002837/capture/gray.pgm",
+    "sha256": "bf09c152da64a1a0ca37026b34148ad2553895b2e39228579aa8b72bdcce78b6"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\T版冷启动-20261018-233216\\capture\\binary.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/T版冷启动-20261018-233216/capture/binary.pgm",
+    "sha256": "93beb5a734f36ce32d66993c05f5c854c3871ad753e6f8780b7412c8e55b2aac"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\T版冷启动-20261018-233216\\capture\\gray-repeat.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/T版冷启动-20261018-233216/capture/gray-repeat.pgm",
+    "sha256": "e87337c52057c077f9cc8c5d96dd9b1c53a370e25dd60c87419b4cb0fafee586"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\T版冷启动-20261018-233216\\capture\\gray.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/T版冷启动-20261018-233216/capture/gray.pgm",
+    "sha256": "61fa9f756d51e9c2bd191a781702d2e0c2a5385dcfbb47d8300cb5171458b834"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\T版冷启动-20261018-233216\\capture\\overlay-n.png",
+    "saved": "原始文件/摄像头现场检查-20261018/T版冷启动-20261018-233216/capture/overlay-n.png",
+    "sha256": "2af0c83c7b4d5c77ce08415700d6392a08b4b5eda3bdd65165ce9f869e736178"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\T版冷启动-20261018-233216\\capture\\overlay-t.png",
+    "saved": "原始文件/摄像头现场检查-20261018/T版冷启动-20261018-233216/capture/overlay-t.png",
+    "sha256": "ae7d7226be906ade05389d9f48ac1fe26464f4388c96f362ef8819148575c7a4"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\T版冷启动-20261018-233216\\capture\\repeat-overlay-t.png",
+    "saved": "原始文件/摄像头现场检查-20261018/T版冷启动-20261018-233216/capture/repeat-overlay-t.png",
+    "sha256": "a1653ddd727a95c75621fff5bb23189dc9f2b956c9905c6f53e10c8b23bff100"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\中线叠加放大.png",
+    "saved": "原始文件/摄像头现场检查-20261018/中线叠加放大.png",
+    "sha256": "f8c08b4cd833eb267d137ebcb3dec9a52a91fa10b9cae55efb0584bf326df636"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\复测-20261018-224621\\binary.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/复测-20261018-224621/binary.pgm",
+    "sha256": "73dd059d215514e3a7c108c810973095a453c74b65d3bcb75e09d95e246ff63a"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\复测-20261018-224621\\gray-repeat.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/复测-20261018-224621/gray-repeat.pgm",
+    "sha256": "f7021a8a1cdbbc57562628e122837d32317253467b7915bfa265d07bb7c2199f"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\复测-20261018-224621\\gray.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/复测-20261018-224621/gray.pgm",
+    "sha256": "e9c667cc7f7baad5c59c0992dda9508859d034a7a76d880213263a064625c5b3"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\复测-20261018-224621\\overlay-n-gray-repeat.png",
+    "saved": "原始文件/摄像头现场检查-20261018/复测-20261018-224621/overlay-n-gray-repeat.png",
+    "sha256": "f8a1ce402b8d7ee01d071ab6626813d7640111a8ac6a29ebbfa0cc8400fab647"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\复测-20261018-224621\\overlay-n-gray.png",
+    "saved": "原始文件/摄像头现场检查-20261018/复测-20261018-224621/overlay-n-gray.png",
+    "sha256": "d190da122b2b1bcdee9f022e4c70c67029c676f049a4e44512b50e6b09b8b4a4"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\复测-20261018-224621\\overlay-t-gray-repeat.png",
+    "saved": "原始文件/摄像头现场检查-20261018/复测-20261018-224621/overlay-t-gray-repeat.png",
+    "sha256": "05deb374ae8b7b3e0e0a09091e661c264a37d5df49c6a9d9fecb5711c5c7ff15"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\复测-20261018-224621\\overlay-t-gray.png",
+    "saved": "原始文件/摄像头现场检查-20261018/复测-20261018-224621/overlay-t-gray.png",
+    "sha256": "ed430101371cf78d86bf7ddbbc390f6f7ad91782197d0663ad4ed5fd71c218f8"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\01-baseline\\binary.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/01-baseline/binary.pgm",
+    "sha256": "5d4c79072a7ab509731e0f53dbc4738808855636a383d30cca89095d374983b5"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\01-baseline\\gray-repeat.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/01-baseline/gray-repeat.pgm",
+    "sha256": "f2db4109028efc0b5972c448a103e41cd6529d6fec3344c249f77a5d2f49bbc2"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\01-baseline\\gray.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/01-baseline/gray.pgm",
+    "sha256": "7aa4e278e9d69dcf518fc6cc541268f293a5463ccb6ca54d0e208903ed8f3f56"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\01-baseline\\overlay-n.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/01-baseline/overlay-n.png",
+    "sha256": "aa3130cdcf332b34f7f9f194479b77255fd2a703672f7ca48636be43bca6c547"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\01-baseline\\overlay-t.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/01-baseline/overlay-t.png",
+    "sha256": "aa3130cdcf332b34f7f9f194479b77255fd2a703672f7ca48636be43bca6c547"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\02-right\\binary.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/02-right/binary.pgm",
+    "sha256": "cf2ebe4cbc90f0ed3b47a2fa1204f5e2722ce5b4877d47ef332de683c9086350"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\02-right\\gray-repeat.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/02-right/gray-repeat.pgm",
+    "sha256": "339d666067b4700de277808bfdbb733ba1a50bf305d6248b61d921408b6e7272"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\02-right\\gray.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/02-right/gray.pgm",
+    "sha256": "e6cb44e2f4177f4272e06d53e69bea005d0c7a814329ee3ba91d6fc2b43aa194"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\02-right\\overlay-n.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/02-right/overlay-n.png",
+    "sha256": "69576e028b468fa97216aa3c28e7896946ac2cfca8fb50ca197dd2056ebb54d9"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\02-right\\overlay-t.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/02-right/overlay-t.png",
+    "sha256": "d6710b91b4a9adf73da305299fedef9518532b3c7f565ea2fa8e36b40da8e35a"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\03-centered-225125\\binary.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/03-centered-225125/binary.pgm",
+    "sha256": "a2b73a5541a93b42e02f2120d18c8ecd8b158981a6eee8cc59f98c117b831aa7"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\03-centered-225125\\gray-repeat.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/03-centered-225125/gray-repeat.pgm",
+    "sha256": "0c5cd5a35916e74c70117e37483e3a95de6ebeafc4cb10aa711c5de298b35b76"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\03-centered-225125\\gray.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/03-centered-225125/gray.pgm",
+    "sha256": "900803349cf12091bbee67e8c003c3d60a1f9be11d5ccf982de0e02a11e43de8"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\03-centered-225125\\overlay-n.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/03-centered-225125/overlay-n.png",
+    "sha256": "fb0f2c7dc37433acd667658effdad6c6c1618b9d6ba0f73180ec62f02baa9e70"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\03-centered-225125\\overlay-t.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/03-centered-225125/overlay-t.png",
+    "sha256": "c7194e7360b0f73d4f064989986600cfaf1d68926077b5041852947f02c3b9ef"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\04-left-225323\\binary.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/04-left-225323/binary.pgm",
+    "sha256": "44e86ceeaf90f493fb5d6cb2faf0e372ade6d28d289000f13987b6ae4af12d3c"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\04-left-225323\\gray-repeat.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/04-left-225323/gray-repeat.pgm",
+    "sha256": "68b5cda5b6fe040281c8eaf1c8e89dc70684b808424ecf3d979853cf7c222b10"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\04-left-225323\\gray.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/04-left-225323/gray.pgm",
+    "sha256": "048aff32b83bebabf376352db179f1c91e2a0899d4d850157bb47a0cb4fac193"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\04-left-225323\\overlay-n.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/04-left-225323/overlay-n.png",
+    "sha256": "e06d4f69984380a1c297f6b2825c52b2043f7e83aa30475af6565a2a99c1ee4f"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\04-left-225323\\overlay-t.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/04-left-225323/overlay-t.png",
+    "sha256": "0e1359d1530041c8fc010782b407aaa46e930388bd83bfc699c19e1a9e0d053d"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\05-left-retry-225539\\binary.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/05-left-retry-225539/binary.pgm",
+    "sha256": "bf8e0464905345b5898765a08c9dfba9aea7dbe8157be83985b601950497d919"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\05-left-retry-225539\\gray-repeat.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/05-left-retry-225539/gray-repeat.pgm",
+    "sha256": "06640d2e5f0b2aaa2a8e276de8dda64ed22889b8d77e6a9777e303fa70b1c9f0"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\05-left-retry-225539\\gray.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/05-left-retry-225539/gray.pgm",
+    "sha256": "0ffb02766d8aef4e46dd77bb9e80fed9d4489740bc6fde5cf228153e242b2833"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\05-left-retry-225539\\overlay-n.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/05-left-retry-225539/overlay-n.png",
+    "sha256": "7da711338bf80ca714caab3b9ce28b5e3c8eb1ad5dc98f19563d28f9c0ae0521"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\05-left-retry-225539\\overlay-t.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/05-left-retry-225539/overlay-t.png",
+    "sha256": "fee2ef2be207bc4ae5ce65efd97ca048834b9162b96511b7559bfec2bab0b508"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\06-covered-225943\\binary.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/06-covered-225943/binary.pgm",
+    "sha256": "b84f67287e7b4eb01a0f6ef53226ce0de70ed0d0fa113dbd60b72ee41ab15f98"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\06-covered-225943\\gray-repeat.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/06-covered-225943/gray-repeat.pgm",
+    "sha256": "ba2981809f5820a0eab0d6ab7e2eb01e82714986516e59fc85e63a3010a51420"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\06-covered-225943\\gray-repeat.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/06-covered-225943/gray-repeat.png",
+    "sha256": "e30e7292cb6fa758b285ba239f462426a2713cb1afe1840870d7af950de14de6"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\06-covered-225943\\gray.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/06-covered-225943/gray.pgm",
+    "sha256": "40abf9f85571e104aeb7b716dd61091e2729a18c9ec9bf6f49e51b2cb8243c8f"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\06-covered-225943\\gray.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/06-covered-225943/gray.png",
+    "sha256": "35bf318b16f8df1cd9c4a857b62d54fbcbfdf1e1d1c22848aab935747c9e649b"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\07-uncovered-230047\\binary.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/07-uncovered-230047/binary.pgm",
+    "sha256": "d6a47d5b3cc3cc80c9d30a4463d42dbb861768132d14cf733bdf0e4a797db03a"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\07-uncovered-230047\\gray-repeat.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/07-uncovered-230047/gray-repeat.pgm",
+    "sha256": "b2fa7c794454ce9c836f6bd036bb76194111052cb8caf0aa565af74f89d935c3"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\07-uncovered-230047\\gray.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/07-uncovered-230047/gray.pgm",
+    "sha256": "2e641c3666d61c6930fdd1e03d1363ca5ae692dc6f3ce6b7c36e29ad98380a9b"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\07-uncovered-230047\\overlay-n.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/07-uncovered-230047/overlay-n.png",
+    "sha256": "0eb781b2d682e0340c4ec8e595db771c5d98d069b577117e945abe8b03b5f96b"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\07-uncovered-230047\\overlay-t.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/07-uncovered-230047/overlay-t.png",
+    "sha256": "dcbd11aaaaa9fbafe398414edc400e5ae4201e224e97f9e5e20a9a9c0a979045"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\08-car-right-230446\\binary.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/08-car-right-230446/binary.pgm",
+    "sha256": "78d242fe42223e9dce9ee01cc0ec2ed8561233089b7dff4989aa7360d190505b"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\08-car-right-230446\\gray-repeat.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/08-car-right-230446/gray-repeat.pgm",
+    "sha256": "6c04a78cdff311e3f0bdc294147d15251140e4caa3c963ef78b88e0677639890"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\08-car-right-230446\\gray.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/08-car-right-230446/gray.pgm",
+    "sha256": "f21a4586af0067e2c44dfe6565ffd3c6eb835e28b5bbac778399c2f9e86b2913"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\08-car-right-230446\\overlay-n.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/08-car-right-230446/overlay-n.png",
+    "sha256": "1e90e56106c33b20446e8efa98ba398c9e6fb90f044c8f3bb8859ad37cb074b4"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\08-car-right-230446\\overlay-t.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/08-car-right-230446/overlay-t.png",
+    "sha256": "18baf9b6af110c7ad8c0c3fc2f0a2b03bb79e4ab430b42685b9c486a99ca08ea"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\09-car-right-again-230606\\binary.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/09-car-right-again-230606/binary.pgm",
+    "sha256": "6ed3d4cceb4156dae4b8d1cd9d70200dcd8309a6fd4ed0acfa1d36e61214b494"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\09-car-right-again-230606\\gray-repeat.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/09-car-right-again-230606/gray-repeat.pgm",
+    "sha256": "5214f0f21a1b9b8b8d2b2d83b15bab026b6f7a262ea345bbf32bbd19070bee88"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\09-car-right-again-230606\\gray.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/09-car-right-again-230606/gray.pgm",
+    "sha256": "ccfe628360ece7297564c4dbcf35cae18286da4b6bb36a2e11664ef69cbcbf1f"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\09-car-right-again-230606\\overlay-n.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/09-car-right-again-230606/overlay-n.png",
+    "sha256": "e4a7e00ad513a0a884485641bdb19bbae8775e6a5a77f15c2d030ed850f4f7ca"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\09-car-right-again-230606\\overlay-t.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/09-car-right-again-230606/overlay-t.png",
+    "sha256": "3b7dce651a39b1c7d6fc309ae379c81ac9b5480a139415774215e1d5cb40da80"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\10-left-sign-230734\\binary.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/10-left-sign-230734/binary.pgm",
+    "sha256": "eeb000b61c308d95bd8b64515c1d49c180db6f7aa569118401d458676dd746db"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\10-left-sign-230734\\gray-repeat.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/10-left-sign-230734/gray-repeat.pgm",
+    "sha256": "9868ab9a2780dcb36e74f8e9684443b6af5dfaaf695a6ad731c1e2f56a75e6e3"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\10-left-sign-230734\\gray.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/10-left-sign-230734/gray.pgm",
+    "sha256": "0095b88df56fc605b95b655fef2066e072a631b9e6babafc37309af5d09dd23b"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\10-left-sign-230734\\overlay-n.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/10-left-sign-230734/overlay-n.png",
+    "sha256": "f28fe5e777752ac0c10f9d631466b09540fd0b4ecc2d758134c14ec87be01047"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\10-left-sign-230734\\overlay-t.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/10-left-sign-230734/overlay-t.png",
+    "sha256": "9eb8dbd5f1419d51c98ba844075ef92ea673100802cee543be1951e52b353147"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\12-larger-left-231445\\binary.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/12-larger-left-231445/binary.pgm",
+    "sha256": "2ac0b4ecd5a7974c686e576b8384cac5b4c8bd2b9f180f3cee9d45ef5df53ff2"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\12-larger-left-231445\\gray-repeat.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/12-larger-left-231445/gray-repeat.pgm",
+    "sha256": "01f2f6954194e88d4a4122e9b0e65b612afc4ac92a9acd677ffe4adf89ab384e"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\12-larger-left-231445\\gray.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/12-larger-left-231445/gray.pgm",
+    "sha256": "566636a9486d759897bf175327fa4d67a6d0246aa0bf6fbe2425720990e95e59"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\12-larger-left-231445\\overlay-n.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/12-larger-left-231445/overlay-n.png",
+    "sha256": "494a1bfa4e91a95aec8df94c3a36160b398591049b4137cc93707b5d871d4381"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\13-larger-left-231713\\binary.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/13-larger-left-231713/binary.pgm",
+    "sha256": "8b1057f980910d8046c1bc48a7018b32a7f1f26a80a455c399abdfb6ffaeaf96"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\13-larger-left-231713\\gray-repeat.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/13-larger-left-231713/gray-repeat.pgm",
+    "sha256": "073e4aeec30d3dbfa15615e0de31e8869b28b09d39a505135443d23b49485a18"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\13-larger-left-231713\\gray.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/13-larger-left-231713/gray.pgm",
+    "sha256": "ab0f8862eb535c0648044eaa715ef38a39b38934d23222de3587cd7111b646fa"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\13-larger-left-231713\\overlay-n.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/13-larger-left-231713/overlay-n.png",
+    "sha256": "cdedce7a8b43cfb615a3a813cc2cbe82955f4db212792fe9111850d8a0f1f785"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\14-right-steer-231950\\binary.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/14-right-steer-231950/binary.pgm",
+    "sha256": "8209c56a3a6a673bb60d227b29f968c6977a9765d4152af10d033a8c8343ba52"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\14-right-steer-231950\\gray-repeat.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/14-right-steer-231950/gray-repeat.pgm",
+    "sha256": "7c7de9a2cf18d5e78f2c098f51f33fd8d4454215cef704de738757ed9857d179"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\14-right-steer-231950\\gray.pgm",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/14-right-steer-231950/gray.pgm",
+    "sha256": "7d9dfc7beef7e38c9deafeca6196acaec39b45de33ce72b2acf53665d507bae2"
+  },
+  {
+    "source": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\左右偏移测试-20261018-224818\\14-right-steer-231950\\overlay-n.png",
+    "saved": "原始文件/摄像头现场检查-20261018/左右偏移测试-20261018-224818/14-right-steer-231950/overlay-n.png",
+    "sha256": "57e502612f53f44cbf984a9ba29719d5d19124cac15c64c068bcf42f8cc96f98"
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/inc/car_core.h",
+    "sha256": "eebb2de58c5f5cb66446e24fee120fac8202b0eb1f9a809016f4bae93bfa188c",
+    "added": false
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/src/car_app.c",
+    "sha256": "5c9908b10646876c08259974b4fc72da7f23a61c8d064e796f6bd8184d1eb40e",
+    "added": false
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/src/car_core.c",
+    "sha256": "97adde4f753cd02e6aa86e2e1a8ea734214e43ef99f558e7f3d9fc739260b8f5",
+    "added": false
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/test_app.c",
+    "sha256": "db49fb7d2495ca6fa0aa8c40987d53ec129f598176873700acc827b9384f6f71",
+    "added": false
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/test_tracking_low.c",
+    "sha256": "3127755e0227e4d1a1b0c6a36ba4101f4da5eec86de936aade5dff0480bbf124",
+    "added": true
+  },
+  {
+    "path": "code/repair/run_tests.py",
+    "sha256": "164415b0fcc86c9e192e4b2f956320ebee40a32775da562c0f3d5c6f00228978",
+    "added": false
+  },
+  {
+    "path": "code/repair/test_tracking_tool.py",
+    "sha256": "b0f3dc658157e5ee1570a2c65b04e365c535b06617b3d49b2580adab07ee66eb",
+    "added": false
+  },
+  {
+    "path": "code/repair/tracking_trial.py",
+    "sha256": "5307537d9ca92c3d3833b7d4a31b13bddf2d4094a0484e539882c3391a5dfb96",
+    "added": false
+  }
+]

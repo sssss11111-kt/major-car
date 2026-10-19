@@ -1,0 +1,60 @@
+{
+  "gray": {
+    "min": 44,
+    "max": 254,
+    "mean": 204.23847517730496
+  },
+  "n-gray": [
+    "valid",
+    "1",
+    "error",
+    "7.0845",
+    "threshold",
+    "190",
+    "paired",
+    "12",
+    "scanned",
+    "13"
+  ],
+  "t-gray": [
+    "valid",
+    "1",
+    "error",
+    "6.6437",
+    "threshold",
+    "190",
+    "paired",
+    "11",
+    "scanned",
+    "13"
+  ],
+  "gray-repeat": {
+    "min": 44,
+    "max": 254,
+    "mean": 204.1843085106383
+  },
+  "n-gray-repeat": [
+    "valid",
+    "1",
+    "error",
+    "7.0069",
+    "threshold",
+    "190",
+    "paired",
+    "12",
+    "scanned",
+    "13"
+  ],
+  "t-gray-repeat": [
+    "valid",
+    "1",
+    "error",
+    "6.5592",
+    "threshold",
+    "190",
+    "paired",
+    "11",
+    "scanned",
+    "13"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "image": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-\u5730\u9762\u89c6\u89c9\u5faa\u8ff9-GT2-20261019\\firmware\\20261019GT2-tracking-3s.hex",
+  "image_sha256": "aaa7366543658b01cbc0918cc9f9702ddfe7b12753a74def76d4e7d99393679a",
+  "mode": "camera",
+  "target": "mimxrt1064",
+  "frequency": 1000000,
+  "connect": "halt",
+  "backup_complete": false,
+  "program_complete": false,
+  "readback_verified": false,
+  "core_left_halted": false,
+  "algorithm": "NXP.MIMXRT1064_DFP.19.0.0/MIMXRT1064_QSPI_4KB_SEC.FLM",
+  "error": "[Errno 5] Input/Output Error"
+}

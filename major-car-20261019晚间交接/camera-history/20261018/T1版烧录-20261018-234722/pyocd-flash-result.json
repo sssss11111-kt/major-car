@@ -1,0 +1,17 @@
+{
+  "image": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-GitHub\u66f4\u65b0-T1-4994cd5-20261018-\u6e90\u7801\u5305\\major-car-T1-20261018\\firmware\\20261018T1-camera.hex",
+  "image_sha256": "4c10694ce097b5c3d2291d40f9f88eb4e6cf826420e2b6f2eda4ce3eeee509a2",
+  "mode": "camera",
+  "target": "mimxrt1064",
+  "frequency": 1000000,
+  "connect": "halt",
+  "backup_complete": true,
+  "program_complete": true,
+  "readback_verified": true,
+  "core_left_halted": true,
+  "algorithm": "NXP.MIMXRT1064_DFP.19.0.0/MIMXRT1064_QSPI_4KB_SEC.FLM",
+  "backup": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\\u6444\u50cf\u5934\u73b0\u573a\u68c0\u67e5-20261018\\T1\u7248\u70e7\u5f55-20261018-234722\\before-flash-70000000-4MiB.bin",
+  "backup_sha256": "38e707824779d23a0fbe0f1d3d58949de0f16b70a7aafb1e17ff3627ddb1331b",
+  "verified_bytes": 69120,
+  "backup_matches_previous_T_image": true
+}

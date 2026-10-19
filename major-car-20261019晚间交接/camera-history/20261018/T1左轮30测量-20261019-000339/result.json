@@ -1,0 +1,48 @@
+{
+  "outcome": "completed",
+  "active_samples": 18,
+  "left_pwm_values": [
+    3000
+  ],
+  "left_encoder_values": [
+    0,
+    1,
+    27,
+    41,
+    44,
+    83,
+    116,
+    120,
+    122,
+    128
+  ],
+  "right_encoder_values": [
+    0
+  ],
+  "final": {
+    "ms": 831520,
+    "mode": 0,
+    "fault": 0,
+    "valid": 0,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 0,
+    "accepted_age": 63320,
+    "trial_id": 2,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "enc": [
+      38,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  "physical_observation": "pending user measurement",
+  "elapsed_host_seconds": 2.161
+}

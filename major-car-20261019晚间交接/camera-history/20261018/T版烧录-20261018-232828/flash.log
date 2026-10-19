@@ -1,0 +1,7 @@
+CONNECTED; core halted
+NXP_FLM page=256 RAM=0x200078ec
+FLASH_HEADER=f3f17bf6
+Traceback (most recent call last):
+  File "D:\����\���ܳ�\����ͷ�ֳ����-20261018\T����¼-20261018-232828\flash-T-private.py", line 90, in <module>
+    raise RuntimeError('Unexpected RT1064 flash configuration header; refusing to erase')
+RuntimeError: Unexpected RT1064 flash configuration header; refusing to erase

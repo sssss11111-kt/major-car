@@ -1,0 +1,49 @@
+{
+  "outcome": "completed",
+  "reason": "Normal expiry and motion feedback observed",
+  "configuration": {
+    "target": 30,
+    "cap": 3000,
+    "settle": 200,
+    "duration": 5000,
+    "lease": 500,
+    "simulated": 0
+  },
+  "completion": {
+    "ms": 58550,
+    "mode": 0,
+    "fault": 0,
+    "valid": 1,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 20,
+    "ready": 1,
+    "good_frames": 3,
+    "accepted_age": 20,
+    "trial_id": 1,
+    "trial_done": 1,
+    "trial_ms": 5200,
+    "pi_mask": 3,
+    "enc": [
+      23,
+      23
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  "hardware_verified": false,
+  "physical_observation": {
+    "user_statement": "总共行进50cm左右，向右偏移5cm左右，在结束前有轻微的向左纠正",
+    "forward_cm_approx": 50,
+    "right_offset_cm_approx": 5,
+    "late_left_correction_observed": true,
+    "physical_stop_confirmation": "not explicitly stated in this reply; software final PWM/encoder zero verified",
+    "track_contact_or_exit": "not stated",
+    "measurement_method": "user approximate report",
+    "stable_centerline_acceptance": false
+  },
+  "physical_track_acceptance": false
+}

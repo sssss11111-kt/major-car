@@ -1,0 +1,17 @@
+{
+  "image": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-\u76f4\u9053\u7ea0\u504f-GT3-30cap-5s-20261019\\firmware\\20261019GT3-track-30cap-5s.hex",
+  "image_sha256": "455b391a69d55fa405d52e546256f52514c3a313af91a191b94f663bd1becd3e",
+  "mode": "camera",
+  "target": "mimxrt1064",
+  "frequency": 1000000,
+  "connect": "halt",
+  "backup_complete": true,
+  "program_complete": true,
+  "readback_verified": true,
+  "core_left_halted": true,
+  "algorithm": "NXP.MIMXRT1064_DFP.19.0.0/MIMXRT1064_QSPI_4KB_SEC.FLM",
+  "baseline_verified_bytes": 76288,
+  "backup": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-\u76f4\u9053\u7ea0\u504f-GT3-30cap-5s-20261019\\records\\01-flash-GT3\\before-flash-70000000-4MiB.bin",
+  "backup_sha256": "0affb45f9e994e381eee3a14fec7dd7851f49384dfbc3443fdad3e7b5556820b",
+  "verified_bytes": 76416
+}

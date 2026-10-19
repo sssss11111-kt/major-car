@@ -1,0 +1,121 @@
+{
+  "commands": [
+    "s",
+    "d",
+    "p",
+    "w",
+    "p queries",
+    "s",
+    "p"
+  ],
+  "preflight": [
+    {
+      "ms": 2764730,
+      "mode": 0,
+      "fault": 0,
+      "frames": 122965,
+      "valid": 1,
+      "paired": 10,
+      "scanned": 13,
+      "err10": 210,
+      "left": 0,
+      "right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1500
+    },
+    {
+      "ms": 2765230,
+      "mode": 0,
+      "fault": 0,
+      "frames": 122988,
+      "valid": 1,
+      "paired": 10,
+      "scanned": 13,
+      "err10": 210,
+      "left": 0,
+      "right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1500
+    },
+    {
+      "ms": 2765730,
+      "mode": 0,
+      "fault": 0,
+      "frames": 123010,
+      "valid": 1,
+      "paired": 10,
+      "scanned": 13,
+      "err10": 210,
+      "left": 0,
+      "right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1500
+    }
+  ],
+  "active_samples": 20,
+  "active_first": {
+    "ms": 2765940,
+    "mode": 5,
+    "fault": 0,
+    "frames": 123020,
+    "valid": 1,
+    "paired": 10,
+    "scanned": 13,
+    "err10": 210,
+    "left": 0,
+    "right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0,
+    "us": 1500
+  },
+  "active_last": {
+    "ms": 2770730,
+    "mode": 5,
+    "fault": 0,
+    "frames": 123236,
+    "valid": 1,
+    "paired": 10,
+    "scanned": 13,
+    "err10": 201,
+    "left": 0,
+    "right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0,
+    "us": 1440
+  },
+  "active_us": [
+    1438,
+    1439,
+    1440,
+    1443,
+    1500
+  ],
+  "active_err10": [
+    191,
+    200,
+    201,
+    202,
+    203,
+    210
+  ],
+  "final": {
+    "ms": 2771730,
+    "mode": 0,
+    "fault": 0,
+    "frames": 123281,
+    "valid": 1,
+    "paired": 10,
+    "scanned": 13,
+    "err10": 203,
+    "left": 0,
+    "right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0,
+    "us": 1500
+  },
+  "stopped": true,
+  "physical_observation": "用户确认看到向右转动并回中，转动没有问题"
+}

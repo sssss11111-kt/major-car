@@ -1,0 +1,2 @@
+ms=66470 mode=0 fault=0 frames=2904 valid=1 pair=11/13 thr=190 err10=26 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=84 reject=2 seq=3290 cap_age=20 proc_ms=0 used_age=0 drop_frames=386
+ms=66730 mode=0 fault=0 frames=2915 valid=1 pair=11/13 thr=190 err10=26 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=84 reject=2 seq=3303 cap_age=20 proc_ms=0 used_age=10 drop_frames=388

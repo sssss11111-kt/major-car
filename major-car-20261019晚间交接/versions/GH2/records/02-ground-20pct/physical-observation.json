@@ -1,0 +1,9 @@
+{
+  "user_statement": "能行驶，但没有沿着赛道中线，有一些左偏",
+  "vehicle_forward_motion_observed": true,
+  "left_drift_reported": true,
+  "distance_measured": false,
+  "drift_measured": false,
+  "vibration_noise_status": "not stated",
+  "physical_stop_confirmation": "not explicitly stated"
+}

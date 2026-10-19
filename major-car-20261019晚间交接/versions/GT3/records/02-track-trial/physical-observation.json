@@ -1,0 +1,10 @@
+{
+  "user_statement": "总共行进50cm左右，向右偏移5cm左右，在结束前有轻微的向左纠正",
+  "forward_cm_approx": 50,
+  "right_offset_cm_approx": 5,
+  "late_left_correction_observed": true,
+  "physical_stop_confirmation": "not explicitly stated in this reply; software final PWM/encoder zero verified",
+  "track_contact_or_exit": "not stated",
+  "measurement_method": "user approximate report",
+  "stable_centerline_acceptance": false
+}

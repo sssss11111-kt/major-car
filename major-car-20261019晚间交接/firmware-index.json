@@ -1,0 +1,156 @@
+[
+  {
+    "version": "G1",
+    "path": "versions/G1/firmware/20261019G1-tracking.hex",
+    "sha256": "ff91ee6db07075337506ecd6962d5a6dc50160d271bbf6fab88d46f308b58fbc",
+    "flash_evidence": [
+      {
+        "record": "versions/G1/field-records/01-flash/pyocd-flash-result.json",
+        "readback_verified": false,
+        "verified_bytes": null
+      },
+      {
+        "record": "versions/G1/field-records/02-program-G1/pyocd-flash-result.json",
+        "readback_verified": true,
+        "verified_bytes": 73088
+      }
+    ]
+  },
+  {
+    "version": "GH1",
+    "path": "versions/GH1/firmware/20261019GH1-ground-hold.hex",
+    "sha256": "c914fdf1979efe043917e0ef0ff9f94baf6f7597e90ba65b6f9be3476526bfa6",
+    "flash_evidence": [
+      {
+        "record": "versions/GH1/records/01-flash-GH1/pyocd-flash-result.json",
+        "readback_verified": true,
+        "verified_bytes": 76544
+      }
+    ]
+  },
+  {
+    "version": "GH2",
+    "path": "versions/GH2/firmware/20261019GH2-ground-20pct.hex",
+    "sha256": "6850645fa3d6ae2ac3e8e7cc1cf55ffbb89e60eb685328d5a7ca997ea59fb1c8",
+    "flash_evidence": [
+      {
+        "record": "versions/GH2/records/01-flash-GH2/pyocd-flash-result.json",
+        "readback_verified": true,
+        "verified_bytes": 76672
+      }
+    ]
+  },
+  {
+    "version": "GL1",
+    "path": "versions/GL1/firmware/20261019GL1-ground-closed-loop.hex",
+    "sha256": "692b541c665d4a02f75f40248b82bf5744fb24d9b60765b3e84ebb33226d91d0",
+    "flash_evidence": [
+      {
+        "record": "versions/GL1/records/01-flash-GL1/pyocd-flash-result.json",
+        "readback_verified": true,
+        "verified_bytes": 76992
+      }
+    ]
+  },
+  {
+    "version": "GL2",
+    "path": "versions/GL2/firmware/20261019GL2-ground-closed-loop.hex",
+    "sha256": "161eb3276e809be35daa6244f7a1c6195b0d441f28bfe8ba458ade2029faca03",
+    "flash_evidence": [
+      {
+        "record": "versions/GL2/records/01-flash-GL2/pyocd-flash-result.json",
+        "readback_verified": true,
+        "verified_bytes": 76992
+      }
+    ]
+  },
+  {
+    "version": "GT1",
+    "path": "versions/GT1/firmware/20261019GT1-tracking-3s.hex",
+    "sha256": "20800bcfc4997f25018c2bcd1c1dc454e5ede98ff2b9c421a8bcfc79e6323d11",
+    "flash_evidence": [
+      {
+        "record": "versions/GT1/records/01-flash-GT1/pyocd-flash-result.json",
+        "readback_verified": true,
+        "verified_bytes": 76224
+      }
+    ]
+  },
+  {
+    "version": "GT2",
+    "path": "versions/GT2/firmware/20261019GT2-tracking-3s.hex",
+    "sha256": "aaa7366543658b01cbc0918cc9f9702ddfe7b12753a74def76d4e7d99393679a",
+    "flash_evidence": [
+      {
+        "record": "versions/GT2/records/01-flash-GT2/pyocd-flash-result.json",
+        "readback_verified": false,
+        "verified_bytes": null
+      },
+      {
+        "record": "versions/GT2/records/02-flash-GT2-reconnect/pyocd-flash-result.json",
+        "readback_verified": true,
+        "verified_bytes": 76288
+      }
+    ]
+  },
+  {
+    "version": "GT3",
+    "path": "versions/GT3/firmware/20261019GT3-track-30cap-5s.hex",
+    "sha256": "455b391a69d55fa405d52e546256f52514c3a313af91a191b94f663bd1becd3e",
+    "flash_evidence": [
+      {
+        "record": "versions/GT3/records/01-flash-GT3/pyocd-flash-result.json",
+        "readback_verified": true,
+        "verified_bytes": 76416
+      }
+    ]
+  },
+  {
+    "version": "GT4",
+    "path": "versions/GT4/firmware/20261019GT4-track-40target-10s.hex",
+    "sha256": "17bcc3a0daa21109c31fe592ebf5845d9333ee4d2a4d909792e057dfd34197e1",
+    "flash_evidence": [
+      {
+        "record": "versions/GT4/records/01-flash-GT4/pyocd-flash-result.json",
+        "readback_verified": true,
+        "verified_bytes": 76480
+      }
+    ]
+  },
+  {
+    "version": "GT4D",
+    "path": "versions/GT4D/firmware/20261019GT4D-communication-diagnostics.hex",
+    "sha256": "8c686e002970a12f1b0ef3851b4a456affc23998c75e2512314109380e645ff7",
+    "flash_evidence": [
+      {
+        "record": "versions/GT4D/records/01-flash-GT4D/pyocd-flash-result.json",
+        "readback_verified": true,
+        "verified_bytes": 76608
+      }
+    ]
+  },
+  {
+    "version": "GT5",
+    "path": "versions/GT5/firmware/20261019GT5-C15-local-button.hex",
+    "sha256": "cd9e5f4e22a7537f4a76dc9f9ad79cbf4f316c40fea669c98b22b4d00bfa3157",
+    "flash_evidence": [
+      {
+        "record": "versions/GT5/records/01-flash-GT5/pyocd-flash-result.json",
+        "readback_verified": true,
+        "verified_bytes": 77568
+      }
+    ]
+  },
+  {
+    "version": "GT6",
+    "path": "versions/GT6/firmware/20261019GT6-gray-color-overlay.hex",
+    "sha256": "2c1a8f2a5914297357a773fcece15f83054d12ecad00596d7343f3efb7854fbf",
+    "flash_evidence": [
+      {
+        "record": "versions/GT6/records/01-flash-GT6/pyocd-flash-result.json",
+        "readback_verified": true,
+        "verified_bytes": 77760
+      }
+    ]
+  }
+]

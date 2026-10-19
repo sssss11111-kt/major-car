@@ -1,0 +1,17 @@
+{
+  "image": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-C15\u6309\u952e\u6d4b\u8bd5-GT5-20261019\\firmware\\20261019GT5-C15-local-button.hex",
+  "image_sha256": "cd9e5f4e22a7537f4a76dc9f9ad79cbf4f316c40fea669c98b22b4d00bfa3157",
+  "mode": "camera",
+  "target": "mimxrt1064",
+  "frequency": 1000000,
+  "connect": "halt",
+  "backup_complete": true,
+  "program_complete": true,
+  "readback_verified": true,
+  "core_left_halted": true,
+  "algorithm": "NXP.MIMXRT1064_DFP.19.0.0/MIMXRT1064_QSPI_4KB_SEC.FLM",
+  "baseline_verified_bytes": 76608,
+  "backup": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-C15\u6309\u952e\u6d4b\u8bd5-GT5-20261019\\records\\01-flash-GT5\\before-flash-70000000-4MiB.bin",
+  "backup_sha256": "6822343887c66c47f295f57b928f127172c4bb4da8982b83c889af43bfe23c40",
+  "verified_bytes": 77568
+}

@@ -1,0 +1,13 @@
+{
+  "complete_images": 3,
+  "complete_statuses": 28,
+  "valid_statuses": 28,
+  "paired_rows_observed": [
+    "9/13"
+  ],
+  "motion_start_sent": false,
+  "all_observed_pwm_zero": true,
+  "target_observation": "dark strokes visible at image bottom, clipped by bottom edge and very blurred; target pattern not identifiable",
+  "focus_calibrated": false,
+  "next_step": "keep camera/lens fixed; move target farther along road until complete pattern lies in middle-lower image; acquire reference before changing focus"
+}

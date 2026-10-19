@@ -1,0 +1,17 @@
+{
+  "image": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-\u7070\u5ea6\u5f69\u6807\u8c03\u8bd5-GT6-20261019\\firmware\\20261019GT6-gray-color-overlay.hex",
+  "image_sha256": "2c1a8f2a5914297357a773fcece15f83054d12ecad00596d7343f3efb7854fbf",
+  "mode": "camera",
+  "target": "mimxrt1064",
+  "frequency": 1000000,
+  "connect": "halt",
+  "backup_complete": true,
+  "program_complete": true,
+  "readback_verified": true,
+  "core_left_halted": true,
+  "algorithm": "NXP.MIMXRT1064_DFP.19.0.0/MIMXRT1064_QSPI_4KB_SEC.FLM",
+  "baseline_verified_bytes": 77568,
+  "backup": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-\u7070\u5ea6\u5f69\u6807\u8c03\u8bd5-GT6-20261019\\records\\01-flash-GT6\\before-flash-70000000-4MiB.bin",
+  "backup_sha256": "2cae5ce974bb6c8ccd2cd5769d1709456c0e9a6c0b5a16d4b93438d55e842812",
+  "verified_bytes": 77760
+}

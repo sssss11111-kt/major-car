@@ -1,0 +1,51 @@
+{
+  "n-gray": [
+    "valid",
+    "1",
+    "error",
+    "6.1563",
+    "threshold",
+    "190",
+    "paired",
+    "11",
+    "scanned",
+    "13"
+  ],
+  "t-gray": [
+    "valid",
+    "1",
+    "error",
+    "5.5845",
+    "threshold",
+    "190",
+    "paired",
+    "10",
+    "scanned",
+    "13"
+  ],
+  "n-gray-repeat": [
+    "valid",
+    "1",
+    "error",
+    "6.1000",
+    "threshold",
+    "192",
+    "paired",
+    "11",
+    "scanned",
+    "13"
+  ],
+  "t-gray-repeat": [
+    "valid",
+    "1",
+    "error",
+    "5.5612",
+    "threshold",
+    "192",
+    "paired",
+    "10",
+    "scanned",
+    "13"
+  ],
+  "folder": "D:\\桌面\\智能车\\摄像头现场检查-20261018\\复测-20261018-224621"
+}

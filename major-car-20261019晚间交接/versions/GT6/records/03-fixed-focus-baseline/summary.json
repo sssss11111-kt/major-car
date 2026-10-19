@@ -1,0 +1,15 @@
+{
+  "complete_images": 3,
+  "statuses": 18,
+  "pairs": [
+    "13/13"
+  ],
+  "valid_statuses": 18,
+  "ready_statuses": 18,
+  "all_zero_pwm": true,
+  "mean_absolute_pixel_change_vs_first": [
+    3.5000886524822694,
+    3.0525709219858155
+  ],
+  "motion_start_sent": false
+}

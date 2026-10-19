@@ -1,0 +1,31 @@
+{
+  "duty_percent": 10,
+  "measurement_complete": true,
+  "normal_expiry": true,
+  "automatic_fault": false,
+  "trial_id": 1,
+  "elapsed_ms": 1900,
+  "hold_ms": 1500,
+  "stats_samples": [
+    50,
+    50
+  ],
+  "mean_counts_per_10ms": [
+    6.7,
+    6.9
+  ],
+  "min": [
+    0,
+    4
+  ],
+  "max": [
+    10,
+    11
+  ],
+  "continuous_feedback_criterion_passed": false,
+  "reason": "Left minimum sampled count 0; this does not by itself prove a physically stopped wheel",
+  "final_zero_verified": true,
+  "physical_observation": "pending",
+  "next_recommended_duty_percent": 11,
+  "next_motion_requires_new_position_reset_confirmation": true
+}

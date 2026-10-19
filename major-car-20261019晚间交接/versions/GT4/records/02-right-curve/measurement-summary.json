@@ -1,0 +1,27 @@
+{
+  "version": "20261019GT4",
+  "curve": "right",
+  "motion_trials": 1,
+  "outcome": "telemetry_stale",
+  "normal_expiry": false,
+  "last_complete_trial_ms": 690,
+  "last_complete_fault": 0,
+  "last_complete_PI_mask": 3,
+  "last_complete_enc": [
+    30,
+    28
+  ],
+  "post_stop_samples": 16,
+  "post_stop_zero_verified": true,
+  "physical_observation": {
+    "statement": "走了一点点就停了，没到弯道已停稳，测试中没有移动过车",
+    "entered_curve": false,
+    "physical_stop_confirmed": true,
+    "vehicle_moved_by_user_during_trial": false,
+    "distance": "not measured",
+    "duration": "not measured"
+  },
+  "communication_root_cause": "unknown",
+  "curve_acceptance": false,
+  "no_automatic_retry": true
+}

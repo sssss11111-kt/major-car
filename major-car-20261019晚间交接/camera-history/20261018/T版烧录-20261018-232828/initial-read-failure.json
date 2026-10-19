@@ -1,0 +1,14 @@
+{
+  "image": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-\u4f4e\u901f\u5faa\u8ff9\u6574\u5408-20261018\\firmware\\20261018T-camera.hex",
+  "image_sha256": "e882cc800297de40fceb9930a0a79def95547e7ad280a5de0096c69ac83681a3",
+  "mode": "camera",
+  "target": "mimxrt1064",
+  "frequency": 1000000,
+  "connect": "halt",
+  "backup_complete": false,
+  "program_complete": false,
+  "readback_verified": false,
+  "core_left_halted": false,
+  "algorithm": "NXP.MIMXRT1064_DFP.19.0.0/MIMXRT1064_QSPI_4KB_SEC.FLM",
+  "error": "Unexpected RT1064 flash configuration header; refusing to erase"
+}

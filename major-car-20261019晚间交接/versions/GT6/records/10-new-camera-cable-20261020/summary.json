@@ -1,0 +1,35 @@
+{
+  "complete_images": 3,
+  "image_stats": [
+    {
+      "file": "gray-01.pgm",
+      "mean_gray": 63.93,
+      "min": 2,
+      "max": 108
+    },
+    {
+      "file": "gray-02.pgm",
+      "mean_gray": 65.06,
+      "min": 2,
+      "max": 108
+    },
+    {
+      "file": "gray-03.pgm",
+      "mean_gray": 68.21,
+      "min": 2,
+      "max": 116
+    }
+  ],
+  "complete_statuses": 30,
+  "paired_rows_observed": [
+    "7/13",
+    "8/13",
+    "9/13"
+  ],
+  "all_observed_pwm_zero": true,
+  "motion_start_sent": false,
+  "new_cable_sharpness_improvement_confirmed": false,
+  "observation": "all new frames remain substantially blurred; scene substantially darker and composition differs from earlier track captures, so cable-only causal comparison unavailable",
+  "comparison_limit": "no matched good competition camera sample acquired; qualitative suitability assessment only",
+  "recommendation": "restore same illuminated track and fixed printed target; verify physical lens movement/focus and matched exposure; if no fine detail recoverable use known-good lens/camera swap comparison"
+}

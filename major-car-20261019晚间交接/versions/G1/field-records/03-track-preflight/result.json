@@ -1,0 +1,31 @@
+{
+  "outcome": "error",
+  "reason": "No identified tracking configuration",
+  "configuration": null,
+  "status": {
+    "ms": 31730,
+    "mode": 0,
+    "fault": 0,
+    "valid": 1,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 20,
+    "ready": 1,
+    "good_frames": 255,
+    "accepted_age": 20,
+    "trial_id": 0,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "pi_mask": 0,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  "hardware_verified": false
+}

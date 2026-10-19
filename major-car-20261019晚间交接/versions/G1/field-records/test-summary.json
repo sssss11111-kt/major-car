@@ -1,0 +1,43 @@
+{
+  "firmware": "20261019G1",
+  "flash_readback_verified": true,
+  "verified_bytes": 73088,
+  "track_trial_count": 1,
+  "trial_id": 1,
+  "outcome": "stopped_early_fault5",
+  "normal_expiry": false,
+  "fault": {
+    "ms": 70820,
+    "mode": 3,
+    "fault": 5,
+    "valid": 1,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 8,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "pi_mask": 3,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  "first_active_ms": 69220,
+  "observed_fault_ms": 70820,
+  "observed_elapsed_ms": 1600,
+  "vision_valid_in_all_trial_samples": true,
+  "post_stop_samples": 21,
+  "post_stop_zero_verified": true,
+  "physical_observation": "用户：稍微动了一下就停了。未提供左右轮分别动作、距离或偏移测量。",
+  "diagnosis": "记录支持落地负载下起转后前馈不足、PI接管前失速；不排除机械阻力或供电因素，未测电压电流，不能定为唯一根因。",
+  "no_automatic_retry": true
+}

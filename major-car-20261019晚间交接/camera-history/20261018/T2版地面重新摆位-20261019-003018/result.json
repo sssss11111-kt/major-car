@@ -1,0 +1,39 @@
+{
+  "outcome": "error",
+  "reason": "Abnormal state/output/feedback; stop required",
+  "configuration": {
+    "target": 20,
+    "cap": 3000,
+    "settle": 200,
+    "duration": 3000,
+    "lease": 500,
+    "simulated": 0,
+    "left_bias": 2200,
+    "right_bias": 1500
+  },
+  "status": {
+    "ms": 658160,
+    "mode": 3,
+    "fault": 3,
+    "valid": 0,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 0,
+    "accepted_age": 90,
+    "trial_id": 2,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "enc": [
+      24,
+      26
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  "hardware_verified": false
+}

@@ -1,0 +1,146 @@
+[
+  {
+    "ms": 355550,
+    "mode": 0,
+    "fault": 0,
+    "valid": 1,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 10,
+    "ready": 1,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 0,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  {
+    "ms": 355610,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1406,
+    "target10": 0,
+    "phase": 0,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  {
+    "ms": 355720,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1406,
+    "target10": 0,
+    "phase": 0,
+    "cap_age": 20,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 60,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 110,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  {
+    "ms": 355820,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1407,
+    "target10": 3,
+    "phase": 1,
+    "cap_age": 20,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 20,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 210,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      3000,
+      3000
+    ]
+  },
+  {
+    "ms": 355920,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1407,
+    "target10": 34,
+    "phase": 1,
+    "cap_age": 20,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 60,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 310,
+    "enc": [
+      0,
+      71
+    ],
+    "pwm": [
+      3000,
+      1115
+    ]
+  },
+  {
+    "ms": 356060,
+    "mode": 3,
+    "fault": 5,
+    "valid": 1,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 20,
+    "ready": 0,
+    "good_frames": 2,
+    "accepted_age": 20,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "enc": [
+      0,
+      5
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "user_statement": "20cm左右，往右偏了3cm，正常停稳",
+  "forward_distance_cm_approx": 20,
+  "right_offset_cm_approx": 3,
+  "normal_stop_confirmed": true,
+  "track_contact_or_exit": "not stated",
+  "measurement_method": "user approximate report; no independently verified video/scale",
+  "centerline_tracking_accepted": false
+}

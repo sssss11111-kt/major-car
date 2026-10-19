@@ -1,0 +1,2 @@
+﻿ms,mode,fault,valid,us,target10,phase,cap_age,ready,good_frames,accepted_age,trial_id,trial_done,trial_ms,enc,pwm
+55230,0,0,1,1500,0,3,20,1,255,20,0,0,0,"(0, 0)","(0, 0)"

@@ -1,0 +1,602 @@
+[
+  {
+    "ms": 83320,
+    "mode": 0,
+    "fault": 0,
+    "valid": 1,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 20,
+    "ready": 1,
+    "good_frames": 255,
+    "accepted_age": 60,
+    "trial_id": 0,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  {
+    "ms": 83370,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1438,
+    "target10": 0,
+    "phase": 0,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  {
+    "ms": 83470,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1439,
+    "target10": 0,
+    "phase": 0,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 100,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  {
+    "ms": 83570,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1441,
+    "target10": 0,
+    "phase": 1,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 200,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      3000,
+      3000
+    ]
+  },
+  {
+    "ms": 83670,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1444,
+    "target10": 34,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 300,
+    "enc": [
+      58,
+      85
+    ],
+    "pwm": [
+      1897,
+      1041
+    ]
+  },
+  {
+    "ms": 83770,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1444,
+    "target10": 70,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 400,
+    "enc": [
+      59,
+      49
+    ],
+    "pwm": [
+      1786,
+      1075
+    ]
+  },
+  {
+    "ms": 83810,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1444,
+    "target10": 84,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 440,
+    "enc": [
+      45,
+      32
+    ],
+    "pwm": [
+      1815,
+      1124
+    ]
+  },
+  {
+    "ms": 83870,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1443,
+    "target10": 105,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 500,
+    "enc": [
+      48,
+      31
+    ],
+    "pwm": [
+      1769,
+      1113
+    ]
+  },
+  {
+    "ms": 83950,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1442,
+    "target10": 132,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 580,
+    "enc": [
+      56,
+      24
+    ],
+    "pwm": [
+      1680,
+      1122
+    ]
+  },
+  {
+    "ms": 83970,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1444,
+    "target10": 140,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 600,
+    "enc": [
+      47,
+      19
+    ],
+    "pwm": [
+      1705,
+      1142
+    ]
+  },
+  {
+    "ms": 84070,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1443,
+    "target10": 175,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 700,
+    "enc": [
+      37,
+      4
+    ],
+    "pwm": [
+      1720,
+      1224
+    ]
+  },
+  {
+    "ms": 84120,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1443,
+    "target10": 175,
+    "phase": 2,
+    "cap_age": 0,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 0,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 750,
+    "enc": [
+      45,
+      19
+    ],
+    "pwm": [
+      1664,
+      1169
+    ]
+  },
+  {
+    "ms": 84170,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1444,
+    "target10": 175,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 800,
+    "enc": [
+      54,
+      27
+    ],
+    "pwm": [
+      1597,
+      1131
+    ]
+  },
+  {
+    "ms": 84230,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1443,
+    "target10": 175,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 860,
+    "enc": [
+      38,
+      17
+    ],
+    "pwm": [
+      1625,
+      1164
+    ]
+  },
+  {
+    "ms": 84270,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1444,
+    "target10": 175,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 900,
+    "enc": [
+      25,
+      10
+    ],
+    "pwm": [
+      1668,
+      1196
+    ]
+  },
+  {
+    "ms": 84370,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1444,
+    "target10": 175,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 1000,
+    "enc": [
+      41,
+      1
+    ],
+    "pwm": [
+      1570,
+      1254
+    ]
+  },
+  {
+    "ms": 84410,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1443,
+    "target10": 175,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 1040,
+    "enc": [
+      47,
+      -1
+    ],
+    "pwm": [
+      1524,
+      1277
+    ]
+  },
+  {
+    "ms": 84470,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1444,
+    "target10": 175,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 1100,
+    "enc": [
+      42,
+      0
+    ],
+    "pwm": [
+      1510,
+      1294
+    ]
+  },
+  {
+    "ms": 84570,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1444,
+    "target10": 175,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 1200,
+    "enc": [
+      21,
+      0
+    ],
+    "pwm": [
+      1579,
+      1329
+    ]
+  },
+  {
+    "ms": 84630,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1444,
+    "target10": 175,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 1260,
+    "enc": [
+      37,
+      0
+    ],
+    "pwm": [
+      1505,
+      1350
+    ]
+  },
+  {
+    "ms": 84670,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1443,
+    "target10": 175,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 1300,
+    "enc": [
+      42,
+      0
+    ],
+    "pwm": [
+      1467,
+      1364
+    ]
+  },
+  {
+    "ms": 84770,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1444,
+    "target10": 175,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 1400,
+    "enc": [
+      42,
+      0
+    ],
+    "pwm": [
+      1417,
+      1399
+    ]
+  },
+  {
+    "ms": 84780,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1444,
+    "target10": 175,
+    "phase": 2,
+    "cap_age": 20,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 20,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 1410,
+    "enc": [
+      38,
+      0
+    ],
+    "pwm": [
+      1429,
+      1402
+    ]
+  },
+  {
+    "ms": 84850,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1444,
+    "target10": 175,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 255,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 1480,
+    "enc": [
+      16,
+      0
+    ],
+    "pwm": [
+      1506,
+      1427
+    ]
+  },
+  {
+    "ms": 84960,
+    "mode": 3,
+    "fault": 5,
+    "valid": 1,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 20,
+    "ready": 0,
+    "good_frames": 4,
+    "accepted_age": 20,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "enc": [
+      -1,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  }
+]

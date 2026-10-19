@@ -1,0 +1,99 @@
+��MDK���̵����á�
+    �����汾�Ĺ���������Ҫ���������ã�
+    ��C/C++��ѡ�������еĺꡢ
+    ��Debug��ѡ��ʹ�õĵ����ļ���
+    ��Linker��ѡ��ʹ�õķ�ɢ�����ļ�
+  
+nor_sdram_zf_dtcm���̣�
+  ��C/C++��ѡ�������еĺ꣺
+      CPU_MIMXRT1064DVL6A,
+      XIP_EXTERNAL_FLASH=1, 
+      SKIP_SYSCLK_INIT,
+      XIP_BOOT_HEADER_ENABLE =1,
+      XIP_BOOT_HEADER_DCD_ENABLE =1,
+      PRINTF_FLOAT_ENABLE=1,
+      SCANF_FLOAT_ENABLE=1, 
+      PRINTF_ADVANCED_ENABLE=1, 
+      SCANF_ADVANCED_ENABLE=1,
+      FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0,
+      USB_STACK_BM
+  ��Debug��ѡ��ʹ�õĵ����ļ���
+      evkbimxrt1064_flexspi_nor.ini
+  ��Linker��ѡ��ʹ�õķ�ɢ�����ļ���
+    MIMXRT1064xxxxx_flexspi_nor.scf
+    
+    
+��IAR���̵����á�
+    �����汾�Ĺ���������Ҫ���������ã�
+    Defined symbols�еĺꡢ
+    linker �����ļ���
+  
+nor_sdram_zf_dtcm���̣�
+  ��C/C++��ѡ�������еĺ꣺
+      CPU_MIMXRT1064DVL6A
+      SKIP_SYSCLK_INIT
+      XIP_EXTERNAL_FLASH=1
+      XIP_BOOT_HEADER_ENABLE=1
+      XIP_BOOT_HEADER_DCD_ENABLE=1
+      PRINTF_FLOAT_ENABLE=1
+      SCANF_FLOAT_ENABLE=1
+      PRINTF_ADVANCED_ENABLE=1
+      SCANF_ADVANCED_ENABLE=1
+      FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0
+      USB_STACK_BM
+  ��Linker��ѡ��ʹ�õķ�ɢ�����ļ���
+    MIMXRT1064xxxxx_flexspi_nor.icf
+    
+    
+
+�����İ���صĴ洢��˵����
+
+    RT1064оƬ�ڲ���RAM�洢�����ڲ����û���ʹ�õ�ROM�洢��
+
+    ITCM��ָ�����ϻ��棨Instruction Tightly-Coupled Memory����
+        Ĭ�ϴ�СΪ128KB�����߿���Ϊ64λ������Arm Cortex-M7 Processor PDF�й���TCM interfaces���ܿ�֪��
+        ���ڻ�����Ҫ����ִ�е�ָ�
+        ����ַΪ��0x0000 0000 
+
+    DTCM�����ݽ���ϻ��棨Data Tightly-Coupled Memory����
+        Ĭ�ϴ�СΪ128KB�����߿���Ϊ����32λ������Arm Cortex-M7 Processor PDF�й���TCM interfaces���ܿ�֪��
+        ���ڻ�����Ҫ���ٷ��ʵ����ݡ�
+        ����ַΪ��0x2000 0000
+
+    OCRAM��Ƭ��RAM��On-Chip RAM����
+        Ĭ�ϴ�СΪ256+512KB�����߿���Ϊ32λ��
+        ���ڻ������ݡ�
+        ����ַΪ��0x2020 0000
+        
+        RT1064Ƭ����1MB RAM������512KBΪ�̶�OCRAM������512KΪITCM��DTCM��OCRAM���ɷ��䡣
+	
+	RT1064�ڲ�FLASH��
+		RT1064оƬ�ڲ��Դ�4MB��flash�����ڴ洢����
+		��������RT1064��FlexSPI2�����A1�˿ڣ�֧��XIP��
+		����ַΪ��0x7000 0000
+	
+	
+    ���İ���Ԥ���Ĵ洢������λ��
+		Ԥ����FLASHλ�ÿ��Ժ�������Flash���洢�������ݡ�
+        ��������RT1064��FlexSPI�����A1�˿ڣ�֧��XIP��
+        ����ַΪ��0x6000 0000
+        
+        
+�������RAM�ķ���˵����
+    
+    DTCM 448KB
+    ITCM 64KB
+    SRAM 512KB
+    
+    ����ı��������DTCM����
+    �����noncache ����DTCM����
+    ��ջ����DTCM����
+
+
+����Թٷ�SDK�޸������¼���
+    �޸�PWM������ռ�����������
+    �޸�PWM�ֲ�ֵ�����ȣ�
+	�޸�pwm_signal_param_t�ṹ���е�dutyCyclePercent��Ϊ32λ����
+    �޸�SPI��ѯ���ͺ�
+    �޸�fsl_csi.h �ļ��еĺ궨��CSI_DRIVER_QUEUE_SIZEΪ2
+    ��fsl_csi.h����CSI_DriverIRQHandler��������

@@ -1,0 +1,47 @@
+{
+  "outcome": "error",
+  "reason": "Telemetry stale; stop attempted (vehicle also has local lease)",
+  "configuration": {
+    "target": 40,
+    "cap": 3000,
+    "settle": 200,
+    "duration": 10000,
+    "lease": 500,
+    "simulated": 0
+  },
+  "status": {
+    "ms": 28850,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1473,
+    "target10": 375,
+    "phase": 2,
+    "cap_age": 0,
+    "ready": 0,
+    "good_frames": 170,
+    "accepted_age": 0,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 690,
+    "pi_mask": 3,
+    "enc": [
+      30,
+      28
+    ],
+    "pwm": [
+      1510,
+      1522
+    ]
+  },
+  "hardware_verified": false,
+  "physical_observation": {
+    "statement": "走了一点点就停了，没到弯道已停稳，测试中没有移动过车",
+    "entered_curve": false,
+    "physical_stop_confirmed": true,
+    "vehicle_moved_by_user_during_trial": false,
+    "distance": "not measured",
+    "duration": "not measured"
+  },
+  "curve_acceptance": false
+}

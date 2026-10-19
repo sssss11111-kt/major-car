@@ -1,0 +1,17 @@
+{
+  "image": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-\u5730\u9762\u4f4e\u901f\u95ed\u73af-GL2-20261019\\firmware\\20261019GL2-ground-closed-loop.hex",
+  "image_sha256": "161eb3276e809be35daa6244f7a1c6195b0d441f28bfe8ba458ade2029faca03",
+  "mode": "camera",
+  "target": "mimxrt1064",
+  "frequency": 1000000,
+  "connect": "halt",
+  "backup_complete": true,
+  "program_complete": true,
+  "readback_verified": true,
+  "core_left_halted": true,
+  "algorithm": "NXP.MIMXRT1064_DFP.19.0.0/MIMXRT1064_QSPI_4KB_SEC.FLM",
+  "baseline_verified_bytes": 76992,
+  "backup": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-\u5730\u9762\u4f4e\u901f\u95ed\u73af-GL2-20261019\\records\\01-flash-GL2\\before-flash-70000000-4MiB.bin",
+  "backup_sha256": "0a9852200b1a91113a0751183227e73c9b10e7f0955f6e807918e5e7932bacd7",
+  "verified_bytes": 76992
+}

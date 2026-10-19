@@ -1,0 +1,4 @@
+ bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=92 reject=1 seq=1527 cap_age=20 proc_ms=0 used_age=0 drop_frames=190 ready=1 good_frames=255 accepted_age=20 trial_id=0 trial_done=0 trial_ms=0 pi_mask=0
+ms=31730 mode=0 fault=0 frames=1359 valid=1 pair=12/13 thr=212 err10=83 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=92 reject=1 seq=1552 cap_age=20 proc_ms=0 used_age=10 drop_frames=193 ready=1 good_frames=255 accepted_age=20 trial_id=0 trial_done=0 trial_ms=0 pi_mask=0
+DRIVE-CFG v=20261018N straight=7 left=8 right=9 duration=1000 settle=200 target=40 cap=3000 straight10=0 lease=500
+TRACK-CFG v=20261019G1 target=20 cap=3

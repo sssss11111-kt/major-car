@@ -1,0 +1,26 @@
+{
+  "n": [
+    "valid",
+    "1",
+    "error",
+    "30.6889",
+    "threshold",
+    "166",
+    "paired",
+    "7",
+    "scanned",
+    "13"
+  ],
+  "t": [
+    "valid",
+    "0",
+    "error",
+    "33.1931",
+    "threshold",
+    "166",
+    "paired",
+    "5",
+    "scanned",
+    "13"
+  ]
+}

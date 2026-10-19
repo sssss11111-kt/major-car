@@ -1,0 +1,42 @@
+FILE ../../records/08-stop-position-images/normal/20261019-213842-648997-01.pgm valid=0 pair=4/13 valid_rows=5 reject=3 error=-27.73 threshold=132 contrast=170
+y=112 left=-1 right=-1 center=-1 flags=0 history_width=142
+y=106 left=-1 right=-1 center=-1 flags=0 history_width=136
+y=100 left=-1 right=-1 center=-1 flags=0 history_width=130
+y=94 left=-1 right=-1 center=-1 flags=0 history_width=124
+y=88 left=-1 right=-1 center=-1 flags=0 history_width=118
+y=82 left=48 right=75 center=61 flags=3 history_width=112
+y=76 left=50 right=77 center=63 flags=3 history_width=106
+y=70 left=53 right=78 center=65 flags=3 history_width=100
+y=64 left=58 right=87 center=72 flags=3 history_width=94
+y=58 left=-1 right=-1 center=-1 flags=0 history_width=88
+y=52 left=66 right=-1 center=107 flags=1 history_width=82
+y=46 left=-1 right=-1 center=-1 flags=0 history_width=76
+y=40 left=-1 right=-1 center=-1 flags=0 history_width=70
+FILE ../../records/08-stop-position-images/normal/20261019-213845-251165-02.pgm valid=0 pair=5/13 valid_rows=7 reject=2 error=-28.27 threshold=130 contrast=170
+y=112 left=-1 right=-1 center=-1 flags=0 history_width=142
+y=106 left=-1 right=-1 center=-1 flags=0 history_width=136
+y=100 left=-1 right=-1 center=-1 flags=0 history_width=130
+y=94 left=-1 right=-1 center=-1 flags=0 history_width=124
+y=88 left=48 right=72 center=60 flags=3 history_width=118
+y=82 left=49 right=75 center=62 flags=3 history_width=112
+y=76 left=50 right=77 center=63 flags=3 history_width=106
+y=70 left=53 right=78 center=65 flags=3 history_width=100
+y=64 left=58 right=88 center=73 flags=3 history_width=94
+y=58 left=-1 right=-1 center=-1 flags=0 history_width=88
+y=52 left=67 right=-1 center=108 flags=1 history_width=82
+y=46 left=65 right=-1 center=103 flags=1 history_width=76
+y=40 left=-1 right=-1 center=-1 flags=0 history_width=70
+FILE ../../records/08-stop-position-images/normal/20261019-213847-855812-03.pgm valid=0 pair=5/13 valid_rows=6 reject=3 error=-29.07 threshold=130 contrast=166
+y=112 left=-1 right=-1 center=-1 flags=0 history_width=142
+y=106 left=-1 right=-1 center=-1 flags=0 history_width=136
+y=100 left=-1 right=-1 center=-1 flags=0 history_width=130
+y=94 left=-1 right=-1 center=-1 flags=0 history_width=124
+y=88 left=48 right=72 center=60 flags=3 history_width=118
+y=82 left=48 right=76 center=62 flags=3 history_width=112
+y=76 left=50 right=77 center=63 flags=3 history_width=106
+y=70 left=53 right=78 center=65 flags=3 history_width=100
+y=64 left=57 right=88 center=72 flags=3 history_width=94
+y=58 left=-1 right=-1 center=-1 flags=0 history_width=88
+y=52 left=61 right=-1 center=102 flags=1 history_width=82
+y=46 left=-1 right=-1 center=-1 flags=0 history_width=76
+y=40 left=-1 right=-1 center=-1 flags=0 history_width=70

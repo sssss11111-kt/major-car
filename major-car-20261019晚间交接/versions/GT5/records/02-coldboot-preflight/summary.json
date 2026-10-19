@@ -1,0 +1,16 @@
+{
+  "version_confirmed": "20261019GT5",
+  "motion_start_sent": false,
+  "trial_ids": [
+    "0"
+  ],
+  "status_count": 15,
+  "valid_status_count": 2,
+  "ready_status_count": 1,
+  "all_idle": true,
+  "all_zero_pwm": true,
+  "all_zero_encoders": true,
+  "preflight_passed": false,
+  "reason": "vision unstable: mostly paired 6/13; temporary valid/ready then invalid; cleaned camera still visibly blurred",
+  "physical_button_test_performed": false
+}

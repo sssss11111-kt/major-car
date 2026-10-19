@@ -1,0 +1,111 @@
+{
+  "outcome": "completed",
+  "motion_sent": true,
+  "reason": "Normal bounded closed-loop expiry; performance judged separately",
+  "physical_observation": "用户：这次右偏一点，自动停止了，可以进行下一步。",
+  "completion": {
+    "ms": 49320,
+    "mode": 0,
+    "fault": 0,
+    "id": 1,
+    "phase": 3,
+    "done": 1,
+    "elapsed": 1900,
+    "duty": 0,
+    "us": 1500,
+    "regulating": 3,
+    "target": 20,
+    "enc": [
+      10,
+      21
+    ],
+    "pwm": [
+      0,
+      0
+    ],
+    "n": [
+      50,
+      50
+    ],
+    "sum": [
+      1456,
+      1422
+    ],
+    "min": [
+      25,
+      24
+    ],
+    "max": [
+      34,
+      34
+    ],
+    "e2": [
+      4372,
+      3800
+    ]
+  },
+  "performance": {
+    "target": 20,
+    "mean": [
+      29.12,
+      28.44
+    ],
+    "rmse": [
+      9.350935782048767,
+      8.717797887081348
+    ],
+    "min": [
+      25,
+      24
+    ],
+    "max": [
+      34,
+      34
+    ],
+    "passed": false,
+    "window_ms": 500,
+    "units": "counts/10ms"
+  },
+  "final": {
+    "ms": 50410,
+    "mode": 0,
+    "fault": 0,
+    "id": 1,
+    "phase": 3,
+    "done": 0,
+    "elapsed": 1900,
+    "duty": 0,
+    "us": 1500,
+    "regulating": 3,
+    "target": 20,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ],
+    "n": [
+      50,
+      50
+    ],
+    "sum": [
+      1456,
+      1422
+    ],
+    "min": [
+      25,
+      24
+    ],
+    "max": [
+      34,
+      34
+    ],
+    "e2": [
+      4372,
+      3800
+    ]
+  },
+  "final_zero_verified": true
+}

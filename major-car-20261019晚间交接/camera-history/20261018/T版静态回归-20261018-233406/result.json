@@ -1,0 +1,119 @@
+{
+  "commands": [
+    "s",
+    "d",
+    "p",
+    "w",
+    "p queries",
+    "s",
+    "p"
+  ],
+  "preflight": [
+    {
+      "ms": 139730,
+      "mode": 0,
+      "fault": 0,
+      "frames": 6173,
+      "valid": 1,
+      "paired": 12,
+      "scanned": 13,
+      "err10": 47,
+      "left": 0,
+      "right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1500
+    },
+    {
+      "ms": 140230,
+      "mode": 0,
+      "fault": 0,
+      "frames": 6196,
+      "valid": 1,
+      "paired": 12,
+      "scanned": 13,
+      "err10": 47,
+      "left": 0,
+      "right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1500
+    },
+    {
+      "ms": 140730,
+      "mode": 0,
+      "fault": 0,
+      "frames": 6216,
+      "valid": 1,
+      "paired": 12,
+      "scanned": 13,
+      "err10": 47,
+      "left": 0,
+      "right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1500
+    }
+  ],
+  "active_samples": 21,
+  "active_first": {
+    "ms": 141210,
+    "mode": 5,
+    "fault": 0,
+    "frames": 6236,
+    "valid": 1,
+    "paired": 12,
+    "scanned": 13,
+    "err10": 47,
+    "left": 0,
+    "right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0,
+    "us": 1500
+  },
+  "active_last": {
+    "ms": 146230,
+    "mode": 5,
+    "fault": 0,
+    "frames": 6437,
+    "valid": 1,
+    "paired": 12,
+    "scanned": 13,
+    "err10": 47,
+    "left": 0,
+    "right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0,
+    "us": 1486
+  },
+  "active_us": [
+    1484,
+    1485,
+    1486,
+    1487,
+    1500
+  ],
+  "active_err10": [
+    46,
+    47,
+    48,
+    49
+  ],
+  "final": {
+    "ms": 147230,
+    "mode": 0,
+    "fault": 0,
+    "frames": 6481,
+    "valid": 1,
+    "paired": 11,
+    "scanned": 13,
+    "err10": 44,
+    "left": 0,
+    "right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0,
+    "us": 1500
+  },
+  "stopped": true,
+  "physical_observation": "pending user confirmation"
+}

@@ -1,0 +1,50 @@
+{
+  "n-gray": [
+    "valid",
+    "1",
+    "error",
+    "6.3423",
+    "threshold",
+    "190",
+    "paired",
+    "11",
+    "scanned",
+    "13"
+  ],
+  "t-gray": [
+    "valid",
+    "1",
+    "error",
+    "5.8120",
+    "threshold",
+    "190",
+    "paired",
+    "10",
+    "scanned",
+    "13"
+  ],
+  "n-gray-repeat": [
+    "valid",
+    "1",
+    "error",
+    "6.3000",
+    "threshold",
+    "190",
+    "paired",
+    "11",
+    "scanned",
+    "13"
+  ],
+  "t-gray-repeat": [
+    "valid",
+    "1",
+    "error",
+    "5.7682",
+    "threshold",
+    "190",
+    "paired",
+    "10",
+    "scanned",
+    "13"
+  ]
+}

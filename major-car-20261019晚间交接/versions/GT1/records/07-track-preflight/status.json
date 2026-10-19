@@ -1,0 +1,302 @@
+[
+  {
+    "ms": 222850,
+    "mode": 0,
+    "fault": 0,
+    "valid": 0,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 0,
+    "ready": 0,
+    "good_frames": 0,
+    "accepted_age": 2680,
+    "trial_id": 0,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "pi_mask": 0,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  {
+    "ms": 223040,
+    "mode": 0,
+    "fault": 0,
+    "valid": 0,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 0,
+    "accepted_age": 2870,
+    "trial_id": 0,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "pi_mask": 0,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  {
+    "ms": 223080,
+    "mode": 0,
+    "fault": 0,
+    "valid": 0,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 0,
+    "accepted_age": 2910,
+    "trial_id": 0,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "pi_mask": 0,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  {
+    "ms": 223250,
+    "mode": 0,
+    "fault": 0,
+    "valid": 0,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 0,
+    "ready": 0,
+    "good_frames": 0,
+    "accepted_age": 3080,
+    "trial_id": 0,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "pi_mask": 0,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  {
+    "ms": 223470,
+    "mode": 0,
+    "fault": 0,
+    "valid": 0,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 0,
+    "ready": 0,
+    "good_frames": 0,
+    "accepted_age": 3300,
+    "trial_id": 0,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "pi_mask": 0,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  {
+    "ms": 223540,
+    "mode": 0,
+    "fault": 0,
+    "valid": 0,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 0,
+    "accepted_age": 3370,
+    "trial_id": 0,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "pi_mask": 0,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  {
+    "ms": 223670,
+    "mode": 0,
+    "fault": 0,
+    "valid": 0,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 0,
+    "ready": 0,
+    "good_frames": 0,
+    "accepted_age": 3500,
+    "trial_id": 0,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "pi_mask": 0,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  {
+    "ms": 223880,
+    "mode": 0,
+    "fault": 0,
+    "valid": 0,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 0,
+    "accepted_age": 3710,
+    "trial_id": 0,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "pi_mask": 0,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  {
+    "ms": 224040,
+    "mode": 0,
+    "fault": 0,
+    "valid": 0,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 0,
+    "accepted_age": 3870,
+    "trial_id": 0,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "pi_mask": 0,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  {
+    "ms": 224140,
+    "mode": 0,
+    "fault": 0,
+    "valid": 0,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 0,
+    "accepted_age": 3970,
+    "trial_id": 0,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "pi_mask": 0,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  {
+    "ms": 224340,
+    "mode": 0,
+    "fault": 0,
+    "valid": 0,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 0,
+    "accepted_age": 4170,
+    "trial_id": 0,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "pi_mask": 0,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  {
+    "ms": 224540,
+    "mode": 0,
+    "fault": 0,
+    "valid": 0,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 0,
+    "accepted_age": 4370,
+    "trial_id": 0,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "pi_mask": 0,
+    "enc": [
+      1,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  }
+]

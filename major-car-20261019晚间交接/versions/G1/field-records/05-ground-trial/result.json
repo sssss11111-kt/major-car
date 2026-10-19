@@ -1,0 +1,38 @@
+{
+  "outcome": "error",
+  "reason": "Abnormal state/output/feedback; stop required",
+  "configuration": {
+    "target": 20,
+    "cap": 3000,
+    "settle": 200,
+    "duration": 3000,
+    "lease": 500,
+    "simulated": 0
+  },
+  "status": {
+    "ms": 70820,
+    "mode": 3,
+    "fault": 5,
+    "valid": 1,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 8,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "pi_mask": 3,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  "hardware_verified": false
+}

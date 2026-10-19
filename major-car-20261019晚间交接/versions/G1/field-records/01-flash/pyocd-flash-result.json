@@ -1,0 +1,14 @@
+{
+  "image": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-G1-\u5b8c\u6574\u4e0b\u8f7d-20261019\\major-car-c3682dd44872d2dd13b5900b3424d26427f4c492\\major-car-\u7535\u673a\u6807\u5b9a\u4e0e\u5faa\u8ff9\u63a5\u5165-20261019\\versions\\G1\\20261019G1-tracking.hex",
+  "image_sha256": "ff91ee6db07075337506ecd6962d5a6dc50160d271bbf6fab88d46f308b58fbc",
+  "mode": "camera",
+  "target": "mimxrt1064",
+  "frequency": 1000000,
+  "connect": "halt",
+  "backup_complete": false,
+  "program_complete": false,
+  "readback_verified": false,
+  "core_left_halted": false,
+  "algorithm": "NXP.MIMXRT1064_DFP.19.0.0/MIMXRT1064_QSPI_4KB_SEC.FLM",
+  "error": "Actual board matches no known baseline; full backup preserved; refusing erase"
+}

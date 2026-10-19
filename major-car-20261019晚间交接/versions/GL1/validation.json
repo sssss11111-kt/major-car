@@ -1,0 +1,55 @@
+{
+  "version": "20261019GL1",
+  "sha256": "692b541c665d4a02f75f40248b82bf5744fb24d9b60765b3e84ebb33226d91d0",
+  "host_regression": "passed",
+  "host_tool_tests": 10,
+  "arm_build": "passed",
+  "arm_warnings": 0,
+  "arm_errors": 0,
+  "flashed": true,
+  "physical_trial_performed": true,
+  "target_counts_per_10ms": 20,
+  "ff_at_target20": [
+    1206,
+    1198
+  ],
+  "kp": 4,
+  "ki_per_second": 20,
+  "closed_cap": 1500,
+  "kick_duty": 3000,
+  "transfer_after_kick_ms": 200,
+  "max_total_ms": 2000,
+  "regulation_ms": 1500,
+  "encoder_guard": 120,
+  "baseline": "same-board exact GH2",
+  "readback_verified": true,
+  "verified_bytes": 76992,
+  "core_left_halted": false,
+  "cold_boot_verified": true,
+  "trial_count": 1,
+  "normal_expiry": true,
+  "final_zero_verified": true,
+  "performance": {
+    "target": 20,
+    "mean": [
+      29.12,
+      28.44
+    ],
+    "rmse": [
+      9.350935782048767,
+      8.717797887081348
+    ],
+    "min": [
+      25,
+      24
+    ],
+    "max": [
+      34,
+      34
+    ],
+    "passed": false,
+    "window_ms": 500,
+    "units": "counts/10ms"
+  },
+  "physical_observation": "用户：这次右偏一点，自动停止了，可以进行下一步。"
+}

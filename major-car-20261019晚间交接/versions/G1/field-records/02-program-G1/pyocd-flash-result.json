@@ -1,0 +1,19 @@
+{
+  "image": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-G1-\u5b8c\u6574\u4e0b\u8f7d-20261019\\major-car-c3682dd44872d2dd13b5900b3424d26427f4c492\\major-car-\u7535\u673a\u6807\u5b9a\u4e0e\u5faa\u8ff9\u63a5\u5165-20261019\\versions\\G1\\20261019G1-tracking.hex",
+  "image_sha256": "ff91ee6db07075337506ecd6962d5a6dc50160d271bbf6fab88d46f308b58fbc",
+  "mode": "camera",
+  "target": "mimxrt1064",
+  "frequency": 1000000,
+  "connect": "halt",
+  "backup_complete": true,
+  "program_complete": true,
+  "readback_verified": true,
+  "core_left_halted": true,
+  "backup": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\G1\u8d5b\u9053\u6d4b\u8bd5-20261019\\01-flash\\before-flash-70000000-4MiB.bin",
+  "backup_sha256": "239fb709a27c36907242398d37c2bd1e70ecbcf237c335f1b544390a41a53cac",
+  "algorithm": "NXP.MIMXRT1064_DFP.19.0.0/MIMXRT1064_QSPI_4KB_SEC.FLM",
+  "baseline_verified_bytes": 4194304,
+  "baseline_identity": "Actual same-board full Flash contains G2 labels; user explicitly requested G1",
+  "rollback_image_preserved": true,
+  "verified_bytes": 73088
+}

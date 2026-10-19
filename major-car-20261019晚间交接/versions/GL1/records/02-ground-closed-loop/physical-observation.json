@@ -1,0 +1,7 @@
+{
+  "statement": "用户：这次右偏一点，自动停止了，可以进行下一步。",
+  "slight_right_drift": true,
+  "automatic_stop_confirmed": true,
+  "next_step_authorized": true,
+  "new_reset_position_not_yet_confirmed": true
+}

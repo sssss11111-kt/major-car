@@ -1,0 +1,77 @@
+{
+  "outcome": "error",
+  "motion_sent": true,
+  "reason": "No complete continuous-hold expiry evidence",
+  "physical_observation": "pending",
+  "status": {
+    "ms": 54360,
+    "mode": 0,
+    "fault": 0,
+    "id": 1,
+    "phase": 3,
+    "done": 1,
+    "elapsed": 1900,
+    "duty": 1000,
+    "us": 1500,
+    "enc": [
+      2,
+      2
+    ],
+    "pwm": [
+      0,
+      0
+    ],
+    "n": [
+      50,
+      50
+    ],
+    "sum": [
+      335,
+      345
+    ],
+    "min": [
+      0,
+      4
+    ],
+    "max": [
+      10,
+      11
+    ]
+  },
+  "final": {
+    "ms": 55520,
+    "mode": 0,
+    "fault": 0,
+    "id": 1,
+    "phase": 3,
+    "done": 0,
+    "elapsed": 1900,
+    "duty": 1000,
+    "us": 1500,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ],
+    "n": [
+      50,
+      50
+    ],
+    "sum": [
+      335,
+      345
+    ],
+    "min": [
+      0,
+      4
+    ],
+    "max": [
+      10,
+      11
+    ]
+  },
+  "final_zero_verified": true
+}

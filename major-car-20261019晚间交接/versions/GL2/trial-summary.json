@@ -1,0 +1,58 @@
+[
+  {
+    "session": "02-ground-closed-loop",
+    "normal_expiry": true,
+    "performance": {
+      "target": 20,
+      "mean": [
+        15.8,
+        15.66
+      ],
+      "rmse": [
+        4.626013402488151,
+        4.730750469005948
+      ],
+      "min": [
+        13,
+        13
+      ],
+      "max": [
+        19,
+        19
+      ],
+      "passed": false,
+      "window_ms": 500,
+      "units": "counts/10ms"
+    },
+    "final_zero_verified": true,
+    "physical_observation": "用户：行驶到自动停止，都没问题，可以进行下一步测试。"
+  },
+  {
+    "session": "03-ground-repeat",
+    "normal_expiry": true,
+    "performance": {
+      "target": 20,
+      "mean": [
+        19.14,
+        18.92
+      ],
+      "rmse": [
+        1.5427248620541512,
+        1.469693845669907
+      ],
+      "min": [
+        15,
+        17
+      ],
+      "max": [
+        23,
+        21
+      ],
+      "passed": true,
+      "window_ms": 500,
+      "units": "counts/10ms"
+    },
+    "final_zero_verified": true,
+    "physical_observation": "用户：行驶到自动停止，都没问题，没变化，可以下一步测试。"
+  }
+]

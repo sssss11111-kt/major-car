@@ -1,0 +1,123 @@
+{
+  "commands": [
+    "s",
+    "d",
+    "p",
+    "w",
+    "p queries",
+    "s",
+    "p"
+  ],
+  "preflight": [
+    {
+      "ms": 2278230,
+      "mode": 0,
+      "fault": 0,
+      "frames": 101332,
+      "valid": 1,
+      "paired": 12,
+      "scanned": 13,
+      "err10": -61,
+      "left": 0,
+      "right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1500
+    },
+    {
+      "ms": 2278730,
+      "mode": 0,
+      "fault": 0,
+      "frames": 101354,
+      "valid": 1,
+      "paired": 12,
+      "scanned": 13,
+      "err10": -60,
+      "left": 0,
+      "right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1500
+    },
+    {
+      "ms": 2279230,
+      "mode": 0,
+      "fault": 0,
+      "frames": 101377,
+      "valid": 1,
+      "paired": 12,
+      "scanned": 13,
+      "err10": -59,
+      "left": 0,
+      "right": 0,
+      "pwm_left": 0,
+      "pwm_right": 0,
+      "us": 1500
+    }
+  ],
+  "active_samples": 20,
+  "active_first": {
+    "ms": 2279520,
+    "mode": 5,
+    "fault": 0,
+    "frames": 101390,
+    "valid": 1,
+    "paired": 12,
+    "scanned": 13,
+    "err10": -60,
+    "left": 0,
+    "right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0,
+    "us": 1500
+  },
+  "active_last": {
+    "ms": 2284230,
+    "mode": 5,
+    "fault": 0,
+    "frames": 101602,
+    "valid": 1,
+    "paired": 12,
+    "scanned": 13,
+    "err10": -67,
+    "left": 0,
+    "right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0,
+    "us": 1520
+  },
+  "active_us": [
+    1500,
+    1516,
+    1518,
+    1519,
+    1520,
+    1521
+  ],
+  "active_err10": [
+    -68,
+    -67,
+    -66,
+    -65,
+    -62,
+    -60,
+    -59
+  ],
+  "final": {
+    "ms": 2285230,
+    "mode": 0,
+    "fault": 0,
+    "frames": 101647,
+    "valid": 1,
+    "paired": 12,
+    "scanned": 13,
+    "err10": -66,
+    "left": 0,
+    "right": 0,
+    "pwm_left": 0,
+    "pwm_right": 0,
+    "us": 1500
+  },
+  "stopped": true,
+  "physical_observation": "pending user confirmation"
+}

@@ -1,0 +1,77 @@
+{
+  "outcome": "completed",
+  "motion_sent": true,
+  "reason": "Normal bounded hold and both-wheel continuous feedback",
+  "physical_observation": "pending",
+  "completion": {
+    "ms": 40560,
+    "mode": 0,
+    "fault": 0,
+    "id": 1,
+    "phase": 3,
+    "done": 1,
+    "elapsed": 1900,
+    "duty": 2000,
+    "us": 1500,
+    "enc": [
+      65,
+      65
+    ],
+    "pwm": [
+      0,
+      0
+    ],
+    "n": [
+      50,
+      50
+    ],
+    "sum": [
+      3562,
+      3660
+    ],
+    "min": [
+      62,
+      62
+    ],
+    "max": [
+      80,
+      84
+    ]
+  },
+  "final": {
+    "ms": 41720,
+    "mode": 0,
+    "fault": 0,
+    "id": 1,
+    "phase": 3,
+    "done": 0,
+    "elapsed": 1900,
+    "duty": 2000,
+    "us": 1500,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ],
+    "n": [
+      50,
+      50
+    ],
+    "sum": [
+      3562,
+      3660
+    ],
+    "min": [
+      62,
+      62
+    ],
+    "max": [
+      80,
+      84
+    ]
+  },
+  "final_zero_verified": true
+}

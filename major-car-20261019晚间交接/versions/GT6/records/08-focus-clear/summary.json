@@ -1,0 +1,14 @@
+{
+  "complete_images": 3,
+  "complete_statuses": 28,
+  "valid_statuses": 28,
+  "paired_rows_observed": [
+    "10/13",
+    "11/13",
+    "12/13"
+  ],
+  "motion_start_sent": false,
+  "all_observed_pwm_zero": true,
+  "image_observation": "unobstructed and stable; grayscale edges remain blurred; focus improvement not established",
+  "next_step": "keep lens position; fixed high contrast printed target on road within middle/lower frame to distinguish focus from washed-out track; no further blind rotation"
+}

@@ -1,0 +1,30 @@
+DRIVE-CFG v=20261018N straight=7 left=8 right=9 duration=1000 settle=200 target=40 cap=3000 straight10=0 lease=500
+ms=2610520 mode=0 fault=0 frames=116109 valid=1 pair=10/13 thr=190 err10=-195 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=2610730 mode=0 fault=0 frames=116118 valid=1 pair=10/13 thr=190 err10=-195 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=2611230 mode=0 fault=0 frames=116139 valid=1 pair=10/13 thr=190 err10=-197 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=2611730 mode=0 fault=0 frames=116158 valid=1 pair=10/13 thr=190 err10=-195 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=2612230 mode=0 fault=0 frames=116179 valid=1 pair=10/13 thr=190 err10=-194 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20
+STATIC-STEER v=20261017K 30s motors=0; s STOP
+ms=2612420 mode=5 fault=0 frames=116187 valid=1 pair=10/13 thr=190 err10=-193 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=2612730 mode=5 fault=0 frames=116198 valid=1 pair=11/13 thr=190 err10=-203 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1560 speed=20
+ms=2612850 mode=5 fault=0 frames=116204 valid=1 pair=11/13 thr=190 err10=-202 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1560 speed=20
+ms=2613230 mode=5 fault=0 frames=116219 valid=1 pair=11/13 thr=190 err10=-203 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1560 speed=20
+ms=2613450 mode=5 fault=0 frames=116228 valid=1 pair=11/13 thr=190 err10=-204 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1561 speed=20
+ms=2613730 mode=5 fault=0 frames=116239 valid=1 pair=10/13 thr=190 err10=-193 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1558 speed=20
+ms=2613950 mode=5 fault=0 frames=116249 valid=1 pair=10/13 thr=190 err10=-192 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1557 speed=20
+ms=2614230 mode=5 fault=0 frames=116262 valid=1 pair=11/13 thr=190 err10=-207 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1568 speed=20
+ms=2614460 mode=5 fault=0 frames=116273 valid=1 pair=10/13 thr=190 err10=-191 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1560 speed=20
+ms=2614730 mode=5 fault=0 frames=116284 valid=1 pair=10/13 thr=190 err10=-191 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1554 speed=20
+ms=2615000 mode=5 fault=0 frames=116297 valid=1 pair=11/13 thr=190 err10=-205 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1557 speed=20
+ms=2615230 mode=5 fault=0 frames=116307 valid=1 pair=11/13 thr=190 err10=-206 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1561 speed=20
+ms=2615520 mode=5 fault=0 frames=116319 valid=1 pair=11/13 thr=190 err10=-205 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1561 speed=20
+ms=2615730 mode=5 fault=0 frames=116329 valid=1 pair=10/13 thr=190 err10=-199 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1559 speed=20
+ms=2616000 mode=5 fault=0 frames=116342 valid=1 pair=10/13 thr=190 err10=-201 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1560 speed=20
+ms=2616230 mode=5 fault=0 frames=116352 valid=1 pair=10/13 thr=190 err10=-200 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1560 speed=20
+ms=2616520 mode=5 fault=0 frames=116364 valid=1 pair=10/13 thr=190 err10=-196 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1558 speed=20
+ms=2616730 mode=5 fault=0 frames=116374 valid=1 pair=10/13 thr=190 err10=-195 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1559 speed=20
+ms=2617030 mode=5 fault=0 frames=116389 valid=1 pair=11/13 thr=190 err10=-208 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1561 speed=20
+ms=2617230 mode=5 fault=0 frames=116397 valid=1 pair=11/13 thr=190 err10=-204 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1561 speed=20
+ms=2617550 mode=0 fault=0 frames=116412 valid=1 pair=11/13 thr=190 err10=-205 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=2617730 mode=0 fault=0 frames=116419 valid=1 pair=10/13 thr=190 err10=-194 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=2618230 mode=0 fault=0 frames=116442 valid=1 pair=10/13 thr=190 err10=-194 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20

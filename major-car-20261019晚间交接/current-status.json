@@ -1,0 +1,19 @@
+{
+  "latest_firmware": "20261019GT6",
+  "firmware_sha256": "2c1a8f2a5914297357a773fcece15f83054d12ecad00596d7343f3efb7854fbf",
+  "readback_verified_bytes": 77760,
+  "camera_latest_user_confirmation": "已调整清晰，下一次从清晰图像识别继续",
+  "camera_confirmation_source": "用户在本次归档请求中补充",
+  "clear_track_baseline_verified": false,
+  "right_curve_accepted": false,
+  "left_curve_accepted": false,
+  "whole_track_accepted": false,
+  "next_step": "阅读20261019晚间测试总结与明日交接.md，再做GT6清晰赛道只读采图、识别鲁棒性及单次运动",
+  "original_GT4_communication_root_cause_confirmed": false,
+  "GT4D_and_GT5_early_stop_cause": "FAULT_LINE=3",
+  "GT5_physical_button_start_confirmed_by_user": true,
+  "final_two_single_frames": [
+    "versions/GT6/records/11-current-camera-20261020/gray.png",
+    "versions/GT6/records/12-current-camera-20261020/gray.png"
+  ]
+}

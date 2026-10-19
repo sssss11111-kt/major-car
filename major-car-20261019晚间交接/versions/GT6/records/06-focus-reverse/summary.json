@@ -1,0 +1,13 @@
+{
+  "complete_images": 3,
+  "complete_statuses": 28,
+  "valid_statuses": 28,
+  "paired_rows_observed": [
+    "12/13"
+  ],
+  "motion_start_sent": false,
+  "all_observed_pwm_zero": true,
+  "focus_improvement_confirmed": false,
+  "observation": "paired rows improved from previous group10/13 to12/13; broad blurred edges persist; geometry differs slightly so row count is not a focus score",
+  "next_probe": "mark current position and turn another1/32 in same reverse direction; retain mount and scene; compare edge definition rather than valid count"
+}

@@ -1,0 +1,42 @@
+{
+  "normal_expiry": true,
+  "trial_ms": 5200,
+  "motor_duration_ms": 5000,
+  "active_samples": 71,
+  "PI_samples": 64,
+  "all_recorded_vision_valid": true,
+  "servo_range": [
+    1477,
+    1537
+  ],
+  "actual_pwm_range_after_PI": [
+    [
+      1241,
+      1410
+    ],
+    [
+      1215,
+      1409
+    ]
+  ],
+  "last_PI_feedback": [
+    27,
+    27
+  ],
+  "mean_sampled_PI_feedback": [
+    29.203125,
+    29.09375
+  ],
+  "post_stop_zero_verified": true,
+  "physical_observation": {
+    "user_statement": "总共行进50cm左右，向右偏移5cm左右，在结束前有轻微的向左纠正",
+    "forward_cm_approx": 50,
+    "right_offset_cm_approx": 5,
+    "late_left_correction_observed": true,
+    "physical_stop_confirmation": "not explicitly stated in this reply; software final PWM/encoder zero verified",
+    "track_contact_or_exit": "not stated",
+    "measurement_method": "user approximate report",
+    "stable_centerline_acceptance": false
+  },
+  "physical_track_acceptance": false
+}

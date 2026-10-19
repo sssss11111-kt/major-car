@@ -1,0 +1,2358 @@
+[
+  {
+    "path": "code/competition/firmware/camera_car/.gitignore",
+    "sha256": "fa490ded95d01dc8a2b08cfa0f59631ba7ef60fe7a1c9f1bb773030f2187ca02"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/build.ps1",
+    "sha256": "3619e9d40c167025817e59df46811464f37f32a736e672b1eb9f303e32c1b204"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/code/本文件夹作用.txt",
+    "sha256": "b670f4e9ffcee1e7808f3d2c36322d403a56f0a7323c28efd7237572c14862db"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/mdk/ini/evkmimxrt1064_flexspi_nor.ini",
+    "sha256": "e3d7a9a13028636fc8c17e80505a63e54f5026ea5dd12342dd907b52fa54f0dc"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/mdk/rt1064-mock.uvprojx",
+    "sha256": "d0d99f527bae584a9e04f74a9ac7114abbfc1b3f955ae6d846b3fc4cbf2420cd"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/mdk/rt1064.uvprojx",
+    "sha256": "70017419e57a195934b0797290d3e07df147aceb9ac673b7ef4aaabda1dea4d3"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/mdk/scf/MIMXRT1064xxxxx_flexspi_nor.scf",
+    "sha256": "01e96363813d98de77475c56b08b50d7a941432a386ac96c54d79231db8a50f6"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/RT1064智能车推荐引脚分配.txt",
+    "sha256": "05d056a8a07db254cabd9cdec8551815dd0506f42684b423911af7f9a61e6ca0"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/inc/car_app.h",
+    "sha256": "503b8c917c4a264c08abcdc20cde1066f255e15041b92f8a448e3ee304e12bcf"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/inc/car_config.h",
+    "sha256": "0e1e028fac6f337aafc747c3af230ef19bdb2341acde5607a03438639e000cbb"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/inc/car_core.h",
+    "sha256": "a6c0e1759a4b7277d00a01bdc22e9ba6dc77fb96ab2db52f7fa25d67c2830d6c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/inc/car_servo.h",
+    "sha256": "375e09b82306c640118cf763bcc2020d02a0377af1dd7297a4e02c56b8a72de0"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/inc/img_process.h",
+    "sha256": "e7a31e34a1ee84646f0c0b0c3fb1f2ec152caebd8429657041f4c5ce566b74f5"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/inc/isr.h",
+    "sha256": "ca84581f6686a0c1a88a5f211b286ec300257f9205ae6b3d909ab9f039518496"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/inc/main.h",
+    "sha256": "ca5aaa6a7ba628c2e0eb58147428de86e1417c2105f459ff2399dc3b7d08cbd6"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/inc/pid.h",
+    "sha256": "eaaa5bab01a6dc4a76c57482e741d10223b5beae9b43baa3716325133065e3e7"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/inc/RT106X_config.h",
+    "sha256": "c594e50681cd7854958f300be01af793a6e044348a6ed691ce67db9f94300493"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/src/car_app.c",
+    "sha256": "e9dd7eab9580ce4d34e3ff9ecafd2fd85171eb92da998d7fc0b5d8c16fe44973"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/src/car_core.c",
+    "sha256": "b28eb180d759d7fce3cd1945675ed9fc8d7744f559cb7b20af7d405b63d8d70f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/src/car_servo.c",
+    "sha256": "6530fe470676bd4eb8d9ddeab220ad2b42ad47e257af1044a7b2396495b69890"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/src/img_process.c",
+    "sha256": "adb07dbbe1b45c1f51a8ea6ecdcdf18f0e4ba69095e48e4c16c2787629c58598"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/src/isr.c",
+    "sha256": "c82ec376db6a2f9d08067a201c8978467dac4ef843965c89c4a7f79e5d51f0f3"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/src/main.c",
+    "sha256": "ddf7d09720ecc0b57fe58472f189898d20e36b17dec411fb2747ef790cbb40e3"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/demo/user/src/pid.c",
+    "sha256": "3880fc5419aa2c7bf8f4a4a2b8df9755934859d15904f58e7573cc621c8d3ded"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/docs/servo-init.md",
+    "sha256": "1fa0211e4b11c69c7878965ea01a218bfe2ef7130de642b2625ece54539ae140"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/docs/verification.md",
+    "sha256": "19cc0f7a3ca3b9f1917bb31090ec15c9313250774b6dfa1aae9bdad5f85e7882"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/docs/vision-scenarios-overview.png",
+    "sha256": "7ac6e41167bb20e32597ed8583b0c47bd79cc359fc799ce7d04db935b66d8bbb"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/docs/vision-scenarios-results.json",
+    "sha256": "a2f668175ecec9ecf5411582b5638b1ba8a25db9b2025314b1905bf007a6eb10"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/docs/vision-scenarios.md",
+    "sha256": "7e7ad6b957868d324a811bdd1bf73f159091a258052f4c8a57ab18109c61bd80"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/HARDWARE.md",
+    "sha256": "589eb79b1dc2b12d9949ed5ff35c1ed9bcd42b3e437e1f96c395676dce0fc950"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/ChangeLogKSDK.txt",
+    "sha256": "9ada72449d0c61f3f32807fb49ca2af28c6623c39dd59160cc4bff1b8cf6ee99"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/LICENSE.txt",
+    "sha256": "c1e7e1a3eb0df8fed5d919e1e741c8816a2048ca6a6a631c986e540436fd68cf"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/source/00history.txt",
+    "sha256": "c8e6872a5da38e9864ef8c2c591a293f2a60941807f60d2aa6dd98b0e97259ef"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/source/00readme.txt",
+    "sha256": "36199d8511e68b5ea7ad68678e47538cc700494cbd2d2d39742924b6f050984d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/source/diskio.c",
+    "sha256": "cabdeccd107982a07396c8497b8cf331230a0145c3a35b6055f1187449a7bf44"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/source/diskio.h",
+    "sha256": "3328e3a32ac1c64f4c62b66da1054f1971127adabb193a6b5ec6a39a19970525"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/source/ff.c",
+    "sha256": "a6938c99498603df619eac8fc9fb1155da50023aefb12afa5d7bbf1d0f4b6590"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/source/ff.h",
+    "sha256": "46e9a88e181289ff68a5bf7faf63a6ac2cc0f04f49f6cbd94073e42720960d95"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/source/ffconf.h",
+    "sha256": "69708d2849cbad0638407bb8680bbc1fd56bfe60d72acd16292e8af39d15961c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/source/ffconf_template.h",
+    "sha256": "17277def5b772b99c023f9782898e6c29524be1141d05292a5ebc67893a86527"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/source/ffsystem.c",
+    "sha256": "694f632a9f7ec5c1cc893cf4aa0c39f22ec1608a13fbc583302b88d0665a95fd"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/source/ffunicode.c",
+    "sha256": "b519b20a6de1ceea6ae01421480d0137d03abe788b4e6553b2153d2a8591b840"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/source/fsl_mmc_disk/fsl_mmc_disk.c",
+    "sha256": "40e24807fa9a00ce237bc19190174c174f4b1c65dce59a11534a79f7680d6614"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/source/fsl_mmc_disk/fsl_mmc_disk.h",
+    "sha256": "699373d0ed7ec726308882e0492e57c7e2a50b114716536177e7e424655e721c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/source/fsl_nand_disk/fsl_nand_disk.c",
+    "sha256": "63f0b0b9acdd06cbf5651bfb7429e98b7a0b4063a80e6e7492a8060fba86bc20"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/source/fsl_nand_disk/fsl_nand_disk.h",
+    "sha256": "cba0295615ba9281184fef314b6442edcceca6d1e82f552710c0cd372e3dd3f3"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/source/fsl_ram_disk/fsl_ram_disk.c",
+    "sha256": "9fef630e97247a744c945a0ab480bdf68819f74a4de943686a17f297328c6e32"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/source/fsl_ram_disk/fsl_ram_disk.h",
+    "sha256": "0812395a80018f0b167d70f5caaae4d90bcd762336758bced51f9ad24a760d85"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/source/fsl_sd_disk/fsl_sd_disk.c",
+    "sha256": "f63777c321a43fc54328c03377c3be84675b8b6e7fb45f0833165638b9116830"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/source/fsl_sd_disk/fsl_sd_disk.h",
+    "sha256": "d8bcfb894403bbb669844342d608391fa87f1c5c4625b606a148e5decdff0273"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/source/fsl_usb_disk/fsl_usb_disk.h",
+    "sha256": "fb617e50c16b68cb30f62a1236759758ccc2a10a3e0596a3ce885fa9d742afbb"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/source/fsl_usb_disk/fsl_usb_disk_bm.c",
+    "sha256": "db4856f9d15dfea120a32fcfb7c48df1b0378160434e7cbfe64e74d59ee7cdde"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/fatfs/template/ffconf.h",
+    "sha256": "96329bd4c4e5eb59fab94f3b80b53f856715d63b5d849acecdd2175f66fd5461"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/sdmmc/common/fsl_sdmmc_common.c",
+    "sha256": "0a0933cc5efc9c32e2d32b58205b896e2640602ce3aa774ef7e4585b20c3f3cc"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/sdmmc/common/fsl_sdmmc_common.h",
+    "sha256": "ba079ff0284040373253148ecfbb53b645ecf8da603ec20253ad768503db65b1"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/sdmmc/common/fsl_sdmmc_spec.h",
+    "sha256": "f38d63d41083cc6b7fdfecaeef51bba0c4cbb14a39e050610ab11ddf29876b49"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/sdmmc/host/usdhc/blocking/fsl_sdmmc_host.c",
+    "sha256": "403dd9e565f62a4e01d4d1d3f1694102479025bc2853ca5962184877a136de29"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/sdmmc/host/usdhc/ChangeLogKSDK.txt",
+    "sha256": "f328329750f100318c9a48374e3545091fe20000e566c6498f82a1a15293001b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/sdmmc/host/usdhc/fsl_sdmmc_host.h",
+    "sha256": "b7d6b7b40ab4849691dd0a9b8c3657b5fb0982e99c15ef575e98f588d7e52b9d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c",
+    "sha256": "89a599a5c3c024f4ecb20bb384724196617c2813a27b821787529bb7a49d7a11"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/sdmmc/osa/fsl_sdmmc_osa.c",
+    "sha256": "d6f32080bd63bbe6e7588eaeb77ece32551a3f31c0ca4e2dcfdcebf863aa20b4"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/sdmmc/osa/fsl_sdmmc_osa.h",
+    "sha256": "53ca1d1dc22752585570a4b6d68bcd3fe8733b3de51a022fb4a91a3c975688b9"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/sdmmc/sd/ChangeLogKSDK.txt",
+    "sha256": "122a104f23f7e48597e1785062e3a0db47c41168c16e5218a6f77210029d5021"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/sdmmc/sd/fsl_sd.c",
+    "sha256": "a175bc9fe28f72874a19e96300971d71b49f47533b7a4b89181cdc47687ec3a5"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/sdmmc/sd/fsl_sd.h",
+    "sha256": "a8781f9b3a45d35a6377621c4ce70a3c63dbed737c8940663ccf9ce8412e866a"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/sdmmc/sdmmc_config.c",
+    "sha256": "c8f8ea7f015e5669ab32b84da56a46e201adb1653c1412f0cfe868b9096b1877"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/sdmmc/sdmmc_config.h",
+    "sha256": "ab64a01245bb58b44c8063808fd681f0e2254ba7f674da34aef607aa7eeb9b41"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/ChangeLogKSDK.txt",
+    "sha256": "1239dc890d0fd41d8c80e2e64f1915128e5866a64ed317941a100d5f9c6535ba"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/dcd/usb_charger_detect.h",
+    "sha256": "d0d945f3fcbce4a897e3419cf135e40ad63b501480232c86a16a53024ac1afaa"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/dcd/usb_phydcd.c",
+    "sha256": "2a2eb0522da747a3bee7fc94999b682b0b53a79cff588c8f5614568228bde814"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/dcd/usb_phydcd.h",
+    "sha256": "7c524e6f1cf09b8545c5127c3ed1c3350c79452f3ab0c39fcaed3ca38f82882d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/device/usb_device.h",
+    "sha256": "ba76105c99d7a12d2a28fa64ada44b7d2f3935fdc6ad39824b2c7568a819c365"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/device/usb_device_dci.c",
+    "sha256": "277eaf55254864e4b84e20cf1d72e7e098e24605133b23d5a81dbbf51195c66c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/device/usb_device_dci.h",
+    "sha256": "2016e4c5d04d3ef70aa983f073a1f9f14a0ed37ffd4a9446ecafa61c7c9a3d53"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/device/usb_device_ehci.c",
+    "sha256": "b4d4e94257cd5518bc3f8dd70c9ace16bdc63040b17e7009a472368655ee1122"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/device/usb_device_ehci.h",
+    "sha256": "7b19bfc0baa4cb02d9ccb8ce8023d169da1f0255f6789a4765b7d8bb088cc3b0"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/device/usb_device_khci.c",
+    "sha256": "03d2b68471561366b9895efb7c1d3efb933fa7f985b428d7da00606343b56e1e"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/device/usb_device_khci.h",
+    "sha256": "e5868895902154d9e4dc8d8717b8d440d752f75fb12fa10e512b0612809677a6"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/device/usb_device_lpcip3511.c",
+    "sha256": "f3171493ba0f809628174fc12c4a717b117afa59bc59fa0e95d20e30904c4c19"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/device/usb_device_lpcip3511.h",
+    "sha256": "9e2715dcb3c184219ffce2a1456b9ea5f3ea735ab7d18b70dba25fe3513e10ff"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_audio.c",
+    "sha256": "15d057085d2e1a1e01cf6f9daffe02bcd66663f125f2662acf0f349a01b59f3c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_audio.h",
+    "sha256": "e774b18d6f0fb38f23b10ba3dc279dee9b211d5a8e3df68973c9694e1e2ef151"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_cdc.c",
+    "sha256": "7265f4e4b737064f4df1b963876cb5a952d9514ca6b2b88020377ea81d6aae4b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_cdc.h",
+    "sha256": "c5fa0ea45c75c8352b0e2dd6b0b792fc615488d4241173896975296747d62da6"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_cdc_rndis.c",
+    "sha256": "e232bdea2e37784787fb2735c5d18ebc65a340bf31aaf02267f8e03bfe69b6aa"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_cdc_rndis.h",
+    "sha256": "1f31702b66e5e06169c13d23f499c6037e6dabd7ee003c59d14abf0f3f45d27f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_hid.c",
+    "sha256": "7ba51d60764510877af45ef9ac24b902a2caa9aae9b9201c82e98d149ecb40c9"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_hid.h",
+    "sha256": "d146c173a5325caf90c003afa58da55d6295609ebccf42a007b049bf80b44e45"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_hub.c",
+    "sha256": "3e5dc5383c92e8acb9c6182db020359fa79c14812ae24aa7843aeb9f8f969e63"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_hub.h",
+    "sha256": "8354daf368ee02cd91945daa31c6dedb06034ccd6342a558dd582d3e19ce910b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_hub_app.c",
+    "sha256": "88fcc91a64758267641b9b2754b0c30bc8a1ffcefb3b5f2e0b53bc577d58083f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_hub_app.h",
+    "sha256": "e7cb30bddda0baa8ecfe218d4ccd5f2df2c353ccd9a4967813023ee379e05bc9"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_msd.c",
+    "sha256": "e292b249e058a3f7713e960a651a08b4af565ec7f0ca206316bd17650375aa82"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_msd.h",
+    "sha256": "111b513200d4675e5deda22dc60cd007579ca1840fbcfb3e0f5ddbfc77ffbd39"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_msd_ufi.c",
+    "sha256": "64f6177164bf57989d7336abc8c685334ac96bd7c78f3e8ae1d826512e84ab16"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_phdc.c",
+    "sha256": "a496e95d6287e5ef7eb82e03cc4b5588a5f49e5e519495c80670c6b3ca4a4a08"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_phdc.h",
+    "sha256": "f07306728afbdbc4191717754e3b6fd8651332550dadb7ebf063e9f3d048dd54"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_printer.c",
+    "sha256": "b090fa2e4c8973411601cda6e2babe5cbe2a637825d66df8638441fd4d532e90"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_printer.h",
+    "sha256": "796d1315b95f36565cfeea1e746ec8240a475af0d9db38e9a17b426a7d4b4c1a"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_video.c",
+    "sha256": "29988af0fd0ac671b644054a785c8b5d4480430a95cb778019ea90612fc9701d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/class/usb_host_video.h",
+    "sha256": "ef9d9bf164b7e6fe8b33843294f06842e547d5a04bd8dee954ec55c1a3891828"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/usb_host.h",
+    "sha256": "aae2889e9b3ce04bcd70843d163731280682f782d8ca1503af57c5b9669ec165"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/usb_host_devices.c",
+    "sha256": "77cc5d43cf8046d81027f788c1338f85136d42e55da8a2f730ca188d8cb3843f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/usb_host_devices.h",
+    "sha256": "9b0c8eeaddf11c0714852a50fe5ad80b984d3b3bd5597584f54cf51de22eaf53"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/usb_host_ehci.c",
+    "sha256": "e8e2afac66a2c8cd15506b88bad8b497c9351d1774da597c5d6d5ee110f4a26e"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/usb_host_ehci.h",
+    "sha256": "114d1aef356ed627ab0341f10768a45c684cf030b8657c3616b46d3c58ccd311"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/usb_host_framework.c",
+    "sha256": "c7928e80a855cc7e6403d4bc6a03b99c247cdf89ab53c71d4166dac2426ef7ef"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/usb_host_framework.h",
+    "sha256": "68389d58106b6e984fd4090e0d69abad0115205f11e500ed99955ef6d294a121"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/usb_host_hci.c",
+    "sha256": "1c576a970e838331cdc1476dcaa1886e99b8fc9a747269910e0f77d448a0ccdf"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/usb_host_hci.h",
+    "sha256": "3c846c3735f18118f9b39af52b3a2d460c42127cbe942445136e40b748350e51"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/usb_host_ip3516hs.c",
+    "sha256": "ce53c1a7fc7b026c540738b8f4656ef52ea8cec062fea0f2e91f86f7871c98a1"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/usb_host_ip3516hs.h",
+    "sha256": "23adb3b8499b58d9db9983dab473d311dbe16f4b83365a2411d09a90f164b483"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/usb_host_khci.c",
+    "sha256": "8f29ea670f389cec0fbbb3af2cebecca39a3b3c89af3b84d6dab10e41fd8f5a2"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/usb_host_khci.h",
+    "sha256": "8cbfffc901d659b6867a93f560c2c690d0048fb6c631674377c08b3b46872870"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/usb_host_ohci.c",
+    "sha256": "b33f594e9c9634e4a33214f689750a9d9e70cfe6be6f9075ef88a1a42ea60acf"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/host/usb_host_ohci.h",
+    "sha256": "4e67cd6cc72348e00f2ca5728baf9365b2afc92d448819dda77a217c1ef97b4c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/include/usb.h",
+    "sha256": "0cf563d8b31b2bfc2386b6c70fd9270be77dfbd41cbdb4b425fb4701032542d8"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/include/usb_misc.h",
+    "sha256": "4d5bbe30cd155d51117299f53a79465bb3433156ab143ca5b5e99441f0dad593"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/include/usb_spec.h",
+    "sha256": "5ad2100f3ca3d494896190fe9d7e6e76ad39d73a342bf641f9538d495362ba9a"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/npw/host_config/fatfs/ehci/usb_host_config.h",
+    "sha256": "a765633b2f6979cf439746af0d1f6300faa8f92de16102723290f7a4566825ac"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/phy/usb_phy.c",
+    "sha256": "8d393b9983de9162b372d3ca0a8dcf2839caf31dac82b1676c93f88147ca9c0a"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/phy/usb_phy.h",
+    "sha256": "3a8fa1954c5a11c5ed1262e8e6f78d9d577dc023bbf9341e405f28d1f7ed893b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/config/usb_device_config.h",
+    "sha256": "24785bcb2784d15cf5e0c1f459cdd214ebd0160d33e924dbf35db5d8634cdac0"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/config/usb_host_config.h",
+    "sha256": "c8e28ee42f8c5e5010fcb4b126445d3bcae424245701c4d10652d148d9014081"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_audio.c",
+    "sha256": "5abfe90c11d60d79962c1498726f7f936c44da5988aec3bc5f9c76becda41653"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_audio.h",
+    "sha256": "08d882cf815faa7bebecb8af46ebb08527c527aab68580792070b4188dfe07d8"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_ccid.c",
+    "sha256": "9655e0a6ff8b6e0c24192323492fefa323c81e10dedb4cdb54385c95c20362e4"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_ccid.h",
+    "sha256": "0f1b438797797e1b8285e9463c81f65dfd93b6dbbe9b828c91ddd53b2d79c738"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_cdc_acm.c",
+    "sha256": "92d3b61ca976f7dfa870229b18ab9cdd5704ae8c24121d2e6c3cf30c397e0bc0"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_cdc_acm.h",
+    "sha256": "35cf37f38699a339663b70f8275effab0be6076267b53fc60b347b59cbef99cf"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_cdc_rndis.c",
+    "sha256": "0b5973988af6a1896cca0f18c8854cb813704a21d86cdcb3fc29e020d33fb48f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_cdc_rndis.h",
+    "sha256": "8f7e0ccc205cab9e498051758835b396514542271a3d2306acaf4b1c7de3ed8b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_class.c",
+    "sha256": "4e61ffc048132d6c71e2eeb377bdcc781a520f98a8be08f2ba952406af40a887"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_class.h",
+    "sha256": "19fb1e0c92dd0b5d0389534be263342bc21fc0a7c00f8bb628298e712185a0f7"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_dfu.c",
+    "sha256": "e135e360c1d9fbf96ede5181a460c01c1b16162c55076a99c3a9f3418c95f34c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_dfu.h",
+    "sha256": "5d347faae2c69852cf5afc37861404700f6f6aa3e4afa3ad113260f2959701a9"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_hid.c",
+    "sha256": "b7f2a9dc23d0042ecbebc0eb90ac0a8a38162b54b0fa46df476c703961e4753b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_hid.h",
+    "sha256": "aca276d13fe40a566350cbcfa06045d96d08608c5147c4943439fdb6dd30bc07"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_msc.c",
+    "sha256": "e69012be4c9983043a1b3728ee0260348c2166041d90ce65d6dbb9a149ead10f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_msc.h",
+    "sha256": "75de444cf9131398726e54c4f69ea17fc8354eceda6360b03a087272e18bc91f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_msc_ufi.c",
+    "sha256": "845fe564a86fc3a1e73365d0ae1d98c8f0c5115e7c32efd70a5a046b59707630"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_msc_ufi.h",
+    "sha256": "4281878e3cc7c4bcc02017691b4339678f384eb7e60b18af9684eeff7cad16de"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_phdc.c",
+    "sha256": "cac3e8a4d81e2ca80ecd94d47a44d2cce91dfeb555a896d941908523b85f3e88"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_phdc.h",
+    "sha256": "9bb723babfe81e58a54171ea822d2317d642fff2cba5cc2b105a076329a76f13"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_printer.c",
+    "sha256": "bcd22b76be082a57f3196c11041a5a3ad7d8348dbe433942a70094ba84659ed3"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_printer.h",
+    "sha256": "d7fbaa8157f88f1cacb85a7c9685f04e19cbe6b1436b5e33e920cdcf08b26319"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_video.c",
+    "sha256": "0e88a8f5f52b587d447c2c4c0d6bc648c7b093fdca058cd5ad2700a32728f7bd"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/class/usb_device_video.h",
+    "sha256": "231f97003786cc29a738b36e84cc306b8686cc56a7da836aff4a1346270e4815"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/usb_device_ch9.c",
+    "sha256": "f6e7400a8997813881caa5ef0a65143e55dd65b7cf0f5a6cf906cfe5da790e49"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/templates/device/usb_device_ch9.h",
+    "sha256": "7fa1120120585b674c837487e0ebe5c9a391e46a9e8b71b5b302b97e29b3800e"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/usb_cdc_adapter/inf/cdc.cat",
+    "sha256": "d1b10680ccde605d48b2b9db1207b3284a121bb53e3c835007451c6c7a5c0350"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/usb_cdc_adapter/inf/fsl_ucwxp.inf",
+    "sha256": "80d58cd19854dead448ac32a34987fa9aadfb268bc9936974b572d5d4c3668f3"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/usb_cdc_adapter/usb_device_cdc_acm.c",
+    "sha256": "a855a6ef2b933b246764bd245719e42592d71bacecf2fc1fcacc6f205e60ccbe"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/usb_cdc_adapter/usb_device_cdc_acm.h",
+    "sha256": "c1c0c6018ea7f3726dc8f7761cc1316750699e975d96b22844134a231059ba63"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/usb_cdc_adapter/usb_device_ch9.c",
+    "sha256": "94c99510c65fcbf1b5c66ad83615ad870bc7ad5bd2b20f731d409d294f41a639"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/usb_cdc_adapter/usb_device_ch9.h",
+    "sha256": "7fa1120120585b674c837487e0ebe5c9a391e46a9e8b71b5b302b97e29b3800e"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/usb_cdc_adapter/usb_device_class.c",
+    "sha256": "910939423f6837383ee39ae5e6e716afd6a5d2051d2121732ce832ea83c3a64b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/usb_cdc_adapter/usb_device_class.h",
+    "sha256": "9045680045ccb3921b68caaf5f81e57cb4a704105f333094d6f6553bbafab63c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/usb_cdc_adapter/usb_device_config.h",
+    "sha256": "64640da8759f823d3d67b5612fec7704fa7e9287f6247a055abb58421b2644f3"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/usb_cdc_adapter/usb_device_descriptor.c",
+    "sha256": "57c217dae52d5b246b24131bc01600269fbc1949b7d890aca0a27c9f72a58d1f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/components/usb/usb_cdc_adapter/usb_device_descriptor.h",
+    "sha256": "dbdd3aaa2a755e68463bfbfa1a22352481ca9ad443fc9a54a924727fe1b07ac9"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/doc/GPL3_permission_statement.txt",
+    "sha256": "5c794d1b342d029254f3228570317315ebe1164244db208cff6541536712c9c3"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/doc/read me.txt",
+    "sha256": "b11880755309fa7a866d0874e9aa1a0a629a16ee37fbe177d6cc658977c43a7d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/doc/version.txt",
+    "sha256": "af73f068d2637fc52741f64eee277de6a2a2c8897353798ff6cde815516ae308"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/LICENSE",
+    "sha256": "0b383d5a63da644f628d99c33976ea6487ed89aaa59f0b3257992deac1171e6b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/board/board.c",
+    "sha256": "c3756640058e5cb2ac3e9f1adc782d850f59712708f7e63ef4acbe17fd347009"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/board/board.h",
+    "sha256": "c92ecc147b994d597ef9ed53b4977cef8376edb9060b163196816c00500ab4ee"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/board/clock_config.c",
+    "sha256": "0a5229ca8607e89f29789d22db63b59d1d8b85e23c4e1844a1234c9a5533beac"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/board/clock_config.h",
+    "sha256": "4e28b349d947f96ac9ad5124158171eb97b8c9ee9750d67b8ee876c09c337797"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/board/pin_mux.c",
+    "sha256": "236dfe267524cdfd522312dec718bb752694f769ce2e2377312288692afd56a8"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/board/pin_mux.h",
+    "sha256": "3b2e4fa219055172ee922d4db7cc68a72448ca4e4166e90fb26770c924f11c5b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/board/RTE_Device.h",
+    "sha256": "394716c680e6242d5f3c85a160acad8e9f62b7e4b261917eda2e4a44447b8423"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/DriverTemplates/Driver_CAN.c",
+    "sha256": "9e75f192a57f725fdb413f64199d7733ca16f683d9b61b2167cdd12c77cc7d05"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/DriverTemplates/Driver_ETH_MAC.c",
+    "sha256": "e0afa87815a08faf1c3a1940bd30f948df2f144ee305dfec6d77bfffa5bf51fe"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/DriverTemplates/Driver_ETH_PHY.c",
+    "sha256": "9efabc231b616e16cd1d7f9280ac54ed679e713260895d64b470309228fd062c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/DriverTemplates/Driver_Flash.c",
+    "sha256": "8f067f1153341b9b711e63ff06e7a0e2dd469e00f8885694129ee1da39a0730d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/DriverTemplates/Driver_I2C.c",
+    "sha256": "88a4d6b5fa88e02b1d35499fba538d9f8ad2b1e900ca837c4556092d1058bb16"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/DriverTemplates/Driver_MCI.c",
+    "sha256": "d459e6b0aa80ff31af3ffa9c47aa20d57fa45cc6877c52f48cf588bdc12a1ed9"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/DriverTemplates/Driver_SAI.c",
+    "sha256": "cf7219be5ed99d4d9caeb887a52dab226f6a3107a9e16b87721970db1a340131"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/DriverTemplates/Driver_SPI.c",
+    "sha256": "28299589f0afd96c9d97905b156d23be54a7549115023e86ccaa09877af88748"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/DriverTemplates/Driver_Storage.c",
+    "sha256": "600cdcaaf5bff079aae006be5939339d2af37e71e42c70471fc18767b4306937"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/DriverTemplates/Driver_USART.c",
+    "sha256": "4925bbe0b7e92cb02d2599bb64bfb76619505b52a61674d70c5e86ad42bea641"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/DriverTemplates/Driver_USBD.c",
+    "sha256": "19fb6523b2237d033dbfa9985b6d6ac88d656755a809ec576376f8f932cd3238"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/DriverTemplates/Driver_USBH.c",
+    "sha256": "4b35dd080c47cc8db49ce46cb4592ae4cf7c494f3f398943d2ef6b26f8f92399"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/Include/Driver_CAN.h",
+    "sha256": "ab5806f71e3fd558c471bf1f81fa01edfd4489375e8d7f9181fb6a25c09f49e3"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/Include/Driver_Common.h",
+    "sha256": "f7e9515637b8300ecc5f4c137771b84414f66bf77702d159fc1e5bf0213f285c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/Include/Driver_ETH.h",
+    "sha256": "139d59e17eaca4e807af013b4d5d80882ab6d855e08da5a0432943bf77d56755"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/Include/Driver_ETH_MAC.h",
+    "sha256": "b48b20c762f71b4c7b59b40f5ad6b1330c776dfc615fbd480bede50f9012fa43"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/Include/Driver_ETH_PHY.h",
+    "sha256": "7d25dc2a896247285ff1e0c68a1bbb7cf20ebfd157d6c9f21d4c31be9429d62e"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/Include/Driver_Flash.h",
+    "sha256": "265c257a00ee3d088ce0c49aaf034f3ab6779b3bfd3bc9b86a9305acc69715df"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/Include/Driver_I2C.h",
+    "sha256": "19fe8a9d8841c034a2f77ae8e351edbd661070c3fb569ee9190fe281d472fbbc"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/Include/Driver_MCI.h",
+    "sha256": "64b3c9865d0b3e439736d43020d16c8192743dbdbb1758d0c732601278d3337f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/Include/Driver_NAND.h",
+    "sha256": "53c048ce58017846f137c7925968f864f11ae423cc122848f31e12f4f1bad8ed"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/Include/Driver_SAI.h",
+    "sha256": "866e75fb6689fe730a4161fccadefc5b3ae4e8956e13b9d20d1d070900af7e7b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/Include/Driver_SPI.h",
+    "sha256": "f454a393e6a711d0c6fc05c698a36d98e7a797fdad35aec06af04588b9dd9c4a"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/Include/Driver_USART.h",
+    "sha256": "cda1beb420624b393bb55a548ead8c159263eb85aaa0cb1138eebe1bc2b1d5bf"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/Include/Driver_USB.h",
+    "sha256": "9fea3ae849e05873d78cba631b5fdc9908c68b3df167005673972f415fc88dfd"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/Include/Driver_USBD.h",
+    "sha256": "3d26bc5bfdd741084317d5dc30a36856d8fa31152a037f5ab231f431fc9c566f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/Include/Driver_USBH.h",
+    "sha256": "30a306848644e6c42d99a820b3db6e9891bf761a7340d3005a3fb1fa8bddd0d4"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Driver/Include/Driver_WiFi.h",
+    "sha256": "2d5aa67b75a4dde659f9ab5413e81c6ed1b9b7d87ec0616c1a6d2683738dbb2d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/arm_common_tables.h",
+    "sha256": "361cfd423ad0d6e49372767708fc1dfd1d7035d8ac94d81cab9a7d7d232783cd"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/arm_const_structs.h",
+    "sha256": "7dec892e089bb12d2d5bc0cf1d78751390674768e41ff716c7de769fab32ecce"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/arm_math.h",
+    "sha256": "1c02f8680817ba346abed4045ff42eb958bbeb58921a9f90f59e3700a9c4adc6"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/cmsis_armcc.h",
+    "sha256": "2f68d630c40a5cf65feb962bd6eba55db98c8745b92e310b54fcf02d09ba3d13"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/cmsis_armclang.h",
+    "sha256": "a6fd2a7cf4a02fbf90c5f241bc3cebd270a94d270d2a89d294e7cac65a018e32"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/cmsis_armclang_ltm.h",
+    "sha256": "92c31663f33e5b7a074f22d96eee87dd065cbc9f76a9de627c4babb6ffd7ea66"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/cmsis_compiler.h",
+    "sha256": "2ec9f436c763d0ab134b22976733c6e5c69269d5e5dd52de3635791a744516af"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/cmsis_gcc.h",
+    "sha256": "337d09284d9f280d739ca5c7db2a6eda83ae194ad647e1f1722f24a37452244c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/cmsis_iccarm.h",
+    "sha256": "eb6bee295f89475f81a550edb4e8c47eb55c715e25541a03516e8db70eb12abb"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/cmsis_version.h",
+    "sha256": "280b9fc8739aefa878d47e68d7adbd4908a15f98ec193cdba1a4b514133f5c34"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/core_armv81mml.h",
+    "sha256": "6db944042cbffc3623139449444bd8c7a7eeb77db098afd20eccd968885b53b9"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/core_armv8mbl.h",
+    "sha256": "a34990ad3b9dbcd67e6390fccdbcea4e7b918a4b3d405c87858e1a746123e4ce"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/core_armv8mml.h",
+    "sha256": "57b4e5ec29bba7465f37cb10d2f5f41efb7bde4b0d9ffca801ef2373271f2152"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/core_cm0.h",
+    "sha256": "c95e648b06752af6265919691ed6a9102f74fcdcdefb8b53cb2da379fbaac3fc"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/core_cm0plus.h",
+    "sha256": "1bb65ca4d90d157dbe1aa58b2d99a7541e10451caa633281e89191dff5e047ff"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/core_cm1.h",
+    "sha256": "9655cca6d7cf48ab4467182555e45f249142b23fdf05861e7ee5be35e9ea0e39"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/core_cm23.h",
+    "sha256": "33f21db4a68f1f92de5beae8ec12faa6679ffecda92a228402f63ab423181e17"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/core_cm3.h",
+    "sha256": "afdbc54edd8e377b0d7f13228aeb958820f9afbdc1a780c2dd5df2e9de94986d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/core_cm33.h",
+    "sha256": "57c2cb1e2819a10821c12404a11b06f1c06b158c0d7af852e37884ce5f7a5e82"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/core_cm35p.h",
+    "sha256": "26f719807bd66523688ab49ea0adc12583292097245de8e982280909568d308e"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/core_cm4.h",
+    "sha256": "66a75019ad0e6ea2b48984cd56acaa36ce3d2543130c3e1d52e1978c32ae1924"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/core_cm7.h",
+    "sha256": "e08fef26f046e72c8398f3e6d20e20a2b44bc334992b2ee7c2c9f8df7f10147b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/core_dsp.h",
+    "sha256": "df9523ea3341b7398a4a3f6a9b5a9f68b45583ad0bcd38c179e1da1032b422c1"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/core_sc000.h",
+    "sha256": "470776a406c6211242627a8e5d09f2bbc32b184f25ec746904ecbcd8be988a8f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/core_sc300.h",
+    "sha256": "a1c44c6712da3bd3e0bf65a0aef03f25e29f32f3309e241f7e3c22f8a22d0a17"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/mpu_armv7.h",
+    "sha256": "e504a7d47dfdb3d61dfae3cf08d27ba9bc69aa4b2b81ca568efdafd65d6abdcc"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/mpu_armv8.h",
+    "sha256": "95a05e406c38cb770621f07ac066b8c89b90874a50559ec9b10c9587b6049503"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/Include/tz_context.h",
+    "sha256": "7fcc21fc190f6fd970390e9caaa6a86d72fd10f9edf4efab36f12aecf1a8baa0"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/CMSIS/LICENSE.txt",
+    "sha256": "e03ba41d7fab20700769fe4118bab50d800cb74f990353a05d2f5fff1c228363"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/cmsis_drivers/fsl_lpi2c_cmsis.c",
+    "sha256": "926fb4057d47bd898112dd66ee885d6a2f7c375124027d119d4393fe7ebbda01"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/cmsis_drivers/fsl_lpi2c_cmsis.h",
+    "sha256": "a370940878fdc4e394605b6d1c770d59bc80bc4b778c3a8fce0c191d9491fe89"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/cmsis_drivers/fsl_lpspi_cmsis.c",
+    "sha256": "71b72ef135390ee3b338a466956aaba0f2e4fb9d95278b416a00f476e0d77549"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/cmsis_drivers/fsl_lpspi_cmsis.h",
+    "sha256": "7573fdcfe43f908e02e67fc5fc178cdade3cf45ec06200671c5437eeb0d7f397"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/cmsis_drivers/fsl_lpuart_cmsis.c",
+    "sha256": "7cbc9c2d9f7af834f7d54e0bf3b26057f942eda03afc379a315cb520cb6b0ebb"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/cmsis_drivers/fsl_lpuart_cmsis.h",
+    "sha256": "1324f02f8480294642e39ccd1c2b32158cba3b7d8726e5b9c7d9aa77752d34e7"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/lists/fsl_component_generic_list.c",
+    "sha256": "bda65a44cd36c12fa6c1fa59a68894ca2a2627627ef535876fc010240800fa1d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/lists/fsl_component_generic_list.h",
+    "sha256": "e758ea6a224fc57634982eedb6144a008d81d395c65c1e7be7284cd516c09be8"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/osa/fsl_os_abstraction.h",
+    "sha256": "35cd2815942a35c999cda9b3c3baeb9f4a7deb30fde82132c5a79548704ab477"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/osa/fsl_os_abstraction_bm.c",
+    "sha256": "e341bb9d0a7226c3ae438da2f12030862c2c1448cc1ad2c95cfc6b9c2bf47a0a"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/osa/fsl_os_abstraction_bm.h",
+    "sha256": "f6fb8eb93eeeabe10e1a1fa8d54dd191239d33eb3843585f83e5454cc3956303"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/osa/fsl_os_abstraction_config.h",
+    "sha256": "de8bc999dc7b1370edb68c3dc2a3eeea1a1c483dcb6da87b4d0170eb735f0cd8"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/osa/fsl_os_abstraction_threadx.c",
+    "sha256": "0b370fc7bb1b523ef5c6a9339eabba8e5a8c36e17dda0cedc254538c9ea354fb"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/osa/fsl_os_abstraction_threadx.h",
+    "sha256": "bab790e643713179434be7a7261eb0ef9169a610f84fb3dc979542a1dbfc8d9c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/serial_manager/fsl_component_serial_manager.c",
+    "sha256": "2e6b0f6d2f1f52a5aacda4132603f32e8a41afa164bcc59b2850ac04db586471"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/serial_manager/fsl_component_serial_manager.h",
+    "sha256": "a13e6e5c0f8ae352b75383dcb3f93e4f92f5a894a66db5ed7128d50ca5496cd5"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/serial_manager/fsl_component_serial_port_internal.h",
+    "sha256": "e78bc0c6438d08f581992fac17e6ea342b91468af9dde269ff2829e87ed969ab"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/serial_manager/fsl_component_serial_port_spi.c",
+    "sha256": "dd1d5305cf8b9e430871c582e62688da2af17604f8e9e2a3e0c7662f8940ca52"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/serial_manager/fsl_component_serial_port_spi.h",
+    "sha256": "f69cbfb92f525a8aa977864d35c4094c05b59a4ffad3377edff80d325b60633f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/serial_manager/fsl_component_serial_port_swo.c",
+    "sha256": "26f79e6b43dc5d70300015b288a02308b375eafe99ff9868d7cbcddd632a4197"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/serial_manager/fsl_component_serial_port_swo.h",
+    "sha256": "a7fadd221534ecce294d65b6e6f7128b56154f6375d5daf22910a0e001e17952"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/serial_manager/fsl_component_serial_port_uart.c",
+    "sha256": "335739cfd089d1b9ec7f674a90fd422b0e56e4f02a29794b7db7eaad83aded76"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/serial_manager/fsl_component_serial_port_uart.h",
+    "sha256": "44baab8eedd6db4799ed0a32ac1020947170d52941bb23c616c30afcdd2454ca"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/serial_manager/fsl_component_serial_port_usb.c",
+    "sha256": "59737f3ef269d97420d64d3a32cac1e8b9fdd43b3744ced112587b22e569847a"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/serial_manager/fsl_component_serial_port_usb.h",
+    "sha256": "75cdf7c2ef16b1101dacab63d367405039c9320c769f93404fac0d66096a50f5"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/serial_manager/fsl_component_serial_port_virtual.c",
+    "sha256": "f50dfdf00025fdf0666543ed8009de7e9b0d7b3870846cc4380faab432b7d62c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/serial_manager/fsl_component_serial_port_virtual.h",
+    "sha256": "99f745af3e2afea1ed8acf8bb5104727c1891acaa07a0003bd2d62542e80d01e"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/uart/fsl_adapter_lpuart.c",
+    "sha256": "4168c5eb534d7b89f89b153e67f4f3e6c699da7555c4da59ca484ca524ff7f78"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/components/uart/fsl_adapter_uart.h",
+    "sha256": "9ae76347b124683d91206f5fe25b224c5e2f77fc94bdcd9da7e1175125f8ac43"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/deceive/fsl_device_registers.h",
+    "sha256": "febbd586c7b0f35e272b2e883e7efb7a1a7ade23befa17e362af382f29f458c1"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/deceive/MIMXRT1064.h",
+    "sha256": "009adf3748f67981cfc96e76e7e06732e9052fe2bf9507efc0e75390a0e844cc"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/deceive/MIMXRT1064_features.h",
+    "sha256": "7141788e1d4161c4691a24728a13b17b4fba4cab2c3a0fbaf7d2d2cf5fc41f12"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/deceive/system_MIMXRT1064.c",
+    "sha256": "66fc338b67ac50e16a1996fc2e5864338b988bcda7e877f9b71f92cbc7c4fda5"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/deceive/system_MIMXRT1064.h",
+    "sha256": "e21cd9492e89092474b37f5d097480f028785610c0e87043cbbf0d08b54fd4c2"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_adc.c",
+    "sha256": "e95a9315736d0be3b59d16bb3fe85dd28635d27298e4bb8a27036a64b63558b1"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_adc.h",
+    "sha256": "9239ff5be1db6293239c0268f0bb9873fd44aab7c6bfb8fe2f2d5dfa2e02d528"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_adc_etc.c",
+    "sha256": "ea902f2ec76aabe50d22804008dc8f1e3948912a10ae8afccd3d9c852ddd9fb5"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_adc_etc.h",
+    "sha256": "44a371519a27bea8bd45828b3005ed8db0771d618885dc4aa88547a962db88c6"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_aipstz.c",
+    "sha256": "1766aa7565be4108f52e32ec0e1209ca1956a0d048feb66ff35c5f1a99ada1b4"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_aipstz.h",
+    "sha256": "6127bb5c0e008e50dee9d1c1157b4e96c1bcffe242ebc138a2a8485488a2d08e"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_aoi.c",
+    "sha256": "0a76b71cc7c5f7c4f1ad1297bebe3a13cb16f23c7bfb00ed9180ce3e110bb827"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_aoi.h",
+    "sha256": "139dcb914bd3eb33ca603f856bc1b1a83a6a8d2823db4ef5cdb1ba52973e6661"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_bee.c",
+    "sha256": "e93553dd5e8fc41ad52d7355021da255205ec7b64c700dc1856dee3a91ef3614"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_bee.h",
+    "sha256": "d996ed5dd14f3fdd72ec6570f94fa665e89fb67737256918e8ce16061828fb51"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_cache.c",
+    "sha256": "4b3f950167303b9beb10c9e8b56c33c0a9b66151ebbcfa6fda3d4d04d7cae84c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_cache.h",
+    "sha256": "241fa050b117fb77ae3073cc5f419340a4f9fdfc9cf8c8f4151a38533ed74f37"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_clock.c",
+    "sha256": "d6cce7cdfa0f984f5652d7e86d433c7b83b1884b3f09346b83b820f592c682ea"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_clock.h",
+    "sha256": "ce487f2c67a91c12c0405ccc39aee4712a98b928c069c0f5e563a18043b960ce"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_cmp.c",
+    "sha256": "cb39ebaffb6de05ec22fcb636ebdf78511f9b995957ccc58290e128222fce78f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_cmp.h",
+    "sha256": "d3b64561dcac10cc282838fda3631d879ee5e51f906d2e3f2aaf318de48feaa8"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_common.c",
+    "sha256": "542430dd1d611947dd0ff05613636360d510cf35d87206b96321c14f4fb74c0d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_common.h",
+    "sha256": "b61bedf8b61d9cd38b653bc110d7121bbfba7650ee4db1ca423956384a5a0555"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_common_arm.c",
+    "sha256": "fef45e06d9310f0ce7d70d7ee9fbb82e18f1001f19b8cb65cbc24bdebfe7ee89"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_common_arm.h",
+    "sha256": "1a374f118b327d34ecb36a7478658738745cbf0f2bf33f5b54feb7bcb44d3918"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_csi.c",
+    "sha256": "9e85de909df3149378b5af921dd75cf0c16e76f522b3513e30cffa50467f7d93"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_csi.h",
+    "sha256": "0edc961ff610c7cf78cd1eb82c5c56fa5c58fd83acc98f0f264082f2b9c884de"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_dcdc.c",
+    "sha256": "25dd24d0392de178a73229c44fe7f4ec49c30fc0396e367c71ff3ecb6724c76e"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_dcdc.h",
+    "sha256": "5fb34f39c46cf207975c6407c2324304f3889e5932725e457298665886f4b6d0"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_dcp.c",
+    "sha256": "59592851193560df637376a8cf597cc66db3befeb85dcc9f461f6eef739b01f4"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_dcp.h",
+    "sha256": "14d9ccee17b7511b5ccb59aadd1a6f6d7997eaf1931a45d3e615aff98bf3a69e"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_dmamux.c",
+    "sha256": "4d6793676286cdbf3e46bf4134d86dfd76b537462badd59f3a06afdea0261d9b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_dmamux.h",
+    "sha256": "9e5d516f52e96a86fdd370db28bb308e2376d1989f9a9fb74a51dadd08fa701a"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_edma.c",
+    "sha256": "0fcbcb935593ce708c11395318f7f34f4dbadf523ffbde0e7e0def15ce6acf3f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_edma.h",
+    "sha256": "d71b71a10c4ae101aecd84bc3c076a3b034e06b6ee1b35b87d36492b5ed71612"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_elcdif.c",
+    "sha256": "c796ecfb6ccf2d2330720b7215870eef8f2af487003290e620cf7176b1e6062d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_elcdif.h",
+    "sha256": "e76cdd3fd309cd4b803ca26166f14c9e0a82c4d0d10ce6db3301b6a89106f731"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_enc.c",
+    "sha256": "48dce63dd73e54c1f1db310db2ce08f8166b2c9a10606f5373e91c659866f8b9"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_enc.h",
+    "sha256": "4c5435f7351ddf9b4ba391e1c189ac18b02e1010a76b58c203f0352cc4e43b13"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_enet.c",
+    "sha256": "cd7c55443a6d5f03a0c356ebf3353b26e97d0502cb2c8efd67773f71bd863ddb"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_enet.h",
+    "sha256": "39d2b40cde7fb8e6eb40f6dad5d62806ea9e096543d5246114c25cb5e45716e8"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_ewm.c",
+    "sha256": "9c02848d45eb4623624315163c42b1c231f6163cd67cb6cf54460eb515ef307a"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_ewm.h",
+    "sha256": "50016d7354460635e3bfb4369b7ae612bdc3414568b823a3e428e3a1278c96e6"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexcan.c",
+    "sha256": "4f034438708f5967d151110667d54cd782e3da272f73437eb1dfcbbe00d9cba6"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexcan.h",
+    "sha256": "46525c886ace5ca7fa0ad762f63a5d9a76e6db03d69a74526137d2d76ec776f6"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexcan_edma.c",
+    "sha256": "71b191668e442167cbea93bf7afa247a2e2da16ef78ab0528af3dd0048cfa97c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexcan_edma.h",
+    "sha256": "c8efa291d44d1a23c4697823a7e2ce880e3f861b45fb200bca78906a63fd5223"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio.c",
+    "sha256": "6a10cab3b74c1e33bb0baeffbf96cd83a82fd6b3eb0a04bf16da24e3e92e4773"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio.h",
+    "sha256": "97de7b7dc453ffea47ee56230ea5e50534ce0035df137a65192593a091c05a1d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_camera.c",
+    "sha256": "abb057d7fb4c5c9be370be42dd501d6dcccdfbfbfbc78fd06e34fcb045d9bf54"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_camera.h",
+    "sha256": "0bfac04060e03e4d1035c71faaef693fc2652c1c31cde3fc016fb898538c1416"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_camera_edma.c",
+    "sha256": "f3e7435de907acff7eee606005bee36a4370a6436dc710e360812a91971014d4"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_camera_edma.h",
+    "sha256": "566eb819a911b7dd97907b37cd7f0c9ab6f32b2fd978261049e5079756783cd2"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_i2c_master.c",
+    "sha256": "815e1b8a9ea008e21e6d4adedc39d129ffbc6efcd2cd28dc4d4688905ef0e42f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_i2c_master.h",
+    "sha256": "60d811aa452749dad8a4ee3fddeb62ade219e7492ca0143104b59c0ed6884904"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_i2s.c",
+    "sha256": "684f6e37bfe5562faa2668a44251a59397d0b4652e9b61b33c3607d96c6a61b5"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_i2s.h",
+    "sha256": "2f7c4eef0fc0b2292d4a3d046ffd24f69ab2b48cf1ef42bb548c8056d9db3e44"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_i2s_edma.c",
+    "sha256": "7cd9bfff07c2555bf94f6c4652f3d37b1f33cc138d705ab842cb515260d15b08"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_i2s_edma.h",
+    "sha256": "6c029f0b7b6fb914b950e440b5a65b25ad450f33290cc18302db87cb1c0cc6e2"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_mculcd.c",
+    "sha256": "95cd21a1946d0bd198d1255b14cc67f92f3723bba8e3cb98597650f8853ec2db"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_mculcd.h",
+    "sha256": "639cfb068960d543bc98c3beec5e260f0ded550cb4f909e0b2070f5b7ddb9cde"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_mculcd_edma.c",
+    "sha256": "321daa6e2039ce7214c69cb7f880d1826775000efddc09dd0f30708d4b098b95"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_mculcd_edma.h",
+    "sha256": "b523f7d2de25e3736dff22804fc0a41d18777dcb99650b488109149cf26e8923"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_spi.c",
+    "sha256": "409728b8d1c80b933958728b2d5fa79fcb6f4da1c65bd1eceadd644f452cf1d6"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_spi.h",
+    "sha256": "a5e766cc2ddd4c4e31aac06ab0d002447d0a0e3d188d485adb79f341d46db671"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_spi_edma.c",
+    "sha256": "8e2e5c8c31ca4fb735dcbc237c232bc82e2dbba0b885b10078f2fef2662ccaf8"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_spi_edma.h",
+    "sha256": "78cb8646d32a86154e47c32a811ec3df5d4fb807f1e2ecf6c4b3cb33a8ee739c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_uart.c",
+    "sha256": "46bef2760e0bcb211b34de87d91b1b557c9271c08e95d121210048c325278be5"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_uart.h",
+    "sha256": "3c9f55c842a2a392cffe58f1b95c2c0c5dc6ed8bfec27ad3f4a5d7e5610e45c3"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_uart_edma.c",
+    "sha256": "678c26e210ad97554707babd6a48ba09f0a5f4547f1e0c9bb483d1a5b3257422"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexio_uart_edma.h",
+    "sha256": "26208827037f15108026e4496087675468da49ecc78a7c0625f167369e055fd9"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexram.c",
+    "sha256": "6582a5ba2d30e93f1417a4a9d79ae6d2779032f4b9426757d9118ffc29975d1b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexram.h",
+    "sha256": "b80556afd2874951f66f2a4e1db6b5cbc59cd67b86a5847f840b97873fb8b110"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexram_allocate.c",
+    "sha256": "51c3a300507c9e0adbf09b48590d023204049f7efe30fa5477d489acfbb832ef"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexram_allocate.h",
+    "sha256": "48ed983bbcf783b6e3fb4ab30251b9c64bd7b373f16b1ba28110c60736a0bd8b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexspi.c",
+    "sha256": "50035ea1871c47e440c942a2995449362a6f67707f5ad202bd9ea1219492fef9"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexspi.h",
+    "sha256": "943015be9d55d8a3af9be2f5ce61a38873fe740e3132d08605936075a4dbb422"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexspi_edma.c",
+    "sha256": "f21b9e9b763a46292a574b781e11524c9fd07c360efbce7eee49fb1105809680"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_flexspi_edma.h",
+    "sha256": "91e300130a61f068f2662ca20fbef590dda7bd5bcc1dbf779c069e3d49a6867a"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_gpc.c",
+    "sha256": "e3c2146f9a2a0fef03a8be13487b1f322aacdd8eb377c26b4a68e9ae7e9eabf8"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_gpc.h",
+    "sha256": "7720636cd4f89df60f2c2edc1a5649cdec16cc9867cc7ab6e476c3ae1f2392aa"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_gpio.c",
+    "sha256": "5513cb94ca5ee75b75f9c589c341e97a6862a1c1c9bcb2ddd293f71c9d25d387"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_gpio.h",
+    "sha256": "041242194eccfa5f89de042e9fccd4090a37de3558d509cef07736fa0af17418"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_gpt.c",
+    "sha256": "a2246f702f360188c47e654b8b8d10f0a678497573c23c0f103209558271b117"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_gpt.h",
+    "sha256": "9ac153fd2a5b8a73c390f54d8f2c073076e036f51202958ca6241882019b1162"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_iomuxc.h",
+    "sha256": "00e4ebdf2c0e5abea240c3cac05abf0ae884c4ae5aa495a28f9d23b981a621e7"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_kpp.c",
+    "sha256": "70b7775c8efb59dd670de19a6ebde920c8c7d4b36574981b4672a339db0c360a"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_kpp.h",
+    "sha256": "92c7b672fe26aa8a4573317b5e7c6aff521e9e65076c66f5c9279bcbc2c27920"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_lpi2c.c",
+    "sha256": "b746c9b0b18b6d9faf424602681fd60d3a03c7d88107c65d7369513d8fdbad4c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_lpi2c.h",
+    "sha256": "f612146de8917c4c0d775eb4787565558cb183b31fb0ba0e1bdbb4367b85eb2f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_lpi2c_edma.c",
+    "sha256": "2e552ae0615ed39df2c52e1a3227c03c5f8528ac387a339cf4a69811d6e65b1f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_lpi2c_edma.h",
+    "sha256": "a021a553dec9be089c51325f42caaed7e7a82f65190e833525a844eb582016e9"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_lpspi.c",
+    "sha256": "244093733a2b83485b27f0d2122f44dfcb4b58c6f23e05a7e2f6483b723d2ba5"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_lpspi.h",
+    "sha256": "16f0ef0a52e46024cf9cddaacb25c2d2418bc33fa40254f9125efdb9a9bdf59a"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_lpspi_edma.c",
+    "sha256": "fd1b17141695fcb7d8be8ac0c74409896c9d0324c4ae1bba58cea641b7ed5a24"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_lpspi_edma.h",
+    "sha256": "23cb9831fdbea3b9b2ee951ff1b69359c619c9708edd16d32d1d57057a24b9b2"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_lpuart.c",
+    "sha256": "e7f12540afb7141bbd041f6c2ed7da31f64bf99035e4d399382349b059f0bf0d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_lpuart.h",
+    "sha256": "59df31d66119054b77261447d04fafc97f8c5e9682f71ae257c3170c4c1fe143"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_lpuart_edma.c",
+    "sha256": "38e65641d598412fc46174969afb490b60597a3c9fe1f85d2cb557bb356570ed"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_lpuart_edma.h",
+    "sha256": "ad994747f924646bc031bee3546043470e57e727a92c37f7bb66d5145c3f0f11"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_nic301.h",
+    "sha256": "e171d96a42a379548fca7d99385fae2743efc4492fae357dde6e534adad541c5"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_ocotp.c",
+    "sha256": "8ae6ea85da6cae1eac1fd4049efbe01621a8c468a10239a7217338d7efa49b1f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_ocotp.h",
+    "sha256": "0c0049b5c8806f3023b5175c1a343d97434b7b44730bc7417edaa82bc0fd2d79"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_pit.c",
+    "sha256": "71aa4d3b49c445047242fa7bcd34ef3f7daac93b66ca338b1615e10d6c0fd595"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_pit.h",
+    "sha256": "7aa9602865be5fa022f91895506dfc7701cc6d54e6ef4df99130555c084baacd"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_pmu.c",
+    "sha256": "6f2a4cf2de987e9ed841756f056facdacfb389547a6e36df72ae1f335ca1bf70"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_pmu.h",
+    "sha256": "2335c9376c55f41c146f55006774e93733dd011cfdb994b2a96c0708df15343d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_pwm.c",
+    "sha256": "37c985657af3fe596d7ffcf53d64bc4f8b57bcc18e3cbace598c28c0e4586aa0"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_pwm.h",
+    "sha256": "81e2f04b8e5acbb0c9dcd3b2726ddf950e95b7323166d30d30f347378e76b60d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_pxp.c",
+    "sha256": "cdf3bd1a260ab7c6fbfffa6a6c620c26ab77032303b6a091d649cb03726f0746"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_pxp.h",
+    "sha256": "ce8f127edd3772355fd7f787137802794c915dd663888ac3de352c445e57373e"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_qtmr.c",
+    "sha256": "026658e8f9f4edf0cfe1fb0b7e9a01217097594b8abb377e44b6f5f6e0cdb379"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_qtmr.h",
+    "sha256": "b6bb5628469c37908ce48eb28dcb55b900766531d326b727a58612a7c2109d4c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_romapi.c",
+    "sha256": "c21eff9f3c30631ab23bf9db4d2cd68e6e33980d6a1af649e04f931d08ee6f0c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_romapi.h",
+    "sha256": "d0e22fe7a4d5f2e7dadee5e49a12520c1b34ed2aa1efa60b8199119c60bf40b0"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_rtwdog.c",
+    "sha256": "e6b3db58178914da47ade944664dcf765cac061aa2704d9eae7d4fc097073178"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_rtwdog.h",
+    "sha256": "78d7e3ece6c01197b6f96b15b795cf51627bd55914f67a7496732354627be882"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_sai.c",
+    "sha256": "e125c71bf5708ad7e53b91f64708eec4a0b4eff7112747e4239eabc41233962a"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_sai.h",
+    "sha256": "576e6c77b20499dde0679a277cdccc9903b9a977ccf8a1e7c602ed0a49820f04"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_sai_edma.c",
+    "sha256": "cfead64884a5c1f39a1c66ffdccfad82e2225d843d7e0b4bff383db326ff0869"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_sai_edma.h",
+    "sha256": "df9289da9b50fc8b4f411d52e136ba93448253863a549f9ad3113d1c87b2f763"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_semc.c",
+    "sha256": "c566102072e62c2003a4dda673a0796b54e6eea2804f00db5c98749b67536a98"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_semc.h",
+    "sha256": "5e63e767532b2059ad9bd5976f2daf6c078e7c5dc3d80a4864638eafc10fbbdc"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_snvs_hp.c",
+    "sha256": "31a3e670bd50d710f22b041b641c54bc122d9daab924886536eafe61406bdab4"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_snvs_hp.h",
+    "sha256": "0b4990e06096cf72640730e89e1b9747554eeef856e34909e067511d4e67c5de"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_snvs_lp.c",
+    "sha256": "17e892670c6377d2dd541eaed58389a9980e1f734a753d60755223960af9cb6b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_snvs_lp.h",
+    "sha256": "7143826ffd2e9954278a7c6c8bd9825f0f3dc8bc8d80b5175d4cddd83a68330d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_spdif.c",
+    "sha256": "724f0d70dd674796253b7214592dbb1d22caab38645b79c3dee983df2ad24303"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_spdif.h",
+    "sha256": "fa61d5fc5ef24b54aca02d5c85466db5d387cd0c82ee15084e25d75221a65e00"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_spdif_edma.c",
+    "sha256": "e0b0b7ce247b41c481ca8342e486654328771994641dcca3ffb3ddee3146f106"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_spdif_edma.h",
+    "sha256": "e803c1d612132e319fe12141607e6b6f440bf43c507451123e6c493d8a4749c9"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_src.c",
+    "sha256": "61161393b0c43f3aa47349004b8a2d9e28c4f7f1c304743f39d67f3e81ec7b77"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_src.h",
+    "sha256": "34a8033242fe56fcc2fc55158ce4e523c47634b1f0c0e30bf44862262e2a4046"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_tempmon.c",
+    "sha256": "3bcbc1a26d9bae8b5d0095a809d2db52aacad4cb9593273cafd5d69b5ae1dd6b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_tempmon.h",
+    "sha256": "ca837be9b58eb26e34abb451952af665d9afd7f94ff44a689188086513dc419f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_trng.c",
+    "sha256": "72c6449d281431aa30d1fb12253b194695a8586bf12fcf6210b68c1b0b11aa43"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_trng.h",
+    "sha256": "4a9dfcc3e750b504caeaa3c5a70ecaf2e58c02d0c302d31a7a3872da3672672b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_tsc.c",
+    "sha256": "cda16ee612d1ed5e84dafb9b32920ee79d1758320342aca5e680ebe8627572c4"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_tsc.h",
+    "sha256": "bd6b88b1440a134d4fe901a7550e18b5b74d199b30de8bb3e71c0141dedbbc72"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_usdhc.c",
+    "sha256": "fb721f248c10a2ebcab616ccaf4346a3930cb91f069dfe6cd7bc765c097aea02"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_usdhc.h",
+    "sha256": "faca579e48fa6e2af1172d10b3abd0cb0eae150e12bed109cf716be027307f46"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_wdog.c",
+    "sha256": "7994d3241ad615cf1a8be61b3c309052444647a88f58aa98905a523062afc198"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_wdog.h",
+    "sha256": "877e5d954344ecc62411a7f66b685bf96a0c270eec33ee75e497be159a83fe4d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_xbara.c",
+    "sha256": "15711cf898531bf64f5b35430a3cf49f715f50b667a59519c047235d2150275d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_xbara.h",
+    "sha256": "5edeaecbaeb3b31b385f380eb7bf9922750860152a36e5d4bb9b18db1bb4c8da"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_xbarb.c",
+    "sha256": "cd0871086d8a6d47a368ebba0a614d8177a5f5db11e5aa20d949841c4ac1da24"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/drives/fsl_xbarb.h",
+    "sha256": "effaa4be833a43fac4339b50ee595314988fd61369f7ff5392c0b1f2476da9ca"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/startup/mdk/startup_MIMXRT1064.S",
+    "sha256": "e3e1cb019a59948ddca0c42c9639f5fa9b526e7e756558c6e09afdb005bed292"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/startup/mdk/startup_MIMXRT1064a.s",
+    "sha256": "bb285f533f4fbab81f24be15d9a0c9400ccaefc2fd720f5b9440b59c3577b274"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/utilities/debug_console/fsl_debug_console.c",
+    "sha256": "73c51a990deefe526eadb1031ba44cb9e8158a7f17677f18254ce1f700d53676"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/utilities/debug_console/fsl_debug_console.h",
+    "sha256": "9812613d8efb2b613678fc5e235a2b2bea9cc116623ff32a885cee062b4c2155"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/utilities/debug_console/fsl_debug_console_conf.h",
+    "sha256": "c187ca1d414f4e18d451a2a4e577e600d758bb4518ecb6b5150b2ab8f95a2f94"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/utilities/fsl_assert.c",
+    "sha256": "73eca897599357c486defdaea37ed3a84ee9c5cd82dada560266685ebf5f4aac"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/utilities/fsl_memcpy.S",
+    "sha256": "33a8a150e59c918dc9e304e7a9c2769bf9ba926d5803037e44d51f52596942be"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/utilities/fsl_notifier.c",
+    "sha256": "6d1b1c32fc43c50f95d34d984fa38dfef9379bcce6d1b28c3815120203498546"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/utilities/fsl_notifier.h",
+    "sha256": "993f8e473492809eced7788e2265ea73cbfb1e98ef3290eb3a862a1290db59f7"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/utilities/fsl_sbrk.c",
+    "sha256": "00cc1f70884068d481e91e3da6b4c627679b6b2fe9c634976f6a42abf9a4d245"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/utilities/fsl_shell.c",
+    "sha256": "3031bdfad6c75badcefc8adfa14d0989a4c9de2fa9e21c1209e2ce1c97255162"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/utilities/fsl_shell.h",
+    "sha256": "6a7e877484d6b8fb9df1c06f0d739e387ed5210e1cad744b4e4a8ce71a71cf79"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/utilities/str/fsl_str.c",
+    "sha256": "8477a036b92af91fad628d2a2e76398f5cd67acb3b738b34e47b4237420649c7"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/utilities/str/fsl_str.h",
+    "sha256": "f50ce104d5b3dd8d3d93c4bcc68fbf86f724ad96e564e2736e230b5503e20ed5"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/xip/evkmimxrt1064_flexspi_nor_config.c",
+    "sha256": "feec559bf9570043df37d6f1b5df15569f5454288690731d95263a75d02ba577"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/xip/evkmimxrt1064_flexspi_nor_config.h",
+    "sha256": "bb05d91deaf20ae1d404bd6470c14af2565ec6eb9ecf0552432bcecdbc6a3ae4"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/xip/evkmimxrt1064_sdram_ini_dcd.c",
+    "sha256": "f31a10e032f371529dccd947b031f9335f50136604ba16542d8bd958d1114276"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/xip/evkmimxrt1064_sdram_ini_dcd.h",
+    "sha256": "78cf23608c4daa710ae44f54f3d73a202eeff2d0a421c503265ed6e180f30801"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/xip/fsl_flexspi_nor_boot.c",
+    "sha256": "74d4106ebc1501c66bc841c226c9e2fb227e372f50cbcea9396667a76c0ef65f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/sdk/xip/fsl_flexspi_nor_boot.h",
+    "sha256": "c17d25c672ed9640c3a8845179a2e6f14ccf3c945f6bbf7b3fed2e68a400473d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_common/zf_common_clock.c",
+    "sha256": "0925c779218831a9aa6960d69af1ab3fa090fef348d252db741d5b51c6b4976e"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_common/zf_common_clock.h",
+    "sha256": "7bba991b6c12f2f5dd2ef8b117d7508cc7d1e719c8d1fc59cc13e68c0b330f3b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_common/zf_common_debug.c",
+    "sha256": "0759b6b9a15b62176f41df0251fe7d391d18ef7b57615359dc9f10a8f64a2757"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_common/zf_common_debug.h",
+    "sha256": "885d849e72f1a64d3ed085dfd82a5965c366dfa0d29be7ca5e82d85f25469529"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_common/zf_common_fifo.c",
+    "sha256": "388fb860b67672ee7f5ee7226bddc2049def6af1baa79d84eed5616963fdbce2"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_common/zf_common_fifo.h",
+    "sha256": "ac651be094fb0542a1e3f4df77fcd657f5c16b2da49cea846b0a6473d2213324"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_common/zf_common_font.c",
+    "sha256": "b4137a481b7cad844351495d1884649b49606ca3f1a74b0a137b8208a43d6d4e"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_common/zf_common_font.h",
+    "sha256": "651dc34cc62fd2a4486fc42bc1a0ecf043d354594f5d58ddb575d8678b5b43aa"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_common/zf_common_function.c",
+    "sha256": "9f2b91c593bf7317bf88c39c7d15156a0dd9ae5f41eafb1d0e687c050878e035"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_common/zf_common_function.h",
+    "sha256": "116e45f590e613b3b9f2790dcc32cec4e7b8c1a8172cc5c611a427a41dbb045f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_common/zf_common_headfile.h",
+    "sha256": "6b46551b126b25da5848a172a907eaad8395a89888a0cab02050a38cc85dfb35"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_common/zf_common_interrupt.c",
+    "sha256": "464bae56c74848c26c47410f4caf5b877e1a417a060dd42ed615f38bdc108904"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_common/zf_common_interrupt.h",
+    "sha256": "4aae17744d4e511ce3270d0d8473db5ed5743acd4e6fb7ccb3d39043996127be"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_common/zf_common_typedef.h",
+    "sha256": "c84742553a186d9b3fb053877bb9ad76f7ecf9dad9986c947e0eed0bbdff6390"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_common/zf_common_vector.c",
+    "sha256": "0437530edc0f2d3f2e88c3e764c94a9291d7e343fc0df0104718eb1d0f25054b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_common/zf_common_vector.h",
+    "sha256": "788b78e5f3ac49fc16faf2b5a01dd840531c23eb1b68c9037a0c9df7dd7bf813"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_absolute_encoder.c",
+    "sha256": "0b4e4a23b8096bffbaa7e4c55e851eea1629985414e95da2a719a2a956b4c223"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_absolute_encoder.h",
+    "sha256": "61b7a82852f4515c35d4361a78cb95524a66493051c378652d1e0b5f0d7fe7a6"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_bluetooth_ch9141.c",
+    "sha256": "f7c04fda07f770b849c763a51750feae4ee3918198dcd7ba18a0e4d565d2d6d7"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_bluetooth_ch9141.h",
+    "sha256": "dd2b52d8e0766f16fc678f600ae5347c3f1bba21dd48bd482328d1b87484e8b7"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_camera.c",
+    "sha256": "8f8e1c22c672b32317fc7e5ea3bfc1fc4d1d0cbfc86d95c4a0afa213167a56c2"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_camera.h",
+    "sha256": "f0a7c8809272167a3040fc5d9cc5f0ca4ea29bfa1a45f5b2c53e2fe7aa5ee4b5"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_config.a",
+    "sha256": "1b197393e98f33ffdb4003cc9f40bbe2a7f8985aecfdfc1ac9bc87447b7c5cf1"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_config.h",
+    "sha256": "366e33b1d68107ce04faf97bee7229df537842e670f5ba2c784a9477ba3f05c0"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_config.lib",
+    "sha256": "d8f07e0ee2fe1bd4dbc68ee9e17b6fa48973c718cbdb02cf61369a316a8271e8"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_detector.c",
+    "sha256": "4325683678aa7909041a76a38caa07298ce79a3c296ca1d6849c04d1c3da3d17"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_detector.h",
+    "sha256": "aa03c7f0f965d1878f4c8f406cd3c07cbadfe1174e70b5b7581a9f9437f29494"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_dl1a.c",
+    "sha256": "e995f7a2fbdb2158c28126b4d79e75360eaa1d6ce2dd8b888a4d77672cef6c7a"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_dl1a.h",
+    "sha256": "f5a5c65583134251c334276e1979b752851b3b33bc87bfb6fe4f15c84c8933cf"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_dl1b.c",
+    "sha256": "ed43c4a2fa55a8dda5fb99e173d2e24480244b06109d9513f9505d29b9a42492"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_dl1b.h",
+    "sha256": "605bc127a2235de075e7cd303abcda33d0650dbebfee1678d76741970aae60dd"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_gps_tau1201.c",
+    "sha256": "844aa1222d39a32a024d87ab3622107b6b69aadb35ddde88b124582510f5d1f1"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_gps_tau1201.h",
+    "sha256": "44108e4d6e6924b1a0e234f3f600de5e53f12d85ccfb6d9b5eb377babb0a3a8c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_icm20602.c",
+    "sha256": "3fd8f26ae4567a6ae55100daa04507724c37dde694f261b96b50673c2a497768"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_icm20602.h",
+    "sha256": "a79420d17017e1ed288eab777a6fecc5ce768424de464a296d9864d0662db86d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_imu660ra.c",
+    "sha256": "de22f11866614bd38023ade67fe6308d995702eab18ad2edd074e7fc22a534a4"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_imu660ra.h",
+    "sha256": "b90df33b874e9b40ed4ec520113b65ded8f3f61ea0d09f1a198f3d28595d816e"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_imu963ra.c",
+    "sha256": "4fbdef484e41be0e72b31b7ac0358143229177e20dc062b8e403671123b569f8"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_imu963ra.h",
+    "sha256": "1f0f368a9b2f1070afe12bd645dbfc53f994f0fbd2e894d0f4e4db4f42ce4fdb"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_ips114.c",
+    "sha256": "2f5b268dd6d61f5b5bd482b030f1faef4e7e9a76fe856326e86ca2d51b6e0516"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_ips114.h",
+    "sha256": "62ccea8271bb516b2feacf4bbe3db0b1c46d2f396f1e9e0b844aa3085aee9182"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_ips200.c",
+    "sha256": "ee5693c4d38a26d00d7dcf5ff9be46a8b7cf90a0a6b62c189c95fd89004223cd"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_ips200.h",
+    "sha256": "aa2d8214e515dfe23348bf58337444088017750bf1f20547bcf210a18e11d025"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_key.c",
+    "sha256": "a939cc548f4276f1347a6cf1f550d321521041fad6c4c3afd7a3470448257562"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_key.h",
+    "sha256": "844cfef977c24b063f9ce011965306ad3b2581d5e6dc073fe94a39b65c26b17d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_mpu6050.c",
+    "sha256": "e307ae4cc36332a9bb9b813215cdd0e18c9280821d434b13816f9629edf809b0"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_mpu6050.h",
+    "sha256": "7a4e8bdb6daba7d46a50ad35b0985d4f2f86e2fa8fc98e68a3c858206096d41b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_mt9v03x.c",
+    "sha256": "bebcbf1638ea74a051a44b790a859c9a940c12e3100d454c4c37968300881cd1"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_mt9v03x.h",
+    "sha256": "16e2f081a057db2c7e97ba406e203309a104a50076559d471c5111fe40f932ef"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_mt9v03x_flexio.c",
+    "sha256": "88243c51d6fa3dfb77596d836a33057c3d511fcb0a52148b222765d6fc3075ab"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_mt9v03x_flexio.h",
+    "sha256": "9acaa76e3f69a2de24e4b1e944bf9682af60087a8e7cd8d788337065740eacea"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_oled.c",
+    "sha256": "8d51074487db10e3ef48f93adc3077c44f7056d86107b53afb051c8b1ef10baf"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_oled.h",
+    "sha256": "dc24ad3f44733e5f5aa7c717cff0c150432c0f1646fe924f799a58f88a11eaa3"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_ov7725.c",
+    "sha256": "908392679759333f52692c168905d79864b98cd4164eb7fa7b109f95e78fd092"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_ov7725.h",
+    "sha256": "d022e7f260a2dd98a6abdab04283e018e711c89c4f55380f83e24342bfca92a5"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_scc8660.c",
+    "sha256": "0a5c3dcf8c1664d1f89dfe81bcb371af018985070410ce9050da1bcb30af3939"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_scc8660.h",
+    "sha256": "00fa3fb0d29bb72d6c0ed7c07015823de6f19c172d06682281060773ac68665e"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_scc8660_flexio.c",
+    "sha256": "661ded7a544687a50bb2059721bca0d63e72ea42c4caa5fd33274281b9cd1cd7"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_scc8660_flexio.h",
+    "sha256": "5428ed29bd4525490838b7b22ccbb98fde2d000c7e32da3b0fdf670eaffb8ff2"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_tft180.c",
+    "sha256": "ec1e0a370220d38d11f5fff20a97ceba029a1b003991899e0d30965f7fd1b608"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_tft180.h",
+    "sha256": "23d8ac9e0b44934201633848899a34dca3c5aac8d1da4d4d955399838c9b6a99"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_tsl1401.c",
+    "sha256": "7163913670dc44e8bab5d5d878522c1d06905c9801d699503f08ae95e19f6cdf"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_tsl1401.h",
+    "sha256": "4f3dd19d390be475d94ac586cd310c8bb9d4457c93b35a42f95ecf3e5548f9e5"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_type.c",
+    "sha256": "26dda8d40dc668dbaf07f14d401571be2758ba3c275aa54573411bf9adf52089"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_type.h",
+    "sha256": "5b95bcf01588cf40a9d9401e6b25e4ea4b260354f2c32d730b62a149b74ebb02"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_virtual_oscilloscope.c",
+    "sha256": "6a2a25e52f3c2cb7306434b84fbe6ef3dacdb71e106df8f23188e6b325a05175"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_virtual_oscilloscope.h",
+    "sha256": "3f046fd2b83b896c277a32fb6cf89b3ee6fe97f04efe3963b1a8ed5f4eaa8b68"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_wifi_spi.c",
+    "sha256": "1757beb6e2b1f7cfe186402c391f04d17e9c06945d83db9c255ac704da639d9d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_wifi_spi.h",
+    "sha256": "ad23462a2be20969f7ca39456c6a8ff6959ab3ad8fa23b5770977f216b528ac0"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_wifi_uart.c",
+    "sha256": "dcedfcdf1c19a90adfb5570dbb6e2fb1165bdd20bce029f05cf6c51a4d11cdbc"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_wifi_uart.h",
+    "sha256": "494356b8a53cd24e2ff82065b69650ccf87d8edd4b3e1961dd24f1dee6716f84"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_wireless_uart.c",
+    "sha256": "7fb252ac992518da6fb88140703e669713743a08a579b99f029de8a2d1be7221"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_device/zf_device_wireless_uart.h",
+    "sha256": "892d234689347a56e58783c08e422b051bb742bf124ff9f99b492200e9393704"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_adc.c",
+    "sha256": "4c35ababd6a58a6b392a62b06d970af85c4ed3458d36badd0c67baee3d69f377"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_adc.h",
+    "sha256": "145da50759a5068886eff96f7b2a942ef6d4f855f8805eaa59c39bb5b35eba36"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_csi.c",
+    "sha256": "6ed551a0b171f3e58ed7cf700fa8b9726648ee336b0be755d894ae592f627e96"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_csi.h",
+    "sha256": "a18779c27916058039f86655becd8a54cfcf9d62090d85e66eb702f0d2f40868"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_delay.c",
+    "sha256": "c0559d9767ddf23892145780be7d5b0dbe05de220486b2ca5c12176f67a8d1b0"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_delay.h",
+    "sha256": "aef7601fb2b7a6b7d091e68c656703f2b1df1f04104e8b0a87d3df8e0c311ffd"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_encoder.c",
+    "sha256": "d2aef5eb37911564ce84cc9d24b8647c64312b1e9131e9a798ee21a8ffe55023"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_encoder.h",
+    "sha256": "324e0e98f05eab9ce443865a9a41ba83cb4cf76fca95ef48cdc37b9310287884"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_exti.c",
+    "sha256": "1cc6b064fb6eced27099f853aee8c04e92bb31acf73cb97eae7963db0930f06e"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_exti.h",
+    "sha256": "56d812123a941be890da181214de4cd1c5f448ff88dfc16a717e53f8831471d4"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_flash.c",
+    "sha256": "87635ac0ca18257c3ffbe96c8882d460bdcdcca9a4e9043f080486978b1aeebe"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_flash.h",
+    "sha256": "0dc6cf9a38e030ad8b57453889d048197cc03a9d5624c0224b77066f0d8d6df1"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_flexio_csi.c",
+    "sha256": "467795f53a85e7ebe8e400bfd02f1984fd82dab38d38ef4a64f41aa8a6b9d227"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_flexio_csi.h",
+    "sha256": "a631fc40aa48e170f74d90294c460d2a05708805321d8023a62db721775f2d31"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_gpio.c",
+    "sha256": "6b84cf94dcb2a31996afa4b2afdb6991f028674aca78971764ffd2ade10f041b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_gpio.h",
+    "sha256": "9efe457c2072d37aaf9c1d62da079ceaa643915ded672037fe361a730de71bb0"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_iic.c",
+    "sha256": "a69aa497c4456bd0923291bc38c6db5da24ebf73a05960dfe44f67859ae18452"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_iic.h",
+    "sha256": "0e8eb531e1cc36d1878f7e4bb89b90a1be6874b6482587b3b21b9d3df4b22df7"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_pit.c",
+    "sha256": "1c7267e562c30bf5e19c96313ce53a72747667666e61280d4fa51cc7a47a135b"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_pit.h",
+    "sha256": "b2288967e918df9896cfe99dbb499bdf79627ee28f4e8eec253d4d4a3b69799c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_pwm.c",
+    "sha256": "765a14f86bc2e1168d9cd133c9c3f01c2bbdc0d7da5186e8fdf7f7ac3933a733"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_pwm.h",
+    "sha256": "99aeaf3f8c1708a9a4fe127742a2b3ad21cb1f64c79281284a1df00db987ac72"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_romapi.c",
+    "sha256": "7605198b53cbd3d7398c0930b6a899299a572c72d622872b06a4a5b6cf94346f"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_romapi.h",
+    "sha256": "242966063fc9f6e5d811702411f7c9383bb025b4af6d6c32537f4683c259c48d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_sdio.c",
+    "sha256": "58676dd2888e37e20c2875bca9ab63a81b951e9ddcb98e90150ef82eced89fce"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_sdio.h",
+    "sha256": "9b468f303193f7054b84d74da15ee80412f58cac34db0ee38111e3fd8bf6edaa"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_soft_iic.c",
+    "sha256": "44138ba94827ea4906ff186f8b39134efff925e1996fe0ddb9781fbd8e092a75"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_soft_iic.h",
+    "sha256": "86a2c898ae1febf096ff4dc9c4b6230047b7b69856ffdbcac5598258c3cb22bb"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_soft_spi.c",
+    "sha256": "b3111f0278f020916b2f5b9ca416d001c8079d7081a40d784f219f75c0c8263c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_soft_spi.h",
+    "sha256": "661d667b9fd25a51f9da9e108e015628852040cddde9105f2c77f6d5d197887a"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_spi.c",
+    "sha256": "d86735a085367bbf22e9741163f27c51ad5bb9674d7499997bbd130e39490fdc"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_spi.h",
+    "sha256": "c62af08cd9766aa688555c173fdce137d6050a99c8199dfba38fe607b6f0f373"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_timer.c",
+    "sha256": "424b3efd741a5ff51a5349221b299d6fd1fdb05ea4e95c54eafcf468d911671e"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_timer.h",
+    "sha256": "7144ae3892ad35f495c13c48ce2f7011d02f97b26ec74b9228bf26ecad5e1ca9"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_uart.c",
+    "sha256": "576012e73ca5900386220adcff9f7a699c9af1caf72aa47bf0e6be59a4c90d8c"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_uart.h",
+    "sha256": "1dbb29050920428e213bbb6cf8570db99de823dcfe6e471180d82638033d7084"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_usb_cdc.c",
+    "sha256": "ac614e4894a1b5dd1fd2204b595354989073f8b15cf1bd5698d3cf5db19369cd"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/zf_driver/zf_driver_usb_cdc.h",
+    "sha256": "3407f1a60a6d44778aedd186549c9120af25f2e8d687246d291364c4cad403b8"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/libraries/版本文件在doc文件夹下.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/PROVENANCE.md",
+    "sha256": "a0c0f03039ebcad4f0236a353ce45f502b0823853abc85b6e3cf72d291a2d686"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/README.md",
+    "sha256": "5d1b6a0be9e2ef01eaccafd6c3511ab36d3b0e5e27dffdfa158c0ceb9c579404"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/render_vision_report.py",
+    "sha256": "75317eca61c8534bfd5cc498fc165c7f09461549d769394b377c3262b39a51da"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/run_tests.py",
+    "sha256": "57805052809f3d9fec12e33b1159d4216fb317d76392b3fd1c9f348cc4b19bb9"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/sdk/zf_common_headfile.h",
+    "sha256": "5397e232edc1a0eb031b55f08cebaf6c6443c0704a202569494e9a9382a90440"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/test_app.c",
+    "sha256": "db49fb7d2495ca6fa0aa8c40987d53ec129f598176873700acc827b9384f6f71"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/test_calibration.c",
+    "sha256": "5fc3a4a335d2ae76c108a44b9483b5805705a2154d138be5ab6ed47c4e0b1858"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/test_capture.py",
+    "sha256": "1aecdd931754338ec4dcfb54452f5c9752998b59e56ce498f2a790965b2bf3b0"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/test_core.c",
+    "sha256": "e8b0b139971acdcacf30f96f781cd2dcabbd2b11bdf227e2c9f2e02f9b582731"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/test_csi_buffers.py",
+    "sha256": "da9d9485175188f0ea6bfcfbf4f0fa166b57364cf65fbcd86c9f8fea60838c2d"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/test_ground.c",
+    "sha256": "3901e5d3ab581cfafec82a887186421191c0878a78f7a224c22c1575af821ba2"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/test_ground_app.c",
+    "sha256": "04e092716c4a27a175d059cf341eb6cfcf62962b93bbc2ee6bdde0df703b1a78"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/test_gt1_app.c",
+    "sha256": "f8be884f97ee1e7d340af9a8b418eeb01f1d01a9e5d89121784c7814ba894387"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/test_low_speed.c",
+    "sha256": "1363a40c92ce8bd95f9f0afe48d812d9c48cbe8cb2ff8822324b3f6755ba78d8"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/test_servo.c",
+    "sha256": "ae82294c6f4d44c1e4422853cc2d8ea6f42c2832b1a8527fdfffb47456448984"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/test_sustain.c",
+    "sha256": "48748fef2ac4aa21c689aef0d3d5a58bcf95170ce2d47d1c0711c543e8a75254"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/test_tracking.c",
+    "sha256": "cc36b0f1b7ee578fa1a1ff6b26e24bd5a68be5e8be4225527f1f60801fa695fa"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/test_tracking_low.c",
+    "sha256": "458783059756262a84ef3413617d0d08f3c69f95ace61584f6f44c37ccee4c25"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/test_uart8.c",
+    "sha256": "69cf8493bdeb454dc0324fcfb914e8c5c9dd71c46ac83c858b22794c3970afd7"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tests/test_vision_scenarios.c",
+    "sha256": "f8c53e6d667a9f00f451d252439991e129ff6ed7620abf30863e8bede2ce0806"
+  },
+  {
+    "path": "code/competition/firmware/camera_car/tools/capture.py",
+    "sha256": "cd23b8a4836b2151e35c776cc6770b41a6bdf21dd833fd77175af830cf6d8ae4"
+  },
+  {
+    "path": "code/repair/build_arm.py",
+    "sha256": "fb1a9415be2ef2be048460662be2073308604b4a147bd2e70b7949640833a8e1"
+  },
+  {
+    "path": "code/repair/flash-algorithm/MIMXRT1064_QSPI_4KB_SEC.FLM",
+    "sha256": "a83769b19bf0ca962ad74d8c644c763ed3725b2f8d7f0efc0d8a5d8f46633d59"
+  },
+  {
+    "path": "code/repair/flash_with_backup.py",
+    "sha256": "24c68daa9806647a00a27bdff39bd20ea5736fa9bef8cf1dacbb0802ca4dc03b"
+  },
+  {
+    "path": "code/repair/ground_trial.py",
+    "sha256": "02efb9ac64e1d3cb0c9cebd75299c412cfd7f3e88832504ec83d00fa8996235d"
+  },
+  {
+    "path": "code/repair/hold_protocol.ps1",
+    "sha256": "27bbda44912f75e46f69a32294d71ddfce26283895e0bbc8b531c98017cc4972"
+  },
+  {
+    "path": "code/repair/low_protocol.ps1",
+    "sha256": "e5a82702173234274712422f65bba08c47e7381595c79f5f5e504e62c6d9fbf6"
+  },
+  {
+    "path": "code/repair/pyocd_local.py",
+    "sha256": "7f2dee629ecc5b6c273d9974e3807f20deae15938d65571a15dca25eca721070"
+  },
+  {
+    "path": "code/repair/README.md",
+    "sha256": "813c2c82567cc02eebffe612a7ea97c0997fa133d166c2ad45b1bf077318e0d0"
+  },
+  {
+    "path": "code/repair/requirements-maintenance.txt",
+    "sha256": "67846f2b8fb1c7843753cecd4528d109f011d8610f799e418dde07d4be110aa9"
+  },
+  {
+    "path": "code/repair/run-tests.cmd",
+    "sha256": "b55a237533d67d48ae8c3eb75f66312c776e9825bde279993ab4a7cfcbe5c852"
+  },
+  {
+    "path": "code/repair/run_tests.py",
+    "sha256": "c93c1473ab876daf58ac4f961806cbccb5e660062b982a99a96b906ad404fa88"
+  },
+  {
+    "path": "code/repair/test-ground.cmd",
+    "sha256": "ba3760b29abf14abe1d8552a1bbe8b3d02f19addffb4ecb92d6abf5d3ca31884"
+  },
+  {
+    "path": "code/repair/test_both_speed.ps1",
+    "sha256": "6ce60244749f6a38fc61a389d6aae104bd4536703812d877a25dfe7f0474c328"
+  },
+  {
+    "path": "code/repair/test_c11_static.ps1",
+    "sha256": "9c43b168c1daeaafbd5aee8170b3e4d7515d22bb0ffbd140abefe074fa264d1e"
+  },
+  {
+    "path": "code/repair/test_calibration.ps1",
+    "sha256": "6873a0feecb4906a6c42e26d817fb854eb7aa78e9b960544e8696ccd5e652461"
+  },
+  {
+    "path": "code/repair/test_drive.ps1",
+    "sha256": "d32d8ded0ce74a71119c614ada4fa4cfc4b31cfe3afe69bd3b937a8a67f9ef58"
+  },
+  {
+    "path": "code/repair/test_ground_tool.py",
+    "sha256": "38384a0d1b9a0dfa56c4032e8be444d3e6d42b13d4345a67dc44b177b72e8b7f"
+  },
+  {
+    "path": "code/repair/test_gt1_tool.py",
+    "sha256": "fb3120e9c9811effb65c56840da8c872919f88bfd12dcd74d5a4494c04b7636c"
+  },
+  {
+    "path": "code/repair/test_hold.ps1",
+    "sha256": "cc6182557becf7113b04231057a600e82858028ded94245049bebb652ee7bcb9"
+  },
+  {
+    "path": "code/repair/test_hold_protocol.ps1",
+    "sha256": "e11927c987d5fdcc3586d8ca9a3b2b0918c39e549621297ae1a259470e0f9a50"
+  },
+  {
+    "path": "code/repair/test_left_speed.ps1",
+    "sha256": "83b4e95adac1b9c8c4898452c4f989618169d32577f6e7779813bd9d758265ff"
+  },
+  {
+    "path": "code/repair/test_low.ps1",
+    "sha256": "310103f1496c260756a168cbde655ea69aaddab190fc1305db14f6f384940655"
+  },
+  {
+    "path": "code/repair/test_low_protocol.ps1",
+    "sha256": "f699d96c01900a5ecbc62a01542f28c7839f8e76b0c9c2e4863103e48b474050"
+  },
+  {
+    "path": "code/repair/test_one_motor.ps1",
+    "sha256": "98c4aad27bfa6237f763c367898265e723ac212f09e9874ab963bf3ef7aa940f"
+  },
+  {
+    "path": "code/repair/test_radio.ps1",
+    "sha256": "bde180ca8622da8952e8e230ce43f8268d389b885f77d6cc32d3d2fa0a9e3d1a"
+  },
+  {
+    "path": "code/repair/test_right_speed.ps1",
+    "sha256": "574c206193f5041722755db256a305fd1fccc9b627c77ee45d011a110d68e841"
+  },
+  {
+    "path": "code/repair/test_servo.ps1",
+    "sha256": "675ab5a021154f622638eec6141a01b82d2803bb0118512a9e5d0c0ca0065cca"
+  },
+  {
+    "path": "code/repair/test_speed.ps1",
+    "sha256": "9174a1bf1bbbc96f71743896355ce040ecd331dd4aa8d4d9a5184c595e53d243"
+  },
+  {
+    "path": "code/repair/test_tracking_tool.py",
+    "sha256": "b0f3dc658157e5ee1570a2c65b04e365c535b06617b3d49b2580adab07ee66eb"
+  },
+  {
+    "path": "code/repair/tracking_gt1.py",
+    "sha256": "ea9f23f14cb347100de7d1a8bceb1b76afea60c53805ff4b454c0f6c32b4270f"
+  },
+  {
+    "path": "code/repair/tracking_trial.py",
+    "sha256": "5307537d9ca92c3d3833b7d4a31b13bddf2d4094a0484e539882c3391a5dfb96"
+  }
+]

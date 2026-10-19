@@ -1,0 +1,21 @@
+{
+  "trial_id": 1,
+  "motion_started": true,
+  "normal_expiry": false,
+  "stop_cause": "FAULT_LINE (3): three consecutive invalid processed vision frames",
+  "fault_status_device_ms": 163320,
+  "host_stop_sent_after_fault_status": true,
+  "last_running_trial_ms": 1450,
+  "snapshot_elapsed_ms_at_host_stop": 1600,
+  "snapshot_prior_mode": 3,
+  "snapshot_prior_fault": 3,
+  "snapshot_lease_age_ms": 150,
+  "snapshot_heartbeat_age_ms": 0,
+  "uart_error_count": 0,
+  "rts_max_high_ms": 0,
+  "complete_status_count": 25,
+  "max_host_status_gap_s": 0.3257057000300847,
+  "communication_interruption_reproduced": false,
+  "original_GT4_communication_root_cause_confirmed": false,
+  "physical_observation": "pending user feedback"
+}

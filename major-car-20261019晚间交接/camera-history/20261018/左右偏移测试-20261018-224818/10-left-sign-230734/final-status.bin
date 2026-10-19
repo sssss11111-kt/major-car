@@ -1,0 +1,3 @@
+ms=2007570 mode=0 fault=0 frames=89283 valid=1 pair=12/13 thr=192 err10=-65 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=2007730 mode=0 fault=0 frames=89289 valid=1 pair=12/13 thr=192 err10=-64 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20
+ms=2008230 mode=0 fault=0 frames=89313 valid=1 pair=12/13 thr=192 err10=-65 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20

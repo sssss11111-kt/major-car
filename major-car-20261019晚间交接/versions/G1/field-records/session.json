@@ -1,0 +1,7 @@
+{
+  "firmware": "20261019G1",
+  "source_commit": "c3682dd44872d2dd13b5900b3424d26427f4c492",
+  "hex_sha256": "ff91ee6db07075337506ecd6962d5a6dc50160d271bbf6fab88d46f308b58fbc",
+  "flash_preflight": "User confirmed battery off, DAP correct, board power LED on, wheels lifted",
+  "ground_motion_authorized_after_separate_position_reset_confirmation": true
+}

@@ -1,0 +1,13 @@
+{
+  "requested_images": 3,
+  "complete_images": 2,
+  "incomplete_image_payload_bytes": 0,
+  "complete_statuses": 35,
+  "valid_statuses": 35,
+  "paired_rows_observed": [
+    "10/13"
+  ],
+  "all_observed_pwm_zero": true,
+  "motion_start_sent": false,
+  "focus_observation": "two complete images show stable road geometry but blurred edges; not identical to original baseline; use this group as current comparison reference"
+}

@@ -1,0 +1,552 @@
+[
+  {
+    "ms": 69180,
+    "mode": 0,
+    "fault": 0,
+    "valid": 1,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 10,
+    "ready": 1,
+    "good_frames": 140,
+    "accepted_age": 10,
+    "trial_id": 0,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "pi_mask": 0,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  {
+    "ms": 69220,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1479,
+    "target10": 0,
+    "phase": 0,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 142,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "pi_mask": 0,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  {
+    "ms": 69320,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1480,
+    "target10": 0,
+    "phase": 0,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 145,
+    "accepted_age": 50,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 100,
+    "pi_mask": 0,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  },
+  {
+    "ms": 69420,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1479,
+    "target10": 190,
+    "phase": 1,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 151,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 200,
+    "pi_mask": 0,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      3000,
+      3000
+    ]
+  },
+  {
+    "ms": 69520,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1479,
+    "target10": 190,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 154,
+    "accepted_age": 50,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 300,
+    "pi_mask": 0,
+    "enc": [
+      12,
+      12
+    ],
+    "pwm": [
+      3000,
+      3000
+    ]
+  },
+  {
+    "ms": 69560,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1480,
+    "target10": 191,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 157,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 340,
+    "pi_mask": 0,
+    "enc": [
+      21,
+      19
+    ],
+    "pwm": [
+      3000,
+      3000
+    ]
+  },
+  {
+    "ms": 69620,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1480,
+    "target10": 191,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 160,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 400,
+    "pi_mask": 0,
+    "enc": [
+      28,
+      27
+    ],
+    "pwm": [
+      694,
+      823
+    ]
+  },
+  {
+    "ms": 69660,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1483,
+    "target10": 191,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 162,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 440,
+    "pi_mask": 0,
+    "enc": [
+      26,
+      26
+    ],
+    "pwm": [
+      694,
+      824
+    ]
+  },
+  {
+    "ms": 69720,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1481,
+    "target10": 191,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 163,
+    "accepted_age": 50,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 500,
+    "pi_mask": 0,
+    "enc": [
+      22,
+      21
+    ],
+    "pwm": [
+      694,
+      824
+    ]
+  },
+  {
+    "ms": 69760,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1483,
+    "target10": 192,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 166,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 540,
+    "pi_mask": 0,
+    "enc": [
+      20,
+      20
+    ],
+    "pwm": [
+      695,
+      824
+    ]
+  },
+  {
+    "ms": 69820,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1486,
+    "target10": 193,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 169,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 600,
+    "pi_mask": 0,
+    "enc": [
+      18,
+      18
+    ],
+    "pwm": [
+      695,
+      825
+    ]
+  },
+  {
+    "ms": 69920,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1486,
+    "target10": 193,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 172,
+    "accepted_age": 50,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 700,
+    "pi_mask": 0,
+    "enc": [
+      16,
+      15
+    ],
+    "pwm": [
+      695,
+      825
+    ]
+  },
+  {
+    "ms": 69990,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1487,
+    "target10": 194,
+    "phase": 2,
+    "cap_age": 20,
+    "ready": 0,
+    "good_frames": 176,
+    "accepted_age": 20,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 770,
+    "pi_mask": 0,
+    "enc": [
+      12,
+      12
+    ],
+    "pwm": [
+      696,
+      826
+    ]
+  },
+  {
+    "ms": 70020,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1488,
+    "target10": 194,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 178,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 800,
+    "pi_mask": 0,
+    "enc": [
+      11,
+      9
+    ],
+    "pwm": [
+      696,
+      826
+    ]
+  },
+  {
+    "ms": 70120,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1489,
+    "target10": 195,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 181,
+    "accepted_age": 50,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 900,
+    "pi_mask": 0,
+    "enc": [
+      6,
+      6
+    ],
+    "pwm": [
+      696,
+      826
+    ]
+  },
+  {
+    "ms": 70220,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1488,
+    "target10": 195,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 187,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 1000,
+    "pi_mask": 0,
+    "enc": [
+      0,
+      1
+    ],
+    "pwm": [
+      696,
+      826
+    ]
+  },
+  {
+    "ms": 70320,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1486,
+    "target10": 194,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 190,
+    "accepted_age": 50,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 1100,
+    "pi_mask": 0,
+    "enc": [
+      0,
+      -1
+    ],
+    "pwm": [
+      696,
+      826
+    ]
+  },
+  {
+    "ms": 70420,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1487,
+    "target10": 194,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 196,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 1200,
+    "pi_mask": 3,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      696,
+      826
+    ]
+  },
+  {
+    "ms": 70520,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1485,
+    "target10": 193,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 199,
+    "accepted_age": 50,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 1300,
+    "pi_mask": 3,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      734,
+      864
+    ]
+  },
+  {
+    "ms": 70540,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1485,
+    "target10": 193,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 201,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 1320,
+    "pi_mask": 3,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      742,
+      871
+    ]
+  },
+  {
+    "ms": 70620,
+    "mode": 1,
+    "fault": 0,
+    "valid": 1,
+    "us": 1486,
+    "target10": 193,
+    "phase": 2,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 205,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 1400,
+    "pi_mask": 3,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      773,
+      902
+    ]
+  },
+  {
+    "ms": 70820,
+    "mode": 3,
+    "fault": 5,
+    "valid": 1,
+    "us": 1500,
+    "target10": 0,
+    "phase": 3,
+    "cap_age": 10,
+    "ready": 0,
+    "good_frames": 8,
+    "accepted_age": 10,
+    "trial_id": 1,
+    "trial_done": 0,
+    "trial_ms": 0,
+    "pi_mask": 3,
+    "enc": [
+      0,
+      0
+    ],
+    "pwm": [
+      0,
+      0
+    ]
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "version": "20261019GT2",
+  "motion_trials": 1,
+  "trial_id": 1,
+  "normal_expiry": true,
+  "trial_ms": 3200,
+  "motor_duration_ms": 3000,
+  "fault": 0,
+  "two_wheel_PI_observed": true,
+  "all_recorded_trial_vision_valid": true,
+  "active_samples": 48,
+  "regulated_samples": 42,
+  "servo_range_us": [
+    1463,
+    1524
+  ],
+  "last_regulated_feedback": [
+    22,
+    19
+  ],
+  "post_stop_samples": 12,
+  "final_zero_verified": true,
+  "physical_observation": {
+    "user_statement": "20cm左右，往右偏了3cm，正常停稳",
+    "forward_distance_cm_approx": 20,
+    "right_offset_cm_approx": 3,
+    "normal_stop_confirmed": true,
+    "track_contact_or_exit": "not stated",
+    "measurement_method": "user approximate report; no independently verified video/scale",
+    "centerline_tracking_accepted": false
+  },
+  "physical_track_acceptance": false
+}

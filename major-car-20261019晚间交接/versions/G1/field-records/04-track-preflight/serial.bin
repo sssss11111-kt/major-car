@@ -1,0 +1,3 @@
+DRIVE-CFG v=20261018N straight=7 left=8 right=9 duration=1000 settle=200 target=40 cap=3000 straight10=0 lease=500
+TRACK-CFG v=20261019G1 target=20 cap=3000 settle=200 duration=3000 lease=500 simulated=0 profile=L3 kp10=10 ki10=200 ff0=570,690 ff10=65,70 closed_cap=1500 kick_min=200 kick_max=300 transfer=1000
+ms=61590 mode=0 fault=0 frames=2662 valid=1 pair=12/13 thr=210 err10=84 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=92 reject=1 seq=3046 cap_age=20 proc_ms=0 used_age=0 drop_frames=384 ready=1 good_frames=255 accepted_age=20 trial_id=0 trial_done=0 trial_ms=0 pi_mask=0

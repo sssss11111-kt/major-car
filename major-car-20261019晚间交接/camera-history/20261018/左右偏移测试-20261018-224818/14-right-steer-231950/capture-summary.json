@@ -1,0 +1,26 @@
+{
+  "gray": [
+    "valid",
+    "1",
+    "error",
+    "22.2098",
+    "threshold",
+    "180",
+    "paired",
+    "10",
+    "scanned",
+    "13"
+  ],
+  "gray-repeat": [
+    "valid",
+    "1",
+    "error",
+    "22.0140",
+    "threshold",
+    "180",
+    "paired",
+    "10",
+    "scanned",
+    "13"
+  ]
+}

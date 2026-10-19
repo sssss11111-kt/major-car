@@ -1,0 +1,50 @@
+{
+  "backup_bytes": 4194304,
+  "backup_sha256": "239fb709a27c36907242398d37c2bd1e70ecbcf237c335f1b544390a41a53cac",
+  "header": "46434642",
+  "exact_matches": [],
+  "closest_images": [
+    {
+      "path": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-G1-\u5b8c\u6574\u4e0b\u8f7d-20261019\\major-car-c3682dd44872d2dd13b5900b3424d26427f4c492\\major-car-\u7535\u673a\u6807\u5b9a\u4e0e\u5faa\u8ff9\u63a5\u5165-20261019\\versions\\G1\\20261019G1-tracking.hex",
+      "sha256": "ff91ee6db07075337506ecd6962d5a6dc50160d271bbf6fab88d46f308b58fbc",
+      "bytes": 73088,
+      "matched_bytes": 28442,
+      "ratio": 0.3891473292469352
+    },
+    {
+      "path": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-G1-\u5b8c\u6574\u4e0b\u8f7d-20261019\\major-car-c3682dd44872d2dd13b5900b3424d26427f4c492\\major-car-\u7535\u673a\u6807\u5b9a\u4e0e\u5faa\u8ff9\u63a5\u5165-20261019\\versions\\C2\\20261019C2-calibration-0to70.hex",
+      "sha256": "ae91687ad3842d3f74726cfb01d47eb0ed8a0079f096fb3cee8f78679e4f9cfc",
+      "bytes": 68800,
+      "matched_bytes": 25725,
+      "ratio": 0.37390988372093026
+    },
+    {
+      "path": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-G1-\u5b8c\u6574\u4e0b\u8f7d-20261019\\major-car-c3682dd44872d2dd13b5900b3424d26427f4c492\\major-car-\u7535\u673a\u6807\u5b9a\u4e0e\u5faa\u8ff9\u63a5\u5165-20261019\\versions\\C1\\20261019C1-calibration-0to30.hex",
+      "sha256": "3e5cbfb22e772c56ffc10dcf995c702187d9ded3bfe4f9d5a2ba7672ef3b07ca",
+      "bytes": 68800,
+      "matched_bytes": 25704,
+      "ratio": 0.3736046511627907
+    },
+    {
+      "path": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-G1-\u5b8c\u6574\u4e0b\u8f7d-20261019\\major-car-c3682dd44872d2dd13b5900b3424d26427f4c492\\major-car-\u7535\u673a\u6807\u5b9a\u4e0e\u5faa\u8ff9\u63a5\u5165-20261019\\versions\\C3\\20261019C3-calibration-0to70.hex",
+      "sha256": "b794aaecddbc994dc245cab37895fd898f52562d3c97c64aa478f113172ba882",
+      "bytes": 68928,
+      "matched_bytes": 25659,
+      "ratio": 0.372258008356546
+    },
+    {
+      "path": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-G1-\u5b8c\u6574\u4e0b\u8f7d-20261019\\major-car-c3682dd44872d2dd13b5900b3424d26427f4c492\\major-car-T1-20261018\\firmware\\20261018T1-camera.hex",
+      "sha256": "4c10694ce097b5c3d2291d40f9f88eb4e6cf826420e2b6f2eda4ce3eeee509a2",
+      "bytes": 69120,
+      "matched_bytes": 25601,
+      "ratio": 0.37038483796296295
+    },
+    {
+      "path": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-G1-\u5b8c\u6574\u4e0b\u8f7d-20261019\\major-car-c3682dd44872d2dd13b5900b3424d26427f4c492\\major-car-\u7535\u673a\u6807\u5b9a\u4e0e\u5faa\u8ff9\u63a5\u5165-20261019\\versions\\L1\\20261019L1-low-speed.hex",
+      "sha256": "cc8d63c618d0392da3c5d1889a7b4300b10ef9622fae7876c66e4258d1d550cb",
+      "bytes": 72512,
+      "matched_bytes": 26531,
+      "ratio": 0.3658842674315975
+    }
+  ]
+}

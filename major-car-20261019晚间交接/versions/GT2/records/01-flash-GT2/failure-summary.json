@@ -1,0 +1,8 @@
+{
+  "stage": "full_flash_backup",
+  "outcome": "USB/DAP read timeout before erase",
+  "backup_bytes": 1638400,
+  "backup_complete": false,
+  "erase_or_program_started": false,
+  "probe_identifier_omitted": true
+}

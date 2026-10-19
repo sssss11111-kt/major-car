@@ -1,0 +1,387 @@
+--- L3/code/competition/firmware/camera_car/demo/user/inc/car_core.h
++++ G1/code/competition/firmware/camera_car/demo/user/inc/car_core.h
+@@ -29,6 +29,7 @@
+     /* T2 STEP-01: tracking-only PI bias; zero preserves the 1500 legacy seed. */
+     float tracking_pwm_bias[2];
+     float low_kp,low_ki,low_ff_offset[2],low_ff_slope[2];
++    uint8_t tracking_low_speed;
+     float steer_kp, steer_kd, steer_sign;
+     float servo_center_us, servo_min_us, servo_max_us;
+     uint32_t frame_timeout_ms, heartbeat_timeout_ms;
+--- L3/code/competition/firmware/camera_car/demo/user/src/car_app.c
++++ G1/code/competition/firmware/camera_car/demo/user/src/car_app.c
+@@ -251,7 +251,7 @@
+     uint32_t trial_ms=snapshot.mode==CAR_RUNNING?now-snapshot.trial_started_ms:snapshot.trial_elapsed_ms;
+     unlock(key);
+     snprintf(line,sizeof line,
+-        "ms=%lu mode=%u fault=%u frames=%lu valid=%u pair=%u/%u thr=%u err10=%d bench_target=%u bench_started=%u enc=%d,%d pwm=%u,%u us=%u speed=%u target10=%u phase=%u quality=%u reject=%u seq=%lu cap_age=%lu proc_ms=%lu used_age=%lu drop_frames=%lu ready=%u good_frames=%u accepted_age=%lu trial_id=%lu trial_done=%u trial_ms=%lu\r\n",
++        "ms=%lu mode=%u fault=%u frames=%lu valid=%u pair=%u/%u thr=%u err10=%d bench_target=%u bench_started=%u enc=%d,%d pwm=%u,%u us=%u speed=%u target10=%u phase=%u quality=%u reject=%u seq=%lu cap_age=%lu proc_ms=%lu used_age=%lu drop_frames=%lu ready=%u good_frames=%u accepted_age=%lu trial_id=%lu trial_done=%u trial_ms=%lu pi_mask=%u\r\n",
+         (unsigned long)now,(unsigned)snapshot.mode,(unsigned)snapshot.fault,
+         (unsigned long)frame_count,result.valid,result.paired_rows,result.scanned_rows,
+         result.threshold,(int)(result.error*10),(unsigned)snapshot.bench_target,
+@@ -260,17 +260,18 @@
+         result.quality,result.rejected_rows,(unsigned long)sequence,(unsigned long)age,
+         (unsigned long)processing_ms,(unsigned long)last_capture_age,(unsigned long)dropped_frames,
+         ready,snapshot.good_frames,(unsigned long)accepted_age,(unsigned long)snapshot.trial_id,
+-        snapshot.trial_done,(unsigned long)trial_ms);
++        snapshot.trial_done,(unsigned long)trial_ms,snapshot.low_regulating);
+     text_queue(line);
+ }
+ /* STEP-05: identify the trial configuration before any motion command. */
+ static void tracking_configuration(void) {
+-    char line[200];control_config_t cfg;
++    char line[360];control_config_t cfg;
+     uint32_t key=lock();cfg=control.cfg;unlock(key);
+-    snprintf(line,sizeof line,"TRACK-CFG v=20261019T2 target=%u cap=%u settle=%lu duration=%lu lease=%lu simulated=%u left_bias=%u right_bias=%u\r\n",
++    snprintf(line,sizeof line,"TRACK-CFG v=20261019G1 target=%u cap=%u settle=%lu duration=%lu lease=%lu simulated=%u profile=L3 kp10=%u ki10=%u ff0=%u,%u ff10=%u,%u closed_cap=1500 kick_min=200 kick_max=300 transfer=1000\r\n",
+         (unsigned)cfg.speed_target,(unsigned)cfg.pwm_max,(unsigned long)cfg.tracking_settle_ms,
+         (unsigned long)cfg.tracking_duration_ms,(unsigned long)cfg.tracking_lease_ms,(unsigned)cfg.simulated,
+-        (unsigned)cfg.tracking_pwm_bias[0],(unsigned)cfg.tracking_pwm_bias[1]);
++        (unsigned)(cfg.low_kp*10),(unsigned)(cfg.low_ki*10),(unsigned)cfg.low_ff_offset[0],(unsigned)cfg.low_ff_offset[1],
++        (unsigned)(cfg.low_ff_slope[0]*10),(unsigned)(cfg.low_ff_slope[1]*10));
+     text_queue(line);
+ }
+ static void sustain_query(uint32_t received) {
+@@ -336,6 +337,7 @@
+     cfg.tracking_pwm_bias[1]=CAR_TRACK_RIGHT_PWM_BIAS;
+     /* L1 candidate from H1 airborne curves; physically tune before tracking adoption. */
+     cfg.low_kp=1;cfg.low_ki=20;
++    cfg.tracking_low_speed=1;
+     cfg.low_ff_offset[0]=570;cfg.low_ff_offset[1]=690;
+     cfg.low_ff_slope[0]=6.5f;cfg.low_ff_slope[1]=7;
+     cfg.steer_kp=CAR_STEER_KP; cfg.steer_kd=CAR_STEER_KD; cfg.steer_sign=CAR_STEER_SIGN;
+@@ -374,7 +376,7 @@
+     interrupt_set_priority(LPUART1_IRQn,2);
+     interrupt_set_priority(CSI_IRQn,3);
+     wireless_negotiate_baud();
+-    text_queue("C-CAR RT1064 SeekFree V3.5.5 TRACK20261019T2: h help; s STOP\r\n");
++    text_queue("C-CAR RT1064 SeekFree V3.5.5 TRACK20261019G1: h help; s STOP\r\n");
+     wireless_diagnostic();
+ #if CAR_DISPLAY_ENABLED
+     tft180_set_dir(TFT180_PORTAIT); tft180_init();
+@@ -465,7 +467,7 @@
+             servo_test_active=0;
+             gpio_init(CAR_LEFT_DIR,GPO,CAR_LEFT_FORWARD,GPO_PUSH_PULL);
+             gpio_init(CAR_RIGHT_DIR,GPO,CAR_RIGHT_FORWARD,GPO_PUSH_PULL);
+-            apply_outputs();text_queue("START TRACK-TRIAL v=20261019T2; p renews lease\r\n");
++            apply_outputs();text_queue("START TRACK-TRIAL v=20261019G1; p renews lease\r\n");
+         }
+         else text_queue("START REFUSED: idle + 3 valid fresh real frames required\r\n");
+         break;
+@@ -490,8 +492,8 @@
+             text_queue(byte=='1'?"LEFT MOTOR TEST 2s at 30%\r\n":"RIGHT MOTOR TEST 2s at 30%\r\n");
+         else text_queue("TEST REFUSED\r\n");
+         break;
+-    case '+': if(control.cfg.speed_target<60) control.cfg.speed_target+=5; break;
+-    case '-': if(control.cfg.speed_target>=5) control.cfg.speed_target-=5; break;
++    case '+': if(control.mode==CAR_IDLE && control.cfg.speed_target<40) control.cfg.speed_target+=5; break;
++    case '-': if(control.mode==CAR_IDLE && control.cfg.speed_target>=5) control.cfg.speed_target-=5; break;
+     case 'c': case 'l': case 'j':
+         if(control.mode==CAR_IDLE) {
+             float us=byte=='c'?CAR_SERVO_CENTER_US:(byte=='l'?CAR_SERVO_MIN_US:CAR_SERVO_MAX_US);
+--- L3/code/competition/firmware/camera_car/demo/user/src/car_core.c
++++ G1/code/competition/firmware/camera_car/demo/user/src/car_core.c
+@@ -201,10 +201,11 @@
+        (uint32_t)(now-s->frame_ms)<=s->cfg.frame_timeout_ms &&
+        (uint32_t)(now-s->heartbeat_ms)<=s->cfg.heartbeat_timeout_ms;
+ }
++static int low_config_valid(const control_state_t *s);
+ int control_start(control_state_t *s,uint32_t now) {
+-    if(!control_tracking_ready(s,now)) return 0;
++    if(!control_tracking_ready(s,now) || (s->cfg.tracking_low_speed && (!low_config_valid(s) || s->cfg.speed_target<0 || s->cfg.speed_target>40))) return 0;
+     /* STEP-02: aim from fresh vision before energizing either wheel. */
+-    zero_outputs(s);s->derivative=0;
++    zero_outputs(s);s->derivative=0;s->low_confirmed=0;s->low_regulating=0;
+     s->servo_us=clampf(s->cfg.servo_center_us+s->cfg.steer_sign*s->cfg.steer_kp*s->error,
+                       s->cfg.servo_min_us,s->cfg.servo_max_us);
+     s->motion_ms=now+s->cfg.tracking_settle_ms;
+@@ -246,18 +247,46 @@
+ int control_speed_test_right(control_state_t *s,uint32_t now) {
+     return control_speed_test(s,2,now);
+ }
++static int low_config_valid(const control_state_t *s) {
++    if(!(s->cfg.low_kp>0 && s->cfg.low_kp<=20 && s->cfg.low_ki>0 && s->cfg.low_ki<=100))return 0;
++    for(unsigned w=0;w<2;w++)if(!(s->cfg.low_ff_offset[w]>=0 && s->cfg.low_ff_offset[w]<=1000 && s->cfg.low_ff_slope[w]>0 && s->cfg.low_ff_slope[w]<=20))return 0;
++    return 1;
++}
+ int control_low_test(control_state_t *s,uint8_t motor,uint8_t target,uint32_t now) {
+     if(s->mode!=CAR_IDLE || s->cfg.simulated || motor<1 || motor>3 || target<10 || target>40 ||
+-       !(s->cfg.low_kp>0 && s->cfg.low_kp<=20 && s->cfg.low_ki>0 && s->cfg.low_ki<=100) ||
++       !low_config_valid(s) ||
+        (uint32_t)(now-s->heartbeat_ms)>s->cfg.heartbeat_timeout_ms)return 0;
+-    for(unsigned w=0;w<2;w++)if(!(s->cfg.low_ff_offset[w]>=0 && s->cfg.low_ff_offset[w]<=1000 &&
+-       s->cfg.low_ff_slope[w]>0 && s->cfg.low_ff_slope[w]<=20))return 0;
+     zero_outputs(s);s->mode=CAR_LOW_SPEED;s->fault=FAULT_NONE;s->test_motor=motor;
+     s->low_id++;s->low_started=now;s->low_elapsed=0;s->low_done=0;s->low_confirmed=0;s->low_target=target;s->low_regulating=0;
+     memset(s->low_n,0,sizeof s->low_n);memset(s->low_sum,0,sizeof s->low_sum);
+     memset(s->low_error2,0,sizeof s->low_error2);memset(s->low_abs_error,0,sizeof s->low_abs_error);
+     memset(s->low_min,0,sizeof s->low_min);memset(s->low_max,0,sizeof s->low_max);
+     s->drive_lease_active=1;s->drive_command_ms=now;return 1;
++}
++static int calibrated_wheel_step(control_state_t *s,unsigned w,int measured,float target,uint32_t elapsed) {
++    unsigned bit=1u<<w;float error=target-measured;
++        if(!(s->low_confirmed&bit)) {
++            if(measured>=5){if(s->drive_start_ticks[w]<3)s->drive_start_ticks[w]++;}else s->drive_start_ticks[w]=0;
++            if(elapsed>=30 && s->drive_start_ticks[w]>=3)s->low_confirmed|=(uint8_t)bit;
++            else if(elapsed>=300){control_fault(s,FAULT_ENCODER);return 0;}
++            else {s->duty[w]=CAR_LOW_KICK;return 1;}
++        }
++        if(elapsed<200){s->duty[w]=CAR_LOW_KICK;return 1;}
++        float ff=s->cfg.low_ff_offset[w]+s->cfg.low_ff_slope[w]*target;
++        /* L3: settle on measured feedforward, then match the existing output
++         * on PI entry. Stall/feedback guards apply throughout this transfer. */
++        if(elapsed<1000){s->duty[w]=clampf(ff,0,CAR_LOW_CAP);s->integral[w]=0;}
++        else {
++            int entering=!(s->low_regulating&bit);
++            if(entering){s->low_regulating|=(uint8_t)bit;s->integral[w]=clampf(-s->cfg.low_kp*error,-500,500);}
++            float candidate=clampf(s->integral[w]+(entering?0:s->cfg.low_ki*error*.01f),-500,500);
++            float raw=ff+s->cfg.low_kp*error+candidate;
++            if((raw>=0 && raw<=CAR_LOW_CAP) || (raw>CAR_LOW_CAP && error<0) || (raw<0 && error>0))s->integral[w]=candidate;
++            s->duty[w]=clampf(ff+s->cfg.low_kp*error+s->integral[w],0,CAR_LOW_CAP);
++        }
++        if(measured<2)s->stalled_ticks[w]++;else s->stalled_ticks[w]=0;
++        if(s->stalled_ticks[w]>=50){control_fault(s,FAULT_ENCODER);return 0;}
++    return 1;
+ }
+ static void low_speed_tick(control_state_t *s,uint32_t now,int16_t left,int16_t right) {
+     s->low_elapsed=now-s->low_started;
+@@ -270,27 +299,7 @@
+     for(unsigned w=0;w<2;w++) {
+         unsigned bit=1u<<w;if(!(s->test_motor&bit)){s->duty[w]=0;continue;}
+         int measured=samples[w],error=(int)s->low_target-measured;
+-        if(!(s->low_confirmed&bit)) {
+-            if(measured>=5){if(s->drive_start_ticks[w]<3)s->drive_start_ticks[w]++;}else s->drive_start_ticks[w]=0;
+-            if(s->low_elapsed>=30 && s->drive_start_ticks[w]>=3)s->low_confirmed|=(uint8_t)bit;
+-            else if(s->low_elapsed>=300){control_fault(s,FAULT_ENCODER);return;}
+-            else {s->duty[w]=CAR_LOW_KICK;continue;}
+-        }
+-        if(s->low_elapsed<200){s->duty[w]=CAR_LOW_KICK;continue;}
+-        float ff=s->cfg.low_ff_offset[w]+s->cfg.low_ff_slope[w]*s->low_target;
+-        /* L3: settle on measured feedforward, then match the existing output
+-         * on PI entry. Stall/feedback guards apply throughout this transfer. */
+-        if(s->low_elapsed<1000){s->duty[w]=clampf(ff,0,CAR_LOW_CAP);s->integral[w]=0;}
+-        else {
+-            int entering=!(s->low_regulating&bit);
+-            if(entering){s->low_regulating|=(uint8_t)bit;s->integral[w]=clampf(-s->cfg.low_kp*error,-500,500);}
+-            float candidate=clampf(s->integral[w]+(entering?0:s->cfg.low_ki*error*.01f),-500,500);
+-            float raw=ff+s->cfg.low_kp*error+candidate;
+-            if((raw>=0 && raw<=CAR_LOW_CAP) || (raw>CAR_LOW_CAP && error<0) || (raw<0 && error>0))s->integral[w]=candidate;
+-            s->duty[w]=clampf(ff+s->cfg.low_kp*error+s->integral[w],0,CAR_LOW_CAP);
+-        }
+-        if(measured<2)s->stalled_ticks[w]++;else s->stalled_ticks[w]=0;
+-        if(s->stalled_ticks[w]>=50){control_fault(s,FAULT_ENCODER);return;}
++        if(!calibrated_wheel_step(s,w,measured,s->low_target,s->low_elapsed))return;
+         if(s->low_elapsed>=CAR_LOW_STATS_MS) {
+             if(!s->low_n[w])s->low_min[w]=s->low_max[w]=(int16_t)measured;
+             if(measured<s->low_min[w])s->low_min[w]=(int16_t)measured;
+@@ -431,14 +440,18 @@
+     if((int32_t)(now-s->motion_ms)<0){s->duty[0]=s->duty[1]=0;return;}
+     float slowdown=clampf(1.0f-(s->error<0?-s->error:s->error)/150.0f,0.5f,1);
+     float ramp=clampf((uint32_t)(now-s->motion_ms)/500.0f,0,1);
+-    float target=s->cfg.speed_target*slowdown*ramp;
++    float target=s->cfg.speed_target*slowdown*(s->cfg.tracking_low_speed?1.0f:ramp);
+     s->bench_target=target; /* STEP-01: actual ramped target also exposed to telemetry. */
+     if(s->cfg.speed_target<=0) {
+         s->duty[0]=s->duty[1]=0;s->integral[0]=s->integral[1]=0;
+         s->bench_started=0;s->drive_start_ticks[0]=s->drive_start_ticks[1]=0;
+-        s->motion_ms=now;return;
++        s->low_confirmed=0;s->low_regulating=0;s->motion_ms=now;return;
+     }
+     int samples[2]={left,right};
++    if(s->cfg.tracking_low_speed){
++        for(unsigned w=0;w<2;w++)if(!calibrated_wheel_step(s,w,samples[w],target,now-s->motion_ms))return;
++        s->bench_started=s->low_confirmed;return;
++    }
+     for(unsigned w=0;w<2;w++)
+         if(!wheel_speed_step(s,w,samples[w],target,now-s->motion_ms,1,
+                             s->cfg.speed_kp,s->cfg.speed_ki,s->cfg.pwm_max,
+--- L3/code/competition/firmware/camera_car/tests/test_app.c
++++ G1/code/competition/firmware/camera_car/tests/test_app.c
+@@ -74,7 +74,7 @@
+     car_app_uart_rx_isr('d');for(int flush=0;flush<100;flush++)car_app_foreground();
+     car_app_uart_rx_isr('p');for(int flush=0;flush<100;flush++)car_app_foreground();
+     tx[tx_len]=0;CHECK(strstr((char*)tx,"cap_age=") && strstr((char*)tx,"phase=") && strstr((char*)tx,"target10="));
+-    CHECK(strstr((char*)tx,"ready=0 good_frames=0 accepted_age=") && strstr((char*)tx,"trial_id=0 trial_done=0 trial_ms=0\r\n"));
++    CHECK(strstr((char*)tx,"ready=0 good_frames=0 accepted_age=") && strstr((char*)tx,"trial_id=0 trial_done=0 trial_ms=0 pi_mask=0\r\n"));
+     if(argc>1){FILE *fixture=fopen(argv[1],"wb");CHECK(fixture);CHECK(fwrite(tx,1,tx_len,fixture)==tx_len);fclose(fixture);}
+     car_app_foreground(); car_app_tick_10ms();
+     CHECK(duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0 && duties[CAR_SERVO_PWM]==750);
+@@ -176,7 +176,7 @@
+     CHECK(duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0 && duties[CAR_SERVO_PWM]<750);
+     for(int i=0;i<20;i++)frame();CHECK(duties[CAR_LEFT_PWM]==3000 && duties[CAR_RIGHT_PWM]==3000);
+     feedback_left=feedback_right=6;
+-    for(int i=0;i<3;i++)frame();CHECK(duties[CAR_LEFT_PWM]>0 && duties[CAR_LEFT_PWM]<3000);
++    for(int i=0;i<3;i++)frame();CHECK(duties[CAR_LEFT_PWM]==3000 && duties[CAR_RIGHT_PWM]==3000); /* L3 minimum200ms kick. */
+     for(int y=0;y<120;y++)for(int x=0;x<188;x++)camera[y][x]=(uint8_t)(x>=30 && x<=118?210:30);
+     for(int i=0;i<5;i++)frame();CHECK(duties[CAR_SERVO_PWM]>750 && duties[CAR_LEFT_PWM]>0);
+     memset(camera,255,sizeof camera);for(int i=0;i<3;i++)frame();
+@@ -193,7 +193,7 @@
+     for(int flush=0;flush<100;flush++)car_app_foreground();
+     unsigned completion_begin=tx_len;
+     car_app_uart_rx_isr('p');for(int flush=0;flush<100;flush++)car_app_foreground();
+-    tx[tx_len]=0;CHECK(strstr((char*)tx+completion_begin,"trial_done=1 trial_ms=3200\r\n"));
++    tx[tx_len]=0;CHECK(strstr((char*)tx+completion_begin,"trial_done=1 trial_ms=3200 pi_mask=3\r\n"));
+     if(argc>1){FILE *fixture=fopen(argv[1],"ab");CHECK(fixture);CHECK(fwrite(tx+completion_begin,1,tx_len-completion_begin,fixture)==tx_len-completion_begin);fclose(fixture);}
+     feedback_left=feedback_right=0;car_app_uart_rx_isr('s');car_app_foreground();
+     for(int i=0;i<4;i++)frame();car_app_uart_rx_isr('a');car_app_foreground();
+--- L3/code/competition/firmware/camera_car/tests/test_tracking_low.c
++++ G1/code/competition/firmware/camera_car/tests/test_tracking_low.c
+@@ -0,0 +1,31 @@
++#include "car_core.h"
++#include <stdio.h>
++#include <stdlib.h>
++#include <math.h>
++#define CHECK(x) do{if(!(x)){fprintf(stderr,"TRACK LOW FAIL %d: %s\n",__LINE__,#x);exit(1);}}while(0)
++static control_state_t fresh(void){control_state_t s;control_config_t c={0};
++ c.speed_target=20;c.pwm_max=3000;c.tracking_low_speed=1;c.low_kp=1;c.low_ki=20;
++ c.low_ff_offset[0]=570;c.low_ff_offset[1]=690;c.low_ff_slope[0]=6.5f;c.low_ff_slope[1]=7;
++ c.steer_kp=3;c.steer_sign=-1;c.servo_center_us=1500;c.servo_min_us=1350;c.servo_max_us=1650;
++ c.frame_timeout_ms=150;c.heartbeat_timeout_ms=100;c.tracking_settle_ms=200;c.tracking_duration_ms=3000;c.tracking_lease_ms=500;
++ control_init(&s,&c);return s;}
++static void frame(control_state_t *s,uint32_t t,int valid,float error){vision_result_t f={0};f.valid=(uint8_t)valid;f.error=error;s->heartbeat_ms=t;control_frame(s,&f,t);}
++static void start(control_state_t *s){frame(s,20,1,0);frame(s,40,1,0);frame(s,60,1,0);CHECK(control_start(s,60));}
++static void step(control_state_t *s,uint32_t t,int l,int r){frame(s,t,1,0);control_drive_keepalive(s,t);control_tick(s,t,l,r);}
++int main(void){
++ control_state_t s=fresh();start(&s);
++ for(unsigned t=70;t<260;t+=10){step(&s,t,0,0);CHECK(s.duty[0]==0 && s.duty[1]==0);}
++ for(unsigned t=260;t<460;t+=10){step(&s,t,20,20);CHECK(s.duty[0]==3000 && s.duty[1]==3000);}
++ step(&s,460,100,100);CHECK(s.duty[0]==700 && s.duty[1]==830 && s.low_regulating==0);
++ for(unsigned t=470;t<1260;t+=10)step(&s,t,28,18);
++ step(&s,1260,28,18);CHECK(s.low_regulating==3 && s.duty[0]==700 && s.duty[1]==830);
++ frame(&s,1270,1,20);control_drive_keepalive(&s,1270);control_tick(&s,1270,20,20);CHECK(s.servo_us==1440 && s.duty[0]<=1500 && s.duty[1]<=1500);
++ for(unsigned t=1280;t<=3260;t+=10)step(&s,t,20,20);
++ CHECK(s.mode==CAR_IDLE && s.trial_done && s.trial_elapsed_ms==3200 && s.duty[0]==0 && s.duty[1]==0);
++ s=fresh();start(&s);for(unsigned t=70;t<=570;t+=10){step(&s,t,t>=270?20:0,0);if(s.fault)break;}CHECK(s.fault==FAULT_ENCODER && !s.trial_done && s.duty[0]==0);
++ s=fresh();start(&s);for(unsigned t=70;t<=560;t+=10){frame(&s,t,1,0);control_tick(&s,t,20,20);}CHECK(s.fault==FAULT_LINK);
++ s=fresh();start(&s);for(unsigned t=70;t<=90;t+=10){frame(&s,t,0,0);control_tick(&s,t,0,0);}CHECK(s.fault==FAULT_LINE);
++ s=fresh();start(&s);s.cfg.speed_target=0;for(unsigned t=70;t<=700;t+=10){step(&s,t,0,0);CHECK(s.duty[0]==0 && s.duty[1]==0);}s.cfg.speed_target=20;step(&s,710,0,0);CHECK(s.duty[0]==3000 && !s.low_regulating);
++ s=fresh();s.cfg.low_ki=0;frame(&s,20,1,0);frame(&s,40,1,0);frame(&s,60,1,0);CHECK(!control_start(&s,60));
++ puts("Tracking calibrated controller: settle/kick/feedforward/bumpless PI/steering/expiry/guards/zero restart PASS");return 0;
++}
+--- L3/code/repair/run_tests.py
++++ G1/code/repair/run_tests.py
+@@ -30,6 +30,7 @@
+         run(args)
+         return exe
+     inc=root/'demo/user/inc';src=root/'demo/user/src';tests=root/'tests'
++    run([build('test_tracking_low',[tests/'test_tracking_low.c',src/'car_core.c'],[inc])])
+     run([build('test_low_speed',[tests/'test_low_speed.c',src/'car_core.c'],[inc])])
+     run([build('test_sustain',[tests/'test_sustain.c',src/'car_core.c'],[inc])])
+     run([build('test_calibration',[tests/'test_calibration.c',src/'car_core.c'],[inc])])
+--- L3/code/repair/test_tracking_tool.py
++++ G1/code/repair/test_tracking_tool.py
+@@ -6,8 +6,8 @@
+ from pathlib import Path
+ from tracking_trial import parse_status, parse_config, check_status, session
+ 
+-LINE = 'ms=100 mode=1 fault=0 frames=8 valid=1 pair=13/13 thr=30 err10=25 bench_target=20 bench_started=3 enc=20,21 pwm=1400,1450 us=1492 speed=20 target10=200 phase=2 quality=100 reject=0 seq=8 cap_age=10 proc_ms=0 used_age=0 drop_frames=0 ready=0 good_frames=3 accepted_age=10 trial_id=1 trial_done=0 trial_ms=100'
+-CFG = 'TRACK-CFG v=20261019T2 target=20 cap=3000 settle=200 duration=3000 lease=500 simulated=0 left_bias=2200 right_bias=1500'
++LINE = 'ms=100 mode=1 fault=0 frames=8 valid=1 pair=13/13 thr=30 err10=25 bench_target=20 bench_started=3 enc=20,21 pwm=1400,1450 us=1492 speed=20 target10=200 phase=2 quality=100 reject=0 seq=8 cap_age=10 proc_ms=0 used_age=0 drop_frames=0 ready=0 good_frames=3 accepted_age=10 trial_id=1 trial_done=0 trial_ms=100 pi_mask=3'
++CFG = 'TRACK-CFG v=20261019G1 target=20 cap=3000 settle=200 duration=3000 lease=500 simulated=0 profile=L3 kp10=10 ki10=200 ff0=570,690 ff10=65,70 closed_cap=1500 kick_min=200 kick_max=300 transfer=1000'
+ 
+ class Contracts(unittest.TestCase):
+     @unittest.skipUnless(os.environ.get('TRACK_TEST_TELEMETRY'), 'Full runner supplies actual C telemetry')
+@@ -36,9 +36,9 @@
+                 check_status(parse_status(LINE.replace(token, replacement)))
+     def test_only_identified_bounded_real_trial(self):
+         self.assertEqual(parse_config(CFG)['duration'], 3000)
+-        for token, replacement in [('v=20261019T2','v=20261018T'), ('lease=500','lease=0'),
++        for token, replacement in [('v=20261019G1','v=20261018T'), ('lease=500','lease=0'),
+                                    ('duration=3000','duration=0'), ('simulated=0','simulated=1'),
+-                                   ('left_bias=2200','left_bias=3000'), ('right_bias=1500','right_bias=2200')]:
++                                   ('ff0=570,690','ff0=2200,1500'), ('closed_cap=1500','closed_cap=3000')]:
+             with self.subTest(replacement=replacement), self.assertRaises(RuntimeError):
+                 parse_config(CFG.replace(token, replacement))
+ 
+@@ -82,7 +82,7 @@
+                             trial_id = 0
+                         line = ('ms=%d mode=%d fault=%d valid=1 us=1500 target10=%d phase=%d '
+                                 'cap_age=10 enc=%d,%d pwm=%d,%d ready=%d good_frames=%d '
+-                                'accepted_age=10 trial_id=%d trial_done=%d trial_ms=%d\n') % (
++                                'accepted_age=10 trial_id=%d trial_done=%d trial_ms=%d pi_mask=3\n') % (
+                             device_ms, mode, fault, 200 if moving else 0, 2 if moving else 0,
+                             20 if moving else 0, 21 if moving else 0, 1400 if moving else 0,
+                             1450 if moving else 0, ready, 3 if ready else 1, trial_id, done, elapsed)
+--- L3/code/repair/tracking_trial.py
++++ G1/code/repair/tracking_trial.py
+@@ -23,7 +23,7 @@
+         values = fields(line)
+         row = {key: int(values[key]) for key in
+                ('ms', 'mode', 'fault', 'valid', 'us', 'target10', 'phase', 'cap_age',
+-                'ready', 'good_frames', 'accepted_age', 'trial_id', 'trial_done', 'trial_ms')}
++                'ready', 'good_frames', 'accepted_age', 'trial_id', 'trial_done', 'trial_ms', 'pi_mask')}
+         for key in ('enc', 'pwm'):
+             pair = tuple(int(v) for v in values[key].split(','))
+             if len(pair) != 2:
+@@ -37,14 +37,18 @@
+ def parse_config(line):
+     values = fields(line)
+     try:
+-        if not line.startswith('TRACK-CFG ') or values['v'] != '20261019T2':
++        if not line.startswith('TRACK-CFG ') or values['v'] != '20261019G1':
+             raise ValueError('unrecognized firmware')
+         cfg = {key: int(values[key]) for key in
+-               ('target', 'cap', 'settle', 'duration', 'lease', 'simulated', 'left_bias', 'right_bias')}
++               ('target', 'cap', 'settle', 'duration', 'lease', 'simulated')}
+         if not (0 < cfg['target'] <= 40 and 0 < cfg['cap'] <= 3000 and
+                 100 <= cfg['settle'] <= 1000 and 0 < cfg['duration'] <= 5000 and
+                 200 <= cfg['lease'] <= 1000 and cfg['simulated'] == 0
+-                and cfg['left_bias'] == 2200 and cfg['right_bias'] == 1500):
++                and values.get('profile') == 'L3' and values.get('kp10') == '10'
++                and values.get('ki10') == '200' and values.get('ff0') == '570,690'
++                and values.get('ff10') == '65,70' and values.get('closed_cap') == '1500'
++                and values.get('kick_min') == '200' and values.get('kick_max') == '300'
++                and values.get('transfer') == '1000'):
+             raise ValueError('configuration outside first-trial envelope')
+         return cfg
+     except (KeyError, ValueError) as exc:
+@@ -54,7 +58,7 @@
+ def check_status(row):
+     if row is None:
+         raise RuntimeError('Missing complete status')
+-    if (row['fault'] != 0 or row['mode'] not in (0, 1) or
++    if (row['pi_mask'] not in (0,1,2,3) or row['fault'] != 0 or row['mode'] not in (0, 1) or
+             any(v < 0 or v > 3000 for v in row['pwm']) or
+             any(v < -5 or v > 450 for v in row['enc']) or
+             not 1350 <= row['us'] <= 1650):
+@@ -107,7 +111,7 @@
+             receive()
+             if latest:
+                 check_status(latest)
+-                if latest['mode'] != 0 or any(latest['pwm']):
++                if latest['mode'] != 0 or any(latest['pwm']) or any(latest['enc']):
+                     raise RuntimeError('Idle and zero outputs required')
+             if (config and latest and latest['ready'] == 1 and latest['good_frames'] >= 3
+                     and latest['valid'] == 1 and latest['cap_age'] <= 150
+@@ -116,7 +120,7 @@
+         if not config:
+             raise RuntimeError('No identified tracking configuration')
+         check_status(latest)
+-        if latest['mode'] != 0 or any(latest['pwm']):
++        if latest['mode'] != 0 or any(latest['pwm']) or any(latest['enc']):
+             raise RuntimeError('Idle and zero outputs required')
+         if (latest['ready'] != 1 or latest['good_frames'] < 3 or latest['valid'] != 1
+                 or latest['cap_age'] > 150 or latest['accepted_age'] > 150):
+@@ -148,7 +152,7 @@
+                     if row['trial_id'] != expected_id:
+                         raise RuntimeError('Unexpected trial identity; no automatic retry')
+                     active = True
+-                    if (row['phase'] == 2 and row['target10'] > 0
++                    if (row['phase'] == 2 and row['pi_mask'] == 3 and row['trial_ms'] >= 1200 and row['target10'] > 0
+                             and all(v > 0 for v in row['enc'])
+                             and all(v > 0 for v in row['pwm'])):
+                         moving = True
+@@ -197,7 +201,13 @@
+     args = parser.parse_args()
+     output = args.out or Path(__file__).resolve().parent / 'evidence' / (
+         'tracking-' + datetime.now().strftime('%Y%m%d-%H%M%S-%f'))
++    import sys
++    sys.path.insert(0,str(Path(__file__).resolve().parent/'tools'))
+     import serial
++    from serial.tools import list_ports
++    devices=[d for d in list_ports.comports() if d.device.upper()==args.port.upper()]
++    if len(devices)!=1 or devices[0].vid!=0x2E3C or devices[0].pid!=0x5740:
++        raise RuntimeError('Wireless USB identity not confirmed; no port opened')
+     with serial.Serial(args.port, 115200, timeout=.02, write_timeout=.2) as port:
+         session(port, output, args.run)
+ 

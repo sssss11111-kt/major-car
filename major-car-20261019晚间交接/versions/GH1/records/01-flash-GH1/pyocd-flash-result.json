@@ -1,0 +1,17 @@
+{
+  "image": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-\u5730\u9762\u8d1f\u8f7d\u8bca\u65ad-GH1-20261019\\firmware\\20261019GH1-ground-hold.hex",
+  "image_sha256": "c914fdf1979efe043917e0ef0ff9f94baf6f7597e90ba65b6f9be3476526bfa6",
+  "mode": "camera",
+  "target": "mimxrt1064",
+  "frequency": 1000000,
+  "connect": "halt",
+  "backup_complete": true,
+  "program_complete": true,
+  "readback_verified": true,
+  "core_left_halted": true,
+  "algorithm": "NXP.MIMXRT1064_DFP.19.0.0/MIMXRT1064_QSPI_4KB_SEC.FLM",
+  "baseline_verified_bytes": 73088,
+  "backup": "D:\\\u684c\u9762\\\u667a\u80fd\u8f66\\major-car-\u5730\u9762\u8d1f\u8f7d\u8bca\u65ad-GH1-20261019\\records\\01-flash-GH1\\before-flash-70000000-4MiB.bin",
+  "backup_sha256": "f7ed31fe9c8937574c607e6bc28b56cfe3bc38395bf498c73f51565ecdf1868c",
+  "verified_bytes": 76544
+}

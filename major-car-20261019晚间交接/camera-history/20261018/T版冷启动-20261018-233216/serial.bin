@@ -1,0 +1,12 @@
+ms=3ms=29230 mode=0 fault=0 frames=1256 valid=0 pair=4/13 thr=164 err10=362 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=30 reject=2 seq=1427 cap_age=20 proc_ms=0 used_age=0 drop_frames=171
+ms=29730 mode=0 fault=0 frames=1278 valid=0 pair=4/13 thr=164 err10=360 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=30 reject=2 seq=1452 cap_age=20 proc_ms=0 used_age=10 drop_frames=174
+ms=30230 mode=0 fault=0 frames=1301 valid=0 pair=6/13 thr=162 err10=317 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=46 reject=0 seq=1477 cap_age=20 proc_ms=0 used_age=0 drop_frames=176
+DRIVE-CFG v=20261018N straight=7 left=8 right=9 duration=1000 settle=200 target=40 cap=3000 straight10=0 lease=500
+TRACK-CFG v=20261018T target=20 cap=3000 settle=200 duration=3000 lease=500 simulated=0
+ms=30410 mode=0 fault=0 frames=1310 valid=0 pair=6/13 thr=166 err10=319 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=46 reject=1 seq=1487 cap_age=0 proc_ms=0 used_age=0 drop_frames=177
+ms=30730 mode=0 fault=0 frames=1323 valid=0 pair=5/13 thr=166 err10=325 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=38 reject=1 seq=1502 cap_age=20 proc_ms=0 used_age=10 drop_frames=179
+ms=31230 mode=0 fault=0 frames=1346 valid=0 pair=5/13 thr=166 err10=334 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=38 reject=1 seq=1527 cap_age=20 proc_ms=0 used_age=0 drop_frames=181
+ms=31730 mode=0 fault=0 frames=1368 valid=0 pair=5/13 thr=164 err10=340 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=38 reject=1 seq=1552 cap_age=20 proc_ms=0 used_age=10 drop_frames=184
+ms=32020 mode=0 fault=0 frames=1382 valid=0 pair=4/13 thr=164 err10=359 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=30 reject=2 seq=1567 cap_age=10 proc_ms=0 used_age=0 drop_frames=185
+ms=32230 mode=0 fault=0 frames=1391 valid=0 pair=4/13 thr=162 err10=353 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=30 reject=2 seq=1577 cap_age=20 proc_ms=0 used_age=0 drop_frames=186
+ms=32730 mode=0 fault=0 frames=1413 valid=0 pair=4/13 thr=164 err10=357 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=30 reject=2 seq=1602 cap_age=20 proc_ms=0 used_age=10 drop_frames=189

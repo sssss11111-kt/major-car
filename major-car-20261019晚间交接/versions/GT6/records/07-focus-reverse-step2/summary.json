@@ -1,0 +1,16 @@
+{
+  "complete_images": 3,
+  "complete_statuses": 28,
+  "valid_statuses": 27,
+  "paired_rows_observed": [
+    "10/13",
+    "11/13",
+    "7/13",
+    "8/13"
+  ],
+  "motion_start_sent": false,
+  "all_observed_pwm_zero": true,
+  "focus_improvement_confirmed": false,
+  "confounder": "images2 and3 contain large near-field obstruction; image1 remains blurred; focus direction cannot be established",
+  "next_step": "do not rotate again; remove hands/objects and reacquire same position"
+}

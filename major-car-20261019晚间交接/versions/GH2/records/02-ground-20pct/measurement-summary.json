@@ -1,0 +1,36 @@
+{
+  "version": "20261019GH2",
+  "measurement_complete": true,
+  "single_start_verified": true,
+  "trial_id": 1,
+  "maintain_duty_percent": 20,
+  "kick_duty_percent": 30,
+  "settle_ms": 200,
+  "hold_ms": 1500,
+  "elapsed_ms": 1900,
+  "normal_expiry": true,
+  "fault": 0,
+  "stats_window_ms": 500,
+  "stats_samples": [
+    50,
+    50
+  ],
+  "mean_counts_per_10ms": [
+    71.24,
+    73.2
+  ],
+  "min_counts_per_10ms": [
+    62,
+    62
+  ],
+  "max_counts_per_10ms": [
+    80,
+    84
+  ],
+  "continuous_feedback_criterion_passed": true,
+  "final_zero_verified": true,
+  "physical_observation": "用户：能行驶，但没有沿着赛道中线，有一些左偏。",
+  "acceptance_boundary": "One short fixed-PWM loaded test; not minimum-duty, static-start, closed-loop tracking or long-term acceptance",
+  "physical_stop_confirmation": "未单独明确；软件已确认最终零输出、零编码器反馈",
+  "heading_diagnosis": "Servo fixed at1500, no visual correction in this diagnostic. Right final-window encoder mean73.20 vs left71.24; mechanical center and unequal loaded wheel speed remain hypotheses, not proven sole causes."
+}

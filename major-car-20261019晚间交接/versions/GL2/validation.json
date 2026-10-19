@@ -1,0 +1,83 @@
+{
+  "version": "20261019GL2",
+  "sha256": "161eb3276e809be35daa6244f7a1c6195b0d441f28bfe8ba458ade2029faca03",
+  "host_regression": "passed",
+  "host_tool_tests": 10,
+  "arm_build": "passed",
+  "arm_warnings": 0,
+  "arm_errors": 0,
+  "flashed": true,
+  "physical_trial_performed": true,
+  "target_counts_per_10ms": 20,
+  "ff_at_target20": [
+    1206,
+    1198
+  ],
+  "kp": 4,
+  "ki_per_second": 20,
+  "entry": "ff",
+  "closed_cap": 1500,
+  "kick_duty": 3000,
+  "transfer_after_kick_ms": 200,
+  "max_total_ms": 2000,
+  "regulation_ms": 1500,
+  "encoder_guard": 120,
+  "baseline": "same-board exact GL1",
+  "readback_verified": true,
+  "verified_bytes": 76992,
+  "core_left_halted": false,
+  "cold_boot_verified": true,
+  "trial_count": 2,
+  "normal_expiry": true,
+  "final_zero_verified": true,
+  "performance": {
+    "target": 20,
+    "mean": [
+      15.8,
+      15.66
+    ],
+    "rmse": [
+      4.626013402488151,
+      4.730750469005948
+    ],
+    "min": [
+      13,
+      13
+    ],
+    "max": [
+      19,
+      19
+    ],
+    "passed": false,
+    "window_ms": 500,
+    "units": "counts/10ms"
+  },
+  "physical_observation": "用户：行驶到自动停止，都没问题，可以进行下一步测试。",
+  "performance_pass_count": 1,
+  "consecutive_performance_passes": 1,
+  "repeated_ground_acceptance": false,
+  "latest_performance": {
+    "target": 20,
+    "mean": [
+      19.14,
+      18.92
+    ],
+    "rmse": [
+      1.5427248620541512,
+      1.469693845669907
+    ],
+    "min": [
+      15,
+      17
+    ],
+    "max": [
+      23,
+      21
+    ],
+    "passed": true,
+    "window_ms": 500,
+    "units": "counts/10ms"
+  },
+  "user_accepts_two_trials_for_next_stage": true,
+  "third_trial_cancelled_by_user": true
+}

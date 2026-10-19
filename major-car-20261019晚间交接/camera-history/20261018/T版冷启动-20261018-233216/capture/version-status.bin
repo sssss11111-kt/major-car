@@ -1,0 +1,6 @@
+DRIVE-CFG v=20261018N straight=7 left=8 right=9 duration=1000 settle=200 target=40 cap=3000 straight10=0 lease=500
+TRACK-CFG v=20261018T target=20 cap=3000 settle=200 duration=3000 lease=500 simulated=0
+ms=45420 mode=0 fault=0 frames=1986 valid=0 pair=5/13 thr=166 err10=341 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=38 reject=2 seq=2238 cap_age=0 proc_ms=0 used_age=0 drop_frames=252
+ms=45730 mode=0 fault=0 frames=1999 valid=0 pair=5/13 thr=166 err10=341 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=38 reject=2 seq=2253 cap_age=10 proc_ms=0 used_age=0 drop_frames=254
+ms=46230 mode=0 fault=0 frames=2022 valid=0 pair=5/13 thr=166 err10=327 bench_target=0 bench_started=0 enc=0,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=38 reject=2 seq=2278 cap_age=10 proc_ms=0 used_age=0 drop_frames=256
+ms=46730 mode=0 fault=0 frames=2044 valid=0 pair=5/13 thr=166 err10=323 bench_target=0 bench_started=0 enc=1,0 pwm=0,0 us=1500 speed=20 target10=0 phase=3 quality=38 reject=2 seq=2303 cap_age=10 proc_ms=0 used_age=0 drop_frames=259

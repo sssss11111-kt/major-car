@@ -1,0 +1,9 @@
+{
+  "version_confirmed": true,
+  "complete_images": 3,
+  "motion_start_sent": false,
+  "all_observed_pwm_zero": true,
+  "physical_screen_display_confirmed": false,
+  "image_observation": "all three grayscale frames visibly blurred; scene composition/foreground objects differ; no fixed-scene focus comparison",
+  "preflight_passed": false
+}
