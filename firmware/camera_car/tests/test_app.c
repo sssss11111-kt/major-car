@@ -78,6 +78,12 @@ int main(void) {
     car_app_uart_rx_isr('1'); stop_on_lock=3;
     car_app_foreground(); car_app_tick_10ms();
     CHECK(stop_on_lock==0 && duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0);
+    tx_len=0;
+    car_app_uart_rx_isr('p');
+    for(int i=0;i<100;i++) car_app_foreground();
+    CHECK(tx_len<sizeof tx);
+    tx[tx_len]=0;
+    CHECK(strstr((const char *)tx,"rows=13 infer=0 contrast=180 auto=1")!=NULL);
     puts("hardware adapter tests: PASS (host I/O double, not physical hardware)");
     return 0;
 }

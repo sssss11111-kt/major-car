@@ -22,7 +22,8 @@ static const scenario_t scenarios[]={
     {"sharp_right_curve",CURVE_RIGHT,0,30,210,0,0,ACCURATE},
     {"s_bend",S_BEND,0,30,210,0,0,ACCURATE},
     {"horizontal_shadow",SHADOW_MILD,0,30,210,0,0,ACCURATE},
-    {"severe_shadow",SHADOW_STRONG,0,30,210,0,0,REJECT},
+    /* V2 local thresholds must recover this 30-level, sharply edged road. */
+    {"severe_shadow",SHADOW_STRONG,0,30,210,0,0,ACCURATE},
     {"background_reflection",GLARE_OUTSIDE,0,30,210,0,0,ACCURATE},
     {"reflection_merges_right_edge",GLARE_EDGE,0,30,210,0,0,CHARACTERIZE},
     {"short_left_boundary_gap",GAP_LEFT,0,30,210,0,0,ACCURATE},
@@ -143,7 +144,7 @@ static void run_case(const scenario_t *s,uint32_t seed,FILE *report,const char *
         accurate_count++;
         check(result.valid,s->name,"usable track detected");
         check(result.paired_rows>=8,s->name,"enough paired rows");
-        if(s->shape==STRAIGHT || s->shape==SHADOW_MILD || s->shape==GLARE_OUTSIDE ||
+        if(s->shape==STRAIGHT || s->shape==SHADOW_MILD || s->shape==SHADOW_STRONG || s->shape==GLARE_OUTSIDE ||
            s->shape==GAP_LEFT || s->shape==GAP_BOTH)
             check(fabsf(result.error-(s->shift+0.5f))<=1,s->name,"straight offset within one pixel");
         if(s->shape==CURVE_LEFT) check(result.error< -3,s->name,"left curve direction");

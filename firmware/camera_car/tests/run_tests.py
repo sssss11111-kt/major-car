@@ -12,6 +12,12 @@ subprocess.run([str(zig), 'cc', '-std=c99', '-Wall', '-Wextra', '-Werror',
                 str(root/'tests/test_core.c'), str(root/'demo/user/src/car_core.c'),
                 '-o', str(exe)], check=True)
 subprocess.run([str(exe)], check=True)
+v2_exe = out / 'test_vision_v2.exe'
+subprocess.run([str(zig), 'cc', '-std=c99', '-Wall', '-Wextra', '-Werror',
+               '-O1', '-UNDEBUG', '-I', str(root/'demo/user/inc'),
+               str(root/'tests/test_vision_v2.c'), str(root/'demo/user/src/car_core.c'),
+               '-o', str(v2_exe)], check=True)
+subprocess.run([str(v2_exe)], check=True)
 app_exe = out / 'test_app.exe'
 subprocess.run([str(zig), 'cc', '-std=c99', '-Wall', '-Wextra', '-Werror',
                '-O1', '-UNDEBUG', '-I', str(root/'tests/sdk'),

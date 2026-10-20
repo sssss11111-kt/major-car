@@ -10,12 +10,16 @@ typedef struct {
 typedef struct {
     int16_t previous_center;
     uint16_t width[CAR_H];
+    uint8_t width_age[CAR_H]; /* 0 measured this frame; >8 unusable */
+    uint8_t history_valid, polarity;
 } vision_state_t;
 typedef struct {
     int16_t left[CAR_H], right[CAR_H], center[CAR_H];
     uint8_t edge_flags[CAR_H]; /* bit 0 left, bit 1 right */
     uint16_t valid_rows, paired_rows, scanned_rows;
     uint8_t threshold, contrast, valid;
+    uint8_t row_threshold[CAR_H]; /* automatic mode uses these, not threshold */
+    uint16_t inferred_rows; /* one real edge, never counted as paired */
     float error; /* positive: track center to vehicle right */
 } vision_result_t;
 typedef enum { CAR_IDLE, CAR_RUNNING, CAR_TEST, CAR_FAULT } car_mode_t;

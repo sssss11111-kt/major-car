@@ -42,7 +42,9 @@ static void vision_tests(void) {
     vision_process(&vs,&vc,image,binary,&vr);
     for(int y=0;y<CAR_H;y++) for(int x=138;x<CAR_W;x++) image[y*CAR_W+x]=210;
     vision_process(&vs,&vc,image,binary,&vr);
-    assert(vr.valid_rows>0 && vr.paired_rows==0 && !vr.valid);
+    /* The learned right edge is INSIDE the image: erasing it is not clipping.
+       V2 must not invent an edge at x=138 merely because history contains it. */
+    assert(vr.valid_rows==0 && vr.paired_rows==0 && !vr.valid);
     /* Noise isolated to one pixel must not become a false black boundary. */
     vision_reset(&vs); track(0,30,210);
     for(int y=0;y<CAR_H;y++) image[y*CAR_W+85]=30;

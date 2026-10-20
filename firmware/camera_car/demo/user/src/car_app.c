@@ -96,9 +96,10 @@ static void telemetry(void) {
     control_state_t snapshot;
     uint32_t key=lock(); snapshot=control; unlock(key);
     snprintf(line,sizeof line,
-        "ms=%lu mode=%u fault=%u frames=%lu valid=%u pair=%u/%u thr=%u err10=%d enc=%d,%d pwm=%u,%u us=%u speed=%u\r\n",
+        "ms=%lu mode=%u fault=%u frames=%lu valid=%u pair=%u/%u rows=%u infer=%u contrast=%u auto=%u thr=%u err10=%d enc=%d,%d pwm=%u,%u us=%u speed=%u\r\n",
         (unsigned long)milliseconds,(unsigned)snapshot.mode,(unsigned)snapshot.fault,
         (unsigned long)frame_count,result.valid,result.paired_rows,result.scanned_rows,
+        result.valid_rows,result.inferred_rows,result.contrast,vision_cfg.otsu,
         result.threshold,(int)(result.error*10),measured_left,measured_right,
         (unsigned)snapshot.duty[0],(unsigned)snapshot.duty[1],
         (unsigned)snapshot.servo_us,(unsigned)snapshot.cfg.speed_target);
