@@ -1,0 +1,143 @@
+--- LAP17/demo/user/src/main.c
++++ LAP18/demo/user/src/main.c
+@@ -41,6 +41,7 @@
+ static volatile uint8 steering_curve = 0, steering_limited = 0;
+ static volatile int16_t preview_error = 0;
+ static volatile float steering_command = 92.5f;
++static volatile float steering_speed_scale = 1.0f;
+ volatile uint32 camera_ready_cycle = 0;
+ static volatile uint32 timing_image_us=0, timing_recognized_to_pwm_us=0;
+ static volatile uint32 timing_ready_to_pwm_us=0, timing_ready_max_us=0, timing_samples=0;
+@@ -102,7 +103,7 @@
+     {
+         if (mt9v03x_init()) {
+             tft180_show_string(0, 16, "mt9v03x reinit.");
+-            telemetry_send("C11LAP17 CAMERA_RETRY\r\n");
++            telemetry_send("C11LAP18 CAMERA_RETRY\r\n");
+         }
+         else
+             break;
+@@ -194,10 +195,10 @@
+     system_delay_ms(300);          // 等待主板其他外设上电完成
+ 
+     wireless_ready = (wireless_uart_init() == 0); /* Supplied wireless driver: RTS and IRQ RX FIFO. */
+-    telemetry_send("C11LAP17 AUTO BOOT\r\n");
++    telemetry_send("C11LAP18 AUTO BOOT\r\n");
+     Init();
+     img_process_reset();
+-    telemetry_send("C11LAP17 AUTO READY\r\n");
++    telemetry_send("C11LAP18 AUTO READY\r\n");
+     tft180_clear();
+     tft180_show_string(0, 0, wireless_ready ? "W:OK GRAY/BINARY" : "W:FAIL GRAY/BIN");
+     interrupt_global_enable(0);
+@@ -267,6 +268,7 @@
+                 img_get_preview_valid(),servo_motor_duty_middle,SERVO_DIR,
+                 MIN(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX),MAX(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX));
+             steering_curve = turn.curve; steering_limited = turn.limited;
++            steering_speed_scale = valid ? turn.speed_scale : 1.0f;
+             preview_error = img_get_preview_error();
+             float tmp_duty = turn.command;
+             if (trial_running && !trial_bench && vision_mode)
+@@ -318,14 +320,14 @@
+             if (trial_ticks-timing_report_tick >= 100) {
+                 timing_report_tick=trial_ticks;
+                 char timing_report[160];
+-                sprintf(timing_report,"TIME17 image_us=%lu recognized_to_pwm_us=%lu ready_to_pwm_us=%lu ready_max_us=%lu samples=%lu\r\n",
++                sprintf(timing_report,"TIME18 image_us=%lu recognized_to_pwm_us=%lu ready_to_pwm_us=%lu ready_max_us=%lu samples=%lu\r\n",
+                     (unsigned long)timing_image_us,(unsigned long)timing_recognized_to_pwm_us,
+                     (unsigned long)timing_ready_to_pwm_us,(unsigned long)timing_ready_max_us,
+                     (unsigned long)timing_samples);
+                 telemetry_send(timing_report);
+             }
+             char report[200]; report_tick=trial_ticks;
+-            sprintf(report, "C11LAP17 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
++            sprintf(report, "C11LAP18 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
+                 (unsigned long)trial_ticks,trial_running,trial_fault,(unsigned long)frame_count,
+                 (unsigned long)good_frames,(unsigned long)(trial_ticks-frame_tick),
+                 encoder_data_1,encoder_data_2,trial_left_pwm,trial_right_pwm);
+@@ -335,8 +337,8 @@
+                 vision_mode != 0, vision_error, usable_rows, both_rows, model_good);
+             telemetry_send(vision_report);
+             char steering_report[100];
+-            sprintf(steering_report,"STEER17 curve=%u near=%d preview=%d command10=%d limited=%u\r\n",
+-                steering_curve,vision_error,preview_error,(int)(steering_command*10.0f),steering_limited);
++            sprintf(steering_report,"STEER18 curve=%u near=%d preview=%d command10=%d limited=%u scale1000=%d geom_cal=0\r\n",
++                steering_curve,vision_error,preview_error,(int)(steering_command*10.0f),steering_limited,(int)(steering_speed_scale*1000.0f));
+             telemetry_send(steering_report);
+             char auto_report[80];
+             uint8 phase = auto_phase;
+@@ -413,7 +415,12 @@
+     gpio_set_level(MOTOR1_DIR,MOTOR1_FORWARD_DIR_LEVEL);
+     gpio_set_level(MOTOR2_DIR,MOTOR2_FORWARD_DIR_LEVEL);
+     if (trial_running) {
+-        float effective_target=(!trial_bench && vision_degraded) ? TRIAL_DRIVE_DEGRADED_TARGET : speed_target;
++        float effective_target = speed_target;
++        if (!trial_bench) {
++            effective_target *= steering_speed_scale;
++            if (vision_degraded && effective_target > TRIAL_DRIVE_DEGRADED_TARGET)
++                effective_target = TRIAL_DRIVE_DEGRADED_TARGET;
++        }
+         speed_real=encoder_data_1;
+         speed_pwm=PidLocCtrl(&speed_pid_l,effective_target-speed_real,1.f);
+         trial_left_pwm=(int)constrain_float(TRIAL_DRIVE_FEEDFORWARD+speed_pwm,0,TRIAL_DRIVE_MAX);
+--- LAP17/demo/user/inc/steering_control.h
++++ LAP18/demo/user/inc/steering_control.h
+@@ -1,6 +1,11 @@
+ #ifndef STEERING_CONTROL_H
+ #define STEERING_CONTROL_H
+ #include <stdint.h>
++/* User measurements: geometric reference, NOT a calibrated servo/road model. */
++#define STEERING_WHEELBASE_M 0.200f
++#define STEERING_MAX_WHEEL_ANGLE_RAD 0.7853981634f
++#define STEERING_MODEL_CALIBRATED 0
++#define STEERING_TIGHT_CURVE_SPEED_SCALE (2.0f/3.0f)
+ #define STEERING_STRAIGHT_GAIN 0.50f
+ #define STEERING_CURVE_GAIN    1.00f
+ #define STEERING_PREVIEW_BLEND 0.40f
+@@ -9,6 +14,7 @@
+ #define STEERING_CURVE_PREVIEW 10
+ typedef struct {
+     float command, error, gain;
++    float curvature_reference, speed_scale;
+     uint8_t curve, limited;
+ } steering_result_t;
+ steering_result_t steering_control(int near_error, int preview_error,
+--- LAP17/demo/user/src/steering_control.c
++++ LAP18/demo/user/src/steering_control.c
+@@ -1,8 +1,9 @@
+ #include "steering_control.h"
++#include <math.h>
+ steering_result_t steering_control(int near_error, int preview_error,
+     uint8_t preview_valid, float middle, float direction, float low, float high)
+ {
+-    steering_result_t out = {middle, (float)near_error, STEERING_STRAIGHT_GAIN, 0, 0};
++    steering_result_t out = {middle, (float)near_error, STEERING_STRAIGHT_GAIN, 0.0f, 1.0f, 0, 0};
+     int delta = preview_error - near_error;
+     if (delta < 0) delta = -delta;
+     int near_abs = near_error < 0 ? -near_error : near_error;
+@@ -18,7 +19,24 @@
+                               (near_error >= -2 && near_error <= 2)))
+             out.error += STEERING_PREVIEW_BLEND * (float)(preview_error-near_error);
+     }
+-    out.command = middle + out.error * out.gain * direction;
++    float offset = out.error * out.gain * direction;
++    if (out.curve) {
++        float span = offset >= 0.0f ? high-middle : middle-low;
++        if (span > 0.0f) {
++            float demand = offset/span;
++            if (demand > 1.0f) { demand=1.0f; out.limited=1; }
++            if (demand < -1.0f) { demand=-1.0f; out.limited=1; }
++            /* Pixel-to-demand gain is empirical. Curvature is a reference only.
++             * Endpoint wheel-angle mapping requires physical calibration. */
++            out.curvature_reference = demand*tanf(STEERING_MAX_WHEEL_ANGLE_RAD)/STEERING_WHEELBASE_M;
++            float angle = atanf(STEERING_WHEELBASE_M*out.curvature_reference);
++            float fraction = angle/STEERING_MAX_WHEEL_ANGLE_RAD;
++            offset = span*fraction;
++            float magnitude = fraction < 0.0f ? -fraction : fraction;
++            out.speed_scale = 1.0f-(1.0f-STEERING_TIGHT_CURVE_SPEED_SCALE)*magnitude;
++        }
++    }
++    out.command = middle + offset;
+     if (out.command < low) { out.command = low; out.limited = 1; }
+     if (out.command > high) { out.command = high; out.limited = 1; }
+     return out;

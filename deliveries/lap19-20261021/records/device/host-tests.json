@@ -1,0 +1,26 @@
+{
+  "implementation": "actual single_edge.c compiled as Windows DLL, same source as firmware",
+  "passed": [
+    "dual preserved 131411",
+    "dual preserved 131631",
+    "dual preserved 131850",
+    "measured left produces 103",
+    "stopped single cannot authorize RUN",
+    "right-only mirror support",
+    "bounded episode and stop/reset",
+    "one-frame dual flicker cannot reset deadline",
+    "three reliable dual frames recover",
+    "uint32 tick wrap",
+    "both missing rejected",
+    "missing neighborhood edge rejected",
+    "edge discontinuity rejected",
+    "dark target rejected",
+    "dark path rejected",
+    "offscreen prediction rejected",
+    "side switching rejected in episode",
+    "startup width mismatch disarms model"
+  ],
+  "case_count": 18,
+  "scope": "host image/state logic; not MCU timing, mechanics or track validation",
+  "firmware_hex_sha256": "f0fcd03318ad395c3253eb48814f946018aa85b7ea5f44f6f5f8aa50bfba81a5"
+}

@@ -1,0 +1,5 @@
+snapshot-20261021-180609 mode 1 center 91 model 1
+snapshot-20261021-180619 mode 1 center 91 model 1
+left center 91 timeout and stopped inhibition PASS
+right center 97 timeout and stopped inhibition PASS
+PASS: two current straight frames, both single-edge directions, timeout and stopped inhibition

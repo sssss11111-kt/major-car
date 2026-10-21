@@ -1,0 +1,89 @@
+--- LAP14/demo/user/src/main.c
++++ LAP15/demo/user/src/main.c
+@@ -102,7 +102,7 @@
+     {
+         if (mt9v03x_init()) {
+             tft180_show_string(0, 16, "mt9v03x reinit.");
+-            telemetry_send("C11LAP14 CAMERA_RETRY\r\n");
++            telemetry_send("C11LAP15 CAMERA_RETRY\r\n");
+         }
+         else
+             break;
+@@ -194,10 +194,10 @@
+     system_delay_ms(300);          // 等待主板其他外设上电完成
+ 
+     wireless_ready = (wireless_uart_init() == 0); /* Supplied wireless driver: RTS and IRQ RX FIFO. */
+-    telemetry_send("C11LAP14 AUTO BOOT\r\n");
++    telemetry_send("C11LAP15 AUTO BOOT\r\n");
+     Init();
+     img_process_reset();
+-    telemetry_send("C11LAP14 AUTO READY\r\n");
++    telemetry_send("C11LAP15 AUTO READY\r\n");
+     tft180_clear();
+     tft180_show_string(0, 0, wireless_ready ? "W:OK GRAY/BINARY" : "W:FAIL GRAY/BIN");
+     interrupt_global_enable(0);
+@@ -318,14 +318,14 @@
+             if (trial_ticks-timing_report_tick >= 100) {
+                 timing_report_tick=trial_ticks;
+                 char timing_report[160];
+-                sprintf(timing_report,"TIME14 image_us=%lu recognized_to_pwm_us=%lu ready_to_pwm_us=%lu ready_max_us=%lu samples=%lu\r\n",
++                sprintf(timing_report,"TIME15 image_us=%lu recognized_to_pwm_us=%lu ready_to_pwm_us=%lu ready_max_us=%lu samples=%lu\r\n",
+                     (unsigned long)timing_image_us,(unsigned long)timing_recognized_to_pwm_us,
+                     (unsigned long)timing_ready_to_pwm_us,(unsigned long)timing_ready_max_us,
+                     (unsigned long)timing_samples);
+                 telemetry_send(timing_report);
+             }
+             char report[200]; report_tick=trial_ticks;
+-            sprintf(report, "C11LAP14 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
++            sprintf(report, "C11LAP15 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
+                 (unsigned long)trial_ticks,trial_running,trial_fault,(unsigned long)frame_count,
+                 (unsigned long)good_frames,(unsigned long)(trial_ticks-frame_tick),
+                 encoder_data_1,encoder_data_2,trial_left_pwm,trial_right_pwm);
+@@ -335,7 +335,7 @@
+                 vision_mode != 0, vision_error, usable_rows, both_rows, model_good);
+             telemetry_send(vision_report);
+             char steering_report[100];
+-            sprintf(steering_report,"STEER14 curve=%u near=%d preview=%d command10=%d limited=%u\r\n",
++            sprintf(steering_report,"STEER15 curve=%u near=%d preview=%d command10=%d limited=%u\r\n",
+                 steering_curve,vision_error,preview_error,(int)(steering_command*10.0f),steering_limited);
+             telemetry_send(steering_report);
+             char auto_report[80];
+--- LAP14/demo/user/inc/steering_control.h
++++ LAP15/demo/user/inc/steering_control.h
+@@ -2,9 +2,11 @@
+ #define STEERING_CONTROL_H
+ #include <stdint.h>
+ #define STEERING_STRAIGHT_GAIN 0.50f
+-#define STEERING_CURVE_GAIN    0.65f
+-#define STEERING_PREVIEW_BLEND 0.25f
+-#define STEERING_CURVE_DELTA   8
++#define STEERING_CURVE_GAIN    0.85f
++#define STEERING_PREVIEW_BLEND 0.40f
++#define STEERING_CURVE_DELTA   6
++#define STEERING_CURVE_NEAR    6
++#define STEERING_CURVE_PREVIEW 10
+ typedef struct {
+     float command, error, gain;
+     uint8_t curve, limited;
+--- LAP14/demo/user/src/steering_control.c
++++ LAP15/demo/user/src/steering_control.c
+@@ -5,11 +5,17 @@
+     steering_result_t out = {middle, (float)near_error, STEERING_STRAIGHT_GAIN, 0, 0};
+     int delta = preview_error - near_error;
+     if (delta < 0) delta = -delta;
+-    if (preview_valid && delta >= STEERING_CURVE_DELTA) {
++    int near_abs = near_error < 0 ? -near_error : near_error;
++    int preview_abs = preview_error < 0 ? -preview_error : preview_error;
++    /* Keep curve authority when near and preview converge, or preview is lost. */
++    if (near_abs >= STEERING_CURVE_NEAR ||
++        (preview_valid && (delta >= STEERING_CURVE_DELTA ||
++                           preview_abs >= STEERING_CURVE_PREVIEW))) {
+         out.curve = 1;
+         out.gain = STEERING_CURVE_GAIN;
+         /* Do not reverse an established near target in an opposite bend. */
+-        if (near_error * preview_error >= 0 || (near_error >= -2 && near_error <= 2))
++        if (preview_valid && (near_error * preview_error >= 0 ||
++                              (near_error >= -2 && near_error <= 2)))
+             out.error += STEERING_PREVIEW_BLEND * (float)(preview_error-near_error);
+     }
+     out.command = middle + out.error * out.gain * direction;

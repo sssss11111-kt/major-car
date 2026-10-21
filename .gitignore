@@ -1,0 +1,16 @@
+# Only new delivery build/cache noise; archived tracked history is preserved.
+**/__pycache__/
+**/*.pyc
+/deliveries/lap19-20261021/project/verification/*.exe
+/deliveries/lap19-20261021/project/verification/*.dll
+/deliveries/lap19-20261021/project/verification/*.pdb
+/deliveries/lap19-20261021/project/verification/*.lib
+/deliveries/lap19-20261021/project/verification/auto-integration-generated.c
+/deliveries/lap19-20261021/project/demo/mdk/Listings/
+/deliveries/lap19-20261021/project/demo/mdk/Objects/*
+!/deliveries/lap19-20261021/project/demo/mdk/Objects/rt1064.hex
+!/deliveries/lap19-20261021/project/demo/mdk/Objects/rt1064.axf
+**/.env
+**/.env.*
+**/*.uvguix.*
+/.venv-lap19/

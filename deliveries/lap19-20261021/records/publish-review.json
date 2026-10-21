@@ -1,0 +1,21 @@
+{
+  "destination": "https://github.com/sssss11111-kt/major-car",
+  "visibility": "public",
+  "branch": "codex/lap19-handoff-20261021",
+  "base": "ba612567708a822421b1209ff9299b733b707dd1",
+  "explicit_user_authorized_dialogue_code_data_push": true,
+  "application_sdk_files_byte_identical_count": 523,
+  "project_hex_axf_byte_identical": true,
+  "high_confidence_secret_pattern_hits": [],
+  "max_new_file_bytes": 2850545,
+  "new_delivery_file_count": 908,
+  "new_delivery_bytes": 26921944,
+  "hardware_access_during_handoff": false,
+  "excluded": [
+    "hidden reasoning/system and developer prompts",
+    "credentials/venvs/tool installations",
+    "off-track room/hand imagery and unknown camera dumps",
+    "generated host binaries and IDE caches"
+  ],
+  "note": "New additions only; inherited remote history was preserved, not rewritten or audited in full."
+}

@@ -1,0 +1,10 @@
+{
+  "version": "C11LAP10",
+  "flashed": false,
+  "hardware_tested": false,
+  "host_tests": 18,
+  "build_errors": 0,
+  "build_warnings": 0,
+  "hex_sha256": "f0fcd03318ad395c3253eb48814f946018aa85b7ea5f44f6f5f8aa50bfba81a5",
+  "previous_flashed": "C11LAP9"
+}

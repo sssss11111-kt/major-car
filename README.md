@@ -1,3 +1,19 @@
+# RT1064 镜头组：LAP19 已完成中期检查
+
+用户于2026-10-21明确反馈：“LAP19成功完成中期检查的要求”。
+
+- **下一位AI先读：[HANDOFF.md](HANDOFF.md)**，含现行代码入口、核算、参数演变、踩坑纠错、原始数据索引和可见对话全文。
+- [当前完整工程、SDK与固件](deliveries/lap19-20261021/project/)
+- [现场验收记录](deliveries/lap19-20261021/records/acceptance.json) / [烧录读回结果](deliveries/lap19-20261021/project/verification/flash-LAP19-result.json)
+- [无硬件校验工具](deliveries/lap19-20261021/tools/) / [文件哈希清单](deliveries/lap19-20261021/MANIFEST-SHA256.json)
+- [LAP10至LAP19历史快照与日志](deliveries/lap19-20261021/history/) / [可见对话](deliveries/lap19-20261021/records/conversation/visible-conversation.md)
+
+成功基线参数：左124、右61、中位92.5；速度目标直道36、急弯24计数/10ms；PWM上限50%；识别赛道回中1秒后自动发车。最后烧录HEX SHA256：`8c4c761340a3649fe1ff465dafa305add67036db0caa25b0241cb46bb30dc29e`，64960字节读回一致。用户现场通过不等同已实测最小半径、机械延迟或多圈稳定性。
+
+下面是本分支祖先保留的上午历史README，LAP9状态仅指当时；当前以以上LAP19交接为准。
+
+---
+
 # 20261021上午例程测试
 
 本归档按用户指定名称保存；实际测试记录延续至当日下午。归档仅针对本次“镜头组例程.zip”派生的 C11 适配工程。

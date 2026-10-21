@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "D:\����\���ܳ�\��ͷ������-C11-LAP10-���߲���-20261021\verification\flash.py", line 3, in <module>
+    from intelhex import IntelHex
+ModuleNotFoundError: No module named 'intelhex'

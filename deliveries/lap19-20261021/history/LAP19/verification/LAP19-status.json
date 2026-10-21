@@ -1,0 +1,40 @@
+{
+  "version": "C11LAP19",
+  "body_mask_start_row": 107,
+  "last_track_row": 105,
+  "steering_rows": [
+    80,
+    105
+  ],
+  "width_row90_px": 142,
+  "width_tolerance_px": 15,
+  "center_delay_ms": 1000,
+  "pwm_max": 5000,
+  "servo_center": 92.5,
+  "servo_left_limit": 124,
+  "servo_right_limit": 61,
+  "speed_target": 36,
+  "degraded_speed_target": 24,
+  "tight_curve_speed_target": 24,
+  "wheelbase_m": 0.2,
+  "max_wheel_angle_reference_deg": 45,
+  "min_radius_reference_m": 0.2,
+  "geometry_calibrated": false,
+  "build_errors": 0,
+  "build_warnings": 0,
+  "straight_error_px": [
+    -4,
+    -4
+  ],
+  "curve_gain": 1.0,
+  "straight_gain": 0.5,
+  "preview_blend": 0.4,
+  "timing_instrumented": true,
+  "physical_latency_measured": false,
+  "flashed": true,
+  "hardware_curve_tested": false,
+  "hex_sha256": "8c4c761340a3649fe1ff465dafa305add67036db0caa25b0241cb46bb30dc29e",
+  "readback_match": true,
+  "verified_bytes": 64960,
+  "state": "halted; cold boot required"
+}

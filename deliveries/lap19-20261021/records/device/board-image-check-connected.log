@@ -1,0 +1,1 @@
+{"read_bytes": 62720, "matches_LAP12": true, "actual_sha256": "12c7bd44fd9569dd037b2506aa7bc2f25ae3e2c7bfc2ade0f2e3da266dc49192", "expected_sha256": "12c7bd44fd9569dd037b2506aa7bc2f25ae3e2c7bfc2ade0f2e3da266dc49192", "operation": "attach and read Flash only; no reset/halt/program commands"}

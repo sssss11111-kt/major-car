@@ -1,0 +1,21 @@
+{
+  "version": "C11LAP11",
+  "automatic_start": true,
+  "center_delay_ms": 1000,
+  "build_errors": 0,
+  "build_warnings": 0,
+  "host_integration_cases": [
+    "auto",
+    "lost",
+    "snapshot",
+    "stale",
+    "bench"
+  ],
+  "hex_sha256": "70103cad06027ac8d66a03f98a047d96f8f7bb97832159e14197699669f239b4",
+  "flashed": true,
+  "hardware_auto_start_tested": false,
+  "blocker": null,
+  "readback_match": true,
+  "verified_bytes": 61312,
+  "state": "halted; cold boot required"
+}

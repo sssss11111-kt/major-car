@@ -1,0 +1,144 @@
+--- LAP11/demo/user/src/main.c
++++ LAP12/demo/user/src/main.c
+@@ -1,4 +1,3 @@
+-#include "single_edge.h"
+ #include "auto_start.h"
+ #include "main.h" // 所有引脚信息更改在main.h里改宏
+ 
+@@ -36,7 +35,8 @@
+ static volatile uint8 trial_bench = 0;
+ static volatile uint8 snapshot_requested = 0;
+ static volatile uint8 vision_mode=0, vision_degraded=0, model_good=0, control_center=94;
+-static volatile uint32 vision_since=0;
++static volatile int16_t vision_error = 0;
++static volatile uint8 usable_rows = 0, both_rows = 0;
+ static auto_start_t auto_start_state = {0}; /* Written only by the 10 ms ISR. */
+ static volatile uint8 auto_phase = AUTO_WAIT, auto_run = 0;
+ static volatile uint32 auto_center_since = 0;
+@@ -95,7 +95,7 @@
+     {
+         if (mt9v03x_init()) {
+             tft180_show_string(0, 16, "mt9v03x reinit.");
+-            telemetry_send("C11LAP11 CAMERA_RETRY\r\n");
++            telemetry_send("C11LAP12 CAMERA_RETRY\r\n");
+         }
+         else
+             break;
+@@ -183,9 +183,10 @@
+     system_delay_ms(300);          // 等待主板其他外设上电完成
+ 
+     wireless_ready = (wireless_uart_init() == 0); /* Supplied wireless driver: RTS and IRQ RX FIFO. */
+-    telemetry_send("C11LAP11 AUTO BOOT\r\n");
++    telemetry_send("C11LAP12 AUTO BOOT\r\n");
+     Init();
+-    telemetry_send("C11LAP11 AUTO READY\r\n");
++    img_process_reset();
++    telemetry_send("C11LAP12 AUTO READY\r\n");
+     tft180_clear();
+     tft180_show_string(0, 0, wireless_ready ? "W:OK GRAY/BINARY" : "W:FAIL GRAY/BIN");
+     interrupt_global_enable(0);
+@@ -195,22 +196,21 @@
+     {
+         if (trial_ticks-report_tick >= 10) {
+             char report[200]; report_tick=trial_ticks;
+-            sprintf(report, "C11LAP11 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
++            sprintf(report, "C11LAP12 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
+                 (unsigned long)trial_ticks,trial_running,trial_fault,(unsigned long)frame_count,
+                 (unsigned long)good_frames,(unsigned long)(trial_ticks-frame_tick),
+                 encoder_data_1,encoder_data_2,trial_left_pwm,trial_right_pwm);
+             telemetry_send(report);
+             char vision_report[100];
+-            sprintf(vision_report,"VIS10 mode=%u center=%u degraded=%u model=%u single_age=%lu\r\n",
+-                vision_mode,control_center,vision_degraded,model_good,
+-                (unsigned long)(vision_degraded ? trial_ticks-vision_since : 0));
++            sprintf(vision_report,"VIS12 valid=%u error=%d rows=%u both=%u ready=%u\r\n",
++                vision_mode != 0, vision_error, usable_rows, both_rows, model_good);
+             telemetry_send(vision_report);
+             char auto_report[80];
+             uint8 phase = auto_phase;
+             uint32 elapsed = trial_ticks - auto_center_since;
+             uint32 remaining = (phase == AUTO_CENTER && elapsed < AUTO_CENTER_TICKS)
+                                ? AUTO_CENTER_TICKS - elapsed : 0;
+-            sprintf(auto_report,"AUTO11 phase=%u wait_ms=%lu autonomous=%u\r\n",
++            sprintf(auto_report,"AUTO12 phase=%u wait_ms=%lu autonomous=%u\r\n",
+                 phase, (unsigned long)(remaining * 10U), auto_run);
+             telemetry_send(auto_report);
+             drive_trace_report();
+@@ -232,18 +232,25 @@
+             // 二值化处理
+             binaryzation_process((uint8_t *)image, MT9V03X_H, MT9V03X_W, threshold);
+             // 边界线寻找
+-            auxiliary_process((uint8_t *)image, MT9V03X_H, MT9V03X_W, 127, left_line, mid_line, right_line);
+-
+-            se_result_t vision=single_edge_update((uint8_t *)image,left_line,mid_line,right_line,
+-                trial_ticks,trial_running && !trial_bench);
++            /* The new band-threshold detector reads raw grayscale without
++             * modifying it. Global binary image is only for LCD comparison. */
++            auxiliary_process((uint8_t *)raw_image, MT9V03X_H, MT9V03X_W, 127,
++                              left_line, mid_line, right_line);
++            uint8 valid = img_get_valid();
++            uint8 detected_both = img_get_both_rows();
++            int16_t detected_error = img_get_error();
+             /* Publish mode, lease and freshness coherently to the PIT ISR. */
+             uint32 vision_mask=interrupt_global_disable();
+-            vision_mode=vision.mode; vision_degraded=vision.degraded;
+-            vision_since=vision.since; control_center=vision.center;
+-            if (vision.mode) { if (good_frames<100) ++good_frames; }
++            uint8 degraded = valid && detected_both < 3;
++            vision_mode = valid ? (degraded ? 2 : 1) : 0;
++            vision_degraded = degraded;
++            vision_error = detected_error;
++            usable_rows = img_get_usable_rows(); both_rows = detected_both;
++            control_center = (uint8)(MT9V03X_W/2 + detected_error);
++            if (valid) { if (good_frames<100) ++good_frames; }
+             else good_frames=0;
+             if (!trial_running) {
+-                if(vision.mode==1 && vision.model_matches) {if(model_good<100) ++model_good;}
++                if(valid && detected_both >= 3) {if(model_good<100) ++model_good;}
+                 else model_good=0;
+             }
+             frame_tick=trial_ticks; ++frame_count;
+@@ -259,8 +266,8 @@
+             // 显示图像
+             /* LCD rendering is rate-limited below, after steering is updated. */
+ 
+-            // 取图像下1/4处做误差判断
+-            float mid_err = (MT9V03X_W/2) - control_center;
++            // 使用新巡线模块的多行加权中线偏差。
++            float mid_err = (float)(-detected_error);
+             // 舵机根据误差乘以系数打角
+             float tmp_duty = servo_motor_duty_middle - mid_err * 0.5 * SERVO_DIR;
+             // 限幅
+@@ -353,8 +360,7 @@
+     if (trial_running) {
+         if (trial_ticks-start_tick>=(trial_bench ? 200U : 12000U)) { trial_running=0; trial_fault=2; }
+         else if (!auto_run && trial_ticks-lease_tick>=50) { trial_running=0; trial_fault=3; }
+-        else if (!trial_bench && (trial_ticks-frame_tick>=20 || !good_frames ||
+-                    (vision_degraded && trial_ticks-vision_since>=SE_TIMEOUT_TICKS))) { trial_running=0; trial_fault=4; }
++        else if (!trial_bench && (trial_ticks-frame_tick>=20 || !good_frames)) { trial_running=0; trial_fault=4; }
+         else if (encoder_data_1 < -5 || encoder_data_2 < -5 ||
+                  encoder_data_1 > 150 || encoder_data_2 > 150) { trial_running=0; trial_fault=5; }
+         else if (trial_ticks-start_tick>30) {
+
+--- LAP11/demo/user/inc/main.h
++++ LAP12/demo/user/inc/main.h
+@@ -56,6 +56,6 @@
+ extern volatile int trial_left_pwm, trial_right_pwm;
+ void trial_tick(void);
+ 
+-/* User-authorized 30 percent drive ceiling; PWM_DUTY_MAX is 10000. */
++/* User-authorized 50 percent drive ceiling; PWM_DUTY_MAX is 10000. */
+ #define TRIAL_DRIVE_FEEDFORWARD (1500.0f)
+-#define TRIAL_DRIVE_MAX (3000.0f)
++#define TRIAL_DRIVE_MAX (5000.0f)
+
+--- LAP11/demo/mdk/rt1064.uvprojx
++++ LAP12/demo/mdk/rt1064.uvprojx
+@@ -395,7 +395,6 @@
+               <FileType>1</FileType>
+               <FilePath>..\user\src\img_process.c</FilePath>
+             </File>
+-            <File><FileName>single_edge.c</FileName><FileType>1</FileType><FilePath>..\user\src\single_edge.c</FilePath></File>
+             <File><FileName>auto_start.c</FileName><FileType>1</FileType><FilePath>..\user\src\auto_start.c</FilePath></File>
+               <File>
+               <FileName>pid.c</FileName>
