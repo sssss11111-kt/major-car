@@ -1,0 +1,38 @@
+[
+  {
+    "directory": "project/verification/snapshot-20261021-131220",
+    "crc_verified": false
+  },
+  {
+    "directory": "project/verification/snapshot-20261021-131337",
+    "crc_verified": false
+  },
+  {
+    "directory": "project/verification/snapshot-20261021-131411",
+    "frame": 6722,
+    "tick": 14317,
+    "crc_verified": true,
+    "bytes": 22920
+  },
+  {
+    "directory": "project/verification/snapshot-20261021-131631",
+    "frame": 2640,
+    "tick": 5278,
+    "crc_verified": true,
+    "bytes": 22920
+  },
+  {
+    "directory": "project/verification/snapshot-20261021-131850",
+    "frame": 1806,
+    "tick": 3611,
+    "crc_verified": true,
+    "bytes": 22920
+  },
+  {
+    "directory": "project/verification/snapshot-20261021-132210",
+    "frame": 2291,
+    "tick": 4581,
+    "crc_verified": true,
+    "bytes": 22920
+  }
+]
