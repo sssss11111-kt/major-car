@@ -1,0 +1,6 @@
+PROGRAMMING C11LAP22: sector erase; smart comparison and preservation disabled
+[---|---|---|---|---|---|---|---|---|----]
+[========================================]
+[---|---|---|---|---|---|---|---|---|----]
+[========================================]
+{"version": "C11LAP22", "started_utc": "2026-10-22T14:21:16.972083+00:00", "success": true, "old_application_read_or_backed_up": false, "prepared_confirmed": true, "programming_started": true, "hex_sha256": "05a293b832c48e7c319d894dab4d8a50a504b74494c3d51149be314327c52b16", "segments": [[1879048192, 1879115712]], "image_bytes": 67520, "readback_match": true, "verified_bytes": 67520, "programmed_data_sha256": "6184f74f526c98e21bbf69809be94eab5a435d4ce1a201fa470f575b89a3669a", "state": "HALTED", "cold_boot_required": true, "hardware_track_tested": false, "finished_utc": "2026-10-22T14:21:22.320500+00:00"}

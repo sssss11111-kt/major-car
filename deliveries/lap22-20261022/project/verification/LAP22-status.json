@@ -9,7 +9,7 @@
   "built": true,
   "build_errors": 0,
   "build_warnings": 0,
-  "flashed": false,
+  "flashed": true,
   "hardware_tested": false,
   "hardware_track_accepted": false,
   "hex_sha256": "05a293b832c48e7c319d894dab4d8a50a504b74494c3d51149be314327c52b16",
@@ -46,5 +46,12 @@
     "host-checks-LAP22.log",
     "hood-replay-result.json"
   ],
-  "remaining": "Not flashed. No on-car stripe images/field validation; inward-limit sharp-bend capability, actual speed and mechanical response, jitter/reliability, camera execution timing remain unverified."
+  "remaining": "Flashed and readback verified. Cold boot required at flash end. No field acceptance or on-car stripe image evidence; sharp-bend capability, actual speed/jitter/reliability and processing timing remain unverified.",
+  "flash_readback_match": true,
+  "flash_verified_bytes": 67520,
+  "flash_evidence": "records/lap22-field-20261022/flash-01/result.json",
+  "flash_started_utc": "2026-10-22T14:21:16.972083+00:00",
+  "flash_finished_utc": "2026-10-22T14:21:22.320500+00:00",
+  "flash_end_state": "HALTED",
+  "cold_boot_required": true
 }
