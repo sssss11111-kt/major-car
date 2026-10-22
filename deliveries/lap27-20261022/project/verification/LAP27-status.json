@@ -7,7 +7,7 @@
   "built": true,
   "build_errors": 0,
   "build_warnings": 0,
-  "flashed": false,
+  "flashed": true,
   "hardware_tested": false,
   "hardware_track_accepted": false,
   "hex_sha256": "ce75b2bf0aaf4bfc935c28a569f61310ed39793e5f1c0fe644ac40febeea516e",
@@ -41,5 +41,12 @@
     "build-reproduced.log",
     "hood-replay-result.json"
   ],
-  "remaining": "Not flashed. No actual camera wave/ring frames supplied. Fully visible closed island required before entry; partial-view detection may be delayed. Runtime worst-case exterior-flood-fill latency not measured on target. Actual course false-positive rate, true-ring recall, yaw scale and exits require field validation."
+  "remaining": "Flashed and readback matched; cold boot required. No actual camera wave/ring frames supplied. Fully visible closed island required before entry; partial-view detection may be delayed. Runtime worst-case exterior-flood-fill latency not measured on target. Actual course false-positive rate, true-ring recall, yaw scale and exits require field validation.",
+  "flash_readback_match": true,
+  "flash_verified_bytes": 69632,
+  "flash_evidence": "records/lap27-field-20261022/flash-01/result.json",
+  "flash_started_utc": "2026-10-22T15:39:18.655279+00:00",
+  "flash_finished_utc": "2026-10-22T15:39:24.193165+00:00",
+  "flash_end_state": "HALTED",
+  "cold_boot_required": true
 }
