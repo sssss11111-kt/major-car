@@ -1,0 +1,49 @@
+{
+  "version": "C11LAP21",
+  "date_asia_shanghai": "2026-10-22",
+  "source_base_commit": "5f8ec2d643a30f3031ea911fb9da94357f31a378",
+  "baseline": "LAP20; user reports full-route completion with steering twitch",
+  "built": true,
+  "build_errors": 0,
+  "build_warnings": 0,
+  "compiler": "ARM Compiler 6.7",
+  "flashed": false,
+  "hardware_tested": false,
+  "hex_sha256": "af24ed5eea725ab58029444579274017af1cd6b0e6171d64cc7e6298658614e9",
+  "hex_bytes": 69056,
+  "hex_segments": [
+    [
+      1879048192,
+      1879117248
+    ]
+  ],
+  "straight_target_counts_per_10ms": 67.5,
+  "tight_curve_target_counts_per_10ms": 36,
+  "single_edge_target_cap_counts_per_10ms": 36,
+  "pwm_max": 10000,
+  "speed_pid": [
+    50,
+    0,
+    0
+  ],
+  "feedforward": 1500,
+  "servo_middle": 92.5,
+  "servo_limits": [
+    61,
+    124
+  ],
+  "steering_gains": [
+    0.5,
+    1.0
+  ],
+  "preview_blend_max": 0.4,
+  "slew_command_points_per_second": [
+    110,
+    220
+  ],
+  "speed_scale_recovery_per_second": 0.8,
+  "geometry_calibrated": false,
+  "host_checks": "MSVC steering sequences + 8 actual trial_tick/PID cases + 2 real straight images x60 frames passed",
+  "physical_steering_twitch_resolved": false,
+  "remaining": "Candidate only; physical steering response, high-speed bend performance and actual speed gain require field validation."
+}

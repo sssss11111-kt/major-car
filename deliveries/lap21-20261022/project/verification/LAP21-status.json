@@ -7,7 +7,7 @@
   "build_errors": 0,
   "build_warnings": 0,
   "compiler": "ARM Compiler 6.7",
-  "flashed": false,
+  "flashed": true,
   "hardware_tested": false,
   "hex_sha256": "af24ed5eea725ab58029444579274017af1cd6b0e6171d64cc7e6298658614e9",
   "hex_bytes": 69056,
@@ -45,5 +45,9 @@
   "geometry_calibrated": false,
   "host_checks": "MSVC steering sequences + 8 actual trial_tick/PID cases + 2 real straight images x60 frames passed",
   "physical_steering_twitch_resolved": false,
-  "remaining": "Candidate only; physical steering response, high-speed bend performance and actual speed gain require field validation."
+  "remaining": "Successfully flashed and readback verified; physical steering response, high-speed bend performance and actual speed gain require field validation.",
+  "flash_verified_bytes": 69056,
+  "flash_readback_match": true,
+  "flash_evidence": "records/lap21-field-20261022/flash-01/result.json",
+  "flash_finished_asia_shanghai": "2026-10-22 21:38:54"
 }

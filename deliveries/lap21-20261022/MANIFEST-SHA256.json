@@ -1,7 +1,7 @@
 {
   "README.md": {
-    "bytes": 1828,
-    "sha256": "0a0f95cc7858eb98e0ab79365c60c5de54a33f5e598d265bea1d808d95b531c4"
+    "bytes": 1880,
+    "sha256": "ff18b9c3e48e605f86c78063b776d0f9ed9e6a68b117810f2c82e6674d3d02c6"
   },
   "project/demo/RT1064智能车推荐引脚分配.txt": {
     "bytes": 1649,
@@ -2232,12 +2232,12 @@
     "sha256": "567bf332c9568fe12df2467ce25c9450473b1cca26b6a041d25348109b4c8c25"
   },
   "CHANGES.md": {
-    "bytes": 3358,
-    "sha256": "fac49dbf6f85d28f025562e9167529013288e2f98cdcbecc44f9c88923fbdcd0"
+    "bytes": 3427,
+    "sha256": "edb473890367d49a34173223136817b8ec860153a2fe0d9326b73074d528955c"
   },
   "project/verification/LAP21-status.json": {
-    "bytes": 1379,
-    "sha256": "456f869ba2e59753799245976613c8d96cc6d003c2a10aa3c1ab1203eb8949e8"
+    "bytes": 1605,
+    "sha256": "9d3c9a7a63c0f29f910884c8c6dd5c240a7f57fe0cc3c48ce08d739805e98fdf"
   },
   "project/verification/host-checks-LAP21.log": {
     "bytes": 5019,

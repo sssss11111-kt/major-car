@@ -1,0 +1,23 @@
+{
+  "version": "C11LAP21",
+  "started_utc": "2026-10-22T13:38:46.235730+00:00",
+  "success": true,
+  "old_application_read_or_backed_up": false,
+  "prepared_confirmed": true,
+  "programming_started": true,
+  "hex_sha256": "af24ed5eea725ab58029444579274017af1cd6b0e6171d64cc7e6298658614e9",
+  "segments": [
+    [
+      1879048192,
+      1879117248
+    ]
+  ],
+  "image_bytes": 69056,
+  "readback_match": true,
+  "verified_bytes": 69056,
+  "programmed_data_sha256": "72bd34deb168ba4fa60dceb7d02769d66236511d1bee669b3a03c9a909c991a6",
+  "state": "HALTED",
+  "cold_boot_required": true,
+  "hardware_track_tested": false,
+  "finished_utc": "2026-10-22T13:38:54.053929+00:00"
+}

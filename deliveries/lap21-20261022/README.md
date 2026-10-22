@@ -1,6 +1,6 @@
 # C11LAP21 连续弯道转向与提速候选
 
-已编译、相关主机检查通过，尚未烧录、尚未实车验证。当前车载仍为LAP20，用户确认可走完全程，但过弯转向抽搐、幅度偏大。
+已编译、相关主机检查通过，2026-10-22 21:38已烧录，69,056字节全部读回一致，尚未实车验证。LAP20保留为用户确认可走完全程但过弯抽搐的回退版本。
 
 | 项目 | LAP20 | LAP21候选 |
 | --- | ---: | ---: |
@@ -21,6 +21,6 @@
 - 状态：project/verification/LAP21-status.json
 - 构建：tools/build-keil.ps1 -Keil D:\Keil5\UV4\UV4.exe
 - 主机检查：tools/run-host-checks-msvc.cmd；其他电脑用VS_VCVARS64指定vcvars64.bat。也支持ZIG工具链。
-- flash-lap21.py仅为下次明确烧录时准备，需--prepared且校验本版精确HEX；本轮未执行。receive-lap21.py只被动接收。
+- flash-lap21.py为本版烧录工具，需--prepared且校验本版精确HEX；本轮已在用户确认准备后执行并读回验证。receive-lap21.py只被动接收。
 
 保留可靠赛道→回中1秒→自动起步，以及停车保护、故障锁定至复位。LAP20完整源码、实际烧录HEX和现场数据在同分支保留，可回退。本交付保留源码、工程、HEX、验证材料；本机临时AXF/对象文件不列入交付。
