@@ -5,8 +5,8 @@
   "built": true,
   "build_errors": 0,
   "build_warnings": 0,
-  "flashed": false,
-  "hardware_tested": false,
+  "flashed": true,
+  "hardware_tested": true,
   "hex_sha256": "56f6003bb90c037130b7f675e3d5a6d9057c1666cd5f13b465c480f7ddc0aabf",
   "hex_bytes": 64960,
   "hex_segments": [
@@ -30,6 +30,11 @@
   "vision_and_steering_algorithms_changed": false,
   "s_bend_twitch_resolved": false,
   "host_checks": "steering, actual trial_tick with actual PID (8 cases), two real straight frames x60 passed",
-  "remaining": "Not flashed; actual speed improvement, S-bend behavior and track reliability require field testing.",
-  "pwm_bounds_stop_check": "full-duty saturation, overspeed zero forward output, and STOP zero output passed with actual PID"
+  "remaining": "Two telemetry sessions ended fault6 with PWM zero; field observations and motor supply state pending; actual speed/S-bend/track reliability not accepted.",
+  "pwm_bounds_stop_check": "full-duty saturation, overspeed zero forward output, and STOP zero output passed with actual PID",
+  "flash_readback_match": true,
+  "flash_verified_bytes": 64960,
+  "flash_evidence": "records/lap20-field-20261022/flash-01/result.json",
+  "hardware_test_scope": "Two cold-boot telemetry sessions captured; physical scene and user acceptance pending.",
+  "hardware_track_accepted": false
 }

@@ -1,7 +1,7 @@
 {
   "README.md": {
-    "bytes": 1719,
-    "sha256": "4f41cf95fab2a594ec3f295068dbc844d05cc1d27fd8d9e61ca73787e2201ace"
+    "bytes": 1845,
+    "sha256": "43b9262af81742156bf8c5dffe13f8b18185cfbc8d510ca4352a7a459df4a6b1"
   },
   "project/demo/RT1064智能车推荐引脚分配.txt": {
     "bytes": 1649,
@@ -2164,8 +2164,8 @@
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
   "project/verification/LAP20-status.json": {
-    "bytes": 1227,
-    "sha256": "05d321bebd3ea44fb96f0bcd0dcfb71f6fa0244fdda12676d6fff086cdbac581"
+    "bytes": 1573,
+    "sha256": "49acecf87f775c12ca756b0c33c3fd75f8d914c008ccc2a5e672a0235e6a1e51"
   },
   "project/verification/MIMXRT1064_QSPI_4KB_SEC.FLM": {
     "bytes": 1475884,
@@ -2238,5 +2238,13 @@
   "tools/run-host-checks.py": {
     "bytes": 1286,
     "sha256": "273570b6188f4f647399d15d976a79b7108179ac3673ffe456c2bf8cee12f6ef"
+  },
+  "tools/flash-lap20.py": {
+    "bytes": 4023,
+    "sha256": "8850fc1f2b83a4e1b717511662b8018bbf4ad5bea47c7b7ec42c8a7fcfe577c2"
+  },
+  "tools/receive-lap20.py": {
+    "bytes": 2574,
+    "sha256": "b2d24d31dc3c2faa7132448e0ed8bd51b943d2a4f80c37ad11fd518be7ad79a2"
   }
 }

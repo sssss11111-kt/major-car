@@ -1,0 +1,191 @@
+{
+  "version": "C11LAP20",
+  "boots": [
+    {
+      "boot_line": "34.179 C11LAP20 AUTO BOOT",
+      "complete_status_lines": 111,
+      "first_status": {
+        "elapsed": 34.952,
+        "tick": 20,
+        "run": 0,
+        "fault": 0,
+        "frame": 9,
+        "good": 9,
+        "age": 1,
+        "e1": 0,
+        "e2": 0,
+        "p1": 0,
+        "p2": 0
+      },
+      "first_running_sample": {
+        "elapsed": 35.952,
+        "tick": 120,
+        "run": 1,
+        "fault": 0,
+        "frame": 54,
+        "good": 54,
+        "age": 1,
+        "e1": 13,
+        "e2": 3,
+        "p1": 2050,
+        "p2": 2550
+      },
+      "last_running_sample": {
+        "elapsed": 36.352,
+        "tick": 160,
+        "run": 1,
+        "fault": 0,
+        "frame": 72,
+        "good": 72,
+        "age": 1,
+        "e1": 0,
+        "e2": 0,
+        "p1": 2700,
+        "p2": 2700
+      },
+      "running_sample_count": 3,
+      "first_fault_sample": {
+        "elapsed": 36.551,
+        "tick": 180,
+        "run": 0,
+        "fault": 6,
+        "frame": 81,
+        "good": 81,
+        "age": 1,
+        "e1": 0,
+        "e2": 0,
+        "p1": 0,
+        "p2": 0
+      },
+      "last_status": {
+        "elapsed": 59.953,
+        "tick": 2520,
+        "run": 0,
+        "fault": 6,
+        "frame": 1134,
+        "good": 100,
+        "age": 2,
+        "e1": 0,
+        "e2": 0,
+        "p1": 0,
+        "p2": 0
+      },
+      "running_encoder_range": {
+        "e1": [
+          0,
+          13
+        ],
+        "e2": [
+          0,
+          3
+        ]
+      },
+      "running_pwm_range": {
+        "p1": [
+          2050,
+          2700
+        ],
+        "p2": [
+          2550,
+          2700
+        ]
+      },
+      "all_fault_samples_pwm_zero": true
+    },
+    {
+      "boot_line": "121.101 C11LAP20 AUTO BOOT",
+      "complete_status_lines": 132,
+      "first_status": {
+        "elapsed": 121.887,
+        "tick": 20,
+        "run": 0,
+        "fault": 0,
+        "frame": 9,
+        "good": 9,
+        "age": 1,
+        "e1": 0,
+        "e2": 0,
+        "p1": 0,
+        "p2": 0
+      },
+      "first_running_sample": {
+        "elapsed": 123.888,
+        "tick": 220,
+        "run": 1,
+        "fault": 0,
+        "frame": 99,
+        "good": 99,
+        "age": 1,
+        "e1": 0,
+        "e2": 1,
+        "p1": 3750,
+        "p2": 3700
+      },
+      "last_running_sample": {
+        "elapsed": 149.289,
+        "tick": 2760,
+        "run": 1,
+        "fault": 0,
+        "frame": 1242,
+        "good": 100,
+        "age": 2,
+        "e1": -1,
+        "e2": 0,
+        "p1": 2750,
+        "p2": 2700
+      },
+      "running_sample_count": 111,
+      "first_fault_sample": {
+        "elapsed": 149.488,
+        "tick": 2780,
+        "run": 0,
+        "fault": 6,
+        "frame": 1251,
+        "good": 100,
+        "age": 2,
+        "e1": 2,
+        "e2": 0,
+        "p1": 0,
+        "p2": 0
+      },
+      "last_status": {
+        "elapsed": 151.901,
+        "tick": 3021,
+        "run": 0,
+        "fault": 6,
+        "frame": 1360,
+        "good": 100,
+        "age": 1,
+        "e1": 0,
+        "e2": -1,
+        "p1": 0,
+        "p2": 0
+      },
+      "running_encoder_range": {
+        "e1": [
+          -1,
+          52
+        ],
+        "e2": [
+          0,
+          53
+        ]
+      },
+      "running_pwm_range": {
+        "p1": [
+          550,
+          3750
+        ],
+        "p2": [
+          400,
+          3700
+        ]
+      },
+      "all_fault_samples_pwm_zero": true
+    }
+  ],
+  "field_acceptance": false,
+  "physical_scene_motor_power_and_reason_for_stopping": "User feedback pending",
+  "fault6_meaning": "After first 30 startup ticks, either encoder below 2 for 20 consecutive 10ms ticks.",
+  "limits": "Sampled telemetry cannot establish exact startup/stop times, full trajectory, motor supply state or mechanical cause."
+}
