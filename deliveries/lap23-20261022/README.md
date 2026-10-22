@@ -2,7 +2,7 @@
 
 基于已烧录LAP22（提交 `a2c22de1bb0b3ac7022bd5a1961940045039269e`）。用户现场反馈：黑线障碍正常；S弯偶尔打角过狠、前轮左右来回打，打到一侧后机械顶住或舵机持续用力。该反馈只确认条纹通过，不代表LAP22整版验收。
 
-LAP23状态：**已编译、主机验证通过，未烧录、未实车验收**。当前车内仍是LAP22。仅提交开发分支 `codex/20261022-lap21-stripes`，不改main。
+LAP23状态：**已编译、主机验证通过，已烧录，未实车验收**。当前车内为LAP23；2026-10-22 22:47:52～22:47:58（Asia/Shanghai）烧录，67,328字节读回一致，结束时HALTED，需要冷启动。仅提交开发分支 `codex/20261022-lap21-stripes`，不改main。
 
 ## 已确认的软件机制
 
@@ -30,3 +30,5 @@ Keil 0错误0警告。主机检查通过：原转向/镜像/预瞄失效/时间�
 尚未验证：69..116是否确实避开机械干涉、实际S弯摆动改善、最急弯通过能力、实际轮角与机械响应，以及速度/图像时延。下一次烧录/现场试验前先架空核对连杆和车轮是否干涉及实际安全行程；不得宣称机械卡滞或实车S弯已修好。
 
 工程 `project/demo/mdk/rt1064.uvprojx`，候选HEX `project/demo/mdk/Objects/rt1064.hex`；校验值见 `project/verification/LAP23-status.json`。构建：`tools/build-keil.ps1 -Keil D:\Keil5\UV4\UV4.exe`。设置ZIG为可用zig.exe，以Python运行 `tools/run-host-checks.py`；测试不访问硬件。
+
+烧录证据：`records/lap23-field-20261022/flash-01/result.json`与`flash.log`。用户确认电机断电、逻辑供电和下载器连接后，使用tools/flash-lap23.py直接覆盖；未读取或备份旧应用。没有自动复位发车或实车试跑。冷启动先保持电机断电，架空核对机械干涉及内侧余量；之后恢复电机供电时须考虑原自动发车流程。
