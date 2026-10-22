@@ -1,0 +1,8 @@
+{
+  "version": "C11LAP24",
+  "date_asia_shanghai": "2026-10-22",
+  "source": "user field observation",
+  "reported": "Deceleration after entering a bend is still obvious; higher curve speed requested.",
+  "measured_speed_available": false,
+  "new_request": "Increase curve target speed, retain existing working steering and stripe logic."
+}
