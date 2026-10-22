@@ -1,0 +1,13 @@
+{
+  "delivery_files": 566,
+  "sdk_source_files_byte_identical": 491,
+  "changed_application_files": [
+    "project/demo/user/inc/main.h",
+    "project/demo/user/inc/steering_control.h",
+    "project/demo/user/src/main.c",
+    "project/demo/user/src/steering_control.c"
+  ],
+  "MCU_build": "0 errors, 0 warnings",
+  "host_checks": "passed",
+  "flashed": false
+}

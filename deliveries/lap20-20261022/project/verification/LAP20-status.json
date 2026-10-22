@@ -30,11 +30,12 @@
   "vision_and_steering_algorithms_changed": false,
   "s_bend_twitch_resolved": false,
   "host_checks": "steering, actual trial_tick with actual PID (8 cases), two real straight frames x60 passed",
-  "remaining": "Two telemetry sessions ended fault6 with PWM zero; field observations and motor supply state pending; actual speed/S-bend/track reliability not accepted.",
+  "remaining": "LAP20 full route confirmed by user; steering twitch remains; LAP21 candidate addresses command continuity and raises targets by 50%.",
   "pwm_bounds_stop_check": "full-duty saturation, overspeed zero forward output, and STOP zero output passed with actual PID",
   "flash_readback_match": true,
   "flash_verified_bytes": 64960,
   "flash_evidence": "records/lap20-field-20261022/flash-01/result.json",
   "hardware_test_scope": "Two cold-boot telemetry sessions captured; physical scene and user acceptance pending.",
-  "hardware_track_accepted": false
+  "hardware_track_accepted": true,
+  "hardware_acceptance_scope": "User reports full route completed, with steering twitch/overlarge turns. No repeated reliability or precise physical speed claim."
 }

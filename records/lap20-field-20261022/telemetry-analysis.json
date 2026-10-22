@@ -184,8 +184,8 @@
       "all_fault_samples_pwm_zero": true
     }
   ],
-  "field_acceptance": false,
-  "physical_scene_motor_power_and_reason_for_stopping": "User feedback pending",
+  "field_acceptance": "User reports full route completion with steering twitch; see user-feedback.json",
+  "physical_scene_motor_power_and_reason_for_stopping": "Full route completion reported; exact cause of fault6 not confirmed",
   "fault6_meaning": "After first 30 startup ticks, either encoder below 2 for 20 consecutive 10ms ticks.",
   "limits": "Sampled telemetry cannot establish exact startup/stop times, full trajectory, motor supply state or mechanical cause."
 }

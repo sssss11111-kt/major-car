@@ -1,0 +1,39 @@
+COMMAND ['cl', '/nologo', '/TC', '/W4', '/WX', '/ID:\\桌面\\智能车\\major-car-LAP20-20261022\\deliveries\\lap21-20261022\\project\\demo\\user\\inc', 'D:\\桌面\\智能车\\major-car-LAP20-20261022\\deliveries\\lap21-20261022\\project\\demo\\user\\src\\steering_control.c', 'D:\\桌面\\智能车\\major-car-LAP20-20261022\\deliveries\\lap21-20261022\\project\\verification\\test-steering.c', '/FeD:\\桌面\\智能车\\major-car-LAP20-20261022\\deliveries\\lap21-20261022\\project\\verification\\test-steering.exe']
+steering_control.c
+test-steering.c
+正在生成代码...
+COMMAND ['D:\\桌面\\智能车\\major-car-LAP20-20261022\\deliveries\\lap21-20261022\\project\\verification\\test-steering.exe']
+PASS: continuous bend response, symmetric bounds, 50% targets, isolated spikes, slew bound, sharp bend/reversal authority, speed recovery, preview loss, invalid reset, duplicate tick, tick wrap
+COMMAND ['C:\\Program Files\\Python314\\python.exe', 'D:\\桌面\\智能车\\major-car-LAP20-20261022\\deliveries\\lap21-20261022\\project\\verification\\check-auto-integration.py']
+auto-integration-generated.c
+D:\桌面\智能车\major-car-LAP20-20261022\deliveries\lap21-20261022\project\demo\user\inc\pid.h(1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\桌面\智能车\major-car-LAP20-20261022\deliveries\lap21-20261022\project\verification\auto-integration-generated.c(116): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+D:\桌面\智能车\major-car-LAP20-20261022\deliveries\lap21-20261022\project\verification\auto-integration-generated.c(119): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+D:\桌面\智能车\major-car-LAP20-20261022\deliveries\lap21-20261022\project\verification\auto-integration-generated.c(123): warning C4244: “函数”: 从“volatile int”转换到“float”，可能丢失数据
+D:\桌面\智能车\major-car-LAP20-20261022\deliveries\lap21-20261022\project\verification\auto-integration-generated.c(124): warning C4244: “函数”: 从“volatile int”转换到“float”，可能丢失数据
+pid.c
+D:\桌面\智能车\major-car-LAP20-20261022\deliveries\lap21-20261022\project\demo\user\src\pid.c(1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\桌面\智能车\major-car-LAP20-20261022\deliveries\lap21-20261022\project\demo\user\inc\pid.h(1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\桌面\智能车\major-car-LAP20-20261022\deliveries\lap21-20261022\project\demo\user\inc\main.h(1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\桌面\智能车\major-car-LAP20-20261022\deliveries\lap21-20261022\project\demo\user\inc\img_process.h(1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+auto_start.c
+正在生成代码...
+PASS: actual trial_tick auto
+PASS: actual trial_tick lost
+PASS: actual trial_tick snapshot
+PASS: actual trial_tick stale
+PASS: actual trial_tick bench
+PASS: actual trial_tick pwm100
+PASS: actual trial_tick single
+PASS: actual trial_tick curve_speed
+COMMAND ['C:\\Program Files\\Python314\\python.exe', 'D:\\桌面\\智能车\\major-car-LAP20-20261022\\deliveries\\lap21-20261022\\project\\verification\\check-hood-replay.py']
+img_process.c
+D:\桌面\智能车\major-car-LAP20-20261022\deliveries\lap21-20261022\project\demo\user\src\img_process.c(1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\桌面\智能车\major-car-LAP20-20261022\deliveries\lap21-20261022\project\demo\user\inc\img_process.h(1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+steering_control.c
+vision-replay-wrapper.c
+D:\桌面\智能车\major-car-LAP20-20261022\deliveries\lap21-20261022\project\demo\user\inc\img_process.h(1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+正在生成代码...
+  正在创建库 D:\桌面\智能车\major-car-LAP20-20261022\deliveries\lap21-20261022\project\verification\vision-replay.lib 和对象 D:\桌面\智能车\major-car-LAP20-20261022\deliveries\lap21-20261022\project\verification\vision-replay.exp
+[{"source": "snapshot-20261021-180609", "frames": 60, "first": [1, -4, 88, 43], "last": [1, -4, 88, 43]}, {"source": "snapshot-20261021-180619", "frames": 60, "first": [1, -4, 88, 38], "last": [1, -4, 88, 38]}]
+PASS: all LAP21 host checks
