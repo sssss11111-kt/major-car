@@ -1,0 +1,8 @@
+{
+  "version": "C11LAP26",
+  "date_asia_shanghai": "2026-10-22",
+  "source": "user field report and course schematic",
+  "reported": "连续约30度小弯被识别成环岛，要求优化识别准确性",
+  "actual_camera_frames_available": false,
+  "scope": "Reported false positive; no measured telemetry or complete-ring acceptance supplied."
+}

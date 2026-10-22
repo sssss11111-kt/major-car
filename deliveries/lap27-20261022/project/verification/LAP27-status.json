@@ -1,0 +1,45 @@
+{
+  "version": "C11LAP27",
+  "date_asia_shanghai": "2026-10-22",
+  "baseline_commit": "5fb8a22fc3b1af9872603269392718d87fce344f",
+  "branch": "codex/20261022-lap21-stripes",
+  "main_update_authorized": false,
+  "built": true,
+  "build_errors": 0,
+  "build_warnings": 0,
+  "flashed": false,
+  "hardware_tested": false,
+  "hardware_track_accepted": false,
+  "hex_sha256": "ce75b2bf0aaf4bfc935c28a569f61310ed39793e5f1c0fe644ac40febeea516e",
+  "hex_bytes": 69632,
+  "hex_segments": [
+    [
+      1879048192,
+      1879117824
+    ]
+  ],
+  "straight_target": 100,
+  "curve_target": 80,
+  "ring_cap": 80,
+  "stripe_cap": 24,
+  "rear_track_m": 0.155,
+  "ring_state_configuration_unchanged": true,
+  "steering_pid_speed_configuration_unchanged": true,
+  "servo_command_bounds": [
+    69,
+    116
+  ],
+  "exterior_connectivity": 8,
+  "enclosed_minimum_consecutive_rows": 12,
+  "enclosed_minimum_dark_area_px": 180,
+  "exterior_scratch_bytes": 35968,
+  "build_zi_bytes": 149760,
+  "test_gate": "T2 new negative fixtures added before implementation; final corrected diagonal-neck fixture also rerun against archived LAP26 owner and failed at open-wave-lobe assertion; LAP27 passes. Synthetic reproduction of a plausible mechanism, not recorded field camera reproduction.",
+  "host_checks": "18 actual trial_tick/PID;5 S-bend groups;stripes and stateful steering;120 real straight frames;original two islands;6 exterior-connected lobe variants x8 frames;27 wave-road variants x8 frames. All passed.",
+  "evidence": [
+    "host-checks-LAP27.log",
+    "build-reproduced.log",
+    "hood-replay-result.json"
+  ],
+  "remaining": "Not flashed. No actual camera wave/ring frames supplied. Fully visible closed island required before entry; partial-view detection may be delayed. Runtime worst-case exterior-flood-fill latency not measured on target. Actual course false-positive rate, true-ring recall, yaw scale and exits require field validation."
+}

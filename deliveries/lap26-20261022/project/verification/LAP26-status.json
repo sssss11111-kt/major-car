@@ -8,7 +8,7 @@
   "build_errors": 0,
   "build_warnings": 0,
   "flashed": true,
-  "hardware_tested": false,
+  "hardware_tested": true,
   "hardware_track_accepted": false,
   "hex_sha256": "32e2afd30e8341183eaa6f27a0bcc9434258488ec45e5d5247f1daae0c059c85",
   "hex_bytes": 69248,
@@ -53,5 +53,7 @@
   "flash_started_utc": "2026-10-22T15:29:26.596267+00:00",
   "flash_finished_utc": "2026-10-22T15:29:32.209873+00:00",
   "flash_end_state": "HALTED",
-  "cold_boot_required": true
+  "cold_boot_required": true,
+  "user_feedback": "records/lap26-field-20261022/user-feedback.json",
+  "hardware_test_scope": "User reports continuous small bends are falsely detected as a roundabout. No on-board frames or telemetry available."
 }
