@@ -1,0 +1,23 @@
+{
+  "version": "C11LAP26",
+  "started_utc": "2026-10-22T15:29:26.596267+00:00",
+  "success": true,
+  "old_application_read_or_backed_up": false,
+  "prepared_confirmed": true,
+  "programming_started": true,
+  "hex_sha256": "32e2afd30e8341183eaa6f27a0bcc9434258488ec45e5d5247f1daae0c059c85",
+  "segments": [
+    [
+      1879048192,
+      1879117440
+    ]
+  ],
+  "image_bytes": 69248,
+  "readback_match": true,
+  "verified_bytes": 69248,
+  "programmed_data_sha256": "b1ed575682e4f0f119efaa3a9e7f4366483a3a1bcd2de0c7710e30b5c58fae87",
+  "state": "HALTED",
+  "cold_boot_required": true,
+  "hardware_track_tested": false,
+  "finished_utc": "2026-10-22T15:29:32.209873+00:00"
+}

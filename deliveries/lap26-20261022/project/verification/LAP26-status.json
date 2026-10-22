@@ -7,7 +7,7 @@
   "built": true,
   "build_errors": 0,
   "build_warnings": 0,
-  "flashed": false,
+  "flashed": true,
   "hardware_tested": false,
   "hardware_track_accepted": false,
   "hex_sha256": "32e2afd30e8341183eaa6f27a0bcc9434258488ec45e5d5247f1daae0c059c85",
@@ -46,5 +46,12 @@
     "build-reproduced.log",
     "hood-replay-result.json"
   ],
-  "remaining": "Unflashed candidate. Actual camera ring frames unavailable. Clockwise and photo1-then-photo2 order are explicit configuration assumptions. Rear track155mm is provisional; wheel scale, slip, yaw anchor, entry/exit thresholds, full route and interaction under field lighting require validation."
+  "remaining": "Flashed, full readback matched; cold boot required. Actual camera ring frames unavailable. Clockwise and photo1-then-photo2 order are explicit configuration assumptions. Rear track155mm is provisional; wheel scale, slip, yaw anchor, entry/exit thresholds, full route and interaction under field lighting require validation.",
+  "flash_readback_match": true,
+  "flash_verified_bytes": 69248,
+  "flash_evidence": "records/lap26-field-20261022/flash-01/result.json",
+  "flash_started_utc": "2026-10-22T15:29:26.596267+00:00",
+  "flash_finished_utc": "2026-10-22T15:29:32.209873+00:00",
+  "flash_end_state": "HALTED",
+  "cold_boot_required": true
 }
