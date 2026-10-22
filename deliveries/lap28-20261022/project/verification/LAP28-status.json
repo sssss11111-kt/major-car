@@ -7,7 +7,7 @@
   "built": true,
   "build_errors": 0,
   "build_warnings": 0,
-  "flashed": false,
+  "flashed": true,
   "hardware_tested": false,
   "hardware_track_accepted": false,
   "hex_sha256": "33ff1e1498495fef245710730d2d0b6ecd09baf97ba95affbf1b40a0a5d3fab5",
@@ -29,5 +29,10 @@
   ],
   "build_zi_bytes": 149824,
   "host_checks": "19 production supervisor/PID cases; steering and 5 S-bend groups; stripes; 120 real straight frames; original ring/yaw and negative topology cases; captured clipped entry and mirror; side-open and rectangle negatives; integrated distant entry/stripe/loss; captured frame confirmation.",
-  "remaining": "Not flashed. Capture is a stationary post-fault frame, not the fault-trigger frame. Target worst-case processing latency, first ring actual camera approach, clockwise photo1->photo2 order, odometry scale, exits and complete course require field testing. Skipping the first configured ring still shifts route index; no reliable type classification is claimed."
+  "remaining": "Flashed; cold boot required. Capture is a stationary post-fault frame, not the fault-trigger frame. Target worst-case processing latency, first ring actual camera approach, clockwise photo1->photo2 order, odometry scale, exits and complete course require field testing. Skipping the first configured ring still shifts route index; no reliable type classification is claimed.",
+  "flash_readback_match": true,
+  "flash_verified_bytes": 70912,
+  "flash_end_state": "HALTED",
+  "cold_boot_required": true,
+  "flash_evidence": "records\\lap28-field-20261023\\flash-01\\result.json"
 }
