@@ -8,7 +8,7 @@
   "build_errors": 0,
   "build_warnings": 0,
   "flashed": true,
-  "hardware_tested": false,
+  "hardware_tested": true,
   "hardware_track_accepted": false,
   "hex_sha256": "e704fa663099ef0d033d518a10e7b1447696435e8f19948561e1ca28496da73d",
   "hex_bytes": 67328,
@@ -50,12 +50,16 @@
   ],
   "passive_serial_probe": "records/lap22-field-20261022/serial-sbend-01/summary.json",
   "passive_serial_bytes": 0,
-  "remaining": "Flashed and readback verified; halted at flash end, cold boot required. Mechanical safe range69..116 and S-bend field improvement remain unverified; bench and field verification required.",
+  "remaining": "User reports functional behavior good, requests substantially faster straight/curve running. Actual speed, multiple-lap stability and mechanical calibration are not measured. LAP24 is separate unflashed speed candidate.",
   "flash_readback_match": true,
   "flash_verified_bytes": 67328,
   "flash_evidence": "records/lap23-field-20261022/flash-01/result.json",
   "flash_started_utc": "2026-10-22T14:47:52.916085+00:00",
   "flash_finished_utc": "2026-10-22T14:47:58.280640+00:00",
   "flash_end_state": "HALTED",
-  "cold_boot_required": true
+  "cold_boot_required": true,
+  "function_field_good_reported": true,
+  "s_bend_field_improvement_reported": true,
+  "user_feedback": "records/lap23-field-20261022/user-feedback.json",
+  "hardware_test_scope": "User reports other behavior good; actual speed is slow. No measured speed/wheel-angle trace or multiple-lap evidence."
 }

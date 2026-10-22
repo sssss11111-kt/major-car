@@ -32,3 +32,5 @@ Keil 0错误0警告。主机检查通过：原转向/镜像/预瞄失效/时间�
 工程 `project/demo/mdk/rt1064.uvprojx`，候选HEX `project/demo/mdk/Objects/rt1064.hex`；校验值见 `project/verification/LAP23-status.json`。构建：`tools/build-keil.ps1 -Keil D:\Keil5\UV4\UV4.exe`。设置ZIG为可用zig.exe，以Python运行 `tools/run-host-checks.py`；测试不访问硬件。
 
 烧录证据：`records/lap23-field-20261022/flash-01/result.json`与`flash.log`。用户确认电机断电、逻辑供电和下载器连接后，使用tools/flash-lap23.py直接覆盖；未读取或备份旧应用。没有自动复位发车或实车试跑。冷启动先保持电机断电，架空核对机械干涉及内侧余量；之后恢复电机供电时须考虑原自动发车流程。
+
+最新现场反馈：用户报告其它行为正常、速度偏慢，要求大幅提高直道与弯道速度。该功能反馈已记录，未取得实际车速、轮角或多圈稳定数据；后续LAP24为独立提速候选，尚未烧录。
