@@ -8,7 +8,7 @@
   "build_errors": 0,
   "build_warnings": 0,
   "flashed": true,
-  "hardware_tested": false,
+  "hardware_tested": true,
   "hardware_track_accepted": false,
   "hex_sha256": "ce75b2bf0aaf4bfc935c28a569f61310ed39793e5f1c0fe644ac40febeea516e",
   "hex_bytes": 69632,
@@ -48,5 +48,7 @@
   "flash_started_utc": "2026-10-22T15:39:18.655279+00:00",
   "flash_finished_utc": "2026-10-22T15:39:24.193165+00:00",
   "flash_end_state": "HALTED",
-  "cold_boot_required": true
+  "cold_boot_required": true,
+  "user_feedback": "records/lap27-field-20261022/user-feedback.json",
+  "hardware_test_scope": "User reports both rings fail entry; second fault4. CRC-verified stationary snapshot and telemetry collected; original fault-trigger frame unavailable."
 }
