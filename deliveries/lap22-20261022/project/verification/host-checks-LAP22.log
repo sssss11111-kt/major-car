@@ -1,0 +1,31 @@
+COMMAND ['C:\\Users\\Tong\\Documents\\ChatGPT\\智能车\\major-car-vision-v2\\firmware\\camera_car\\.tools\\ziglang\\zig.exe', 'cc', '-I', 'C:\\Users\\Tong\\Documents\\ChatGPT\\智能车\\major-car-obstacle\\deliveries\\lap22-20261022\\project\\demo\\user\\inc', '-I', 'C:\\Users\\Tong\\Documents\\ChatGPT\\智能车\\major-car-obstacle\\deliveries\\lap22-20261022\\project\\verification\\vision-stubs', 'C:\\Users\\Tong\\Documents\\ChatGPT\\智能车\\major-car-obstacle\\deliveries\\lap22-20261022\\project\\demo\\user\\src\\steering_control.c', 'C:\\Users\\Tong\\Documents\\ChatGPT\\智能车\\major-car-obstacle\\deliveries\\lap22-20261022\\project\\verification\\test-steering.c', '-o', 'C:\\Users\\Tong\\Documents\\ChatGPT\\智能车\\major-car-obstacle\\deliveries\\lap22-20261022\\project\\verification\\test-steering.exe']
+COMMAND ['C:\\Users\\Tong\\Documents\\ChatGPT\\智能车\\major-car-obstacle\\deliveries\\lap22-20261022\\project\\verification\\test-steering.exe']
+PASS: continuous bend response, symmetric bounds, LAP21 targets, isolated spikes, slew bound, sharp bend/reversal authority, speed recovery, preview loss, invalid reset, duplicate tick, tick wrap
+COMMAND ['C:\\Users\\Tong\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe', 'C:\\Users\\Tong\\Documents\\ChatGPT\\智能车\\major-car-obstacle\\deliveries\\lap22-20261022\\project\\verification\\check-auto-integration.py']
+PASS: actual trial_tick auto
+PASS: actual trial_tick lost
+PASS: actual trial_tick snapshot
+PASS: actual trial_tick stale
+PASS: actual trial_tick bench
+PASS: actual trial_tick pwm100
+PASS: actual trial_tick single
+PASS: actual trial_tick curve_speed
+PASS: actual trial_tick stripe_start
+PASS: actual trial_tick stripe_recovery
+PASS: actual trial_tick stripe_stale
+PASS: actual trial_tick stripe_lost
+PASS: actual trial_tick stripe_encoder
+PASS: actual trial_tick stripe_stall
+PASS: actual trial_tick stripe_degraded
+PASS: actual trial_tick no_stripe_target_change
+COMMAND ['C:\\Users\\Tong\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe', 'C:\\Users\\Tong\\Documents\\ChatGPT\\智能车\\major-car-obstacle\\deliveries\\lap22-20261022\\project\\verification\\check-stripes.py']
+PASS: measured stripe corridor preserves centered/left/right steering and reacquires
+PASS: no blind continuation from historical centers
+PASS: clean distant track cannot mask a missing near corridor
+PASS: stripe-only startup rejected
+PASS: isolated marks, body mask, and uniform scenes
+PASS: mirrored normal curves do not trigger stripes
+PASS: combined vision/stateful steering retains history, preview gating and 66..119 limits
+COMMAND ['C:\\Users\\Tong\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe', 'C:\\Users\\Tong\\Documents\\ChatGPT\\智能车\\major-car-obstacle\\deliveries\\lap22-20261022\\project\\verification\\check-hood-replay.py']
+[{"source": "snapshot-20261021-180609", "frames": 60, "first": [1, -4, 88, 43], "last": [1, -4, 88, 43]}, {"source": "snapshot-20261021-180619", "frames": 60, "first": [1, -4, 88, 38], "last": [1, -4, 88, 38]}]
+PASS: all LAP22 host-only checks
