@@ -8,7 +8,7 @@
   "built": true,
   "build_errors": 0,
   "build_warnings": 0,
-  "flashed": false,
+  "flashed": true,
   "hardware_tested": false,
   "hardware_track_accepted": false,
   "hex_sha256": "dbb759e621d4b7252803f7520a1fedc513a988e38e55a4f42993bf104fb0eabb",
@@ -42,5 +42,12 @@
     "host-checks-LAP24.log",
     "hood-replay-result.json"
   ],
-  "remaining": "Not flashed. Actual speed increase, higher-speed S-bend/curve stability, encoder transients, stripe exit acceleration and multiple-lap reliability remain unverified."
+  "remaining": "Flashed and readback verified. Halted at flash end, cold boot required. Actual speed gain, higher-speed curve/S-bend stability, encoder transients, stripe exit acceleration and multiple-lap reliability remain unverified.",
+  "flash_readback_match": true,
+  "flash_verified_bytes": 67328,
+  "flash_evidence": "records/lap24-field-20261022/flash-01/result.json",
+  "flash_started_utc": "2026-10-22T15:00:38.419068+00:00",
+  "flash_finished_utc": "2026-10-22T15:00:43.696674+00:00",
+  "flash_end_state": "HALTED",
+  "cold_boot_required": true
 }

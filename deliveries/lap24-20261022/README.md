@@ -2,7 +2,7 @@
 
 基于已烧录LAP23提交 `b0fc1e1fc0a1fffc49aee1bb09085baecc581eee`。用户最新反馈“其它都好，仅速度偏慢”，要求大幅提高直道和弯道速度；这不等于已测多圈稳定性或机械轮角标定。
 
-状态：**已编译0错误0警告、主机检查通过，未烧录、未实车验收**。车内仍是LAP23；仅推送开发分支 `codex/20261022-lap21-stripes`，不改main。
+状态：**已编译0错误0警告、主机检查通过，已烧录、未实车验收**。2026-10-22 23:00:38～23:00:43（Asia/Shanghai）已写入LAP24，67,328字节读回一致；烧录结束时HALTED，需要冷启动。仅推送开发分支 `codex/20261022-lap21-stripes`，不改main。
 
 | 速度目标，计数/10ms | LAP23 | LAP24 | 变化 |
 | --- | ---: | ---: | ---: |
@@ -22,3 +22,5 @@
 工程 `project/demo/mdk/rt1064.uvprojx`，HEX `project/demo/mdk/Objects/rt1064.hex`，校验值见 `project/verification/LAP24-status.json`。构建运行 `tools/build-keil.ps1 -Keil D:\Keil5\UV4\UV4.exe`；设置ZIG后以Python运行 `tools/run-host-checks.py`，主机检查不访问硬件。
 
 尚未验证：实际速度增幅、提速后的S弯/急弯稳定性、编码器瞬态和连续圈表现。LAP23原成功转向/条纹程序与已烧录HEX完整保留供回退。
+
+烧录证据：仓库records/lap24-field-20261022/flash-01/result.json及flash.log；原候选状态另存。用户确认电机断电、逻辑供电和下载器连接后，使用tools/flash-lap24.py直接覆盖，未读取或备份旧程序。没有自动复位发车或实车试跑；断开下载器并冷启动后保留原自动发车流程。
