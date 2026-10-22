@@ -15,6 +15,17 @@
 **/*.uvguix.*
 /.venv-lap19/
 
+# LAP21 candidate build and host-test artifacts.
+/deliveries/lap21-20261022/project/verification/*.exe
+/deliveries/lap21-20261022/project/verification/*.dll
+/deliveries/lap21-20261022/project/verification/*.pdb
+/deliveries/lap21-20261022/project/verification/*.lib
+/deliveries/lap21-20261022/project/verification/auto-integration-generated.c
+/deliveries/lap21-20261022/project/demo/mdk/Listings/
+/deliveries/lap21-20261022/project/demo/mdk/Objects/*
+!/deliveries/lap21-20261022/project/demo/mdk/Objects/rt1064.hex
+!/deliveries/lap21-20261022/project/demo/mdk/Objects/rt1064.axf
+
 # LAP20 generated build and host-test artifacts.
 /deliveries/lap20-20261022/project/verification/*.exe
 /deliveries/lap20-20261022/project/verification/*.dll

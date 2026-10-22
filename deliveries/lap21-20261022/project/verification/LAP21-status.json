@@ -1,0 +1,40 @@
+{
+  "version": "C11LAP21",
+  "date_asia_shanghai": "2026-10-22",
+  "branch": "codex/20261022-obstacle-crossing",
+  "baseline_commit": "404e2478f8b2c19fcab344cadfae3fabcb0dfbd4",
+  "built": true,
+  "build_errors": 0,
+  "build_warnings": 0,
+  "flashed": false,
+  "hardware_tested": false,
+  "hardware_track_accepted": false,
+  "hex_sha256": "6392129678196ce12407969c14c2042167f9905836a5f2ab465a61511b1f95f2",
+  "hex_bytes": 65920,
+  "hex_address_start": "0x70000000",
+  "hex_address_end_exclusive": "0x70010180",
+  "sdk_files_unchanged_from_lap20": 508,
+  "straight_target_counts_per_10ms": 45,
+  "tight_curve_target_counts_per_10ms": 24,
+  "single_edge_target_cap_counts_per_10ms": 24,
+  "stripe_target_cap_counts_per_10ms": 24,
+  "pwm_duty_max": 10000,
+  "servo_middle": 92.5,
+  "servo_left": 124,
+  "servo_right": 61,
+  "stripe_validity": "current measured plausible outer edges; >=6 observed near rows; no blind lease",
+  "stripe_recovery_clean_frames": 3,
+  "s_bend_twitch_resolved": false,
+  "test_gate": "T2: deterministic production vision and publication/supervisor logic",
+  "pre_change_red": [
+    "Original vision: stripe steering offset=-12, frame=0 returned [valid=1,error=0,usable=37,both=37] instead of prior offset error.",
+    "Original main publication: stripe_start failed vision_mode==2 && vision_degraded even with marker set and 40 normal both rows."
+  ],
+  "host_checks": "steering; 13 actual trial_tick+PID cases; synthetic stripe/curve/negative paths; 2 real straight fixtures x60 frames; all passed",
+  "evidence": [
+    "build-reproduced.log",
+    "host-checks-LAP21.log",
+    "hood-replay-result.json"
+  ],
+  "remaining": "No on-car stripe raw frames or field calibration. Real traversal, camera timing, marker dimensions/lighting and edge visibility remain unverified. No hardware access in this task."
+}
