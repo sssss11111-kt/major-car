@@ -1,0 +1,8 @@
+{
+  "date": "2026-10-23",
+  "version": "LAP28",
+  "user_verbatim": "经测试LAP28依旧过不了环岛",
+  "hardware_tested": true,
+  "hardware_track_accepted": false,
+  "unknown": "未提供本次具体停点、是否进入环岛、故障码或LOSS28数据；不得沿用LAP27的X4作为此次实测结果。"
+}

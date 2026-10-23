@@ -8,7 +8,7 @@
   "build_errors": 0,
   "build_warnings": 0,
   "flashed": true,
-  "hardware_tested": false,
+  "hardware_tested": true,
   "hardware_track_accepted": false,
   "hex_sha256": "33ff1e1498495fef245710730d2d0b6ecd09baf97ba95affbf1b40a0a5d3fab5",
   "hex_bytes": 70912,
@@ -34,5 +34,6 @@
   "flash_verified_bytes": 70912,
   "flash_end_state": "HALTED",
   "cold_boot_required": true,
-  "flash_evidence": "records\\lap28-field-20261023\\flash-01\\result.json"
+  "flash_evidence": "records\\lap28-field-20261023\\flash-01\\result.json",
+  "user_feedback": "records/lap28-field-20261023/user-feedback.json"
 }
