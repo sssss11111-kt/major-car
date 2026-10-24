@@ -1,0 +1,14 @@
+{
+  "version_expected": "C11LAP22",
+  "port": "COM9",
+  "baud": 115200,
+  "passive_only": true,
+  "started_utc": "2026-10-22T14:35:14.299672+00:00",
+  "elapsed_s": 12.03,
+  "bytes": 0,
+  "complete_status_lines": 0,
+  "run_seen": false,
+  "faults_seen": [],
+  "finished": true,
+  "error": null
+}

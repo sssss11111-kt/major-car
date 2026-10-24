@@ -1,0 +1,6 @@
+{
+  "frame_before": 4835,
+  "frame_after": 4851,
+  "single_frame_confirmed": false,
+  "kind": "Live debug read, may span frames; no halt or reset"
+}

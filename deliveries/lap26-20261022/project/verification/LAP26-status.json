@@ -1,0 +1,59 @@
+{
+  "version": "C11LAP26",
+  "date_asia_shanghai": "2026-10-22",
+  "baseline_commit": "d45c704bbf2b40199a5d7adde3aa122af4d7d508",
+  "branch": "codex/20261022-lap21-stripes",
+  "main_update_authorized": false,
+  "built": true,
+  "build_errors": 0,
+  "build_warnings": 0,
+  "flashed": true,
+  "hardware_tested": true,
+  "hardware_track_accepted": false,
+  "hex_sha256": "32e2afd30e8341183eaa6f27a0bcc9434258488ec45e5d5247f1daae0c059c85",
+  "hex_bytes": 69248,
+  "hex_segments": [
+    [
+      1879048192,
+      1879117440
+    ]
+  ],
+  "rear_track_m": 0.155,
+  "meters_per_encoder_count_assumed": 4.62e-05,
+  "clockwise_assumed": true,
+  "encounter_order_assumed": [
+    "photo1",
+    "photo2"
+  ],
+  "exit_yaw_degrees": [
+    270,
+    360
+  ],
+  "straight_target": 100,
+  "curve_target": 80,
+  "ring_cap": 80,
+  "stripe_cap": 24,
+  "servo_command_bounds": [
+    69,
+    116
+  ],
+  "steering_pid_speed_configuration_unchanged": true,
+  "sdk_files_unchanged": 508,
+  "test_gate": "T2: new state/vision tests first failed at missing owner header/API, then passed. Existing gates reused and extended with ring speed/stripe precedence and fault8. Synthetic topology is not real camera or route acceptance.",
+  "host_checks": "18 actual supervisor/PID cases; original steering and 5 S-bend groups; stripe/stateful steering;120 real straight frames;two synthetic island shapes and mirrored branch paths, center stays white and servo bounds, open fork/rectangle/near-loss negatives; signed odometry270/360, cooldown, timeout. All passed.",
+  "evidence": [
+    "host-checks-LAP26.log",
+    "build-reproduced.log",
+    "hood-replay-result.json"
+  ],
+  "remaining": "Flashed, full readback matched; cold boot required. Actual camera ring frames unavailable. Clockwise and photo1-then-photo2 order are explicit configuration assumptions. Rear track155mm is provisional; wheel scale, slip, yaw anchor, entry/exit thresholds, full route and interaction under field lighting require validation.",
+  "flash_readback_match": true,
+  "flash_verified_bytes": 69248,
+  "flash_evidence": "records/lap26-field-20261022/flash-01/result.json",
+  "flash_started_utc": "2026-10-22T15:29:26.596267+00:00",
+  "flash_finished_utc": "2026-10-22T15:29:32.209873+00:00",
+  "flash_end_state": "HALTED",
+  "cold_boot_required": true,
+  "user_feedback": "records/lap26-field-20261022/user-feedback.json",
+  "hardware_test_scope": "User reports continuous small bends are falsely detected as a roundabout. No on-board frames or telemetry available."
+}

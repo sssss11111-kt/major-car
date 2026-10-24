@@ -1,0 +1,33 @@
+{
+  "current_real_frame_first": {
+    "valid": 1,
+    "near_error": -41,
+    "usable": 76,
+    "both": 2,
+    "island": 0,
+    "command": 113.4000015258789,
+    "preview": -43.0,
+    "preview_valid": 1.0
+  },
+  "current_real_frame_settled": {
+    "valid": 1,
+    "near_error": -41,
+    "usable": 76,
+    "both": 2,
+    "island": 0,
+    "command": 113.4000015258789,
+    "preview": -43.0,
+    "preview_valid": 1.0
+  },
+  "synthetic_confirmed_guidance_far_island": {
+    "valid": 1,
+    "near_error": 0,
+    "usable": 88,
+    "both": 0,
+    "island": 1,
+    "command": 92.5,
+    "preview": -36.0,
+    "preview_valid": 1.0
+  },
+  "limits": "Current stationary snapshot, not fault-trigger frame. Far-island case is synthetic."
+}

@@ -1,0 +1,13 @@
+--- single_edge-before.c
++++ single_edge.c
+@@ -1,8 +1,8 @@
+ #include "single_edge.h"
+-/* Reference from two CRC-verified same-pose straight snapshots, 131631/131850.
++/* Reference from two CRC-verified fixed-pose straight snapshots, 180609/180619.
+  * Horizontal width is an estimate in curves, not an observed missing edge.
+  * Change camera pose/track width => recalibrate before enabling this model. */
+-static const uint8_t width_reference[SE_H] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,66,68,69,69,72,72,73,74,75,76,78,78,79,80,81,82,82,84,84,86,87,87,88,90,90,92,93,94,95,96,98,98,100,101,102,104,104,105,106,108,108,110,110,111,112,113,114,114,116,118,118,120,120,122,123,124,125,126,127,129,130,131,132,134,134,136,138,138,140,141,142,144,145,146,147,149,149,151,152,153,154,0,0,0,0,0,0,0,0,0 };
++static const uint8_t width_reference[SE_H] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,75,76,78,79,80,81,83,84,86,87,88,89,90,92,93,94,95,96,97,98,99,100,101,102,103,104,106,106,108,108,110,111,112,114,114,115,116,117,118,120,120,122,123,124,125,126,127,128,129,130,131,132,134,134,136,137,138,139,140,142,142,144,144,146,146,148,148,150,150,152,153,154,155,156,157,158,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+ static uint8_t active, active_side, recovered;
+ static uint32_t since;
+ static int abs_i(int a) { return a < 0 ? -a : a; }

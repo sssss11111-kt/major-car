@@ -1,0 +1,72 @@
+SWD/JTAG communication failure (No ACK); check USB cable, reduce debugger clock
+Traceback (most recent call last):
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\probe\cmsis_dap_probe.py", line 540, in read_dp
+    result = self._link.read_reg(reg_id, now=now)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\probe\pydapaccess\dap_access_cmsis_dap.py", line 1088, in read_reg
+    return read_reg_cb()
+           ^^^^^^^^^^^^^
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\probe\pydapaccess\dap_access_cmsis_dap.py", line 1082, in read_reg_cb
+    res = transfer.get_result()
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\probe\pydapaccess\dap_access_cmsis_dap.py", line 161, in get_result
+    self.daplink.flush()
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\utility\concurrency.py", line 29, in _locking
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\probe\pydapaccess\dap_access_cmsis_dap.py", line 887, in flush
+    self._read_packet()
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\utility\concurrency.py", line 29, in _locking
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\probe\pydapaccess\dap_access_cmsis_dap.py", line 1168, in _read_packet
+    decoded_data = cmd.decode_data(raw_data)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\probe\pydapaccess\dap_access_cmsis_dap.py", line 484, in decode_data
+    data = self._decode_transfer_block_data(data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\probe\pydapaccess\dap_access_cmsis_dap.py", line 453, in _decode_transfer_block_data
+    self._check_response(data[3])
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\probe\pydapaccess\dap_access_cmsis_dap.py", line 372, in _check_response
+    raise DAPAccessIntf.TransferError("SWD/JTAG communication failure (No ACK); " \
+pyocd.probe.pydapaccess.dap_access_api.DAPAccessIntf.TransferError: SWD/JTAG communication failure (No ACK); check USB cable, reduce debugger clock
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\coresight\dap.py", line 472, in _connect
+    connector.connect()
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\coresight\dap.py", line 260, in connect
+    self._idr = self.read_idr()
+                ^^^^^^^^^^^^^^^
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\coresight\dap.py", line 289, in read_idr
+    dpidr = self._probe.read_dp(DP_IDR, now=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\probe\cmsis_dap_probe.py", line 543, in read_dp
+    raise self._convert_exception(error) from error
+pyocd.core.exceptions.TransferError: SWD/JTAG communication failure (No ACK); check USB cable, reduce debugger clock
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\output\LAP12-����ѭ���Զ�����50pct-20261021\code\verification\flash-LAP12.py", line 23, in <module>
+    with s:
+         ^
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\core\session.py", line 512, in __enter__
+    self.open()
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\core\session.py", line 689, in open
+    self._board.init()
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\board\board.py", line 152, in init
+    self.target.init()
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\coresight\coresight_target.py", line 131, in init
+    super().init()
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\core\soc_target.py", line 174, in init
+    seq.invoke()
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\utility\sequencer.py", line 213, in invoke
+    resultSequence.invoke()
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\utility\sequencer.py", line 208, in invoke
+    resultSequence = call()
+                     ^^^^^^
+  File "C:\Users\Tong\Documents\ChatGPT\���ܳ�\analysis\lap10-runtime\Lib\site-packages\pyocd\coresight\dap.py", line 479, in _connect
+    raise exceptions.Error(
+pyocd.core.exceptions.Error: Target not detected. Check connection to target. Potentially reduce debug clock.

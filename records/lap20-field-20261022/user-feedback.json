@@ -1,0 +1,12 @@
+{
+  "version": "C11LAP20",
+  "user_reported_full_route_complete": true,
+  "user_observation": "可以走完全程，但是过弯时候前轮抽搐，多次舵机转动幅度过大过弯",
+  "acceptance_scope": "User-reported full route completion, with steering issue still open; not a claim of repeated stable completion.",
+  "telemetry_fault6_explanation": "End-of-run physical cause not confirmed; retain fault6 logs, do not equate these alone with route failure.",
+  "next_request": {
+    "new_candidate": "LAP21",
+    "speed_target_multiplier": 1.5,
+    "vary_steering_for_bend_severity": true
+  }
+}

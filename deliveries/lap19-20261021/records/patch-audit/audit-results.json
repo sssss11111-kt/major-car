@@ -1,0 +1,683 @@
+{
+  "branch_commit": "ba612567708a822421b1209ff9299b733b707dd1",
+  "source_sha256": {
+    "main.c": "ad4010f3acf5d8830b6c10c9a115fdb776866b24deff898598f8c96569ebdd46",
+    "img_process.c": "2d25e1f0d128b15262d831263d479cded403073d65afede887a008c140b2fa7a",
+    "img_process.h": "c8264308c6813e2b25463f97d1276ead9cf8bd056960003dd02c14b091d352c3"
+  },
+  "main_orig_matches_branch": true,
+  "zip_files_match_outputs": true,
+  "cold_start_no_reset": [
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 102,
+      "row90": [
+        0,
+        0,
+        62
+      ]
+    },
+    {
+      "valid": 1,
+      "error": 0,
+      "usable": 102,
+      "both": 102,
+      "row90": [
+        36,
+        94,
+        152
+      ]
+    },
+    {
+      "valid": 1,
+      "error": 0,
+      "usable": 102,
+      "both": 102,
+      "row90": [
+        36,
+        94,
+        152
+      ]
+    },
+    {
+      "valid": 1,
+      "error": 0,
+      "usable": 102,
+      "both": 102,
+      "row90": [
+        36,
+        94,
+        152
+      ]
+    },
+    {
+      "valid": 1,
+      "error": 0,
+      "usable": 102,
+      "both": 102,
+      "row90": [
+        36,
+        94,
+        152
+      ]
+    }
+  ],
+  "same_input_with_reset": [
+    {
+      "valid": 1,
+      "error": 0,
+      "usable": 102,
+      "both": 102,
+      "row90": [
+        36,
+        94,
+        152
+      ]
+    },
+    {
+      "valid": 1,
+      "error": 0,
+      "usable": 102,
+      "both": 102,
+      "row90": [
+        36,
+        94,
+        152
+      ]
+    },
+    {
+      "valid": 1,
+      "error": 0,
+      "usable": 102,
+      "both": 102,
+      "row90": [
+        36,
+        94,
+        152
+      ]
+    },
+    {
+      "valid": 1,
+      "error": 0,
+      "usable": 102,
+      "both": 102,
+      "row90": [
+        36,
+        94,
+        152
+      ]
+    },
+    {
+      "valid": 1,
+      "error": 0,
+      "usable": 102,
+      "both": 102,
+      "row90": [
+        36,
+        94,
+        152
+      ]
+    }
+  ],
+  "only_far_rows_18_to_59": [
+    {
+      "valid": 1,
+      "error": 0,
+      "usable": 42,
+      "both": 42,
+      "row90": [
+        0,
+        0,
+        187
+      ]
+    },
+    {
+      "valid": 1,
+      "error": 0,
+      "usable": 42,
+      "both": 42,
+      "row90": [
+        0,
+        0,
+        187
+      ]
+    },
+    {
+      "valid": 1,
+      "error": 0,
+      "usable": 42,
+      "both": 42,
+      "row90": [
+        0,
+        0,
+        187
+      ]
+    }
+  ],
+  "offset_jump_40_after_straight": [
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    },
+    {
+      "valid": 0,
+      "error": 0,
+      "usable": 0,
+      "both": 51,
+      "row90": [
+        35,
+        94,
+        153
+      ]
+    }
+  ],
+  "uniform_20": {
+    "valid": 0,
+    "error": 0,
+    "usable": 0,
+    "both": 0,
+    "row90": [
+      0,
+      0,
+      187
+    ]
+  },
+  "uniform_250": {
+    "valid": 0,
+    "error": 0,
+    "usable": 0,
+    "both": 0,
+    "row90": [
+      0,
+      0,
+      187
+    ]
+  },
+  "snapshots": {
+    "131411": {
+      "size": [
+        188,
+        120
+      ],
+      "crc_match": true,
+      "replay": [
+        {
+          "valid": 1,
+          "error": 0,
+          "usable": 102,
+          "both": 76,
+          "row90": [
+            31,
+            95,
+            159
+          ]
+        },
+        {
+          "valid": 1,
+          "error": 0,
+          "usable": 102,
+          "both": 75,
+          "row90": [
+            31,
+            95,
+            159
+          ]
+        },
+        {
+          "valid": 1,
+          "error": 0,
+          "usable": 102,
+          "both": 75,
+          "row90": [
+            31,
+            95,
+            159
+          ]
+        }
+      ]
+    },
+    "131631": {
+      "size": [
+        188,
+        120
+      ],
+      "crc_match": true,
+      "replay": [
+        {
+          "valid": 1,
+          "error": -5,
+          "usable": 102,
+          "both": 102,
+          "row90": [
+            26,
+            90,
+            155
+          ]
+        },
+        {
+          "valid": 1,
+          "error": -5,
+          "usable": 102,
+          "both": 102,
+          "row90": [
+            26,
+            90,
+            155
+          ]
+        },
+        {
+          "valid": 1,
+          "error": -5,
+          "usable": 102,
+          "both": 102,
+          "row90": [
+            26,
+            90,
+            155
+          ]
+        }
+      ]
+    },
+    "131850": {
+      "size": [
+        188,
+        120
+      ],
+      "crc_match": true,
+      "replay": [
+        {
+          "valid": 1,
+          "error": -5,
+          "usable": 102,
+          "both": 102,
+          "row90": [
+            26,
+            90,
+            154
+          ]
+        },
+        {
+          "valid": 1,
+          "error": -5,
+          "usable": 102,
+          "both": 102,
+          "row90": [
+            26,
+            90,
+            154
+          ]
+        },
+        {
+          "valid": 1,
+          "error": -5,
+          "usable": 102,
+          "both": 102,
+          "row90": [
+            26,
+            90,
+            154
+          ]
+        }
+      ]
+    },
+    "132210": {
+      "size": [
+        188,
+        120
+      ],
+      "crc_match": true,
+      "replay": [
+        {
+          "valid": 1,
+          "error": 0,
+          "usable": 85,
+          "both": 0,
+          "row90": [
+            38,
+            104,
+            187
+          ]
+        },
+        {
+          "valid": 1,
+          "error": 0,
+          "usable": 85,
+          "both": 0,
+          "row90": [
+            38,
+            104,
+            187
+          ]
+        },
+        {
+          "valid": 1,
+          "error": 0,
+          "usable": 85,
+          "both": 0,
+          "row90": [
+            38,
+            104,
+            187
+          ]
+        }
+      ]
+    }
+  }
+}

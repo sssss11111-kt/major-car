@@ -1,0 +1,453 @@
+34.179 C11LAP20 AUTO BOOT
+34.750 C11LAP20 AUTO READY
+34.952 C11LAP20 t=20 run=0 fault=0 frame=9 good=9 age=1 e1=0 e2=0 p1=0 p2=0
+34.955 VIS12 valid=1 error=39 rows=85 both=3 ready=9
+34.957 STEER20 curve=1 near=39 preview=-41 command10=925 limited=1 scale1000=533 geom_cal=0
+35.153 C11LAP20 t=40 run=0 fault=0 frame=18 good=18 age=1 e1=0 e2=0 p1=0 p2=0
+35.155 VIS12 valid=1 error=39 rows=83 both=5 ready=18
+35.157 STEER20 curve=1 near=39 preview=-40 command10=925 limited=1 scale1000=533 geom_cal=0
+35.352 C11LAP20 t=60 run=0 fault=0 frame=27 good=27 age=1 e1=0 e2=0 p1=0 p2=0
+35.353 VIS12 valid=1 error=39 rows=81 both=6 ready=27
+35.355 STEER20 curve=1 near=39 preview=-39 command10=925 limited=1 scale1000=533 geom_cal=0
+35.555 C11LAP20 t=80 run=0 fault=0 frame=36 good=36 age=1 e1=0 e2=0 p1=0 p2=0
+35.555 VIS12 valid=1 error=39 rows=84 both=7 ready=36
+35.555 STEER20 curve=1 near=39 preview=-38 command10=925 limited=1 scale1000=533 geom_cal=0
+35.753 TIME20 image_us=2090 recognized_to_pwm_us=0 ready_to_pwm_us=0 ready_max_us=0 samples=0
+35.754 C11LAP20 t=100 run=0 fault=0 frame=45 good=45 age=1 e1=0 e2=0 p1=0 p2=0
+35.952 C11LAP20 t=120 run=1 fault=0 frame=54 good=54 age=1 e1=13 e2=3 p1=2050 p2=2550
+35.953 VIS12 valid=1 error=39 rows=86 both=4 ready=50
+35.955 STEER20 curve=1 near=39 preview=-37 command10=610 limited=1 scale1000=533 geom_cal=0
+36.152 C11LAP20 t=140 run=1 fault=0 frame=63 good=63 age=1 e1=0 e2=0 p1=2700 p2=2700
+36.154 VIS12 valid=1 error=38 rows=86 both=3 ready=50
+36.156 STEER20 curve=1 near=38 preview=-38 command10=610 limited=1 scale1000=533 geom_cal=0
+36.352 C11LAP20 t=160 run=1 fault=0 frame=72 good=72 age=1 e1=0 e2=0 p1=2700 p2=2700
+36.353 VIS12 valid=1 error=38 rows=85 both=5 ready=50
+36.355 STEER20 curve=1 near=38 preview=-38 command10=610 limited=1 scale1000=533 geom_cal=0
+36.551 C11LAP20 t=180 run=0 fault=6 frame=81 good=81 age=1 e1=0 e2=0 p1=0 p2=0
+36.554 VIS12 valid=1 error=38 rows=85 both=4 ready=59
+36.558 STEER20 curve=1 near=38 preview=-38 command10=610 limited=1 scale1000=533 geom_cal=0
+36.753 TIME20 image_us=2074 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+36.754 C11LAP20 t=200 run=0 fault=6 frame=90 good=90 age=1 e1=0 e2=0 p1=0 p2=0
+36.953 C11LAP20 t=220 run=0 fault=6 frame=99 good=99 age=1 e1=0 e2=0 p1=0 p2=0
+36.954 VIS12 valid=1 error=38 rows=83 both=6 ready=77
+36.956 STEER20 curve=1 near=38 preview=-39 command10=610 limited=1 scale1000=533 geom_cal=0
+37.152 C11LAP20 t=240 run=0 fault=6 frame=108 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+37.153 VIS12 valid=1 error=38 rows=83 both=9 ready=86
+37.155 STEER20 curve=1 near=38 preview=-39 command10=610 limited=1 scale1000=533 geom_cal=0
+37.353 C11LAP20 t=260 run=0 fault=6 frame=117 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+37.354 VIS12 valid=1 error=38 rows=86 both=11 ready=95
+37.357 STEER20 curve=1 near=38 preview=-39 command10=610 limited=1 scale1000=533 geom_cal=0
+37.552 C11LAP20 t=280 run=0 fault=6 frame=126 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+37.553 VIS12 valid=1 error=38 rows=86 both=17 ready=100
+37.558 STEER20 curve=1 near=38 preview=-39 command10=610 limited=1 scale1000=533 geom_cal=0
+37.752 TIME20 image_us=2070 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+37.755 C11LAP20 t=300 run=0 fault=6 frame=135 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+37.953 C11LAP20 t=320 run=0 fault=6 frame=144 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+37.954 VIS12 valid=1 error=38 rows=86 both=19 ready=100
+37.956 STEER20 curve=1 near=38 preview=-39 command10=610 limited=1 scale1000=533 geom_cal=0
+38.152 C11LAP20 t=340 run=0 fault=6 frame=153 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+38.153 VIS12 valid=1 error=38 rows=86 both=14 ready=100
+38.155 STEER20 curve=1 near=38 preview=-39 command10=610 limited=1 scale1000=533 geom_cal=0
+38.354 C11LAP20 t=360 run=0 fault=6 frame=162 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+38.354 VIS12 valid=1 error=38 rows=86 both=7 ready=100
+38.357 STEER20 curve=1 near=38 preview=-40 command10=610 limited=1 scale1000=533 geom_cal=0
+38.551 C11LAP20 t=380 run=0 fault=6 frame=171 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+38.553 VIS12 valid=1 error=38 rows=84 both=10 ready=100
+38.555 STEER20 curve=1 near=38 preview=-46 command10=610 limited=1 scale1000=533 geom_cal=0
+38.752 TIME20 image_us=2086 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+38.756 C11LAP20 t=400 run=0 fault=6 frame=180 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+38.951 C11LAP20 t=420 run=0 fault=6 frame=189 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+38.953 VIS12 valid=1 error=38 rows=85 both=20 ready=100
+38.955 STEER20 curve=1 near=38 preview=-41 command10=610 limited=1 scale1000=533 geom_cal=0
+39.152 C11LAP20 t=440 run=0 fault=6 frame=198 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+39.155 VIS12 valid=1 error=38 rows=85 both=22 ready=100
+39.158 STEER20 curve=1 near=38 preview=-41 command10=610 limited=1 scale1000=533 geom_cal=0
+39.352 C11LAP20 t=460 run=0 fault=6 frame=207 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+39.352 VIS12 valid=1 error=38 rows=84 both=23 ready=100
+39.354 STEER20 curve=1 near=38 preview=-41 command10=610 limited=1 scale1000=533 geom_cal=0
+39.552 C11LAP20 t=480 run=0 fault=6 frame=216 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+39.554 VIS12 valid=1 error=38 rows=85 both=18 ready=100
+39.754 TIME20 image_us=2079 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+39.755 C11LAP20 t=500 run=0 fault=6 frame=225 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+39.951 C11LAP20 t=520 run=0 fault=6 frame=234 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+39.952 VIS12 valid=1 error=38 rows=85 both=18 ready=100
+40.152 C11LAP20 t=540 run=0 fault=6 frame=243 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+40.154 VIS12 valid=1 error=38 rows=85 both=16 ready=100
+40.352 C11LAP20 t=560 run=0 fault=6 frame=252 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+40.352 VIS12 valid=1 error=38 rows=85 both=15 ready=100
+40.552 C11LAP20 t=580 run=0 fault=6 frame=261 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+40.553 VIS12 valid=1 error=38 rows=86 both=24 ready=100
+40.752 TIME20 image_us=2076 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+40.755 C11LAP20 t=600 run=0 fault=6 frame=270 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+40.952 C11LAP20 t=620 run=0 fault=6 frame=279 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+40.953 VIS12 valid=1 error=43 rows=84 both=4 ready=100
+41.153 C11LAP20 t=640 run=0 fault=6 frame=288 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+41.154 VIS12 valid=1 error=43 rows=85 both=0 ready=0
+41.351 C11LAP20 t=660 run=0 fault=6 frame=297 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+41.352 VIS12 valid=1 error=43 rows=79 both=0 ready=0
+41.552 C11LAP20 t=680 run=0 fault=6 frame=306 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+41.554 VIS12 valid=1 error=38 rows=57 both=0 ready=0
+41.752 TIME20 image_us=2110 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+41.754 C11LAP20 t=700 run=0 fault=6 frame=315 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+41.954 C11LAP20 t=720 run=0 fault=6 frame=324 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+41.955 VIS12 valid=1 error=38 rows=39 both=0 ready=0
+42.152 C11LAP20 t=740 run=0 fault=6 frame=333 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+42.153 VIS12 valid=1 error=38 rows=64 both=0 ready=0
+42.351 C11LAP20 t=760 run=0 fault=6 frame=342 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+42.352 VIS12 valid=1 error=38 rows=63 both=0 ready=0
+42.551 C11LAP20 t=780 run=0 fault=6 frame=351 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+42.552 VIS12 valid=1 error=38 rows=62 both=0 ready=0
+42.753 TIME20 image_us=2093 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+42.755 C11LAP20 t=800 run=0 fault=6 frame=360 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+42.952 C11LAP20 t=820 run=0 fault=6 frame=369 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+42.954 VIS12 valid=1 error=38 rows=63 both=0 ready=0
+43.153 C11LAP20 t=840 run=0 fault=6 frame=378 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+43.153 VIS12 valid=1 error=41 rows=45 both=0 ready=0
+43.352 C11LAP20 t=860 run=0 fault=6 frame=387 good=4 age=1 e1=0 e2=0 p1=0 p2=0
+43.352 VIS12 valid=1 error=-5 rows=37 both=0 ready=0
+43.551 C11LAP20 t=880 run=0 fault=6 frame=396 good=13 age=1 e1=0 e2=-1 p1=0 p2=0
+43.553 VIS12 valid=1 error=-8 rows=59 both=0 ready=0
+43.751 TIME20 image_us=2125 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+43.754 C11LAP20 t=900 run=0 fault=6 frame=405 good=22 age=1 e1=0 e2=0 p1=0 p2=0
+43.952 C11LAP20 t=920 run=0 fault=6 frame=414 good=31 age=1 e1=-7 e2=-4 p1=0 p2=0
+43.954 VIS12 valid=1 error=-8 rows=64 both=0 ready=0
+44.152 C11LAP20 t=940 run=0 fault=6 frame=423 good=40 age=1 e1=-2 e2=1 p1=0 p2=0
+44.153 VIS12 valid=1 error=-8 rows=63 both=0 ready=0
+44.352 C11LAP20 t=960 run=0 fault=6 frame=432 good=49 age=1 e1=1 e2=-1 p1=0 p2=0
+44.354 VIS12 valid=1 error=-14 rows=60 both=0 ready=0
+44.553 C11LAP20 t=980 run=0 fault=6 frame=441 good=58 age=1 e1=1 e2=1 p1=0 p2=0
+44.554 VIS12 valid=1 error=-21 rows=60 both=0 ready=0
+44.752 TIME20 image_us=2138 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+44.753 C11LAP20 t=1000 run=0 fault=6 frame=450 good=67 age=1 e1=-1 e2=0 p1=0 p2=0
+44.954 C11LAP20 t=1020 run=0 fault=6 frame=459 good=76 age=1 e1=0 e2=0 p1=0 p2=0
+44.955 VIS12 valid=1 error=-24 rows=60 both=0 ready=0
+45.152 C11LAP20 t=1040 run=0 fault=6 frame=468 good=85 age=1 e1=0 e2=0 p1=0 p2=0
+45.153 VIS12 valid=1 error=-19 rows=55 both=0 ready=0
+45.351 C11LAP20 t=1060 run=0 fault=6 frame=477 good=94 age=1 e1=0 e2=0 p1=0 p2=0
+45.353 VIS12 valid=1 error=-17 rows=63 both=0 ready=0
+45.554 C11LAP20 t=1080 run=0 fault=6 frame=486 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+45.555 VIS12 valid=1 error=-16 rows=52 both=0 ready=0
+45.752 TIME20 image_us=2147 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+45.953 C11LAP20 t=1120 run=0 fault=6 frame=504 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+45.953 VIS12 valid=1 error=-17 rows=56 both=0 ready=0
+46.154 C11LAP20 t=1140 run=0 fault=6 frame=513 good=100 age=1 e1=0 e2=0 p1=0 p2=0
+46.155 VIS12 valid=1 error=-17 rows=63 both=0 ready=0
+46.351 C11LAP20 t=1160 run=0 fault=6 frame=522 good=100 age=1 e1=0 e2=2 p1=0 p2=0
+46.353 VIS12 valid=1 error=-17 rows=62 both=0 ready=0
+46.551 C11LAP20 t=1180 run=0 fault=6 frame=531 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+46.553 VIS12 valid=1 error=-17 rows=72 both=0 ready=0
+46.753 TIME20 image_us=2149 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+46.952 C11LAP20 t=1220 run=0 fault=6 frame=549 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+46.952 VIS12 valid=1 error=-17 rows=78 both=0 ready=0
+47.151 C11LAP20 t=1240 run=0 fault=6 frame=558 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+47.152 VIS12 valid=1 error=-20 rows=77 both=0 ready=0
+47.352 C11LAP20 t=1260 run=0 fault=6 frame=567 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+47.355 VIS12 valid=1 error=-17 rows=77 both=0 ready=0
+47.551 C11LAP20 t=1280 run=0 fault=6 frame=576 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+47.552 VIS12 valid=1 error=-20 rows=75 both=0 ready=0
+47.752 TIME20 image_us=2098 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+47.951 C11LAP20 t=1320 run=0 fault=6 frame=594 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+47.952 VIS12 valid=1 error=-13 rows=65 both=4 ready=4
+48.151 C11LAP20 t=1340 run=0 fault=6 frame=603 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+48.153 VIS12 valid=1 error=-17 rows=56 both=4 ready=13
+48.352 C11LAP20 t=1360 run=0 fault=6 frame=612 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+48.353 VIS12 valid=1 error=-14 rows=53 both=5 ready=22
+48.552 C11LAP20 t=1380 run=0 fault=6 frame=621 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+48.552 VIS12 valid=1 error=-10 rows=53 both=5 ready=31
+48.755 TIME20 image_us=2072 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+48.954 C11LAP20 t=1420 run=0 fault=6 frame=639 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+48.955 VIS12 valid=1 error=-12 rows=56 both=8 ready=49
+49.153 C11LAP20 t=1440 run=0 fault=6 frame=648 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+49.352 C11LAP20 t=1460 run=0 fault=6 frame=657 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+49.551 C11LAP20 t=1480 run=0 fault=6 frame=666 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+49.752 TIME20 image_us=2084 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+49.951 C11LAP20 t=1520 run=0 fault=6 frame=684 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+50.151 C11LAP20 t=1540 run=0 fault=6 frame=693 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+50.352 C11LAP20 t=1560 run=0 fault=6 frame=702 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+50.550 C11LAP20 t=1580 run=0 fault=6 frame=711 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+50.753 TIME20 image_us=2092 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+50.952 C11LAP20 t=1620 run=0 fault=6 frame=729 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+51.152 C11LAP20 t=1640 run=0 fault=6 frame=738 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+51.353 C11LAP20 t=1660 run=0 fault=6 frame=747 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+51.552 C11LAP20 t=1680 run=0 fault=6 frame=756 good=0 age=2 e1=0 e2=0 p1=0 p2=0
+51.752 TIME20 image_us=2055 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+51.953 C11LAP20 t=1720 run=0 fault=6 frame=774 good=18 age=2 e1=0 e2=0 p1=0 p2=0
+52.151 C11LAP20 t=1740 run=0 fault=6 frame=783 good=27 age=2 e1=0 e2=0 p1=0 p2=0
+52.352 C11LAP20 t=1760 run=0 fault=6 frame=792 good=36 age=2 e1=0 e2=0 p1=0 p2=0
+52.552 C11LAP20 t=1780 run=0 fault=6 frame=801 good=45 age=2 e1=0 e2=0 p1=0 p2=0
+52.752 TIME20 image_us=2081 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+52.951 C11LAP20 t=1820 run=0 fault=6 frame=819 good=63 age=2 e1=0 e2=0 p1=0 p2=0
+53.151 C11LAP20 t=1840 run=0 fault=6 frame=828 good=72 age=2 e1=0 e2=0 p1=0 p2=0
+53.351 C11LAP20 t=1860 run=0 fault=6 frame=837 good=81 age=2 e1=0 e2=0 p1=0 p2=0
+53.551 C11LAP20 t=1880 run=0 fault=6 frame=846 good=90 age=2 e1=0 e2=0 p1=0 p2=0
+53.751 TIME20 image_us=2073 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+53.951 C11LAP20 t=1920 run=0 fault=6 frame=864 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+54.151 C11LAP20 t=1940 run=0 fault=6 frame=873 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+54.351 C11LAP20 t=1960 run=0 fault=6 frame=882 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+54.553 C11LAP20 t=1980 run=0 fault=6 frame=891 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+54.751 TIME20 image_us=2095 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+54.951 C11LAP20 t=2020 run=0 fault=6 frame=909 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+55.151 C11LAP20 t=2040 run=0 fault=6 frame=918 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+55.351 C11LAP20 t=2060 run=0 fault=6 frame=927 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+55.552 C11LAP20 t=2080 run=0 fault=6 frame=936 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+55.751 TIME20 image_us=1939 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+55.952 C11LAP20 t=2120 run=0 fault=6 frame=954 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+56.151 C11LAP20 t=2140 run=0 fault=6 frame=963 good=2 age=2 e1=0 e2=0 p1=0 p2=0
+56.351 C11LAP20 t=2160 run=0 fault=6 frame=972 good=11 age=2 e1=0 e2=0 p1=0 p2=0
+56.551 C11LAP20 t=2180 run=0 fault=6 frame=981 good=3 age=2 e1=0 e2=0 p1=0 p2=0
+56.751 TIME20 image_us=2111 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+56.952 C11LAP20 t=2220 run=0 fault=6 frame=999 good=21 age=2 e1=0 e2=0 p1=0 p2=0
+57.151 C11LAP20 t=2240 run=0 fault=6 frame=1008 good=30 age=2 e1=0 e2=0 p1=0 p2=0
+57.350 C11LAP20 t=2260 run=0 fault=6 frame=1017 good=39 age=2 e1=0 e2=0 p1=0 p2=0
+57.551 C11LAP20 t=2280 run=0 fault=6 frame=1026 good=48 age=2 e1=0 e2=0 p1=0 p2=0
+57.751 TIME20 image_us=2071 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+57.952 C11LAP20 t=2320 run=0 fault=6 frame=1044 good=66 age=2 e1=0 e2=0 p1=0 p2=0
+58.151 C11LAP20 t=2340 run=0 fault=6 frame=1053 good=75 age=2 e1=0 e2=0 p1=0 p2=0
+58.350 C11LAP20 t=2360 run=0 fault=6 frame=1062 good=84 age=2 e1=0 e2=0 p1=0 p2=0
+58.553 C11LAP20 t=2380 run=0 fault=6 frame=1071 good=93 age=2 e1=0 e2=0 p1=0 p2=0
+58.751 TIME20 image_us=2032 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+58.951 C11LAP20 t=2420 run=0 fault=6 frame=1089 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+59.152 C11LAP20 t=2440 run=0 fault=6 frame=1098 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+59.352 C11LAP20 t=2460 run=0 fault=6 frame=1107 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+59.551 C11LAP20 t=2480 run=0 fault=6 frame=1116 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+59.751 TIME20 image_us=1980 recognized_to_pwm_us=3 ready_to_pwm_us=2076 ready_max_us=8277 samples=22
+59.953 C11LAP20 t=2520 run=0 fault=6 frame=1134 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+121.101 C11LAP20 AUTO BOOT
+121.687 C11LAP20 AUTO READY
+121.887 C11LAP20 t=20 run=0 fault=0 frame=9 good=9 age=1 e1=0 e2=0 p1=0 p2=0
+121.889 VIS12 valid=1 error=-3 rows=72 both=0 ready=0
+121.890 STEER20 curve=1 near=-3 preview=-58 command10=925 limited=0 scale1000=601 geom_cal=0
+122.088 C11LAP20 t=40 run=0 fault=0 frame=18 good=18 age=1 e1=0 e2=0 p1=0 p2=0
+122.090 VIS12 valid=1 error=0 rows=87 both=8 ready=5
+122.092 STEER20 curve=0 near=0 preview=-3 command10=925 limited=0 scale1000=1000 geom_cal=0
+122.288 C11LAP20 t=60 run=0 fault=0 frame=27 good=27 age=1 e1=0 e2=2 p1=0 p2=0
+122.288 VIS12 valid=1 error=-7 rows=88 both=13 ready=14
+122.290 STEER20 curve=1 near=-7 preview=-11 command10=925 limited=0 scale1000=841 geom_cal=0
+122.488 C11LAP20 t=80 run=0 fault=0 frame=36 good=36 age=1 e1=0 e2=2 p1=0 p2=0
+122.489 VIS12 valid=1 error=-3 rows=84 both=3 ready=23
+122.497 STEER20 curve=0 near=-3 preview=-5 command10=925 limited=0 scale1000=1000 geom_cal=0
+122.689 TIME20 image_us=2004 recognized_to_pwm_us=0 ready_to_pwm_us=0 ready_max_us=0 samples=0
+122.691 C11LAP20 t=100 run=0 fault=0 frame=45 good=45 age=1 e1=0 e2=0 p1=0 p2=0
+122.917 C11LAP20 t=120 run=0 fault=0 frame=54 good=54 age=1 e1=0 e2=-1 p1=0 p2=0
+122.919 VIS12 valid=1 error=-6 rows=83 both=3 ready=5
+122.922 STEER20 curve=1 near=-6 preview=-7 command10=925 limited=0 scale1000=880 geom_cal=0
+123.089 C11LAP20 t=140 run=0 fault=0 frame=63 good=63 age=1 e1=0 e2=-1 p1=0 p2=0
+123.092 VIS12 valid=1 error=-4 rows=87 both=8 ready=14
+123.095 STEER20 curve=0 near=-4 preview=-4 command10=925 limited=0 scale1000=1000 geom_cal=0
+123.290 C11LAP20 t=160 run=0 fault=0 frame=72 good=72 age=1 e1=-2 e2=-2 p1=0 p2=0
+123.292 VIS12 valid=1 error=0 rows=88 both=9 ready=23
+123.297 STEER20 curve=0 near=0 preview=-2 command10=925 limited=0 scale1000=1000 geom_cal=0
+123.488 C11LAP20 t=180 run=0 fault=0 frame=81 good=81 age=1 e1=0 e2=0 p1=0 p2=0
+123.489 VIS12 valid=1 error=0 rows=88 both=8 ready=32
+123.492 STEER20 curve=0 near=0 preview=-3 command10=925 limited=0 scale1000=1000 geom_cal=0
+123.690 TIME20 image_us=1995 recognized_to_pwm_us=0 ready_to_pwm_us=0 ready_max_us=0 samples=0
+123.691 C11LAP20 t=200 run=0 fault=0 frame=90 good=90 age=1 e1=0 e2=0 p1=0 p2=0
+123.888 C11LAP20 t=220 run=1 fault=0 frame=99 good=99 age=1 e1=0 e2=1 p1=3750 p2=3700
+123.889 VIS12 valid=1 error=0 rows=88 both=8 ready=50
+123.891 STEER20 curve=0 near=0 preview=-3 command10=925 limited=0 scale1000=1000 geom_cal=0
+124.127 C11LAP20 t=240 run=1 fault=0 frame=108 good=100 age=1 e1=32 e2=31 p1=2150 p2=2200
+124.128 VIS12 valid=1 error=0 rows=88 both=11 ready=50
+124.155 STEER20 curve=0 near=0 preview=-3 command10=925 limited=0 scale1000=1000 geom_cal=0
+124.289 C11LAP20 t=260 run=1 fault=0 frame=117 good=100 age=1 e1=43 e2=44 p1=1600 p2=1550
+124.290 VIS12 valid=1 error=0 rows=88 both=10 ready=50
+124.291 STEER20 curve=0 near=0 preview=-2 command10=925 limited=0 scale1000=1000 geom_cal=0
+124.489 C11LAP20 t=280 run=1 fault=0 frame=126 good=100 age=1 e1=45 e2=47 p1=1500 p2=1400
+124.490 VIS12 valid=1 error=0 rows=88 both=12 ready=50
+124.492 STEER20 curve=0 near=0 preview=-2 command10=925 limited=0 scale1000=1000 geom_cal=0
+124.690 TIME20 image_us=2001 recognized_to_pwm_us=3 ready_to_pwm_us=2004 ready_max_us=9099 samples=36
+124.691 C11LAP20 t=300 run=1 fault=0 frame=135 good=100 age=1 e1=46 e2=46 p1=1450 p2=1450
+124.888 C11LAP20 t=320 run=1 fault=0 frame=144 good=100 age=1 e1=43 e2=49 p1=1600 p2=1300
+124.890 VIS12 valid=1 error=0 rows=88 both=8 ready=50
+124.892 STEER20 curve=0 near=0 preview=1 command10=925 limited=0 scale1000=1000 geom_cal=0
+125.089 C11LAP20 t=340 run=1 fault=0 frame=153 good=100 age=1 e1=44 e2=49 p1=1550 p2=1300
+125.090 VIS12 valid=1 error=0 rows=88 both=10 ready=50
+125.091 STEER20 curve=0 near=0 preview=2 command10=925 limited=0 scale1000=1000 geom_cal=0
+125.288 C11LAP20 t=360 run=1 fault=0 frame=162 good=100 age=1 e1=45 e2=45 p1=1500 p2=1500
+125.289 VIS12 valid=1 error=4 rows=76 both=8 ready=50
+125.291 STEER20 curve=0 near=4 preview=3 command10=905 limited=0 scale1000=1000 geom_cal=0
+125.489 C11LAP20 t=380 run=1 fault=0 frame=171 good=100 age=1 e1=46 e2=44 p1=1450 p2=1550
+125.491 VIS12 valid=1 error=4 rows=76 both=10 ready=50
+125.690 TIME20 image_us=2090 recognized_to_pwm_us=3 ready_to_pwm_us=2093 ready_max_us=9368 samples=81
+125.691 C11LAP20 t=400 run=1 fault=0 frame=180 good=100 age=1 e1=47 e2=42 p1=1400 p2=1650
+125.887 C11LAP20 t=420 run=1 fault=0 frame=189 good=100 age=1 e1=46 e2=43 p1=1450 p2=1600
+125.889 VIS12 valid=1 error=4 rows=77 both=13 ready=50
+126.088 C11LAP20 t=440 run=1 fault=0 frame=198 good=100 age=1 e1=49 e2=47 p1=1300 p2=1400
+126.089 VIS12 valid=1 error=3 rows=79 both=13 ready=50
+126.352 C11LAP20 t=460 run=1 fault=0 frame=207 good=100 age=1 e1=48 e2=49 p1=1350 p2=1300
+126.355 VIS12 valid=1 error=3 rows=80 both=11 ready=50
+126.493 C11LAP20 t=480 run=1 fault=0 frame=216 good=100 age=1 e1=46 e2=48 p1=1450 p2=1350
+126.493 VIS12 valid=1 error=0 rows=82 both=11 ready=50
+126.688 TIME20 image_us=2023 recognized_to_pwm_us=3 ready_to_pwm_us=2026 ready_max_us=9368 samples=126
+126.693 C11LAP20 t=500 run=1 fault=0 frame=225 good=100 age=1 e1=46 e2=48 p1=1450 p2=1350
+126.889 C11LAP20 t=520 run=1 fault=0 frame=234 good=100 age=1 e1=47 e2=48 p1=1400 p2=1350
+126.890 VIS12 valid=1 error=0 rows=78 both=10 ready=50
+127.088 C11LAP20 t=540 run=1 fault=0 frame=243 good=100 age=1 e1=45 e2=48 p1=1500 p2=1350
+127.089 VIS12 valid=1 error=0 rows=85 both=11 ready=50
+127.288 C11LAP20 t=560 run=1 fault=0 frame=252 good=100 age=1 e1=44 e2=44 p1=1550 p2=1550
+127.290 VIS12 valid=1 error=0 rows=77 both=9 ready=50
+127.489 C11LAP20 t=580 run=1 fault=0 frame=261 good=100 age=1 e1=45 e2=41 p1=1373 p2=1573
+127.490 VIS12 valid=1 error=-3 rows=76 both=10 ready=50
+127.689 TIME20 image_us=2037 recognized_to_pwm_us=3 ready_to_pwm_us=2040 ready_max_us=9368 samples=171
+127.690 C11LAP20 t=600 run=1 fault=0 frame=270 good=100 age=1 e1=45 e2=31 p1=1167 p2=1867
+127.890 C11LAP20 t=620 run=1 fault=0 frame=279 good=100 age=1 e1=37 e2=45 p1=1535 p2=1135
+127.891 VIS12 valid=1 error=0 rows=74 both=34 ready=50
+128.206 C11LAP20 t=640 run=1 fault=0 frame=288 good=100 age=1 e1=40 e2=30 p1=1370 p2=1870
+128.208 VIS12 valid=1 error=0 rows=81 both=31 ready=50
+128.290 C11LAP20 t=660 run=1 fault=0 frame=297 good=100 age=1 e1=38 e2=32 p1=1341 p2=1641
+128.291 VIS12 valid=1 error=3 rows=86 both=24 ready=50
+128.489 C11LAP20 t=680 run=1 fault=0 frame=306 good=100 age=1 e1=39 e2=28 p1=1673 p2=2223
+128.490 VIS12 valid=1 error=-3 rows=72 both=23 ready=50
+128.972 TIME20 image_us=2083 recognized_to_pwm_us=4 ready_to_pwm_us=2087 ready_max_us=9368 samples=216
+128.975 C11LAP20 t=700 run=1 fault=0 frame=315 good=100 age=1 e1=40 e2=30 p1=1285 p2=1785
+128.978 C11LAP20 t=720 run=1 fault=0 frame=324 good=100 age=1 e1=41 e2=32 p1=1320 p2=1770
+128.979 VIS12 valid=1 error=0 rows=81 both=17 ready=50
+129.082 C11LAP20 t=740 run=1 fault=0 frame=333 good=100 age=1 e1=39 e2=39 p1=1673 p2=1673
+129.092 VIS12 valid=1 error=-3 rows=82 both=29 ready=50
+129.348 C11LAP20 t=760 run=1 fault=0 frame=342 good=100 age=1 e1=36 e2=22 p1=900 p2=1600
+129.350 VIS12 valid=1 error=4 rows=82 both=1 ready=50
+129.487 C11LAP20 t=780 run=1 fault=0 frame=351 good=100 age=1 e1=43 e2=30 p1=1473 p2=2123
+129.488 VIS12 valid=1 error=-3 rows=83 both=46 ready=50
+129.682 TIME20 image_us=2011 recognized_to_pwm_us=4 ready_to_pwm_us=2015 ready_max_us=9368 samples=261
+129.699 C11LAP20 t=800 run=1 fault=0 frame=360 good=100 age=1 e1=45 e2=29 p1=1020 p2=1820
+130.010 C11LAP20 t=820 run=1 fault=0 frame=369 good=100 age=1 e1=44 e2=33 p1=1249 p2=1799
+130.017 VIS12 valid=1 error=0 rows=84 both=32 ready=50
+130.089 C11LAP20 t=840 run=1 fault=0 frame=378 good=100 age=1 e1=42 e2=42 p1=1523 p2=1523
+130.090 VIS12 valid=1 error=-3 rows=84 both=23 ready=50
+130.289 C11LAP20 t=860 run=1 fault=0 frame=387 good=100 age=1 e1=44 e2=41 p1=1314 p2=1464
+130.290 VIS12 valid=1 error=0 rows=84 both=23 ready=50
+130.489 C11LAP20 t=880 run=1 fault=0 frame=396 good=100 age=1 e1=46 e2=38 p1=1264 p2=1664
+130.489 VIS12 valid=1 error=0 rows=81 both=19 ready=50
+130.688 TIME20 image_us=2004 recognized_to_pwm_us=3 ready_to_pwm_us=2008 ready_max_us=9368 samples=306
+130.690 C11LAP20 t=900 run=1 fault=0 frame=405 good=100 age=1 e1=45 e2=40 p1=1364 p2=1614
+130.888 C11LAP20 t=920 run=1 fault=0 frame=414 good=100 age=1 e1=47 e2=46 p1=1298 p2=1348
+130.889 VIS12 valid=1 error=0 rows=84 both=16 ready=50
+131.165 C11LAP20 t=940 run=1 fault=0 frame=423 good=100 age=1 e1=50 e2=49 p1=1250 p2=1300
+131.172 VIS12 valid=1 error=0 rows=83 both=16 ready=50
+131.288 C11LAP20 t=960 run=1 fault=0 frame=432 good=100 age=1 e1=49 e2=48 p1=1300 p2=1350
+131.289 VIS12 valid=1 error=3 rows=84 both=14 ready=50
+131.479 C11LAP20 t=980 run=1 fault=0 frame=441 good=100 age=1 e1=49 e2=48 p1=1300 p2=1350
+131.496 VIS12 valid=1 error=3 rows=84 both=11 ready=50
+131.688 TIME20 image_us=2027 recognized_to_pwm_us=3 ready_to_pwm_us=2030 ready_max_us=9368 samples=351
+131.693 C11LAP20 t=1000 run=1 fault=0 frame=450 good=100 age=1 e1=52 e2=48 p1=1150 p2=1350
+131.889 C11LAP20 t=1020 run=1 fault=0 frame=459 good=100 age=1 e1=49 e2=45 p1=1015 p2=1215
+131.890 VIS12 valid=1 error=4 rows=80 both=7 ready=50
+132.093 C11LAP20 t=1040 run=1 fault=0 frame=468 good=100 age=1 e1=47 e2=36 p1=1273 p2=1823
+132.095 VIS12 valid=1 error=-3 rows=77 both=7 ready=50
+132.384 C11LAP20 t=1060 run=1 fault=0 frame=477 good=100 age=1 e1=49 e2=40 p1=983 p2=1433
+132.384 VIS12 valid=1 error=0 rows=75 both=17 ready=50
+132.490 C11LAP20 t=1080 run=1 fault=0 frame=486 good=100 age=1 e1=41 e2=46 p1=1531 p2=1281
+132.492 VIS12 valid=1 error=-4 rows=74 both=29 ready=50
+132.688 TIME20 image_us=2058 recognized_to_pwm_us=4 ready_to_pwm_us=2062 ready_max_us=9368 samples=396
+132.888 C11LAP20 t=1120 run=1 fault=0 frame=504 good=100 age=1 e1=35 e2=42 p1=1667 p2=1317
+132.889 VIS12 valid=1 error=0 rows=78 both=25 ready=50
+133.089 C11LAP20 t=1140 run=1 fault=0 frame=513 good=100 age=1 e1=49 e2=31 p1=904 p2=1804
+133.090 VIS12 valid=1 error=0 rows=76 both=16 ready=50
+133.288 C11LAP20 t=1160 run=1 fault=0 frame=522 good=100 age=1 e1=44 e2=32 p1=1423 p2=2023
+133.289 VIS12 valid=1 error=-3 rows=74 both=16 ready=50
+133.487 C11LAP20 t=1180 run=1 fault=0 frame=531 good=100 age=2 e1=42 e2=24 p1=600 p2=1500
+133.489 VIS12 valid=1 error=3 rows=76 both=0 ready=50
+133.703 TIME20 image_us=2217 recognized_to_pwm_us=3 ready_to_pwm_us=2221 ready_max_us=9368 samples=441
+133.888 C11LAP20 t=1220 run=1 fault=0 frame=549 good=100 age=2 e1=24 e2=15 p1=1500 p2=1950
+133.889 VIS12 valid=1 error=-4 rows=75 both=0 ready=50
+134.089 C11LAP20 t=1240 run=1 fault=0 frame=558 good=100 age=2 e1=20 e2=23 p1=1700 p2=1550
+134.089 VIS12 valid=1 error=0 rows=78 both=0 ready=50
+134.292 C11LAP20 t=1260 run=1 fault=0 frame=567 good=100 age=2 e1=26 e2=20 p1=1400 p2=1700
+134.297 VIS12 valid=1 error=0 rows=81 both=0 ready=50
+134.488 C11LAP20 t=1280 run=1 fault=0 frame=576 good=100 age=2 e1=35 e2=24 p1=950 p2=1500
+134.489 VIS12 valid=1 error=0 rows=83 both=0 ready=50
+134.689 TIME20 image_us=2287 recognized_to_pwm_us=4 ready_to_pwm_us=2291 ready_max_us=9368 samples=486
+134.893 C11LAP20 t=1320 run=1 fault=0 frame=594 good=100 age=2 e1=45 e2=32 p1=1127 p2=1777
+135.218 C11LAP20 t=1340 run=1 fault=0 frame=603 good=100 age=2 e1=46 e2=36 p1=970 p2=1470
+135.287 C11LAP20 t=1360 run=1 fault=0 frame=612 good=100 age=2 e1=45 e2=30 p1=969 p2=1719
+135.540 C11LAP20 t=1380 run=1 fault=0 frame=621 good=100 age=2 e1=48 e2=28 p1=885 p2=1885
+135.688 TIME20 image_us=2099 recognized_to_pwm_us=3 ready_to_pwm_us=2103 ready_max_us=9368 samples=531
+135.965 C11LAP20 t=1420 run=1 fault=0 frame=639 good=100 age=2 e1=47 e2=37 p1=1012 p2=1512
+136.089 C11LAP20 t=1440 run=1 fault=0 frame=648 good=100 age=2 e1=46 e2=26 p1=890 p2=1890
+136.289 C11LAP20 t=1460 run=1 fault=0 frame=657 good=100 age=2 e1=44 e2=29 p1=1108 p2=1858
+136.488 C11LAP20 t=1480 run=1 fault=0 frame=666 good=100 age=2 e1=44 e2=41 p1=1550 p2=1700
+136.688 TIME20 image_us=1979 recognized_to_pwm_us=4 ready_to_pwm_us=1983 ready_max_us=9368 samples=576
+136.888 C11LAP20 t=1520 run=1 fault=0 frame=684 good=100 age=2 e1=49 e2=42 p1=1064 p2=1414
+137.089 C11LAP20 t=1540 run=1 fault=0 frame=693 good=100 age=2 e1=44 e2=53 p1=1381 p2=931
+137.290 C11LAP20 t=1560 run=1 fault=0 frame=702 good=100 age=2 e1=33 e2=51 p1=1666 p2=766
+137.487 C11LAP20 t=1580 run=1 fault=0 frame=711 good=100 age=2 e1=38 e2=52 p1=1639 p2=939
+137.701 TIME20 image_us=2020 recognized_to_pwm_us=3 ready_to_pwm_us=2024 ready_max_us=9368 samples=621
+137.963 C11LAP20 t=1620 run=1 fault=0 frame=729 good=100 age=2 e1=40 e2=53 p1=1623 p2=973
+138.090 C11LAP20 t=1640 run=1 fault=0 frame=738 good=100 age=2 e1=31 e2=46 p1=1150 p2=400
+138.288 C11LAP20 t=1660 run=1 fault=0 frame=747 good=100 age=2 e1=28 e2=39 p1=1300 p2=750
+138.487 C11LAP20 t=1680 run=1 fault=0 frame=756 good=100 age=2 e1=22 e2=35 p1=1600 p2=950
+138.690 TIME20 image_us=2158 recognized_to_pwm_us=3 ready_to_pwm_us=2162 ready_max_us=9368 samples=666
+138.887 C11LAP20 t=1720 run=1 fault=0 frame=774 good=100 age=2 e1=28 e2=36 p1=1923 p2=1523
+139.088 C11LAP20 t=1740 run=1 fault=0 frame=783 good=100 age=2 e1=30 e2=40 p1=1823 p2=1323
+139.287 C11LAP20 t=1760 run=1 fault=0 frame=792 good=100 age=2 e1=33 e2=43 p1=1643 p2=1143
+139.488 C11LAP20 t=1780 run=1 fault=0 frame=801 good=100 age=2 e1=26 e2=44 p1=1978 p2=1078
+139.688 TIME20 image_us=2023 recognized_to_pwm_us=4 ready_to_pwm_us=2027 ready_max_us=9368 samples=711
+139.889 C11LAP20 t=1820 run=1 fault=0 frame=819 good=100 age=2 e1=11 e2=18 p1=2150 p2=1800
+140.089 C11LAP20 t=1840 run=1 fault=0 frame=828 good=100 age=2 e1=18 e2=27 p1=1800 p2=1350
+140.287 C11LAP20 t=1860 run=1 fault=0 frame=837 good=100 age=2 e1=20 e2=25 p1=1700 p2=1450
+140.488 C11LAP20 t=1880 run=1 fault=0 frame=846 good=100 age=2 e1=23 e2=36 p1=2012 p2=1362
+140.689 TIME20 image_us=1979 recognized_to_pwm_us=4 ready_to_pwm_us=1983 ready_max_us=9368 samples=756
+140.888 C11LAP20 t=1920 run=1 fault=0 frame=864 good=100 age=2 e1=41 e2=41 p1=1367 p2=1367
+141.087 C11LAP20 t=1940 run=1 fault=0 frame=873 good=100 age=2 e1=36 e2=43 p1=1698 p2=1348
+141.291 C11LAP20 t=1960 run=1 fault=0 frame=882 good=100 age=2 e1=47 e2=40 p1=1273 p2=1623
+141.569 C11LAP20 t=1980 run=1 fault=0 frame=891 good=100 age=2 e1=42 e2=50 p1=1365 p2=965
+141.689 TIME20 image_us=1999 recognized_to_pwm_us=3 ready_to_pwm_us=2003 ready_max_us=9368 samples=801
+141.891 C11LAP20 t=2020 run=1 fault=0 frame=909 good=100 age=2 e1=37 e2=52 p1=1773 p2=1023
+142.088 C11LAP20 t=2040 run=1 fault=0 frame=918 good=100 age=2 e1=31 e2=48 p1=1691 p2=841
+142.288 C11LAP20 t=2060 run=1 fault=0 frame=927 good=100 age=2 e1=36 e2=47 p1=1781 p2=1231
+142.491 C11LAP20 t=2080 run=1 fault=0 frame=936 good=100 age=2 e1=29 e2=41 p1=1250 p2=650
+142.688 TIME20 image_us=2068 recognized_to_pwm_us=4 ready_to_pwm_us=2072 ready_max_us=9368 samples=846
+142.890 C11LAP20 t=2120 run=1 fault=0 frame=954 good=100 age=2 e1=33 e2=43 p1=1689 p2=1189
+143.161 C11LAP20 t=2140 run=1 fault=0 frame=963 good=100 age=2 e1=28 e2=47 p1=1878 p2=928
+143.287 C11LAP20 t=2160 run=1 fault=0 frame=972 good=100 age=2 e1=41 e2=43 p1=1531 p2=1431
+143.488 C11LAP20 t=2180 run=1 fault=0 frame=981 good=100 age=2 e1=33 e2=46 p1=1650 p2=1000
+143.689 TIME20 image_us=1996 recognized_to_pwm_us=3 ready_to_pwm_us=2000 ready_max_us=9368 samples=891
+143.963 C11LAP20 t=2220 run=1 fault=0 frame=999 good=100 age=2 e1=40 e2=47 p1=1449 p2=1099
+144.089 C11LAP20 t=2240 run=1 fault=0 frame=1008 good=100 age=2 e1=45 e2=47 p1=1500 p2=1400
+144.288 C11LAP20 t=2260 run=1 fault=0 frame=1017 good=100 age=2 e1=48 e2=44 p1=1147 p2=1347
+144.490 C11LAP20 t=2280 run=1 fault=0 frame=1026 good=100 age=2 e1=42 e2=46 p1=1481 p2=1281
+144.687 TIME20 image_us=2037 recognized_to_pwm_us=3 ready_to_pwm_us=2041 ready_max_us=9368 samples=936
+144.891 C11LAP20 t=2320 run=1 fault=0 frame=1044 good=100 age=2 e1=42 e2=47 p1=1285 p2=1035
+145.087 C11LAP20 t=2340 run=1 fault=0 frame=1053 good=100 age=2 e1=51 e2=31 p1=820 p2=1820
+145.356 C11LAP20 t=2360 run=1 fault=0 frame=1062 good=100 age=2 e1=46 e2=38 p1=970 p2=1370
+145.632 C11LAP20 t=2380 run=1 fault=0 frame=1071 good=100 age=2 e1=48 e2=35 p1=985 p2=1635
+145.688 TIME20 image_us=2127 recognized_to_pwm_us=3 ready_to_pwm_us=2131 ready_max_us=9368 samples=981
+145.887 C11LAP20 t=2420 run=1 fault=0 frame=1089 good=100 age=2 e1=42 e2=28 p1=1163 p2=1863
+146.087 C11LAP20 t=2440 run=1 fault=0 frame=1098 good=100 age=2 e1=42 e2=32 p1=600 p2=1100
+146.289 C11LAP20 t=2460 run=1 fault=0 frame=1107 good=100 age=2 e1=37 e2=26 p1=850 p2=1400
+146.487 C11LAP20 t=2480 run=1 fault=0 frame=1116 good=100 age=2 e1=35 e2=25 p1=950 p2=1450
+146.774 TIME20 image_us=2135 recognized_to_pwm_us=4 ready_to_pwm_us=2139 ready_max_us=9368 samples=1026
+146.892 C11LAP20 t=2520 run=1 fault=0 frame=1134 good=100 age=2 e1=38 e2=27 p1=1305 p2=1855
+147.088 C11LAP20 t=2540 run=1 fault=0 frame=1143 good=100 age=2 e1=40 e2=26 p1=1233 p2=1933
+147.287 C11LAP20 t=2560 run=1 fault=0 frame=1152 good=100 age=2 e1=43 e2=30 p1=550 p2=1200
+147.490 C11LAP20 t=2580 run=1 fault=0 frame=1161 good=100 age=2 e1=40 e2=27 p1=1285 p2=1935
+147.687 TIME20 image_us=2063 recognized_to_pwm_us=4 ready_to_pwm_us=2067 ready_max_us=9368 samples=1071
+147.889 C11LAP20 t=2620 run=1 fault=0 frame=1179 good=100 age=2 e1=46 e2=41 p1=1054 p2=1304
+148.088 C11LAP20 t=2640 run=1 fault=0 frame=1188 good=100 age=2 e1=47 e2=39 p1=1140 p2=1540
+148.288 C11LAP20 t=2660 run=1 fault=0 frame=1197 good=100 age=2 e1=51 e2=41 p1=997 p2=1497
+148.488 C11LAP20 t=2680 run=1 fault=0 frame=1206 good=100 age=2 e1=51 e2=40 p1=907 p2=1457
+148.688 TIME20 image_us=2134 recognized_to_pwm_us=3 ready_to_pwm_us=2138 ready_max_us=9368 samples=1116
+148.888 C11LAP20 t=2720 run=1 fault=0 frame=1224 good=100 age=2 e1=17 e2=26 p1=1850 p2=1400
+149.087 C11LAP20 t=2740 run=1 fault=0 frame=1233 good=100 age=2 e1=20 e2=22 p1=1700 p2=1600
+149.289 C11LAP20 t=2760 run=1 fault=0 frame=1242 good=100 age=2 e1=-1 e2=0 p1=2750 p2=2700
+149.488 C11LAP20 t=2780 run=0 fault=6 frame=1251 good=100 age=2 e1=2 e2=0 p1=0 p2=0
+149.688 TIME20 image_us=2138 recognized_to_pwm_us=3 ready_to_pwm_us=2142 ready_max_us=9670 samples=1149
+149.888 C11LAP20 t=2820 run=0 fault=6 frame=1269 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+150.088 C11LAP20 t=2840 run=0 fault=6 frame=1278 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+150.288 C11LAP20 t=2860 run=0 fault=6 frame=1287 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+150.487 C11LAP20 t=2880 run=0 fault=6 frame=1296 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+150.688 TIME20 image_us=2139 recognized_to_pwm_us=3 ready_to_pwm_us=2142 ready_max_us=9670 samples=1149
+150.888 C11LAP20 t=2920 run=0 fault=6 frame=1314 good=100 age=2 e1=0 e2=0 p1=0 p2=0
+151.090 C11LAP20 t=2940 run=0 fault=6 frame=1324 good=100 age=0 e1=0 e2=0 p1=0 p2=0
+151.092 VIS12 valid=1 error=11 rows=72 both=0 ready=0
+151.094 STEER20 curve=1 near=11 preview=62 command10=615 limited=0 scale1000=534 geom_cal=0
+151.309 C11LAP20 t=2960 run=0 fault=6 frame=1333 good=100 age=0 e1=0 e2=1 p1=0 p2=0
+151.312 VIS12 valid=1 error=10 rows=71 both=0 ready=0
+151.333 STEER20 curve=1 near=10 preview=63 command10=615 limited=0 scale1000=536 geom_cal=0
+151.489 C11LAP20 t=2980 run=0 fault=6 frame=1342 good=100 age=0 e1=-1 e2=1 p1=0 p2=0
+151.490 VIS12 valid=1 error=60 rows=69 both=2 ready=0
+151.507 STEER20 curve=1 near=60 preview=66 command10=615 limited=1 scale1000=533 geom_cal=0
+151.691 TIME20 image_us=2152 recognized_to_pwm_us=3 ready_to_pwm_us=2142 ready_max_us=9670 samples=1149
+151.692 C11LAP20 t=3001 run=0 fault=6 frame=1351 good=100 age=1 e1=0 e2=3 p1=0 p2=0
+151.694 VIS12 valid=1 error=30 rows=71 both=0 ready=0
+151.901 C11LAP20 t=3021 run=0 fault=6 frame=1360 good=100 age=1 e1=0 e2=-1 p1=0 p2=0
+151.902 VIS12 valid=1 error=0 rows=80 both=14 ready=6

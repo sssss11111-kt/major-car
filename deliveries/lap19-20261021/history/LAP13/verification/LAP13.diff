@@ -1,0 +1,86 @@
+--- LAP12/demo/user/src/img_process.c
++++ LAP13/demo/user/src/img_process.c
+@@ -34,7 +34,7 @@
+ /* 场景对比度兜底：全黑/全白/只有均匀灰的帧，动态范围很小，直接判无效。 */
+ static uint8_t s_scene_ok;
+ #define IP_TRACK_TOP      18         /* 只处理 y>=IP_TRACK_TOP 的行（更远的行噪声大、透视太扁） */
+-#define IP_TRACK_BOTTOM   (IP_H-1)   /* 从这一行开始向上扫 */
++#define IP_TRACK_BOTTOM   (IP_BODY_MASK_START_ROW-2) /* Exclude confirmed vehicle body plus clearance. */
+ #define IP_RUN_MIN        10         /* 白色连通段最少像素，短于此视为噪点 */
+ #define IP_RUN_GOOD       24         /* 长度达到这个值，就优先选"离参考中心最近"的段 */
+ #define IP_JUMP_MAX       22         /* 相邻两行中线允许的最大跳变（像素） */
+@@ -42,8 +42,8 @@
+ #define IP_VALID_ROWS_MIN 30         /* 至少这么多行可用，才算这一帧有效 */
+ #define IP_HALF_PERSPECTIVE_SPAN 32.0f /* Keep the original per-row perspective slope. */
+ #define IP_HALF_ALPHA     4          /* 半宽平滑：新值权重 1/IP_HALF_ALPHA */
+-#define IP_ERROR_ROW_TOP  (IP_H-30)  /* 误差取这一行到画面底部的加权平均 */
+-#define IP_ERROR_ROW_BOT  (IP_H-2)
++#define IP_ERROR_ROW_TOP  (IP_H-40)  /* y=80..105, only unobstructed track rows. */
++#define IP_ERROR_ROW_BOT  IP_TRACK_BOTTOM
+ #define IP_ERROR_NEAR     8          /* 越靠近底部权重越大：这一行更重要 */
+ 
+ /* ---------- 帧间状态（函数内部用，不暴露给 main.c） ---------- */
+@@ -268,6 +268,9 @@
+         uint32_t total = 0;
+         int y0 = b * band_rows;
+         int y1 = (y0 + band_rows < IP_H) ? (y0 + band_rows) : IP_H;
++        /* The vehicle body must not influence even the threshold of the
++         * last usable band. Empty masked bands inherit the preceding one. */
++        if (y1 > IP_TRACK_BOTTOM + 1) y1 = IP_TRACK_BOTTOM + 1;
+         memset(band_hist, 0, sizeof band_hist);
+         for (y = y0; y < y1; ++y) {
+             const uint8_t *src = _src_pixel_mat + (unsigned)y * IP_W;
+@@ -283,7 +286,7 @@
+     for (y = 0; y < IP_H; ++y) { row_thr[y] = band_thr[y / band_rows]; s_row_thr[y] = row_thr[y]; }
+     {
+         int lo = 255, hi = 0;
+-        for (y = 0; y < IP_H; ++y) {
++        for (y = IP_TRACK_TOP; y <= IP_TRACK_BOTTOM; ++y) {
+             const uint8_t *src = _src_pixel_mat + (unsigned)y * IP_W;
+             for (int x = 0; x < IP_W; ++x) { if (src[x] < lo) lo = src[x]; if (src[x] > hi) hi = src[x]; }
+         }
+--- LAP12/demo/user/inc/img_process.h
++++ LAP13/demo/user/inc/img_process.h
+@@ -6,6 +6,9 @@
+ #define IP_WIDTH_CAL_ROW       90
+ #define IP_WIDTH_CAL_PX        142
+ #define IP_WIDTH_TOLERANCE_PX  15
++/* User-confirmed vehicle body enters the image at row 107 (zero based).
++ * Keep one extra row of clearance; track processing ends at row 105. */
++#define IP_BODY_MASK_START_ROW 107
+ 
+ void get_hist_gram(unsigned char* _img,
+                    const unsigned short _rows,
+--- LAP12/demo/user/src/main.c
++++ LAP13/demo/user/src/main.c
+@@ -95,7 +95,7 @@
+     {
+         if (mt9v03x_init()) {
+             tft180_show_string(0, 16, "mt9v03x reinit.");
+-            telemetry_send("C11LAP12 CAMERA_RETRY\r\n");
++            telemetry_send("C11LAP13 CAMERA_RETRY\r\n");
+         }
+         else
+             break;
+@@ -183,10 +183,10 @@
+     system_delay_ms(300);          // 等待主板其他外设上电完成
+ 
+     wireless_ready = (wireless_uart_init() == 0); /* Supplied wireless driver: RTS and IRQ RX FIFO. */
+-    telemetry_send("C11LAP12 AUTO BOOT\r\n");
++    telemetry_send("C11LAP13 AUTO BOOT\r\n");
+     Init();
+     img_process_reset();
+-    telemetry_send("C11LAP12 AUTO READY\r\n");
++    telemetry_send("C11LAP13 AUTO READY\r\n");
+     tft180_clear();
+     tft180_show_string(0, 0, wireless_ready ? "W:OK GRAY/BINARY" : "W:FAIL GRAY/BIN");
+     interrupt_global_enable(0);
+@@ -196,7 +196,7 @@
+     {
+         if (trial_ticks-report_tick >= 10) {
+             char report[200]; report_tick=trial_ticks;
+-            sprintf(report, "C11LAP12 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
++            sprintf(report, "C11LAP13 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
+                 (unsigned long)trial_ticks,trial_running,trial_fault,(unsigned long)frame_count,
+                 (unsigned long)good_frames,(unsigned long)(trial_ticks-frame_tick),
+                 encoder_data_1,encoder_data_2,trial_left_pwm,trial_right_pwm);

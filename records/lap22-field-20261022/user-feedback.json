@@ -1,0 +1,12 @@
+{
+  "version": "C11LAP22",
+  "date_asia_shanghai": "2026-10-22",
+  "source": "user field observation",
+  "stripe_pass_reported": true,
+  "full_track_accepted": false,
+  "s_bend": "Occasional harsh steering and repeated left/right corrections.",
+  "jam_clarification": "Front wheel reaches one side mechanically and servo continues exerting force.",
+  "mechanical_safe_command_range_measured": false,
+  "passive_serial_evidence": "serial-sbend-01/summary.json",
+  "passive_serial_bytes": 0
+}

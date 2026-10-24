@@ -1,0 +1,307 @@
+--- LAP9/demo/user/src/main.c
++++ LAP10/demo/user/src/main.c
+@@ -1,3 +1,4 @@
++#include "single_edge.h"
+ #include "main.h" // 所有引脚信息更改在main.h里改宏
+ 
+ // *************************** 例程硬件连接说明 ***************************
+@@ -33,6 +34,8 @@
+ static volatile uint8 wireless_ready = 0;
+ static volatile uint8 trial_bench = 0;
+ static volatile uint8 snapshot_requested = 0;
++static volatile uint8 vision_mode=0, vision_degraded=0, model_good=0, control_center=94;
++static volatile uint32 vision_since=0;
+ 
+ /* Capture the first 1.28 seconds at control rate, including the stop tick.
+  * VAL3 is a register readback, not a measurement at the connector. */
+@@ -72,7 +75,7 @@
+     {
+         if (mt9v03x_init()) {
+             tft180_show_string(0, 16, "mt9v03x reinit.");
+-            wireless_uart_send_string("C11LAP9 CAMERA_RETRY\r\n");
++            wireless_uart_send_string("C11LAP10 CAMERA_RETRY\r\n");
+         }
+         else
+             break;
+@@ -160,9 +163,9 @@
+     system_delay_ms(300);          // 等待主板其他外设上电完成
+ 
+     wireless_ready = (wireless_uart_init() == 0); /* Supplied wireless driver: RTS and IRQ RX FIFO. */
+-    wireless_uart_send_string("C11LAP9 BOOT\r\n");
++    wireless_uart_send_string("C11LAP10 BOOT\r\n");
+     Init();
+-    wireless_uart_send_string("C11LAP9 READY\r\n");
++    wireless_uart_send_string("C11LAP10 READY\r\n");
+     tft180_clear();
+     tft180_show_string(0, 0, wireless_ready ? "W:OK GRAY/BINARY" : "W:FAIL GRAY/BIN");
+     interrupt_global_enable(0);
+@@ -172,11 +175,16 @@
+     {
+         if (trial_ticks-report_tick >= 10) {
+             char report[200]; report_tick=trial_ticks;
+-            sprintf(report, "C11LAP9 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
++            sprintf(report, "C11LAP10 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
+                 (unsigned long)trial_ticks,trial_running,trial_fault,(unsigned long)frame_count,
+                 (unsigned long)good_frames,(unsigned long)(trial_ticks-frame_tick),
+                 encoder_data_1,encoder_data_2,trial_left_pwm,trial_right_pwm);
+             wireless_uart_send_string(report);
++            char vision_report[100];
++            sprintf(vision_report,"VIS10 mode=%u center=%u degraded=%u model=%u single_age=%lu\r\n",
++                vision_mode,control_center,vision_degraded,model_good,
++                (unsigned long)(vision_degraded ? trial_ticks-vision_since : 0));
++            wireless_uart_send_string(vision_report);
+             drive_trace_report();
+         }
+         //  mt9v03x摄像头
+@@ -198,15 +206,20 @@
+             // 边界线寻找
+             auxiliary_process((uint8_t *)image, MT9V03X_H, MT9V03X_W, 127, left_line, mid_line, right_line);
+ 
+-            /* Publish validity only after the original detector completed. */
+-            uint8_t row = MT9V03X_H - MT9V03X_H/4;
+-            uint8_t valid = left_line[row] > 0 && right_line[row] < MT9V03X_W-1
+-                && right_line[row] > left_line[row]+10
+-                && image[row][mid_line[row]] == 255;
+-            if (valid) { if (good_frames < 100) ++good_frames; }
+-            else good_frames = 0;
+-            frame_tick = trial_ticks;
+-            ++frame_count;
++            se_result_t vision=single_edge_update((uint8_t *)image,left_line,mid_line,right_line,
++                trial_ticks,trial_running && !trial_bench);
++            /* Publish mode, lease and freshness coherently to the PIT ISR. */
++            uint32 vision_mask=interrupt_global_disable();
++            vision_mode=vision.mode; vision_degraded=vision.degraded;
++            vision_since=vision.since; control_center=vision.center;
++            if (vision.mode) { if (good_frames<100) ++good_frames; }
++            else good_frames=0;
++            if (!trial_running) {
++                if(vision.mode==1 && vision.model_matches) {if(model_good<100) ++model_good;}
++                else model_good=0;
++            }
++            frame_tick=trial_ticks; ++frame_count;
++            interrupt_global_enable(vision_mask);
+             if (snapshot_requested && !trial_running) snapshot_send(threshold);
+             for (uint8_t _i = 0; _i < MT9V03X_H; ++_i)
+             {
+@@ -219,13 +232,13 @@
+             /* LCD rendering is rate-limited below, after steering is updated. */
+ 
+             // 取图像下1/4处做误差判断
+-            float mid_err = (MT9V03X_W/2) - mid_line[MT9V03X_H-MT9V03X_H/4];
++            float mid_err = (MT9V03X_W/2) - control_center;
+             // 舵机根据误差乘以系数打角
+             float tmp_duty = servo_motor_duty_middle - mid_err * 0.5 * SERVO_DIR;
+             // 限幅
+             tmp_duty = MAX(tmp_duty,MIN(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX));
+             tmp_duty = MIN(tmp_duty,MAX(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX));
+-            if (!trial_bench) pwm_set_duty(SERVO_MOTOR_PWM, SERVO_MOTOR_DUTY(tmp_duty));
++            if (!trial_bench && vision_mode) pwm_set_duty(SERVO_MOTOR_PWM, SERVO_MOTOR_DUTY(tmp_duty));
+ 
+             /* 5 Hz LCD: no full-screen clear, no text over the pictures.
+              * Both pictures use the same captured frame at 80 x 51 pixels. */
+@@ -243,7 +256,7 @@
+                 }
+                 tft180_show_gray_image(0,16,(uint8 *)raw_image,MT9V03X_W,MT9V03X_H,80,51,0);
+                 tft180_show_gray_image(80,16,(uint8 *)image,MT9V03X_W,MT9V03X_H,80,51,0);
+-                sprintf(line,"T%3u G%3u/%3u",threshold,low,high);
++                sprintf(line,"T%3u M%u C%3u A%u",threshold,vision_mode,control_center,model_good>=5);
+                 tft180_show_string(0,72,line);
+                 sprintf(line,"F%6lu V%3lu",(unsigned long)frame_count,(unsigned long)good_frames);
+                 tft180_show_string(0,88,line);
+@@ -278,7 +291,7 @@
+             else if (!strcmp(cmd,"SNAP") && !trial_running && !snapshot_requested) snapshot_requested=1;
+             else if (!strcmp(cmd,"K") && trial_running) lease_tick=trial_ticks;
+             else if (wireless_ready && !snapshot_requested && !used && !trial_fault &&
+-                     ((!strcmp(cmd,"RUN") && good_frames>=5 && trial_ticks-frame_tick<15)
++                     ((!strcmp(cmd,"RUN") && good_frames>=5 && model_good>=5 && vision_mode==1 && trial_ticks-frame_tick<15)
+                       || !strcmp(cmd,"BENCH"))) {
+                 trial_bench = !strcmp(cmd,"BENCH");
+                 used=1; trial_running=1; start_tick=lease_tick=trial_ticks;
+@@ -292,7 +305,8 @@
+     if (trial_running) {
+         if (trial_ticks-start_tick>=(trial_bench ? 200U : 12000U)) { trial_running=0; trial_fault=2; }
+         else if (trial_ticks-lease_tick>=50) { trial_running=0; trial_fault=3; }
+-        else if (!trial_bench && (trial_ticks-frame_tick>=20 || !good_frames)) { trial_running=0; trial_fault=4; }
++        else if (!trial_bench && (trial_ticks-frame_tick>=20 || !good_frames ||
++                    (vision_degraded && trial_ticks-vision_since>=SE_TIMEOUT_TICKS))) { trial_running=0; trial_fault=4; }
+         else if (encoder_data_1 < -5 || encoder_data_2 < -5 ||
+                  encoder_data_1 > 150 || encoder_data_2 > 150) { trial_running=0; trial_fault=5; }
+         else if (trial_ticks-start_tick>30) {
+@@ -303,11 +317,12 @@
+     gpio_set_level(MOTOR1_DIR,MOTOR1_FORWARD_DIR_LEVEL);
+     gpio_set_level(MOTOR2_DIR,MOTOR2_FORWARD_DIR_LEVEL);
+     if (trial_running) {
++        float effective_target=(!trial_bench && vision_degraded) ? 20.0f : speed_target;
+         speed_real=encoder_data_1;
+-        speed_pwm=PidLocCtrl(&speed_pid_l,speed_target-speed_real,1.f);
++        speed_pwm=PidLocCtrl(&speed_pid_l,effective_target-speed_real,1.f);
+         trial_left_pwm=(int)constrain_float(TRIAL_DRIVE_FEEDFORWARD+speed_pwm,0,TRIAL_DRIVE_MAX);
+         speed_real=encoder_data_2;
+-        speed_pwm=PidLocCtrl(&speed_pid_r,speed_target-speed_real,1.f);
++        speed_pwm=PidLocCtrl(&speed_pid_r,effective_target-speed_real,1.f);
+         trial_right_pwm=(int)constrain_float(TRIAL_DRIVE_FEEDFORWARD+speed_pwm,0,TRIAL_DRIVE_MAX);
+     } else { trial_left_pwm=trial_right_pwm=0; speed_pwm=0; }
+     pwm_set_duty(MOTOR1_PWM,trial_left_pwm);
+--- LAP9/demo/user/src/single_edge.c
++++ LAP10/demo/user/src/single_edge.c
+@@ -0,0 +1,67 @@
++#include "single_edge.h"
++/* Reference from two CRC-verified same-pose straight snapshots, 131631/131850.
++ * Horizontal width is an estimate in curves, not an observed missing edge.
++ * Change camera pose/track width => recalibrate before enabling this model. */
++static const uint8_t width_reference[SE_H] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,66,68,69,69,72,72,73,74,75,76,78,78,79,80,81,82,82,84,84,86,87,87,88,90,90,92,93,94,95,96,98,98,100,101,102,104,104,105,106,108,108,110,110,111,112,113,114,114,116,118,118,120,120,122,123,124,125,126,127,129,130,131,132,134,134,136,138,138,140,141,142,144,145,146,147,149,149,151,152,153,154,0,0,0,0,0,0,0,0,0 };
++static uint8_t active, active_side, recovered;
++static uint32_t since;
++static int abs_i(int a) { return a < 0 ? -a : a; }
++static uint8_t dual_valid(const uint8_t *b,const uint8_t *l,const uint8_t *m,const uint8_t *r,int y)
++{
++    return l[y]>0 && r[y]<SE_W-1 && r[y]>l[y]+10 && b[y*SE_W+m[y]]==255;
++}
++se_result_t single_edge_update(const uint8_t *b,const uint8_t *l,
++    const uint8_t *m,const uint8_t *r,uint32_t tick,uint8_t allow_single)
++{
++    se_result_t out={0,SE_W/2,0,0,0};
++    int y, side=0, prev_edge=-1, center=SE_W/2;
++    if (!allow_single) { active=active_side=recovered=0; }
++    out.degraded=active; out.since=since;
++    /* A transient dual edge must not repeatedly reset a degraded episode. */
++    if (active && (uint32_t)(tick-since)>=SE_TIMEOUT_TICKS) return out;
++    if (dual_valid(b,l,m,r,SE_ROW)) {
++        out.mode=1; out.center=m[SE_ROW]; out.model_matches=1;
++        for(y=SE_ROW-2;y<=SE_ROW+2;++y) {
++            if (!dual_valid(b,l,m,r,y) || !width_reference[y] ||
++                abs_i((int)r[y]-l[y]-width_reference[y])>8 ||
++                (y>SE_ROW-2 && (abs_i((int)l[y]-l[y-1])>4 || abs_i((int)r[y]-r[y-1])>4)))
++                out.model_matches=0;
++        }
++        if(active) {
++            if(out.model_matches) ++recovered; else recovered=0;
++            if(recovered>=3) { active=active_side=recovered=0; }
++        }
++        out.degraded=active;out.since=since;return out;
++    }
++    recovered=0;
++    if (!allow_single) return out;
++    if(l[SE_ROW]>0 && r[SE_ROW]==SE_W-1) side=2;
++    else if(l[SE_ROW]==0 && r[SE_ROW]<SE_W-1) side=3;
++    else return out;
++    if(active && active_side!=side) return out;
++    /* Require a continuous measured edge and a white path toward every
++     * candidate center in a five-row neighborhood. Never clamp offscreen
++     * estimates into view and then call them valid. */
++    for(y=SE_ROW-2;y<=SE_ROW+2;++y) {
++        int edge, x, first, last, white=0, count;
++        if(!width_reference[y]) return out;
++        if(side==2) {
++            if(l[y]<3 || l[y]>SE_W-4 || r[y]!=SE_W-1) return out;
++            edge=l[y];center=edge+width_reference[y]/2;
++            first=edge+3;last=center;
++        } else {
++            if(l[y]!=0 || r[y]<3 || r[y]>SE_W-4) return out;
++            edge=r[y];center=edge-width_reference[y]/2;
++            first=center;last=edge-3;
++        }
++        if(prev_edge>=0 && abs_i(edge-prev_edge)>4) return out;
++        prev_edge=edge;
++        if(center<1 || center>=SE_W-1 || b[y*SE_W+center]!=255 || first>last) return out;
++        count=last-first+1;
++        for(x=first;x<=last;++x) if(b[y*SE_W+x]==255) ++white;
++        if(white*10<count*9) return out;
++        if(y==SE_ROW) out.center=(uint8_t)center;
++    }
++    if(!active) {active=1;active_side=(uint8_t)side;since=tick;}
++    out.mode=(uint8_t)side;out.degraded=1;out.since=since;return out;
++}
+--- LAP9/demo/user/inc/single_edge.h
++++ LAP10/demo/user/inc/single_edge.h
+@@ -0,0 +1,15 @@
++#ifndef SINGLE_EDGE_H
++#define SINGLE_EDGE_H
++#include <stdint.h>
++#define SE_W 188
++#define SE_H 120
++#define SE_ROW 90
++#define SE_TIMEOUT_TICKS 50U
++/* mode: 0 invalid, 1 measured dual, 2 measured left, 3 measured right. */
++typedef struct {
++    uint8_t mode, center, degraded, model_matches;
++    uint32_t since;
++} se_result_t;
++se_result_t single_edge_update(const uint8_t *binary, const uint8_t *left,
++    const uint8_t *mid, const uint8_t *right, uint32_t tick, uint8_t allow_single);
++#endif
+--- LAP9/demo/mdk/rt1064.uvprojx
++++ LAP10/demo/mdk/rt1064.uvprojx
+@@ -395,7 +395,8 @@
+               <FileType>1</FileType>
+               <FilePath>..\user\src\img_process.c</FilePath>
+             </File>
+-            <File>
++            <File><FileName>single_edge.c</FileName><FileType>1</FileType><FilePath>..\user\src\single_edge.c</FilePath></File>
++              <File>
+               <FileName>pid.c</FileName>
+               <FileType>1</FileType>
+               <FilePath>..\user\src\pid.c</FilePath>
+--- LAP9/verification/trial.ps1
++++ LAP10/verification/trial.ps1
+@@ -14,6 +14,7 @@
+ }
+ $stopFile=Join-Path $out 'STOP'; Write-Output ('Stop file: '+$stopFile)
+ $commandLog=[Collections.Generic.List[object]]::new(); $stopReason=''; $lastPrinted=-1; $printedRun=-1; $printedFault=-1
++$visionMode=0; $visionModel=0; $visionAt=-100
+ $started=$false; $stopped=$false; $stopAt=0; $last=$null; $consecutive=0
+ $watch=[Diagnostics.Stopwatch]::StartNew(); $runAt=0; $lastKeep=0; $lastLineAt=0
+ try {
+@@ -23,7 +24,10 @@
+   if($chunk){[void]$raw.Append($chunk);$pending+=$chunk}
+   while($pending.Contains("`n")) {
+    $at=$pending.IndexOf("`n");$line=$pending.Substring(0,$at).Trim();$pending=$pending.Substring($at+1)
+-   if($line -match '^C11LAP9 t=(\d+) run=(\d+) fault=(\d+) frame=(\d+) good=(\d+) age=(\d+) e1=(-?\d+) e2=(-?\d+) p1=(\d+) p2=(\d+)$') {
++   if($line -match '^VIS10 mode=(\d+) center=(\d+) degraded=(\d+) model=(\d+) single_age=(\d+)$') {
++    $visionMode=[int]$Matches[1];$visionModel=[int]$Matches[4];$visionAt=$watch.Elapsed.TotalSeconds
++   }
++   if($line -match '^C11LAP10 t=(\d+) run=(\d+) fault=(\d+) frame=(\d+) good=(\d+) age=(\d+) e1=(-?\d+) e2=(-?\d+) p1=(\d+) p2=(\d+)$') {
+     $r=[pscustomobject]@{time=$watch.Elapsed.TotalSeconds;t=[long]$Matches[1];run=[int]$Matches[2];fault=[int]$Matches[3];frame=[long]$Matches[4];good=[int]$Matches[5];age=[int]$Matches[6];e1=[int]$Matches[7];e2=[int]$Matches[8];p1=[int]$Matches[9];p2=[int]$Matches[10]}
+     $rows.Add($r);$lastLineAt=$watch.Elapsed.TotalSeconds
+     if($r.time-$lastPrinted -ge 1 -or $r.run -ne $printedRun -or $r.fault -ne $printedFault){Write-Output $line;$lastPrinted=$r.time;$printedRun=$r.run;$printedFault=$r.fault}
+@@ -34,7 +38,7 @@
+    }
+   }
+   $now=$watch.Elapsed.TotalSeconds
+-  if(($MotionPrepared -or $SignalOnlyPrepared -or $BenchPrepared) -and !$started -and $now -ge 2 -and $consecutive -ge 10){if($BenchPrepared){Send-TrialCommand 'BENCH'}else{Send-TrialCommand 'RUN'};$started=$true;$runAt=$watch.Elapsed.TotalSeconds;$lastKeep=$runAt}
++  if(($MotionPrepared -or $SignalOnlyPrepared -or $BenchPrepared) -and !$started -and $now -ge 2 -and $consecutive -ge 10 -and ($BenchPrepared -or ($visionMode -eq 1 -and $visionModel -ge 5 -and $now-$visionAt -lt 0.4))){if($BenchPrepared){Send-TrialCommand 'BENCH'}else{Send-TrialCommand 'RUN'};$started=$true;$runAt=$watch.Elapsed.TotalSeconds;$lastKeep=$runAt}
+   $now=$watch.Elapsed.TotalSeconds
+   if($started -and !$stopped){
+    if((Test-Path -LiteralPath $stopFile) -or ($now-$runAt -ge $RunSeconds) -or ($now-$lastLineAt -gt 0.4) -or ($last.fault -ne 0) -or ($now-$runAt -gt 0.8 -and $last.run -eq 0)){
+--- LAP9/verification/receive-snapshot.py
++++ LAP10/verification/receive-snapshot.py
+@@ -74,12 +74,12 @@
+    deadline=time.monotonic()+8;ready=0
+    while time.monotonic()<deadline:
+     b=read_line(port);raw.extend(b);l=b.decode('ascii',errors='replace').strip()
+-    m=re.fullmatch(r'C11LAP9 t=\d+ run=(\d+) fault=\d+ frame=\d+ good=\d+ age=\d+ e1=-?\d+ e2=-?\d+ p1=(\d+) p2=(\d+)',l)
++    m=re.fullmatch(r'C11LAP10 t=\d+ run=(\d+) fault=\d+ frame=\d+ good=\d+ age=\d+ e1=-?\d+ e2=-?\d+ p1=(\d+) p2=(\d+)',l)
+     if m:
+      if m.groups()!=('0','0','0'):raise RuntimeError('vehicle is not idle')
+      ready+=1
+      if ready>=5:break
+-   if ready<5:raise RuntimeError('no verified LAP9 idle telemetry; SNAP not sent')
++   if ready<5:raise RuntimeError('no verified LAP10 idle telemetry; SNAP not sent')
+    for b in b'\nSNAP\n':port.write(bytes([b]));port.flush();time.sleep(.015)
+    sent=True;deadline=time.monotonic()+45
+    while time.monotonic()<deadline:
+--- LAP9/verification/flash.py
++++ LAP10/verification/flash.py
+@@ -6,9 +6,9 @@
+ from pyocd.target.pack.flash_algo import PackFlashAlgo
+ from pyocd.core.memory_map import RamRegion
+ root=Path(__file__).resolve().parents[1]
+-backup=root/'verification/private-backup'
+-meta=json.loads((backup/'backup.json').read_text())
+-assert meta['second_read_match'] and hashlib.sha256((backup/'before-flash-4MiB.bin').read_bytes()).hexdigest()==meta['sha256']
++import argparse
++ap=argparse.ArgumentParser();ap.add_argument('--prepared',action='store_true');args=ap.parse_args()
++if not args.prepared: raise SystemExit('Confirm motor power OFF, wheels lifted and debugger connected before --prepared.')
+ f=root/'demo/mdk/Objects/rt1064.hex'
+ h=IntelHex(str(f));segments=h.segments()
+ assert all(0x70000000<=a<b<=0x70400000 for a,b in segments)

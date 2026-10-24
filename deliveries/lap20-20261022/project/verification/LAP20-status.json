@@ -1,0 +1,41 @@
+{
+  "version": "C11LAP20",
+  "date_asia_shanghai": "2026-10-22",
+  "baseline_commit": "adb555af2f16a9229a48fcf94884275b796dba39",
+  "built": true,
+  "build_errors": 0,
+  "build_warnings": 0,
+  "flashed": true,
+  "hardware_tested": true,
+  "hex_sha256": "56f6003bb90c037130b7f675e3d5a6d9057c1666cd5f13b465c480f7ddc0aabf",
+  "hex_bytes": 64960,
+  "hex_segments": [
+    [
+      1879048192,
+      1879113152
+    ]
+  ],
+  "straight_target_counts_per_10ms": 45,
+  "tight_curve_target_counts_per_10ms": 24,
+  "single_edge_target_cap_counts_per_10ms": 24,
+  "pwm_duty_max": 10000,
+  "pwm_software_ceiling": 10000,
+  "feedforward": 1500,
+  "speed_kp": 50,
+  "speed_ki": 0,
+  "speed_kd": 0,
+  "servo_middle": 92.5,
+  "servo_left": 124,
+  "servo_right": 61,
+  "vision_and_steering_algorithms_changed": false,
+  "s_bend_twitch_resolved": false,
+  "host_checks": "steering, actual trial_tick with actual PID (8 cases), two real straight frames x60 passed",
+  "remaining": "LAP20 full route confirmed by user; steering twitch remains; LAP21 candidate addresses command continuity and raises targets by 50%.",
+  "pwm_bounds_stop_check": "full-duty saturation, overspeed zero forward output, and STOP zero output passed with actual PID",
+  "flash_readback_match": true,
+  "flash_verified_bytes": 64960,
+  "flash_evidence": "records/lap20-field-20261022/flash-01/result.json",
+  "hardware_test_scope": "Two cold-boot telemetry sessions captured; physical scene and user acceptance pending.",
+  "hardware_track_accepted": true,
+  "hardware_acceptance_scope": "User reports full route completed, with steering twitch/overlarge turns. No repeated reliability or precise physical speed claim."
+}

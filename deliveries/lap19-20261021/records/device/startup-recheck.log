@@ -1,0 +1,7 @@
+PASS: actual trial_tick auto
+PASS: actual trial_tick lost
+PASS: actual trial_tick snapshot
+PASS: actual trial_tick stale
+PASS: actual trial_tick bench
+PASS: actual trial_tick pwm50
+PASS: actual trial_tick single

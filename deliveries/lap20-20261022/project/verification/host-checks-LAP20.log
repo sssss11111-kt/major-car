@@ -1,0 +1,25 @@
+COMMAND ['D:\\major-car\\firmware\\camera_car\\.tools\\ziglang\\zig.exe', 'cc', '-I', 'C:\\Users\\Tong\\Documents\\ChatGPT\\智能车\\analysis\\github-lap19-review-20261022\\deliveries\\lap20-20261022\\project\\demo\\user\\inc', 'C:\\Users\\Tong\\Documents\\ChatGPT\\智能车\\analysis\\github-lap19-review-20261022\\deliveries\\lap20-20261022\\project\\demo\\user\\src\\steering_control.c', 'C:\\Users\\Tong\\Documents\\ChatGPT\\智能车\\analysis\\github-lap19-review-20261022\\deliveries\\lap20-20261022\\project\\verification\\test-steering.c', '-o', 'C:\\Users\\Tong\\Documents\\ChatGPT\\智能车\\analysis\\github-lap19-review-20261022\\deliveries\\lap20-20261022\\project\\verification\\test-steering.exe']
+COMMAND ['C:\\Users\\Tong\\Documents\\ChatGPT\\智能车\\analysis\\github-lap19-review-20261022\\deliveries\\lap20-20261022\\project\\verification\\test-steering.exe']
+PASS: geometry reference, unchanged straight, earlier turn, monotonic symmetric commands, limits, speed schedule, missing preview, sign guard
+COMMAND ['C:\\Users\\Tong\\Documents\\ChatGPT\\智能车\\analysis\\lap10-runtime\\Scripts\\python.exe', 'C:\\Users\\Tong\\Documents\\ChatGPT\\智能车\\analysis\\github-lap19-review-20261022\\deliveries\\lap20-20261022\\project\\verification\\check-auto-integration.py']
+PASS: actual trial_tick auto
+PASS: actual trial_tick lost
+PASS: actual trial_tick snapshot
+PASS: actual trial_tick stale
+PASS: actual trial_tick bench
+PASS: actual trial_tick pwm100
+PASS: actual trial_tick single
+PASS: actual trial_tick curve_speed
+COMMAND ['C:\\Users\\Tong\\Documents\\ChatGPT\\智能车\\analysis\\lap10-runtime\\Scripts\\python.exe', 'C:\\Users\\Tong\\Documents\\ChatGPT\\智能车\\analysis\\github-lap19-review-20261022\\deliveries\\lap20-20261022\\project\\verification\\check-hood-replay.py']
+[{"source": "snapshot-20261021-180609", "frames": 60, "first": [1, -4, 88, 43], "last": [1, -4, 88, 43]}, {"source": "snapshot-20261021-180619", "frames": 60, "first": [1, -4, 88, 38], "last": [1, -4, 88, 38]}]
+PASS: all LAP20 host-only checks
+
+Final actual-PID checks including full-duty, overspeed zero-output and STOP:
+PASS: actual trial_tick auto
+PASS: actual trial_tick lost
+PASS: actual trial_tick snapshot
+PASS: actual trial_tick stale
+PASS: actual trial_tick bench
+PASS: actual trial_tick pwm100
+PASS: actual trial_tick single
+PASS: actual trial_tick curve_speed

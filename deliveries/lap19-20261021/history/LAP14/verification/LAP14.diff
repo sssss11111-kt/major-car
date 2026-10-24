@@ -1,0 +1,285 @@
+--- LAP12/demo/user/src/img_process.c
++++ LAP14/demo/user/src/img_process.c
+@@ -58,6 +58,8 @@
+ static int16_t  s_error;             /* 本帧误差（像素）：正 = 赛道中心在画面中心右侧 */
+ static uint8_t  s_usable_rows;       /* 本帧可用行数（调试/遥测用） */
+ static uint8_t  s_both_rows;         /* 本帧双边行数 */
++static int16_t s_preview_error;
++static uint8_t s_preview_valid;
+ 
+ /* ---------- 小工具 ---------- */
+ static int ip_clamp(int v, int lo, int hi) { return v < lo ? lo : (v > hi ? hi : v); }
+@@ -226,12 +228,16 @@
+     s_scene_ok = 0;
+     s_valid = 0;
+     s_error = 0;
++    s_preview_error = 0;
++    s_preview_valid = 0;
+     s_usable_rows = 0;
+     s_both_rows = 0;
+ }
+ 
+ uint8_t  img_get_valid(void)      { return s_valid; }
+ int16_t  img_get_error(void)      { return s_error; }
++int16_t img_get_preview_error(void) { return s_preview_error; }
++uint8_t img_get_preview_valid(void) { return s_preview_valid; }
+ uint8_t  img_get_usable_rows(void){ return s_usable_rows; }
+ uint8_t  img_get_both_rows(void)  { return s_both_rows; }
+ 
+@@ -257,6 +263,8 @@
+     int      seed, y, usable = 0, both = 0;
+     long     err_sum = 0;
+     int      err_n = 0;
++    long preview_sum = 0;
++    int preview_n = 0;
+ 
+     (void)_threshold_val;
+     if (_src_rows != IP_H || _src_cols != IP_W) return;
+@@ -408,6 +416,7 @@
+         _mid_line[y]   = (uint8_t)center;
+         ++usable;
+         seed = center;
++        if (y >= 55 && y <= 75) { preview_sum += center; ++preview_n; }
+         if (y >= IP_ERROR_ROW_TOP && y <= IP_ERROR_ROW_BOT) {
+             /* 越靠近车头权重越大，避免远处几行把小车的实际位置带偏 */
+             int wgt = IP_ERROR_NEAR + (y - IP_ERROR_ROW_TOP);
+@@ -421,6 +430,10 @@
+     s_both_rows   = (uint8_t)(both > 255 ? 255 : both);
+ 
+     s_valid = (uint8_t)(s_scene_ok && usable >= IP_VALID_ROWS_MIN);
++    s_preview_valid = (uint8_t)(s_valid && preview_n >= 10);
++    if (s_preview_valid)
++        s_preview_error = (int16_t)ip_clamp((int)(preview_sum/preview_n)-IP_W/2,-IP_W/2,IP_W/2);
++    else s_preview_error = 0;
+     if (s_valid) {
+         int e = err_n ? (int)(err_sum / err_n) : (IP_W / 2);
+         e -= IP_W / 2;
+--- LAP12/demo/user/inc/img_process.h
++++ LAP14/demo/user/inc/img_process.h
+@@ -30,5 +30,7 @@
+ int16_t  img_get_error(void);        /* 像素：正 = 赛道中心在画面中心右侧 */
+ uint8_t  img_get_usable_rows(void);  /* 本帧可用行数（遥测用） */
+ uint8_t  img_get_both_rows(void);    /* 本帧双边行数（遥测用） */
++int16_t  img_get_preview_error(void); /* Measured rows 55..75, before gap filling. */
++uint8_t  img_get_preview_valid(void);
+ 
+ #endif
+--- LAP12/demo/user/src/main.c
++++ LAP14/demo/user/src/main.c
+@@ -1,4 +1,5 @@
+ #include "auto_start.h"
++#include "steering_control.h"
+ #include "main.h" // 所有引脚信息更改在main.h里改宏
+ 
+ // *************************** 例程硬件连接说明 ***************************
+@@ -37,6 +38,12 @@
+ static volatile uint8 vision_mode=0, vision_degraded=0, model_good=0, control_center=94;
+ static volatile int16_t vision_error = 0;
+ static volatile uint8 usable_rows = 0, both_rows = 0;
++static volatile uint8 steering_curve = 0, steering_limited = 0;
++static volatile int16_t preview_error = 0;
++static volatile float steering_command = 92.5f;
++volatile uint32 camera_ready_cycle = 0;
++static volatile uint32 timing_image_us=0, timing_recognized_to_pwm_us=0;
++static volatile uint32 timing_ready_to_pwm_us=0, timing_ready_max_us=0, timing_samples=0;
+ static auto_start_t auto_start_state = {0}; /* Written only by the 10 ms ISR. */
+ static volatile uint8 auto_phase = AUTO_WAIT, auto_run = 0;
+ static volatile uint32 auto_center_since = 0;
+@@ -46,7 +53,7 @@
+ static uint32 telemetry_send(const char *text)
+ {
+     uint32 remaining = (uint32)strlen(text);
+-    if (!wireless_ready) return remaining;
++    if (!wireless_ready || mt9v03x_finish_flag) return remaining;
+     while (remaining) {
+         uint32 count = remaining > 30U ? 30U : remaining;
+         if (gpio_get_level(WIRELESS_UART_RTS_PIN)) return remaining;
+@@ -95,7 +102,7 @@
+     {
+         if (mt9v03x_init()) {
+             tft180_show_string(0, 16, "mt9v03x reinit.");
+-            telemetry_send("C11LAP13 CAMERA_RETRY\r\n");
++            telemetry_send("C11LAP14 CAMERA_RETRY\r\n");
+         }
+         else
+             break;
+@@ -180,48 +187,33 @@
+ {
+     clock_init(SYSTEM_CLOCK_600M); // 不可删除
+     debug_init();                  // 调试端口初始化
++    CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
++    DWT->LAR = 0xC5ACCE55U;
++    DWT->CYCCNT = 0;
++    DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+     system_delay_ms(300);          // 等待主板其他外设上电完成
+ 
+     wireless_ready = (wireless_uart_init() == 0); /* Supplied wireless driver: RTS and IRQ RX FIFO. */
+-    telemetry_send("C11LAP13 AUTO BOOT\r\n");
++    telemetry_send("C11LAP14 AUTO BOOT\r\n");
+     Init();
+     img_process_reset();
+-    telemetry_send("C11LAP13 AUTO READY\r\n");
++    telemetry_send("C11LAP14 AUTO READY\r\n");
+     tft180_clear();
+     tft180_show_string(0, 0, wireless_ready ? "W:OK GRAY/BINARY" : "W:FAIL GRAY/BIN");
+     interrupt_global_enable(0);
+ 
+-    uint32 report_tick = 0, display_tick = 0;
++    uint32 report_tick = 0, display_tick = 0, timing_report_tick = 0;
+     while (1)
+     {
+-        if (trial_ticks-report_tick >= 10) {
+-            char report[200]; report_tick=trial_ticks;
+-            sprintf(report, "C11LAP13 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
+-                (unsigned long)trial_ticks,trial_running,trial_fault,(unsigned long)frame_count,
+-                (unsigned long)good_frames,(unsigned long)(trial_ticks-frame_tick),
+-                encoder_data_1,encoder_data_2,trial_left_pwm,trial_right_pwm);
+-            telemetry_send(report);
+-            char vision_report[100];
+-            sprintf(vision_report,"VIS12 valid=%u error=%d rows=%u both=%u ready=%u\r\n",
+-                vision_mode != 0, vision_error, usable_rows, both_rows, model_good);
+-            telemetry_send(vision_report);
+-            char auto_report[80];
+-            uint8 phase = auto_phase;
+-            uint32 elapsed = trial_ticks - auto_center_since;
+-            uint32 remaining = (phase == AUTO_CENTER && elapsed < AUTO_CENTER_TICKS)
+-                               ? AUTO_CENTER_TICKS - elapsed : 0;
+-            sprintf(auto_report,"AUTO12 phase=%u wait_ms=%lu autonomous=%u\r\n",
+-                phase, (unsigned long)(remaining * 10U), auto_run);
+-            telemetry_send(auto_report);
+-            drive_trace_report();
+-        }
+         //  mt9v03x摄像头
+         if (mt9v03x_finish_flag)
+         {
++            uint32 process_begin_cycle = DWT->CYCCNT;
+             // 另寻空间将图像保存下来，以免产生因读写冲突带来的未知后果
+             /* Keep CSI's completed-buffer pointer stable during the short copy.
+              * Clear only the frame being consumed, never a later completion. */
+             uint32 camera_mask = interrupt_global_disable();
++            uint32 consumed_ready_cycle = camera_ready_cycle;
+             memcpy(raw_image, (const void *)mt9v03x_image, sizeof(raw_image));
+             mt9v03x_finish_flag = 0;
+             interrupt_global_enable(camera_mask);
+@@ -239,6 +231,10 @@
+             uint8 valid = img_get_valid();
+             uint8 detected_both = img_get_both_rows();
+             int16_t detected_error = img_get_error();
++            uint32 recognized_cycle = DWT->CYCCNT;
++            uint32 cycles_per_us = system_clock/1000000U;
++            if (!cycles_per_us) cycles_per_us = 1;
++            timing_image_us = (recognized_cycle-process_begin_cycle)/cycles_per_us;
+             /* Publish mode, lease and freshness coherently to the PIT ISR. */
+             uint32 vision_mask=interrupt_global_disable();
+             uint8 degraded = valid && detected_both < 3;
+@@ -267,14 +263,25 @@
+             /* LCD rendering is rate-limited below, after steering is updated. */
+ 
+             // 使用新巡线模块的多行加权中线偏差。
+-            float mid_err = (float)(-detected_error);
+-            // 舵机根据误差乘以系数打角
+-            float tmp_duty = servo_motor_duty_middle - mid_err * 0.5 * SERVO_DIR;
+-            // 限幅
+-            tmp_duty = MAX(tmp_duty,MIN(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX));
+-            tmp_duty = MIN(tmp_duty,MAX(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX));
++            steering_result_t turn = steering_control(detected_error,img_get_preview_error(),
++                img_get_preview_valid(),servo_motor_duty_middle,SERVO_DIR,
++                MIN(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX),MAX(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX));
++            steering_curve = turn.curve; steering_limited = turn.limited;
++            preview_error = img_get_preview_error();
++            float tmp_duty = turn.command;
+             if (trial_running && !trial_bench && vision_mode)
++            {
++                steering_command = tmp_duty;
+                 pwm_set_duty(SERVO_MOTOR_PWM, SERVO_MOTOR_DUTY(tmp_duty));
++                uint32 command_cycle = DWT->CYCCNT;
++                timing_recognized_to_pwm_us = (command_cycle-recognized_cycle)/cycles_per_us;
++                if (consumed_ready_cycle) {
++                    timing_ready_to_pwm_us = (command_cycle-consumed_ready_cycle)/cycles_per_us;
++                    if (timing_ready_to_pwm_us > timing_ready_max_us)
++                        timing_ready_max_us = timing_ready_to_pwm_us;
++                }
++                ++timing_samples;
++            }
+ 
+             /* 5 Hz LCD: no full-screen clear, no text over the pictures.
+              * Both pictures use the same captured frame at 80 x 51 pixels. */
+@@ -307,6 +314,40 @@
+                 telemetry_send(camera_report);
+             }
+         }
++        if (trial_ticks-report_tick >= 20) {
++            if (trial_ticks-timing_report_tick >= 100) {
++                timing_report_tick=trial_ticks;
++                char timing_report[160];
++                sprintf(timing_report,"TIME14 image_us=%lu recognized_to_pwm_us=%lu ready_to_pwm_us=%lu ready_max_us=%lu samples=%lu\r\n",
++                    (unsigned long)timing_image_us,(unsigned long)timing_recognized_to_pwm_us,
++                    (unsigned long)timing_ready_to_pwm_us,(unsigned long)timing_ready_max_us,
++                    (unsigned long)timing_samples);
++                telemetry_send(timing_report);
++            }
++            char report[200]; report_tick=trial_ticks;
++            sprintf(report, "C11LAP14 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
++                (unsigned long)trial_ticks,trial_running,trial_fault,(unsigned long)frame_count,
++                (unsigned long)good_frames,(unsigned long)(trial_ticks-frame_tick),
++                encoder_data_1,encoder_data_2,trial_left_pwm,trial_right_pwm);
++            telemetry_send(report);
++            char vision_report[100];
++            sprintf(vision_report,"VIS12 valid=%u error=%d rows=%u both=%u ready=%u\r\n",
++                vision_mode != 0, vision_error, usable_rows, both_rows, model_good);
++            telemetry_send(vision_report);
++            char steering_report[100];
++            sprintf(steering_report,"STEER14 curve=%u near=%d preview=%d command10=%d limited=%u\r\n",
++                steering_curve,vision_error,preview_error,(int)(steering_command*10.0f),steering_limited);
++            telemetry_send(steering_report);
++            char auto_report[80];
++            uint8 phase = auto_phase;
++            uint32 elapsed = trial_ticks - auto_center_since;
++            uint32 remaining = (phase == AUTO_CENTER && elapsed < AUTO_CENTER_TICKS)
++                               ? AUTO_CENTER_TICKS - elapsed : 0;
++            sprintf(auto_report,"AUTO12 phase=%u wait_ms=%lu autonomous=%u\r\n",
++                phase, (unsigned long)(remaining * 10U), auto_run);
++            telemetry_send(auto_report);
++            drive_trace_report();
++        }
+     }
+ }
+ 
+@@ -350,6 +391,7 @@
+         /* Hold the calibrated command midpoint throughout the full delay.
+          * Main-loop steering is enabled only after trial_running becomes true. */
+         pwm_set_duty(SERVO_MOTOR_PWM, SERVO_MOTOR_DUTY(servo_motor_duty_middle));
++        steering_command = servo_motor_duty_middle;
+     }
+     if (auto_phase == AUTO_STARTED && !used) {
+         auto_run = 1; trial_bench = 0;
+--- LAP12/demo/user/inc/main.h
++++ LAP14/demo/user/inc/main.h
+@@ -54,6 +54,7 @@
+ extern volatile uint32 trial_ticks, frame_tick, good_frames, frame_count;
+ extern volatile uint8 trial_running, trial_fault;
+ extern volatile int trial_left_pwm, trial_right_pwm;
++extern volatile uint32 camera_ready_cycle;
+ void trial_tick(void);
+ 
+ /* User-authorized 50 percent drive ceiling; PWM_DUTY_MAX is 10000. */
+--- LAP12/demo/user/src/isr.c
++++ LAP14/demo/user/src/isr.c
+@@ -47,6 +47,7 @@
+ void CSI_IRQHandler(void)
+ {
+     CSI_DriverIRQHandler();     // 调用SDK自带的中断函数 这个函数最后会调用我们设置的回调函数
++    if (mt9v03x_finish_flag) camera_ready_cycle = DWT->CYCCNT;
+     __DSB();                    // 数据同步隔离
+ }
+ 
+--- LAP12/demo/mdk/rt1064.uvprojx
++++ LAP14/demo/mdk/rt1064.uvprojx
+@@ -396,6 +396,7 @@
+               <FilePath>..\user\src\img_process.c</FilePath>
+             </File>
+             <File><FileName>auto_start.c</FileName><FileType>1</FileType><FilePath>..\user\src\auto_start.c</FilePath></File>
++            <File><FileName>steering_control.c</FileName><FileType>1</FileType><FilePath>..\user\src\steering_control.c</FilePath></File>
+               <File>
+               <FileName>pid.c</FileName>
+               <FileType>1</FileType>

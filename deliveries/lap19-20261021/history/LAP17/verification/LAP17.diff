@@ -1,0 +1,74 @@
+--- LAP16/demo/user/src/main.c
++++ LAP17/demo/user/src/main.c
+@@ -102,7 +102,7 @@
+     {
+         if (mt9v03x_init()) {
+             tft180_show_string(0, 16, "mt9v03x reinit.");
+-            telemetry_send("C11LAP16 CAMERA_RETRY\r\n");
++            telemetry_send("C11LAP17 CAMERA_RETRY\r\n");
+         }
+         else
+             break;
+@@ -194,10 +194,10 @@
+     system_delay_ms(300);          // 等待主板其他外设上电完成
+ 
+     wireless_ready = (wireless_uart_init() == 0); /* Supplied wireless driver: RTS and IRQ RX FIFO. */
+-    telemetry_send("C11LAP16 AUTO BOOT\r\n");
++    telemetry_send("C11LAP17 AUTO BOOT\r\n");
+     Init();
+     img_process_reset();
+-    telemetry_send("C11LAP16 AUTO READY\r\n");
++    telemetry_send("C11LAP17 AUTO READY\r\n");
+     tft180_clear();
+     tft180_show_string(0, 0, wireless_ready ? "W:OK GRAY/BINARY" : "W:FAIL GRAY/BIN");
+     interrupt_global_enable(0);
+@@ -318,14 +318,14 @@
+             if (trial_ticks-timing_report_tick >= 100) {
+                 timing_report_tick=trial_ticks;
+                 char timing_report[160];
+-                sprintf(timing_report,"TIME16 image_us=%lu recognized_to_pwm_us=%lu ready_to_pwm_us=%lu ready_max_us=%lu samples=%lu\r\n",
++                sprintf(timing_report,"TIME17 image_us=%lu recognized_to_pwm_us=%lu ready_to_pwm_us=%lu ready_max_us=%lu samples=%lu\r\n",
+                     (unsigned long)timing_image_us,(unsigned long)timing_recognized_to_pwm_us,
+                     (unsigned long)timing_ready_to_pwm_us,(unsigned long)timing_ready_max_us,
+                     (unsigned long)timing_samples);
+                 telemetry_send(timing_report);
+             }
+             char report[200]; report_tick=trial_ticks;
+-            sprintf(report, "C11LAP16 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
++            sprintf(report, "C11LAP17 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
+                 (unsigned long)trial_ticks,trial_running,trial_fault,(unsigned long)frame_count,
+                 (unsigned long)good_frames,(unsigned long)(trial_ticks-frame_tick),
+                 encoder_data_1,encoder_data_2,trial_left_pwm,trial_right_pwm);
+@@ -335,7 +335,7 @@
+                 vision_mode != 0, vision_error, usable_rows, both_rows, model_good);
+             telemetry_send(vision_report);
+             char steering_report[100];
+-            sprintf(steering_report,"STEER16 curve=%u near=%d preview=%d command10=%d limited=%u\r\n",
++            sprintf(steering_report,"STEER17 curve=%u near=%d preview=%d command10=%d limited=%u\r\n",
+                 steering_curve,vision_error,preview_error,(int)(steering_command*10.0f),steering_limited);
+             telemetry_send(steering_report);
+             char auto_report[80];
+--- LAP16/demo/user/inc/main.h
++++ LAP17/demo/user/inc/main.h
+@@ -29,8 +29,8 @@
+ // 舵机参数设置
+ #define SERVO_MOTOR_PWM (PWM4_MODULE2_CHA_C30) // 定义主板上舵机对应引脚
+ #define SERVO_MOTOR_FREQ (50)                  // 定义主板上舵机频率  请务必注意范围 50-300
+-#define SERVO_MOTOR_L_MAX (102)  // 定义主板上舵机活动范围(左打方向的极限值) 角度 自行标定
+-#define SERVO_MOTOR_R_MAX (83) // 定义主板上舵机活动范围(右打方向的极限值) 角度 自行标定
++#define SERVO_MOTOR_L_MAX (104)  // 定义主板上舵机活动范围(左打方向的极限值) 角度 自行标定
++#define SERVO_MOTOR_R_MAX (81) // 定义主板上舵机活动范围(右打方向的极限值) 角度 自行标定
+ #define SERVO_MOTOR_MIDDLE (92.5f) // Independently calibrated center
+ #define SERVO_DIR (SERVO_MOTOR_L_MAX>SERVO_MOTOR_R_MAX?-1.f:1.f) // 根据左右duty的大小自动决定舵机方向
+ 
+--- LAP16/demo/user/inc/steering_control.h
++++ LAP17/demo/user/inc/steering_control.h
+@@ -2,7 +2,7 @@
+ #define STEERING_CONTROL_H
+ #include <stdint.h>
+ #define STEERING_STRAIGHT_GAIN 0.50f
+-#define STEERING_CURVE_GAIN    0.85f
++#define STEERING_CURVE_GAIN    1.00f
+ #define STEERING_PREVIEW_BLEND 0.40f
+ #define STEERING_CURVE_DELTA   6
+ #define STEERING_CURVE_NEAR    6

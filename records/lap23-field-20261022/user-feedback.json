@@ -1,0 +1,11 @@
+{
+  "version": "C11LAP23",
+  "date_asia_shanghai": "2026-10-22",
+  "source": "user field observation",
+  "reported": "Other behavior is good; speed is somewhat slow. Increase straight and curve speeds substantially.",
+  "steering_and_stripe_function_reported_good": true,
+  "measured_speed_available": false,
+  "multiple_lap_stability_verified": false,
+  "mechanical_safe_range_calibrated": false,
+  "new_request": "Substantially raise straight and curve target counts; preserve working steering and stripes."
+}

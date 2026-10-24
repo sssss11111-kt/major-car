@@ -1,0 +1,38 @@
+[
+  {
+    "scene": "room_reference_multi_frame",
+    "first": [
+      0,
+      1,
+      52,
+      76,
+      0
+    ],
+    "last": [
+      0,
+      1,
+      46,
+      80,
+      0
+    ],
+    "ready_frames": 0
+  },
+  {
+    "scene": "straight",
+    "first": [
+      1,
+      1,
+      30,
+      49,
+      38
+    ],
+    "last": [
+      1,
+      1,
+      -4,
+      79,
+      38
+    ],
+    "ready_frames": 60
+  }
+]

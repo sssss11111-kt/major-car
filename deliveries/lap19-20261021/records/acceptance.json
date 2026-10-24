@@ -1,0 +1,16 @@
+{
+  "version": "C11LAP19",
+  "user_reported_curve_completed": true,
+  "source": "User message immediately after LAP19 flash: 这次成功完成了",
+  "repeat_count_documented": 1,
+  "success_run_telemetry_available": false,
+  "both_left_and_right_repeated_verified": false,
+  "physical_servo_latency_measured": false,
+  "minimum_turn_radius_measured": false,
+  "last_flash_hex_sha256": "8c4c761340a3649fe1ff465dafa305add67036db0caa25b0241cb46bb30dc29e",
+  "note": "Original flash status is historical; hardware_curve_tested=false there predates this later user report.",
+  "user_reported_midterm_requirements_completed": true,
+  "midterm_report_verbatim": "LAP19成功完成中期检查的要求",
+  "report_date_asia_shanghai": "2026-10-21",
+  "next_baseline": "Preserve LAP19; do not resume speculative curve tuning by default."
+}

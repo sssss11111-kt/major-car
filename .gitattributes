@@ -1,0 +1,23 @@
+# Byte-preserving archive: HEX hashes, SDK/source snapshots and raw evidence.
+/deliveries/lap19-20261021/** -text
+/HANDOFF.md text eol=lf
+/README.md text eol=lf
+/.gitignore text eol=lf
+/.gitattributes text eol=lf
+
+/deliveries/lap20-20261022/** -text
+/deliveries/lap22-20261022/** -text
+/records/lap22-field-20261022/** -text
+/deliveries/lap23-20261022/** -text
+/records/lap23-field-20261022/** -text
+/deliveries/lap24-20261022/** -text
+/records/lap24-field-20261022/** -text
+/deliveries/lap25-20261022/** -text
+/records/lap25-field-20261022/** -text
+/deliveries/lap26-20261022/** -text
+/records/lap26-field-20261022/** -text
+/deliveries/lap27-20261022/** -text
+/records/lap27-field-20261022/** -text
+/deliveries/lap28-20261022/** -text
+/records/lap28-field-20261023/** -text
+/records/conversation-20261023/** -text

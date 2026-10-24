@@ -1,0 +1,30 @@
+{
+  "version": "C11LAP14",
+  "body_mask_start_row": 107,
+  "last_track_row": 105,
+  "steering_rows": [
+    80,
+    105
+  ],
+  "width_row90_px": 142,
+  "width_tolerance_px": 15,
+  "center_delay_ms": 1000,
+  "pwm_max": 5000,
+  "build_errors": 0,
+  "build_warnings": 0,
+  "straight_error_px": [
+    -4,
+    -4
+  ],
+  "curve_gain": 0.65,
+  "straight_gain": 0.5,
+  "preview_blend": 0.25,
+  "timing_instrumented": true,
+  "physical_latency_measured": false,
+  "flashed": true,
+  "hardware_curve_tested": false,
+  "hex_sha256": "6eaafd912c69728810e273ed0661a0712c70f9a57b35c362cf2cdcb6c9a01147",
+  "readback_match": true,
+  "verified_bytes": 63680,
+  "state": "halted; cold boot required"
+}

@@ -1,0 +1,17 @@
+{
+  "version": "C11LAP12",
+  "width_row90_px": 142,
+  "width_tolerance_px": 15,
+  "automatic_center_delay_ms": 1000,
+  "pwm_max": 5000,
+  "pwm_scale": 10000,
+  "build_errors": 0,
+  "build_warnings": 0,
+  "integration_cases": 7,
+  "hex_sha256": "da8cf26511aabe77eb0e1cb09e1a77fdb8686f74458910a3c0826e1109336a8e",
+  "flashed": true,
+  "hardware_curve_tested": false,
+  "readback_match": true,
+  "verified_bytes": 62720,
+  "state": "halted; cold boot required"
+}

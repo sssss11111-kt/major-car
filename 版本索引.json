@@ -1,0 +1,92 @@
+[
+  {
+    "version": "3s-已烧录",
+    "hex": [
+      {
+        "path": "project/versions/3s-已烧录/rt1064.hex",
+        "sha256": "b7ff8218ebae24dfaa4da99f6e0e5e942de499b4ac547ab8981e8c3d09e12650"
+      }
+    ]
+  },
+  {
+    "version": "LAP1-已烧录",
+    "hex": [
+      {
+        "path": "project/versions/LAP1-已烧录/rt1064.hex",
+        "sha256": "4f11aa2d33bd4c95be6ee83976c485eabe3fbf853a50edc8aec90631a1f67d88"
+      }
+    ]
+  },
+  {
+    "version": "LAP2-已烧录",
+    "hex": [
+      {
+        "path": "project/versions/LAP2-已烧录/rt1064.hex",
+        "sha256": "d8a96aa7fe7fe7a63e22aaa9e72aaf0fcb01c9620210476d75dfca58d6c23402"
+      }
+    ]
+  },
+  {
+    "version": "LAP3-已烧录",
+    "hex": [
+      {
+        "path": "project/versions/LAP3-已烧录/rt1064.hex",
+        "sha256": "5ec900104051577a910df52e2391ef6a63c422b5187bb4539a5f897cc2dce1e2"
+      }
+    ]
+  },
+  {
+    "version": "LAP4-已烧录",
+    "hex": [
+      {
+        "path": "project/versions/LAP4-已烧录/rt1064.hex",
+        "sha256": "17ab6c3ea8f093dc995d5a3113c2ff48b7a90a361a3f4cc01bb20e6ee017ec3d"
+      }
+    ]
+  },
+  {
+    "version": "LAP5-重建且哈希一致",
+    "hex": [
+      {
+        "path": "project/versions/LAP5-重建且哈希一致/demo/mdk/Objects/rt1064.hex",
+        "sha256": "3a77780222b127ef8c7f9f69beb12a3d887877913efb1f4e028fd97dc00ab09b"
+      }
+    ]
+  },
+  {
+    "version": "LAP6-已烧录",
+    "hex": [
+      {
+        "path": "project/versions/LAP6-已烧录/demo/mdk/Objects/rt1064.hex",
+        "sha256": "04666fa7259a6c035bb600d6b11980c001d9b2be514d74b5da8dad9cc0b2175f"
+      }
+    ]
+  },
+  {
+    "version": "LAP7-已烧录",
+    "hex": [
+      {
+        "path": "project/versions/LAP7-已烧录/demo/mdk/Objects/rt1064.hex",
+        "sha256": "5e22fce6b3f95ff25287c50fc55d58832c51e11b77ce77fbfc538baf4d56a933"
+      }
+    ]
+  },
+  {
+    "version": "LAP8-已烧录",
+    "hex": [
+      {
+        "path": "project/versions/LAP8-已烧录/demo/mdk/Objects/rt1064.hex",
+        "sha256": "e0d40a70c1333bd26f700ea6cc233d44dadae9b26ed0a16686512c7a5f147d82"
+      }
+    ]
+  },
+  {
+    "version": "LAP9-已烧录",
+    "hex": [
+      {
+        "path": "project/versions/LAP9-已烧录/demo/mdk/Objects/rt1064.hex",
+        "sha256": "0b2eb5066b8ef4150255eea8b19892b73157577dafd74610fc6da3819546cbd5"
+      }
+    ]
+  }
+]

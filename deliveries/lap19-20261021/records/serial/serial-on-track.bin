@@ -1,0 +1,103 @@
+C11LAP12 t=7920 run=0 fault=0 frame=3555 good=0 age=0 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=39 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+CAM2 frame=3557 threshold=194 min=56 max=254 mean=203 white=57
+C11LAP12 t=7930 run=0 fault=0 frame=3559 good=0 age=0 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+C11LAP12 t=7940 run=0 fault=0 frame=3564 good=0 age=0 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+CAM2 frame=3566 threshold=194 min=56 max=254 mean=203 white=57
+C11LAP12 t=7950 run=0 fault=0 frame=3568 good=0 age=0 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+C11LAP12 t=7960 run=0 fault=0 frame=3573 good=0 age=0 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+CAM2 frame=3575 threshold=194 min=56 max=254 mean=203 white=57
+C11LAP12 t=7970 run=0 fault=0 frame=3577 good=0 age=0 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+C11LAP12 t=7980 run=0 fault=0 frame=3582 good=0 age=1 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+CAM2 frame=3585 threshold=194 min=54 max=254 mean=203 white=57
+C11LAP12 t=7990 run=0 fault=0 frame=3585 good=0 age=5 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+C11LAP12 t=8000 run=0 fault=0 frame=3590 good=0 age=1 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+CAM2 frame=3593 threshold=196 min=54 max=254 mean=203 white=56
+C11LAP12 t=8010 run=0 fault=0 frame=3593 good=0 age=5 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+C11LAP12 t=8020 run=0 fault=0 frame=3598 good=0 age=1 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+CAM2 frame=3601 threshold=196 min=54 max=254 mean=203 white=56
+C11LAP12 t=8030 run=0 fault=0 frame=3601 good=0 age=5 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+C11LAP12 t=8040 run=0 fault=0 frame=3606 good=0 age=1 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+CAM2 frame=3609 threshold=194 min=54 max=254 mean=203 white=57
+C11LAP12 t=8050 run=0 fault=0 frame=3609 good=0 age=5 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+C11LAP12 t=8060 run=0 fault=0 frame=3614 good=0 age=1 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+CAM2 frame=3617 threshold=194 min=54 max=254 mean=203 white=57
+C11LAP12 t=8070 run=0 fault=0 frame=3617 good=0 age=5 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+C11LAP12 t=8080 run=0 fault=0 frame=3622 good=0 age=1 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+CAM2 frame=3625 threshold=194 min=54 max=254 mean=203 white=57
+C11LAP12 t=8090 run=0 fault=0 frame=3625 good=0 age=5 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+C11LAP12 t=8100 run=0 fault=0 frame=3630 good=0 age=1 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+CAM2 frame=3633 threshold=194 min=54 max=254 mean=202 white=56
+C11LAP12 t=8110 run=0 fault=0 frame=3633 good=0 age=5 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+C11LAP12 t=8120 run=0 fault=0 frame=3638 good=0 age=1 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+CAM2 frame=3641 threshold=194 min=56 max=254 mean=202 white=57
+C11LAP12 t=8130 run=0 fault=0 frame=3641 good=0 age=5 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+C11LAP12 t=8140 run=0 fault=0 frame=3646 good=0 age=1 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+CAM2 frame=3649 threshold=194 min=54 max=254 mean=202 white=57
+C11LAP12 t=8150 run=0 fault=0 frame=3649 good=0 age=5 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+C11LAP12 t=8160 run=0 fault=0 frame=3654 good=0 age=1 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+CAM2 frame=3657 threshold=194 min=56 max=254 mean=202 white=57
+C11LAP12 t=8170 run=0 fault=0 frame=3657 good=0 age=5 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+C11LAP12 t=8180 run=0 fault=0 frame=3662 good=0 age=1 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+CAM2 frame=3665 threshold=194 min=54 max=254 mean=202 white=56
+C11LAP12 t=8190 run=0 fault=0 frame=3665 good=0 age=5 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+C11LAP12 t=8200 run=0 fault=0 frame=3670 good=0 age=1 e1=0 e2=0 p1=0 p2=0
+VIS12 valid=0 error=-58 rows=6 both=37 ready=0
+AUTO12 phase=0 wait_ms=0 autonomous=0
+CAM2 frame=3673 threshold=194 min=50 max=254 mean=201 white=56
+C

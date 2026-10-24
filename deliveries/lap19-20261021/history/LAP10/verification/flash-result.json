@@ -1,0 +1,12 @@
+{
+  "hex_sha256": "29e69994d96bc9f47541b40e977d96141a3ba295ae9c1a3f614309c1d757ad39",
+  "verified_bytes": 60864,
+  "segments": [
+    [
+      1879048192,
+      1879109056
+    ]
+  ],
+  "readback_match": true,
+  "state": "halted; cold boot required"
+}
