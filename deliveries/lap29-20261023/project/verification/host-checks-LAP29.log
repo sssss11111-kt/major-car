@@ -1,0 +1,49 @@
+COMMAND ['D:\\major-car\\firmware\\camera_car\\.tools\\ziglang\\zig.exe', 'cc', '-I', 'C:\\Users\\Tong\\.gemini\\antigravity\\scratch\\major-car-lap28\\deliveries\\lap29-20261023\\project\\demo\\user\\inc', '-I', 'C:\\Users\\Tong\\.gemini\\antigravity\\scratch\\major-car-lap28\\deliveries\\lap29-20261023\\project\\verification\\vision-stubs', 'C:\\Users\\Tong\\.gemini\\antigravity\\scratch\\major-car-lap28\\deliveries\\lap29-20261023\\project\\demo\\user\\src\\steering_control.c', 'C:\\Users\\Tong\\.gemini\\antigravity\\scratch\\major-car-lap28\\deliveries\\lap29-20261023\\project\\verification\\test-steering.c', '-o', 'C:\\Users\\Tong\\.gemini\\antigravity\\scratch\\major-car-lap28\\deliveries\\lap29-20261023\\project\\verification\\test-steering.exe']
+COMMAND ['C:\\Users\\Tong\\.gemini\\antigravity\\scratch\\major-car-lap28\\deliveries\\lap29-20261023\\project\\verification\\test-steering.exe']
+PASS: continuous bend response, symmetric bounds, LAP29 targets, isolated spikes, slew bound, sharp bend/reversal authority, speed recovery, preview loss, invalid reset, duplicate tick, tick wrap
+COMMAND ['C:\\Users\\Tong\\.workbuddy\\binaries\\python\\envs\\pandaai\\Scripts\\python.exe', 'C:\\Users\\Tong\\.gemini\\antigravity\\scratch\\major-car-lap28\\deliveries\\lap29-20261023\\project\\verification\\check-auto-integration.py']
+PASS: actual trial_tick auto
+PASS: actual trial_tick lost
+PASS: actual trial_tick snapshot
+PASS: actual trial_tick stale
+PASS: actual trial_tick running_stale
+PASS: actual trial_tick bench
+PASS: actual trial_tick pwm100
+PASS: actual trial_tick single
+PASS: actual trial_tick curve_speed
+PASS: actual trial_tick stripe_start
+PASS: actual trial_tick stripe_recovery
+PASS: actual trial_tick stripe_stale
+PASS: actual trial_tick stripe_lost
+PASS: actual trial_tick stripe_encoder
+PASS: actual trial_tick stripe_stall
+PASS: actual trial_tick stripe_degraded
+PASS: actual trial_tick no_stripe_target_change
+PASS: actual trial_tick ring_speed
+PASS: actual trial_tick ring_fault
+COMMAND ['C:\\Users\\Tong\\.workbuddy\\binaries\\python\\envs\\pandaai\\Scripts\\python.exe', 'C:\\Users\\Tong\\.gemini\\antigravity\\scratch\\major-car-lap28\\deliveries\\lap29-20261023\\project\\verification\\check-s-bend.py']
+PASS: S-bend linear
+PASS: S-bend preview
+PASS: S-bend limits
+PASS: S-bend reverse
+PASS: S-bend spike
+COMMAND ['C:\\Users\\Tong\\.workbuddy\\binaries\\python\\envs\\pandaai\\Scripts\\python.exe', 'C:\\Users\\Tong\\.gemini\\antigravity\\scratch\\major-car-lap28\\deliveries\\lap29-20261023\\project\\verification\\check-stripes.py']
+PASS: measured stripe corridor preserves centered/left/right steering and reacquires
+PASS: no blind continuation from historical centers
+PASS: clean distant track cannot mask a missing near corridor
+PASS: stripe-only startup rejected
+PASS: isolated marks, body mask, and uniform scenes
+PASS: mirrored normal curves do not trigger stripes
+PASS: combined vision/stateful steering retains history, preview gating and 69..116 soft bounds
+COMMAND ['C:\\Users\\Tong\\.workbuddy\\binaries\\python\\envs\\pandaai\\Scripts\\python.exe', 'C:\\Users\\Tong\\.gemini\\antigravity\\scratch\\major-car-lap28\\deliveries\\lap29-20261023\\project\\verification\\check-hood-replay.py']
+[{"source": "snapshot-20261021-180609", "frames": 60, "first": [1, -4, 88, 43], "last": [1, -4, 88, 43]}, {"source": "snapshot-20261021-180619", "frames": 60, "first": [1, -4, 88, 38], "last": [1, -4, 88, 38]}]
+COMMAND ['D:\\major-car\\firmware\\camera_car\\.tools\\ziglang\\zig.exe', 'cc', '-Wall', '-Wextra', '-Werror', '-I', 'C:\\Users\\Tong\\.gemini\\antigravity\\scratch\\major-car-lap28\\deliveries\\lap29-20261023\\project\\demo\\user\\inc', 'C:\\Users\\Tong\\.gemini\\antigravity\\scratch\\major-car-lap28\\deliveries\\lap29-20261023\\project\\verification\\test-roundabout.c', '-o', 'C:\\Users\\Tong\\.gemini\\antigravity\\scratch\\major-car-lap28\\deliveries\\lap29-20261023\\project\\verification\\test-roundabout.exe']
+COMMAND ['C:\\Users\\Tong\\.gemini\\antigravity\\scratch\\major-car-lap28\\deliveries\\lap29-20261023\\project\\verification\\test-roundabout.exe']
+PASS: roundabout entry, signed yaw, 270/360 exit gates, clean exit, cooldown and timeout
+COMMAND ['C:\\Users\\Tong\\.workbuddy\\binaries\\python\\envs\\pandaai\\Scripts\\python.exe', 'C:\\Users\\Tong\\.gemini\\antigravity\\scratch\\major-car-lap28\\deliveries\\lap29-20261023\\project\\verification\\check-roundabout.py']
+PASS: both islands and mirrored guidance; 6 open-lobe variants x8 frames; 27 continuous-wave variants x8 frames; original negative and near-field cases
+PASS: captured side-clipped island and mirror
+PASS: side-open/rectangular negatives; integrated distant entry, loss, stripe priority and production wiring
+PASS: actual captured entry remains valid through confirmation and guide activation
+PASS: LAP29 auxiliary evidence, continuous entry target centerline, zero-frame entry response and curve negatives
+PASS: all LAP29 host-only checks
