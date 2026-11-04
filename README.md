@@ -4,3 +4,7 @@
 
 Zzou到此一游
 [RT1064 摄像头组 C 车模工程](firmware/camera_car/README.md)：完整工程、硬件映射、软件验证与实车调试说明。
+
+## 赛道图像回放工具
+
+[下载便携版（解压后打开HTML即可使用）](tools/track-replay/track-replay-portable.zip) | [使用说明与源码](tools/track-replay/README.md)

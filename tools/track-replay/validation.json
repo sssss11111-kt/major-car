@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-01",
+  "hardware_accessed": false,
+  "firmware_modified": false,
+  "portable_runtime": "Single HTML with embedded WebAssembly, loaded via file:// in Chrome",
+  "source_sha256": "3036b32618dd225db67cfbc816bde992dc107e5c4419a7d75407a75c25bf1f61",
+  "native_parity": {
+    "sequential_frames": 120,
+    "independent_frames": 120,
+    "metrics_per_frame": 13,
+    "line_coordinates_per_frame": 360,
+    "row_thresholds_per_frame": 120,
+    "all_equal": true
+  },
+  "other_checks": [
+    "Direct PGM plus JSONL input",
+    "Invalid CRC rejected and following frame history reset",
+    "PGM first pixel newline is preserved",
+    "Gzip portable data import",
+    "Exported HTML content independently opens with original frame 50 and note/results unchanged",
+    "Python native desktop export creates a portable HTML on disk with pixel/result identity",
+    "Embedded algorithm initializes in browser offline mode",
+    "Accessibility audit zero violations"
+  ],
+  "download_automation_limit": "Isolated browser canceled downloads including a plain-text probe. Did not change browser security policy. Validated generated Blob content separately and tested native desktop file export; do not claim browser-download-to-disk acceptance.",
+  "untested": ["Other operating systems", "Physical mobile devices", "Driving data acquisition", "Full vehicle control replay"],
+  "phase_two_status": "Plan only; awaiting explicit user confirmation"
+}

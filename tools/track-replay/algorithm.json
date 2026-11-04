@@ -1,0 +1,9 @@
+{
+  "baseline": "C11LAP29SF2 / lap29-wired188-20261028",
+  "source_sha256": "3036b32618dd225db67cfbc816bde992dc107e5c4419a7d75407a75c25bf1f61",
+  "wasm_sha256": "97494f9593b58e5f7ea3462e2f570aa15daec5a9e4710ea8c4f142a9fd2e04c8",
+  "adapter": "portable/wasm_adapter.c",
+  "firmware_modified": false,
+  "controller_replayed": false,
+  "guidance": 0
+}
