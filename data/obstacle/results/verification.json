@@ -1,0 +1,79 @@
+{
+  "base": "4d0e4216b03ae6d7f73367c4b56a422e59e98c9f",
+  "source_commit": "7756ac15f4913e93a0276f3997ff7cf521785a87",
+  "branch": "codex/20261107-red-brick",
+  "real_frames": 101,
+  "labels": {
+    "front_face_boxes": 17,
+    "same_scene_no_brick": 15,
+    "review": "pending independent review"
+  },
+  "uvision": {
+    "version": "5.39",
+    "result": "launch crash 0xC0000005"
+  },
+  "builds": {
+    "default": {
+      "code": 66800,
+      "ro_data": 8948,
+      "rw_data": 200,
+      "zi_data": 126208,
+      "compiler": "Arm Compiler 6.21",
+      "compiled_sources": 156,
+      "linked": true,
+      "flashed": false,
+      "hex_sha256": "83c1ab4735add2525fbed926f49730e081cd13a4b226d28d3fa11445ab92fdd1"
+    },
+    "shadow": {
+      "code": 70176,
+      "ro_data": 9056,
+      "rw_data": 200,
+      "zi_data": 132524,
+      "compiler": "Arm Compiler 6.21",
+      "compiled_sources": 156,
+      "linked": true,
+      "flashed": false,
+      "hex_sha256": "9c1c606c326fc30320ef9cb8244c92d7cd180e743824810531c924ebf3c9704c"
+    }
+  },
+  "detector_workspace_bytes": 6288,
+  "synthetic_checks": 48986,
+  "unchanged_from_base": [
+    "car_core.c",
+    "car_config.h",
+    "main.c",
+    "isr.c"
+  ],
+  "limitations": [
+    "Main vision output detects 8 of 17 labeled faces, including 2 other wrong locations",
+    "No independent negative-scene validation",
+    "No calibrated real-vehicle distance, width, turn sweep or counts per meter",
+    "No board timing or physical bypass validation",
+    "Latest full firmware containing the SF2 roundabout controller is absent from GitHub main"
+  ],
+  "source_sha256": {
+    "data/obstacle/.gitignore": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+    "data/obstacle/README.md": "ef3d5cbdbeef89aecf4feb0b44e3fe893c1be470f5539da41e2f4d5916640842",
+    "data/obstacle/analyze.py": "a3414747878aa79da2dcf7cfc72a146e0d93f3a8cc4327039af9942d2f21559a",
+    "data/obstacle/build_armclang.py": "679e1584c6dcb5f0c07ecf7c298612239b77ecb0a07c05bffea5592ebb72a223",
+    "data/obstacle/check_detector.py": "a005ca275afefaeb3fefc64c6f69f36544d5aa326895238f11be37d73836354a",
+    "data/obstacle/comparison.png": "c7df3129d0c7d8d91c17abeb03455ab7f38facd15c75d90d83be0c43f8977251",
+    "data/obstacle/detector_replay.c": "9beca41cb0baaee8895dab5b43506109e4658829207798158a5127ea47df8afe",
+    "data/obstacle/extract_replay.py": "67d38750074bd74421753f968a15b6a0f9423be70fc64473f0a07de496552413",
+    "data/obstacle/frames-100-200.bin.gz": "fd5f18721bf217ed35f1c3c30e095c21bdc084177f34273520aac24350ea3571",
+    "data/obstacle/labels.json": "711f8d7f914cf33ee734e2bce8596ad0069c4e4892dcb2cfcd15a7021bfeccd0",
+    "data/obstacle/manifest.json": "f08e1061fb5e96a373ef1b4c7c9c29af2a40a04ca18208a99ea4ee2c06fcb32f",
+    "firmware/camera_car/.gitignore": "3dd5bfd8e93ada23992baef4b9733ded977c66f0828ef754ca8ab4888fb84b7b",
+    "firmware/camera_car/demo/mdk/rt1064.uvprojx": "98610eb30a18c783e5e2bb0f33829db6809553ecbd1bf978aa120b395c94fbff",
+    "firmware/camera_car/demo/user/inc/obstacle_bypass.h": "077aa860801e88d20793078a26a1b11514ad00bbc99f9d2f5ce122061fa7e632",
+    "firmware/camera_car/demo/user/inc/obstacle_detect.h": "9fbcf04698b98d751aebe47936c13e6e37f70069dca66030725e8a08e34909a2",
+    "firmware/camera_car/demo/user/inc/obstacle_vision.h": "c17dea23877d4de9003aa8133b9e4630474bc0231392aafea1e2c22f179cd6c4",
+    "firmware/camera_car/demo/user/src/car_app.c": "d622c8f97358a4b64556008b64f5904b4ddb0b42037c97d8a5cd06cb2b2809a3",
+    "firmware/camera_car/demo/user/src/obstacle_bypass.c": "513cf6ab1143546799640fa169a20a0fa1c6a4db17592bc25448205c8e4b74fe",
+    "firmware/camera_car/demo/user/src/obstacle_detect.c": "1756b2c40ff3d2ea1e0bbe1f5d4ef96ec69f55041da03e5009261afe21849a20",
+    "firmware/camera_car/docs/obstacle-progress.md": "8f8360d47ad3d99c56af51b8441bd378979cb277533f3c0a7adac3b89df7a9b4",
+    "firmware/camera_car/tests/run_tests.py": "1141129a0bc7497271d710c9a0c754ceabae32f193884eea90f2391940233bc0",
+    "firmware/camera_car/tests/test_app.c": "fce0959e7d008b02b4ddacf3fbdcab69acb5886776dda6e4831948584bc52c20",
+    "firmware/camera_car/tests/test_obstacle_bypass.c": "a6d32d6eab331d3a7a83e40128f592271dc9913f3cdd9a0177783579fc3b1bbe"
+  }
+}

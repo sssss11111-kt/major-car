@@ -1,0 +1,2 @@
+OBS frame=100 cand=1 confirmed=1 box=87,63,109,69 area=146 contrast=60 binary_dark=691 interp=38 overflow=0
+hardware adapter tests: PASS (host I/O double, not physical hardware)

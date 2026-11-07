@@ -1,0 +1,4614 @@
+{
+  "totals": {
+    "sf2_frozen": {
+      "tp": 13,
+      "fn": 4,
+      "fp": 0,
+      "wrong_location": 0,
+      "confirmed": 15,
+      "suppressed": 0
+    },
+    "sf2_recomputed": {
+      "tp": 13,
+      "fn": 4,
+      "fp": 0,
+      "wrong_location": 0,
+      "confirmed": 14,
+      "suppressed": 0
+    },
+    "main_measured": {
+      "tp": 8,
+      "fn": 9,
+      "fp": 0,
+      "wrong_location": 2,
+      "confirmed": 6,
+      "suppressed": 0
+    }
+  },
+  "frames": [
+    {
+      "frame": 100,
+      "label_box": [
+        115,
+        48,
+        135,
+        56
+      ],
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            115,
+            50,
+            134,
+            56
+          ],
+          "iou": 0.741,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 109,
+          "binary_dark_permille": 807,
+          "suppressed": false,
+          "host_ms": 0.0693,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            115,
+            50,
+            134,
+            56
+          ],
+          "iou": 0.741,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 109,
+          "binary_dark_permille": 807,
+          "suppressed": false,
+          "host_ms": 0.0402,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": 0.0,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0736,
+          "interpolated_rows": 35
+        }
+      }
+    },
+    {
+      "frame": 101,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            115,
+            50,
+            133,
+            56
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 2,
+          "area": 108,
+          "binary_dark_permille": 870,
+          "suppressed": false,
+          "host_ms": 0.0461,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            115,
+            50,
+            133,
+            56
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 2,
+          "area": 108,
+          "binary_dark_permille": 870,
+          "suppressed": false,
+          "host_ms": 0.0381,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.066,
+          "interpolated_rows": 38
+        }
+      }
+    },
+    {
+      "frame": 102,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            116,
+            49,
+            135,
+            56
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 3,
+          "area": 109,
+          "binary_dark_permille": 862,
+          "suppressed": false,
+          "host_ms": 0.0504,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            116,
+            49,
+            135,
+            56
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 3,
+          "area": 109,
+          "binary_dark_permille": 862,
+          "suppressed": false,
+          "host_ms": 0.0358,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0621,
+          "interpolated_rows": 35
+        }
+      }
+    },
+    {
+      "frame": 103,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0683,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0568,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.077,
+          "interpolated_rows": 45
+        }
+      }
+    },
+    {
+      "frame": 104,
+      "label_box": [
+        121,
+        45,
+        140,
+        53
+      ],
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": 0.0,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0683,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": 0.0,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0593,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": 0.0,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0716,
+          "interpolated_rows": 45
+        }
+      }
+    },
+    {
+      "frame": 105,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0682,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0588,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0772,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 106,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0689,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0598,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0615,
+          "interpolated_rows": 35
+        }
+      }
+    },
+    {
+      "frame": 107,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0647,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0599,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0764,
+          "interpolated_rows": 38
+        }
+      }
+    },
+    {
+      "frame": 108,
+      "label_box": [
+        122,
+        47,
+        142,
+        55
+      ],
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": 0.0,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0702,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": 0.0,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0644,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": 0.0,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0688,
+          "interpolated_rows": 38
+        }
+      }
+    },
+    {
+      "frame": 109,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0677,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0719,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0717,
+          "interpolated_rows": 38
+        }
+      }
+    },
+    {
+      "frame": 110,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0723,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0639,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0657,
+          "interpolated_rows": 35
+        }
+      }
+    },
+    {
+      "frame": 111,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            123,
+            49,
+            166,
+            59
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 278,
+          "binary_dark_permille": 136,
+          "suppressed": false,
+          "host_ms": 0.0697,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            123,
+            49,
+            166,
+            59
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 278,
+          "binary_dark_permille": 136,
+          "suppressed": false,
+          "host_ms": 0.0876,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0843,
+          "interpolated_rows": 38
+        }
+      }
+    },
+    {
+      "frame": 112,
+      "label_box": [
+        123,
+        52,
+        145,
+        60
+      ],
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            124,
+            54,
+            142,
+            61
+          ],
+          "iou": 0.588,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 109,
+          "binary_dark_permille": 816,
+          "suppressed": false,
+          "host_ms": 0.0515,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            124,
+            54,
+            142,
+            61
+          ],
+          "iou": 0.588,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 109,
+          "binary_dark_permille": 816,
+          "suppressed": false,
+          "host_ms": 0.0583,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": 0.0,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0783,
+          "interpolated_rows": 38
+        }
+      }
+    },
+    {
+      "frame": 113,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            125,
+            56,
+            142,
+            63
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 2,
+          "area": 105,
+          "binary_dark_permille": 838,
+          "suppressed": false,
+          "host_ms": 0.0455,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            125,
+            56,
+            142,
+            63
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 2,
+          "area": 105,
+          "binary_dark_permille": 838,
+          "suppressed": false,
+          "host_ms": 0.0373,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0767,
+          "interpolated_rows": 38
+        }
+      }
+    },
+    {
+      "frame": 114,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            126,
+            59,
+            144,
+            65
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 3,
+          "area": 114,
+          "binary_dark_permille": 894,
+          "suppressed": false,
+          "host_ms": 0.048,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            126,
+            59,
+            144,
+            65
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 3,
+          "area": 114,
+          "binary_dark_permille": 894,
+          "suppressed": false,
+          "host_ms": 0.0472,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            126,
+            57,
+            149,
+            66
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 132,
+          "binary_dark_permille": 553,
+          "suppressed": false,
+          "host_ms": 0.0847,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 115,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            126,
+            61,
+            147,
+            68
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 4,
+          "area": 115,
+          "binary_dark_permille": 930,
+          "suppressed": false,
+          "host_ms": 0.0427,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            126,
+            61,
+            147,
+            68
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 4,
+          "area": 115,
+          "binary_dark_permille": 930,
+          "suppressed": false,
+          "host_ms": 0.0382,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            127,
+            63,
+            146,
+            68
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 2,
+          "area": 88,
+          "binary_dark_permille": 806,
+          "suppressed": false,
+          "host_ms": 0.0642,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 116,
+      "label_box": [
+        126,
+        60,
+        152,
+        69
+      ],
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            126,
+            64,
+            147,
+            71
+          ],
+          "iou": 0.42,
+          "confirmed": true,
+          "track_hits": 5,
+          "area": 124,
+          "binary_dark_permille": 951,
+          "suppressed": false,
+          "host_ms": 0.0438,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            126,
+            64,
+            147,
+            71
+          ],
+          "iou": 0.42,
+          "confirmed": true,
+          "track_hits": 5,
+          "area": 124,
+          "binary_dark_permille": 951,
+          "suppressed": false,
+          "host_ms": 0.0387,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            127,
+            69,
+            147,
+            71
+          ],
+          "iou": 0.067,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 49,
+          "binary_dark_permille": 795,
+          "suppressed": false,
+          "host_ms": 0.0624,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 117,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            128,
+            68,
+            150,
+            75
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 6,
+          "area": 136,
+          "binary_dark_permille": 926,
+          "suppressed": false,
+          "host_ms": 0.0465,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            128,
+            68,
+            150,
+            75
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 6,
+          "area": 136,
+          "binary_dark_permille": 926,
+          "suppressed": false,
+          "host_ms": 0.039,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            128,
+            69,
+            150,
+            75
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 2,
+          "area": 127,
+          "binary_dark_permille": 913,
+          "suppressed": false,
+          "host_ms": 0.0607,
+          "interpolated_rows": 38
+        }
+      }
+    },
+    {
+      "frame": 118,
+      "label_box": [
+        129,
+        68,
+        159,
+        78
+      ],
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            130,
+            72,
+            153,
+            79
+          ],
+          "iou": 0.46,
+          "confirmed": true,
+          "track_hits": 7,
+          "area": 143,
+          "binary_dark_permille": 937,
+          "suppressed": false,
+          "host_ms": 0.046,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            130,
+            72,
+            153,
+            79
+          ],
+          "iou": 0.46,
+          "confirmed": true,
+          "track_hits": 7,
+          "area": 143,
+          "binary_dark_permille": 937,
+          "suppressed": false,
+          "host_ms": 0.0415,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            130,
+            75,
+            153,
+            79
+          ],
+          "iou": 0.263,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 97,
+          "binary_dark_permille": 927,
+          "suppressed": false,
+          "host_ms": 0.059,
+          "interpolated_rows": 38
+        }
+      }
+    },
+    {
+      "frame": 119,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            130,
+            77,
+            156,
+            84
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 154,
+          "binary_dark_permille": 935,
+          "suppressed": false,
+          "host_ms": 0.0454,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            130,
+            77,
+            156,
+            84
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 154,
+          "binary_dark_permille": 935,
+          "suppressed": false,
+          "host_ms": 0.0418,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            131,
+            81,
+            156,
+            84
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 71,
+          "binary_dark_permille": 929,
+          "suppressed": false,
+          "host_ms": 0.0601,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 120,
+      "label_box": [
+        136,
+        87,
+        173,
+        100
+      ],
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            135,
+            91,
+            167,
+            100
+          ],
+          "iou": 0.59,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 187,
+          "binary_dark_permille": 935,
+          "suppressed": false,
+          "host_ms": 0.0459,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            135,
+            91,
+            167,
+            100
+          ],
+          "iou": 0.59,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 187,
+          "binary_dark_permille": 935,
+          "suppressed": false,
+          "host_ms": 0.0468,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": 0.0,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0555,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 121,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0442,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0371,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0595,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 122,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.038,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0388,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0534,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 123,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0399,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0276,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0479,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 124,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0378,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0551,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0556,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 125,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0417,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0321,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0752,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 126,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0387,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0344,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0645,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 127,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0629,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.118,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0589,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 128,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0364,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0451,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0629,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 129,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0371,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0311,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0494,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 130,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0349,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0313,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0502,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 131,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0343,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0353,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0525,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 132,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.034,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0315,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0511,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 133,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0372,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0326,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0554,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 134,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0406,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0331,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0535,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 135,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0353,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0272,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.068,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 136,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0399,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.033,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0546,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 137,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0394,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0334,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0528,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 138,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0416,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0345,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0533,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 139,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0398,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0469,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0561,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 140,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0398,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0344,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0493,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 141,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0389,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0332,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0524,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 142,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.043,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0417,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0564,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 143,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0406,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.034,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0519,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 144,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0408,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0401,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0518,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 145,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0344,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0332,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0513,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 146,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0372,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0301,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0593,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 147,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.4066,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0582,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0644,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 148,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.049,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0426,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.068,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 149,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.038,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0438,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.057,
+          "interpolated_rows": 33
+        }
+      }
+    },
+    {
+      "frame": 150,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0409,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0443,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0636,
+          "interpolated_rows": 38
+        }
+      }
+    },
+    {
+      "frame": 151,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0418,
+          "interpolated_rows": 9
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0415,
+          "interpolated_rows": 9
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0668,
+          "interpolated_rows": 49
+        }
+      }
+    },
+    {
+      "frame": 152,
+      "label_box": [
+        139,
+        92,
+        179,
+        105
+      ],
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": 0.0,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0694,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": 0.0,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0734,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": 0.0,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0636,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 153,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            119,
+            79,
+            147,
+            85
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 166,
+          "binary_dark_permille": 915,
+          "suppressed": false,
+          "host_ms": 0.0547,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            119,
+            79,
+            147,
+            85
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 166,
+          "binary_dark_permille": 915,
+          "suppressed": false,
+          "host_ms": 0.0496,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            119,
+            81,
+            146,
+            85
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 112,
+          "binary_dark_permille": 928,
+          "suppressed": false,
+          "host_ms": 0.0727,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 154,
+      "label_box": [
+        121,
+        65,
+        149,
+        76
+      ],
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            121,
+            69,
+            164,
+            78
+          ],
+          "iou": 0.417,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 228,
+          "binary_dark_permille": 899,
+          "suppressed": false,
+          "host_ms": 0.0736,
+          "interpolated_rows": 1
+        },
+        "sf2_recomputed": {
+          "box": [
+            121,
+            69,
+            169,
+            78
+          ],
+          "iou": 0.383,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 279,
+          "binary_dark_permille": 917,
+          "suppressed": false,
+          "host_ms": 0.0666,
+          "interpolated_rows": 1
+        },
+        "main_measured": {
+          "box": [
+            121,
+            69,
+            147,
+            76
+          ],
+          "iou": 0.621,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 173,
+          "binary_dark_permille": 843,
+          "suppressed": false,
+          "host_ms": 0.0676,
+          "interpolated_rows": 38
+        }
+      }
+    },
+    {
+      "frame": 155,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            122,
+            58,
+            146,
+            64
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 147,
+          "binary_dark_permille": 965,
+          "suppressed": false,
+          "host_ms": 0.0531,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            122,
+            58,
+            146,
+            64
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 147,
+          "binary_dark_permille": 965,
+          "suppressed": false,
+          "host_ms": 0.0454,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0612,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 156,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            117,
+            53,
+            139,
+            60
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 151,
+          "binary_dark_permille": 927,
+          "suppressed": false,
+          "host_ms": 0.0643,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            117,
+            53,
+            139,
+            60
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 151,
+          "binary_dark_permille": 927,
+          "suppressed": false,
+          "host_ms": 0.0541,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            117,
+            57,
+            138,
+            60
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 82,
+          "binary_dark_permille": 451,
+          "suppressed": false,
+          "host_ms": 0.0739,
+          "interpolated_rows": 38
+        }
+      }
+    },
+    {
+      "frame": 157,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            73,
+            55,
+            94,
+            63
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 174,
+          "binary_dark_permille": 821,
+          "suppressed": false,
+          "host_ms": 0.0788,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            73,
+            55,
+            94,
+            63
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 174,
+          "binary_dark_permille": 821,
+          "suppressed": false,
+          "host_ms": 0.0695,
+          "interpolated_rows": 1
+        },
+        "main_measured": {
+          "box": [
+            73,
+            57,
+            94,
+            63
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 131,
+          "binary_dark_permille": 335,
+          "suppressed": false,
+          "host_ms": 0.0597,
+          "interpolated_rows": 33
+        }
+      }
+    },
+    {
+      "frame": 158,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            60,
+            55,
+            77,
+            62
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 115,
+          "binary_dark_permille": 904,
+          "suppressed": false,
+          "host_ms": 0.044,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            60,
+            55,
+            77,
+            62
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 115,
+          "binary_dark_permille": 904,
+          "suppressed": false,
+          "host_ms": 0.0361,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            60,
+            57,
+            77,
+            62
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 85,
+          "binary_dark_permille": 764,
+          "suppressed": false,
+          "host_ms": 0.0538,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 159,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            70,
+            53,
+            88,
+            60
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 139,
+          "binary_dark_permille": 841,
+          "suppressed": false,
+          "host_ms": 0.0439,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            70,
+            53,
+            88,
+            60
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 139,
+          "binary_dark_permille": 841,
+          "suppressed": false,
+          "host_ms": 0.0478,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            70,
+            53,
+            88,
+            60
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 109,
+          "binary_dark_permille": 440,
+          "suppressed": false,
+          "host_ms": 0.0713,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 160,
+      "label_box": [
+        69,
+        47,
+        88,
+        55
+      ],
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            68,
+            48,
+            88,
+            55
+          ],
+          "iou": 0.851,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 152,
+          "binary_dark_permille": 585,
+          "suppressed": false,
+          "host_ms": 0.049,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            68,
+            48,
+            88,
+            55
+          ],
+          "iou": 0.851,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 152,
+          "binary_dark_permille": 585,
+          "suppressed": false,
+          "host_ms": 0.0627,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            68,
+            51,
+            88,
+            55
+          ],
+          "iou": 0.541,
+          "confirmed": false,
+          "track_hits": 2,
+          "area": 96,
+          "binary_dark_permille": 354,
+          "suppressed": false,
+          "host_ms": 0.0522,
+          "interpolated_rows": 35
+        }
+      }
+    },
+    {
+      "frame": 161,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            69,
+            48,
+            91,
+            56
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 2,
+          "area": 177,
+          "binary_dark_permille": 327,
+          "suppressed": false,
+          "host_ms": 0.0634,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            69,
+            48,
+            91,
+            56
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 2,
+          "area": 177,
+          "binary_dark_permille": 327,
+          "suppressed": false,
+          "host_ms": 0.1508,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            70,
+            51,
+            91,
+            56
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 3,
+          "area": 115,
+          "binary_dark_permille": 330,
+          "suppressed": false,
+          "host_ms": 0.0648,
+          "interpolated_rows": 38
+        }
+      }
+    },
+    {
+      "frame": 162,
+      "label_box": [
+        76,
+        43,
+        96,
+        51
+      ],
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            74,
+            43,
+            95,
+            52
+          ],
+          "iou": 0.786,
+          "confirmed": true,
+          "track_hits": 3,
+          "area": 164,
+          "binary_dark_permille": 201,
+          "suppressed": false,
+          "host_ms": 0.0572,
+          "interpolated_rows": 1
+        },
+        "sf2_recomputed": {
+          "box": [
+            74,
+            43,
+            95,
+            52
+          ],
+          "iou": 0.786,
+          "confirmed": true,
+          "track_hits": 3,
+          "area": 164,
+          "binary_dark_permille": 201,
+          "suppressed": false,
+          "host_ms": 0.045,
+          "interpolated_rows": 1
+        },
+        "main_measured": {
+          "box": [
+            75,
+            45,
+            95,
+            52
+          ],
+          "iou": 0.645,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 136,
+          "binary_dark_permille": 507,
+          "suppressed": false,
+          "host_ms": 0.0579,
+          "interpolated_rows": 40
+        }
+      }
+    },
+    {
+      "frame": 163,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            68,
+            44,
+            88,
+            52
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 4,
+          "area": 160,
+          "binary_dark_permille": 243,
+          "suppressed": false,
+          "host_ms": 0.0584,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            68,
+            44,
+            88,
+            52
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 4,
+          "area": 160,
+          "binary_dark_permille": 243,
+          "suppressed": false,
+          "host_ms": 0.0518,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            68,
+            44,
+            88,
+            52
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 2,
+          "area": 158,
+          "binary_dark_permille": 329,
+          "suppressed": false,
+          "host_ms": 0.0683,
+          "interpolated_rows": 45
+        }
+      }
+    },
+    {
+      "frame": 164,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            67,
+            45,
+            88,
+            53
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 5,
+          "area": 163,
+          "binary_dark_permille": 263,
+          "suppressed": false,
+          "host_ms": 0.0655,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            67,
+            45,
+            88,
+            53
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 5,
+          "area": 163,
+          "binary_dark_permille": 263,
+          "suppressed": false,
+          "host_ms": 0.061,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            53,
+            36,
+            88,
+            53
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 3,
+          "area": 307,
+          "binary_dark_permille": 166,
+          "suppressed": false,
+          "host_ms": 0.0745,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 165,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            66,
+            46,
+            87,
+            54
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 6,
+          "area": 169,
+          "binary_dark_permille": 295,
+          "suppressed": false,
+          "host_ms": 0.0574,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            66,
+            46,
+            87,
+            54
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 6,
+          "area": 169,
+          "binary_dark_permille": 295,
+          "suppressed": false,
+          "host_ms": 0.0558,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            70,
+            47,
+            87,
+            54
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 108,
+          "binary_dark_permille": 314,
+          "suppressed": false,
+          "host_ms": 0.0959,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 166,
+      "label_box": [
+        69,
+        47,
+        87,
+        55
+      ],
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            65,
+            47,
+            87,
+            55
+          ],
+          "iou": 0.826,
+          "confirmed": true,
+          "track_hits": 7,
+          "area": 177,
+          "binary_dark_permille": 288,
+          "suppressed": false,
+          "host_ms": 0.0548,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            65,
+            47,
+            87,
+            55
+          ],
+          "iou": 0.826,
+          "confirmed": true,
+          "track_hits": 7,
+          "area": 177,
+          "binary_dark_permille": 288,
+          "suppressed": false,
+          "host_ms": 0.0535,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            67,
+            51,
+            87,
+            55
+          ],
+          "iou": 0.525,
+          "confirmed": false,
+          "track_hits": 2,
+          "area": 94,
+          "binary_dark_permille": 255,
+          "suppressed": false,
+          "host_ms": 0.0529,
+          "interpolated_rows": 35
+        }
+      }
+    },
+    {
+      "frame": 167,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            58,
+            49,
+            84,
+            58
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 8,
+          "area": 208,
+          "binary_dark_permille": 269,
+          "suppressed": false,
+          "host_ms": 0.0685,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            58,
+            49,
+            84,
+            58
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 8,
+          "area": 208,
+          "binary_dark_permille": 269,
+          "suppressed": false,
+          "host_ms": 0.0596,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            61,
+            51,
+            84,
+            58
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 3,
+          "area": 174,
+          "binary_dark_permille": 321,
+          "suppressed": false,
+          "host_ms": 0.0639,
+          "interpolated_rows": 35
+        }
+      }
+    },
+    {
+      "frame": 168,
+      "label_box": [
+        58,
+        53,
+        79,
+        62
+      ],
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            60,
+            56,
+            80,
+            62
+          ],
+          "iou": 0.617,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 137,
+          "binary_dark_permille": 890,
+          "suppressed": false,
+          "host_ms": 0.061,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            60,
+            56,
+            80,
+            62
+          ],
+          "iou": 0.617,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 137,
+          "binary_dark_permille": 890,
+          "suppressed": false,
+          "host_ms": 0.048,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            55,
+            57,
+            80,
+            62
+          ],
+          "iou": 0.541,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 139,
+          "binary_dark_permille": 568,
+          "suppressed": false,
+          "host_ms": 0.0763,
+          "interpolated_rows": 35
+        }
+      }
+    },
+    {
+      "frame": 169,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            60,
+            59,
+            79,
+            66
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 2,
+          "area": 147,
+          "binary_dark_permille": 843,
+          "suppressed": false,
+          "host_ms": 0.0548,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            60,
+            59,
+            79,
+            66
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 2,
+          "area": 147,
+          "binary_dark_permille": 843,
+          "suppressed": false,
+          "host_ms": 0.045,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            57,
+            63,
+            79,
+            66
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 82,
+          "binary_dark_permille": 573,
+          "suppressed": false,
+          "host_ms": 0.0688,
+          "interpolated_rows": 35
+        }
+      }
+    },
+    {
+      "frame": 170,
+      "label_box": [
+        56,
+        59,
+        81,
+        70
+      ],
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            59,
+            63,
+            81,
+            69
+          ],
+          "iou": 0.516,
+          "confirmed": true,
+          "track_hits": 3,
+          "area": 141,
+          "binary_dark_permille": 929,
+          "suppressed": false,
+          "host_ms": 0.0478,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            59,
+            63,
+            81,
+            69
+          ],
+          "iou": 0.516,
+          "confirmed": true,
+          "track_hits": 3,
+          "area": 141,
+          "binary_dark_permille": 929,
+          "suppressed": false,
+          "host_ms": 0.0442,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            59,
+            63,
+            81,
+            69
+          ],
+          "iou": 0.516,
+          "confirmed": false,
+          "track_hits": 2,
+          "area": 159,
+          "binary_dark_permille": 754,
+          "suppressed": false,
+          "host_ms": 0.1047,
+          "interpolated_rows": 38
+        }
+      }
+    },
+    {
+      "frame": 171,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            56,
+            68,
+            79,
+            75
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 164,
+          "binary_dark_permille": 926,
+          "suppressed": false,
+          "host_ms": 0.0498,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            56,
+            68,
+            79,
+            75
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 164,
+          "binary_dark_permille": 926,
+          "suppressed": false,
+          "host_ms": 0.0405,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            57,
+            69,
+            79,
+            75
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 137,
+          "binary_dark_permille": 912,
+          "suppressed": false,
+          "host_ms": 0.0837,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 172,
+      "label_box": [
+        40,
+        70,
+        73,
+        82
+      ],
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            48,
+            74,
+            73,
+            81
+          ],
+          "iou": 0.471,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 169,
+          "binary_dark_permille": 881,
+          "suppressed": false,
+          "host_ms": 0.0307,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            48,
+            74,
+            73,
+            81
+          ],
+          "iou": 0.471,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 169,
+          "binary_dark_permille": 881,
+          "suppressed": false,
+          "host_ms": 0.0283,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            48,
+            75,
+            73,
+            81
+          ],
+          "iou": 0.412,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 155,
+          "binary_dark_permille": 909,
+          "suppressed": false,
+          "host_ms": 0.0416,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 173,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0364,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0278,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0419,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 174,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0268,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0222,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.036,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 175,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.033,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0219,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0398,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 176,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0466,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0356,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0562,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 177,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0425,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.032,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0511,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 178,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0455,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0314,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.1176,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 179,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0341,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0264,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0447,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 180,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0362,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.033,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0524,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 181,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0391,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.028,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0488,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 182,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0437,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0342,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0695,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 183,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0408,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0332,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0629,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 184,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0466,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.03,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0474,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 185,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0406,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0334,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0509,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 186,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.043,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0336,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0531,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 187,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0436,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0307,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0534,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 188,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0419,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0329,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0519,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 189,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0406,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0376,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0527,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 190,
+      "label_box": [
+        16,
+        92,
+        56,
+        106
+      ],
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": 0.0,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0367,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": 0.0,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0325,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": 0.0,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0491,
+          "interpolated_rows": 48
+        }
+      }
+    },
+    {
+      "frame": 191,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            42,
+            77,
+            68,
+            84
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 159,
+          "binary_dark_permille": 949,
+          "suppressed": false,
+          "host_ms": 0.0492,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            42,
+            77,
+            68,
+            84
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 159,
+          "binary_dark_permille": 949,
+          "suppressed": false,
+          "host_ms": 0.0397,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            43,
+            81,
+            68,
+            84
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 74,
+          "binary_dark_permille": 905,
+          "suppressed": false,
+          "host_ms": 0.0539,
+          "interpolated_rows": 38
+        }
+      }
+    },
+    {
+      "frame": 192,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0453,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.04,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0581,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 193,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0533,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0405,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0624,
+          "interpolated_rows": 43
+        }
+      }
+    },
+    {
+      "frame": 194,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            54,
+            68,
+            100,
+            78
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 362,
+          "binary_dark_permille": 712,
+          "suppressed": false,
+          "host_ms": 0.057,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            54,
+            68,
+            100,
+            78
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 362,
+          "binary_dark_permille": 712,
+          "suppressed": false,
+          "host_ms": 0.0438,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            54,
+            69,
+            100,
+            78
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 312,
+          "binary_dark_permille": 285,
+          "suppressed": false,
+          "host_ms": 0.0571,
+          "interpolated_rows": 38
+        }
+      }
+    },
+    {
+      "frame": 195,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            54,
+            68,
+            109,
+            77
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 2,
+          "area": 419,
+          "binary_dark_permille": 694,
+          "suppressed": false,
+          "host_ms": 0.0645,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            54,
+            68,
+            109,
+            77
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 2,
+          "area": 419,
+          "binary_dark_permille": 694,
+          "suppressed": false,
+          "host_ms": 0.0511,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            54,
+            69,
+            109,
+            77
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 2,
+          "area": 360,
+          "binary_dark_permille": 219,
+          "suppressed": false,
+          "host_ms": 0.0608,
+          "interpolated_rows": 38
+        }
+      }
+    },
+    {
+      "frame": 196,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            54,
+            66,
+            109,
+            77
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 3,
+          "area": 383,
+          "binary_dark_permille": 195,
+          "suppressed": false,
+          "host_ms": 0.0707,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0581,
+          "interpolated_rows": 4
+        },
+        "main_measured": {
+          "box": [
+            54,
+            69,
+            109,
+            77
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 3,
+          "area": 289,
+          "binary_dark_permille": 159,
+          "suppressed": false,
+          "host_ms": 0.0615,
+          "interpolated_rows": 38
+        }
+      }
+    },
+    {
+      "frame": 197,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0427,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": null,
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 0,
+          "area": 0,
+          "binary_dark_permille": 0,
+          "suppressed": false,
+          "host_ms": 0.0361,
+          "interpolated_rows": 1
+        },
+        "main_measured": {
+          "box": [
+            81,
+            69,
+            109,
+            77
+          ],
+          "iou": null,
+          "confirmed": true,
+          "track_hits": 4,
+          "area": 162,
+          "binary_dark_permille": 296,
+          "suppressed": false,
+          "host_ms": 0.0464,
+          "interpolated_rows": 38
+        }
+      }
+    },
+    {
+      "frame": 198,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            87,
+            62,
+            109,
+            69
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 152,
+          "binary_dark_permille": 855,
+          "suppressed": false,
+          "host_ms": 0.0439,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            87,
+            62,
+            109,
+            69
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 152,
+          "binary_dark_permille": 855,
+          "suppressed": false,
+          "host_ms": 0.0374,
+          "interpolated_rows": 5
+        },
+        "main_measured": {
+          "box": [
+            87,
+            63,
+            109,
+            69
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 1,
+          "area": 150,
+          "binary_dark_permille": 666,
+          "suppressed": false,
+          "host_ms": 0.0453,
+          "interpolated_rows": 33
+        }
+      }
+    },
+    {
+      "frame": 199,
+      "label_box": null,
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            88,
+            59,
+            109,
+            69
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 2,
+          "area": 191,
+          "binary_dark_permille": 785,
+          "suppressed": false,
+          "host_ms": 0.0371,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            88,
+            59,
+            109,
+            69
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 2,
+          "area": 208,
+          "binary_dark_permille": 798,
+          "suppressed": false,
+          "host_ms": 0.032,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            88,
+            63,
+            109,
+            69
+          ],
+          "iou": null,
+          "confirmed": false,
+          "track_hits": 2,
+          "area": 142,
+          "binary_dark_permille": 704,
+          "suppressed": false,
+          "host_ms": 0.046,
+          "interpolated_rows": 38
+        }
+      }
+    },
+    {
+      "frame": 200,
+      "label_box": [
+        86,
+        59,
+        109,
+        69
+      ],
+      "results": {
+        "sf2_frozen": {
+          "box": [
+            87,
+            59,
+            109,
+            69
+          ],
+          "iou": 0.958,
+          "confirmed": true,
+          "track_hits": 3,
+          "area": 213,
+          "binary_dark_permille": 812,
+          "suppressed": false,
+          "host_ms": 0.0528,
+          "interpolated_rows": 0
+        },
+        "sf2_recomputed": {
+          "box": [
+            87,
+            59,
+            109,
+            69
+          ],
+          "iou": 0.958,
+          "confirmed": true,
+          "track_hits": 3,
+          "area": 213,
+          "binary_dark_permille": 812,
+          "suppressed": false,
+          "host_ms": 0.0508,
+          "interpolated_rows": 0
+        },
+        "main_measured": {
+          "box": [
+            87,
+            63,
+            109,
+            69
+          ],
+          "iou": 0.61,
+          "confirmed": true,
+          "track_hits": 3,
+          "area": 146,
+          "binary_dark_permille": 691,
+          "suppressed": false,
+          "host_ms": 0.0774,
+          "interpolated_rows": 38
+        }
+      }
+    }
+  ]
+}

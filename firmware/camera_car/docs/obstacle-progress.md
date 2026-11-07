@@ -21,6 +21,14 @@
 
 构建证据见 `data/obstacle/results/`。本轮同时修正既有主机测试在中文工作区路径下的文件打开问题，C 场景测试改传相对输出路径，报告进程明确使用 UTF-8。测试脚本可通过 `ZIG` 环境变量指定编译器。
 
+## 已提交证据
+
+阶段代码依次提交为 `d2d16c2` 数据提取、`96a21b6` 像素分析、`feef9f7` C 检测、`922b012` 停车观测、`7756ac1` 标定式距离规划及测试。最终证据另作独立提交。
+
+`results/image-analysis.zip` 包含全部 101 帧的原图/二值图/ROI/候选 mask/框对照及完整统计 JSON，`results/c-replay.json` 保存三条真实 C 回归路径的逐帧输出。`results/tests.log`、`detector.log`、`shadow-test.log` 保存主机证据。`arm-default.log` 和 `arm-shadow.log` 保存 Arm 工具链构建摘要。两个候选 HEX、完整 map 和源码/产物 SHA-256 见 `results/verification.json`。
+
+Git 作者配置缺失，本轮提交以命令级 `Codex <codex@local>` 身份署名。切换到 main 后，原目录中此前已存在的历史构建中间文件显示为未跟踪的 `deliveries/`。这些文件未纳入本轮提交。
+
 ## 绕行规划与合成验证
 
 标定表的每个节点记录 `y_max` 对应的到障碍物近表面的距离和横向毫米/像素。表按行递增、距离递减，采用有界插值。缺少有效标定且已有确认目标，或已在规划中而标定失效时，锁存停车请求。没有确认目标且尚未进入规划时保持空闲。没有从本次图像推算厘米。

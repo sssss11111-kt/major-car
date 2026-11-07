@@ -1,0 +1,27 @@
+{
+  "sf2_frozen": {
+    "tp": 13,
+    "fn": 4,
+    "fp": 0,
+    "wrong_location": 0,
+    "confirmed": 15,
+    "suppressed": 0
+  },
+  "sf2_recomputed": {
+    "tp": 13,
+    "fn": 4,
+    "fp": 0,
+    "wrong_location": 0,
+    "confirmed": 14,
+    "suppressed": 0
+  },
+  "main_measured": {
+    "tp": 8,
+    "fn": 9,
+    "fp": 0,
+    "wrong_location": 2,
+    "confirmed": 6,
+    "suppressed": 0
+  }
+}
+PASS: ROI isolation, invalid rows, queue overflow, temporal confirmation/reset
