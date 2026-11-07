@@ -13,7 +13,19 @@ from analyze import intersection_over_union, load_frames
 from extract_replay import ROOT
 
 
-def plan(binary, lines, box, margin):
+def clearance(lines, box, margin, center_extra):
+    """Central-third overlap uses extra experimental image clearance."""
+    anchor = min(105, box[3] + 12)
+    left, mid, right = map(int, lines[:, anchor])
+    if not (2 < left < mid < right < 185):
+        return margin
+    center = (left + right) / 2
+    half_central_band = (right - left) / 6
+    central = box[0] <= center + half_central_band and box[2] >= center - half_central_band
+    return margin + center_extra if central else margin
+
+
+def plan(binary, lines, box, margin, center_extra=12):
     """Row DP with bounded image slope/acceleration, returning a complete path."""
     top, bottom = max(36, box[1] - 10), 105
     rows = list(range(bottom, top - 1, -1))
@@ -25,8 +37,9 @@ def plan(binary, lines, box, margin):
         allowed[y, :left + margin + 1] = False
         allowed[y, right - margin:] = False
     x0, y0, x1, y1 = box
+    obstacle_margin = clearance(lines, box, margin, center_extra)
     allowed[max(0, y0 - 4):min(120, y1 + 5),
-            max(0, x0 - margin):min(188, x1 + margin + 1)] = False
+            max(0, x0 - obstacle_margin):min(188, x1 + obstacle_margin + 1)] = False
     start = int(lines[1, bottom])
     if not allowed[bottom, start]:
         return None, "blocked_start"
@@ -81,7 +94,7 @@ def draw_line(draw, path, color, dashed=False):
             draw.line((a, b), fill=color, width=1)
 
 
-def panel(frame, gray, binary, lines, label, detection, path, status, margin):
+def panel(frame, gray, binary, lines, label, detection, path, status, margin, center_extra):
     scale = 3
     sheet = Image.new("RGB", (188 * 3, 151), "#182d3c")
     sheet.paste(Image.fromarray(gray).convert("RGB"), (0, 0))
@@ -102,12 +115,13 @@ def panel(frame, gray, binary, lines, label, detection, path, status, margin):
                   dashed=not detection["confirmed"])
     draw.text((4, 122), f"Frame {frame} | original", fill="#ffdb56")
     draw.text((192, 122), "Original SF2 binary", fill="white")
-    draw.text((380, 122), f"{status} / margin {margin}px", fill="#00e6eb")
+    applied = clearance(lines, box, margin, center_extra) if box else margin
+    draw.text((380, 122), f"{status} / gap {applied}px", fill="#00e6eb")
     draw.text((4, 137), "Yellow original  Cyan preview  Red detected  Pink face label", fill="white")
     return sheet.resize((sheet.width * scale, sheet.height * scale), Image.Resampling.NEAREST)
 
 
-def run(report_file, output, margin):
+def run(report_file, output, margin, center_extra=12):
     output.mkdir(parents=True, exist_ok=True)
     reports = {r["frame"]: r["results"]["sf2_frozen"]
                for r in json.loads(report_file.read_text(encoding="utf-8"))["frames"]}
@@ -117,15 +131,17 @@ def run(report_file, output, margin):
         detection = reports[number]
         path, status = (None, "not_detected")
         if detection["box"]:
-            path, status = plan(binary, lines, detection["box"], margin)
+            path, status = plan(binary, lines, detection["box"], margin, center_extra)
         original = [(int(lines[1, y]), y) for y in range(36, 106) if lines[1, y]]
         record = dict(frame=number, board_frame=frame["board_frame"],
                       label=label, negative=negative, detection=detection, status=status,
                       path=path, original_crosses_face=crosses(original, label),
                       new_crosses_face=crosses(path, label),
-                      matched=bool(label and intersection_over_union(label, detection["box"]) >= .35))
+                      matched=bool(label and intersection_over_union(label, detection["box"]) >= .35),
+                      obstacle_margin=clearance(lines, detection["box"], margin, center_extra)
+                      if detection["box"] else None)
         items.append(record)
-        image = panel(number, gray, binary, lines, label, detection, path, status, margin)
+        image = panel(number, gray, binary, lines, label, detection, path, status, margin, center_extra)
         image.save(output / f"{number}.png")
         if number in (104, 118, 142, 162, 172, 200):
             thumbnails.append(image)
@@ -141,6 +157,7 @@ def run(report_file, output, margin):
                       "max_common_row_shift": max(abs(a[y] - b[y]) for y in common)})
     summary = {
         "frames": len(items), "labeled_frames": len(labeled), "pixel_margin": margin,
+        "central_brick_extra_px": center_extra,
         "detected_labeled": sum(r["matched"] for r in labeled),
         "correct_detection_and_pixel_route": sum(r["matched"] and r["path"] is not None and
                                                   not r["new_crosses_face"] for r in labeled),
@@ -173,7 +190,7 @@ def run(report_file, output, margin):
 img{width:100%;image-rendering:pixelated}button,input{font:inherit;margin:8px}pre{white-space:pre-wrap}</style>
 <h1>真实图像上的红砖中线候选回放</h1>
 <p>左为原灰度与原中线，中为原二值图，右为新候选中线。黄色原中线，青色候选线，红框检测，粉框人工正面初标。青色虚线表示尚未多帧确认。</p>
-<p>像素裕量为 MARGIN px，未做车宽和距离标定。逐帧生成，不代表车辆已完成连续绕行。停止或漏检时右图只保留原中线。</p>
+<p>赛道边缘裕量为 MARGIN px，中央红砖横向裕量为 CENTRAL px。中央砖定义为框与下方赛道中央三分之一区域重叠。未做车宽和距离标定。逐帧生成，停止或漏检时右图只保留原中线。</p>
 <button id="prev">上一张</button><button id="play">播放</button><button id="next">下一张</button>
 <input id="seek" type="range" min="0" max="100" value="0"><span id="info"></span>
 <img id="image"><pre>SUMMARY</pre><script>
@@ -184,7 +201,7 @@ document.getElementById('info').textContent='第 '+f.frame+' 张 / '+f.status+' 
 document.getElementById('prev').onclick=()=>show(index-1);document.getElementById('next').onclick=()=>show(index+1);
 seek.oninput=()=>show(+seek.value);document.getElementById('play').onclick=()=>{if(timer){clearInterval(timer);timer=null;}
 else timer=setInterval(()=>show((index+1)%101),250);};show(0);</script>"""
-    document = document.replace("MARGIN", str(margin)).replace("SUMMARY", html.escape(json.dumps(summary, ensure_ascii=False, indent=2)))
+    document = document.replace("MARGIN", str(margin)).replace("CENTRAL", str(margin + center_extra)).replace("SUMMARY", html.escape(json.dumps(summary, ensure_ascii=False, indent=2)))
     (output / "index.html").write_text(document.replace("METADATA", metadata), encoding="utf-8")
     print(json.dumps(summary, indent=2))
     return summary
@@ -195,7 +212,10 @@ if __name__ == "__main__":
     parser.add_argument("--report", type=Path, default=ROOT / "results/c-replay.json")
     parser.add_argument("--output", type=Path, default=ROOT / "centerline-preview")
     parser.add_argument("--margin", type=int, default=8)
+    parser.add_argument("--center-extra", type=int, default=12)
     args = parser.parse_args()
     if not 1 <= args.margin <= 20:
         parser.error("margin must be 1..20 image pixels")
-    run(args.report, args.output, args.margin)
+    if not 0 <= args.center_extra <= 40:
+        parser.error("center-extra must be 0..40 image pixels")
+    run(args.report, args.output, args.margin, args.center_extra)
