@@ -1,0 +1,11 @@
+*
+!.gitignore
+!README.md
+!verification.json
+!monitor-wireless.py
+!candidate-status-before-flash.json
+!flash-01/
+flash-01/*
+!flash-01/result.json
+!flash-01/flash.log
+!boot-analysis.json

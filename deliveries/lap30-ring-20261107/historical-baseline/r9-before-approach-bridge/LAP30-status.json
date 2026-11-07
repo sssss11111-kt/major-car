@@ -1,0 +1,83 @@
+{
+  "version": "C11LAP30R9",
+  "baseline_commit": "1f919df",
+  "built": true,
+  "build_errors": 0,
+  "build_warnings": 0,
+  "hardware_accessed": true,
+  "flashed": true,
+  "real_track_tested": false,
+  "release_ready": false,
+  "hex_sha256": "626e55594f709d94a9c3b8cae6a027796ba9af542233737a8c62e0e3cfbd6b4c",
+  "axf_sha256": "11891107ae9bf2beda79902e55dda604e4a300899b849d4cfa1c071aabbc442c",
+  "feedback_assertions": 166,
+  "ordered_path_assertions": 877,
+  "actual_supervisor_scenarios": 28,
+  "original_host_checks": "passed",
+  "image_comparison": "../../records/ring-research-20261107/entry-r9/comparison.html",
+  "first_invalid_frame_in_entry_replay": 205,
+  "current_outer_edge_valid_frames": [
+    127,
+    204
+  ],
+  "bridge_defaults": {
+    "max_ticks_10ms": 10,
+    "max_estimated_distance_m": 0.04,
+    "max_heading_error_deg": 3,
+    "single_edge_target_counts_per_10ms": 50,
+    "bridge_target_counts_per_10ms": 35,
+    "field_calibrated": false
+  },
+  "recorded_odometry_available": false,
+  "bridge_verification": "synthetic motion with captured grayscale input; actual trial_tick fault and speed tests",
+  "known_limits": [
+    "Frame205 has no accepted current side opening. Dynamic forward-goal handoff remains unfinished.",
+    "Captured sequence was hand-pushed with motors off. Main image replay holds ENTER without synchronized encoders.",
+    "No physical closed-loop roundabout entry or full-orbit/exit acceptance. Some steering commands reach69.",
+    "Threshold and association gates are software parameters requiring more field, reflection and shadow validation.",
+    "MCU worst-case processing time of up to8 candidates remains unmeasured.",
+    "Static peripheral checks and wireless SNAP passed. Powered motor load, encoder scale/direction and full steering range remain untested."
+  ],
+  "source_changes": [
+    {
+      "path": "demo/user/inc/ring_entry_path.h",
+      "r8_git_blob_sha256": "5b605273b44b5a2542694b0b137c9d2702eb94991d7f116be6c7fcd092a4200f",
+      "r9_worktree_sha256": "4be1257d869950260ff143cd17cd462f46067de3c6e07b99a3cf01fcbc17fb79"
+    },
+    {
+      "path": "demo/user/src/img_process.c",
+      "r8_git_blob_sha256": "82fe5ad18abc16be6bf93059651157ddbc9c87652e1a54f4db9340d82a3283c8",
+      "r9_worktree_sha256": "a6b69640ab7526178a70cee62787c78570431f088c7295415f234dfddcbc2f55"
+    },
+    {
+      "path": "demo/user/src/main.c",
+      "r8_git_blob_sha256": "dad9d00f431898df14a59284c0c82d6b7db7f8b4d754cf475fcb34ff29e7b2ad",
+      "r9_worktree_sha256": "025442e21d7325f8192ecef69b5f76477030a8ba36fb1f38fdae8158ea9f7383"
+    }
+  ],
+  "frame147": {
+    "threshold_old": 178,
+    "threshold_new": 239,
+    "old_wrong_goal": [
+      182,
+      37
+    ],
+    "new_goal": [
+      182,
+      75
+    ],
+    "points": 99,
+    "boundary_support": 11
+  },
+  "flash_readback_match": true,
+  "verified_flash_bytes": 89536,
+  "hardware_verification": "../../records/lap30r9-field-20261107/verification.json",
+  "latest_vehicle_state": {
+    "cpu": "RUNNING",
+    "trial_running": 0,
+    "trial_fault": 1,
+    "fault_meaning": "STOP requested for stationary inspection; latched until reset",
+    "left_pwm": 0,
+    "right_pwm": 0
+  }
+}

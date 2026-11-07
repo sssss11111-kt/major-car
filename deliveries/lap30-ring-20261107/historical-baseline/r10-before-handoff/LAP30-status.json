@@ -1,0 +1,97 @@
+{
+  "version": "C11LAP30R10",
+  "baseline_commit": "b9f9ce640827d460debec1d716b166ce1b750cc8",
+  "built": true,
+  "build_errors": 0,
+  "build_warnings": 0,
+  "hardware_accessed": false,
+  "flashed": false,
+  "real_track_tested": false,
+  "release_ready": false,
+  "last_flashed_version": "C11LAP30R9",
+  "last_flashed_hex_sha256": "626e55594f709d94a9c3b8cae6a027796ba9af542233737a8c62e0e3cfbd6b4c",
+  "hex_sha256": "5d28c1fc099edf1660abb0ec810ab2b73db23f427d070a7134c1e8bd3df636d6",
+  "axf_sha256": "a57cc60403ca213dbefffb4945b1f353c57f209860ede89f73f7b4ad7b9635db",
+  "original_host_checks": "passed",
+  "actual_supervisor_scenarios": 28,
+  "ordered_path_assertions": 877,
+  "approach_assertions": 3061,
+  "source_changes": [
+    {
+      "path": "demo/user/src/img_process.c",
+      "r10_worktree_sha256": "c349e42425a5b73e8cd6f1e870fdef7d4d883a765cc8c00b048c871682637af2"
+    },
+    {
+      "path": "demo/user/src/main.c",
+      "r10_worktree_sha256": "c644bd8d8aa199ac1f2276afd9f5df0fbb42f0dc6d8bcf31460fc4574cab7d01"
+    }
+  ],
+  "manual02": {
+    "checks": 3061,
+    "passed": true,
+    "bridge_frames": [
+      5,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "frame21": {
+      "rows": 35,
+      "old_max_adjacent_midline_step_px": 16,
+      "new_max_adjacent_midline_step_px": 1,
+      "old_error": 0.0,
+      "new_error": 0.0,
+      "old_command": 92.47,
+      "new_command": 92.47
+    },
+    "focus_valid": 41,
+    "focus_frames": 41,
+    "missing_anchor_frames": [
+      10,
+      11,
+      12,
+      47,
+      48,
+      49,
+      50
+    ]
+  },
+  "known_limits": [
+    "No physical closed-loop validation or MCU worst-case timing measurement.",
+    "Manual02 frames10-12 and47-50 lack lower anchors; approach bridging declines.",
+    "Manual02 still first invalid at frame74 after ENTER at52.",
+    "Frame21 simulated steering command is92.47 before and after. No synchronized encoder evidence to establish cause of reported stall.",
+    "No synchronized odometry in captured replay."
+  ]
+}

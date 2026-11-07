@@ -1,0 +1,14 @@
+project/demo/mdk/Objects/*
+!project/demo/mdk/Objects/rt1064.hex
+project/demo/mdk/Listings/
+project/demo/mdk/*.uvguix.*
+project/demo/mdk/*.uvoptx
+project/demo/mdk/*.htm
+project/verification/*.obj
+project/verification/*.exe
+project/verification/*.dll
+project/verification/*.lib
+project/verification/*.exp
+project/verification/*.pdb
+project/verification/auto-integration-generated.c
+**/__pycache__/

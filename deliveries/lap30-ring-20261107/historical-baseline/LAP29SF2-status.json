@@ -1,0 +1,26 @@
+{
+  "version": "C11LAP29SF2",
+  "built": true,
+  "build_errors": 0,
+  "build_warnings": 0,
+  "flashed": false,
+  "hex_sha256": "c68784bd052a997ddf964da483118b3a01147eed66df368c6ff8ad3d949f90ea",
+  "image_bytes": 79040,
+  "segments": [
+    [
+      1879048192,
+      1879127232
+    ]
+  ],
+  "wired_size": [
+    188,
+    120
+  ],
+  "wired_baud": 460800,
+  "wireless_size": [
+    94,
+    60
+  ],
+  "wireless_baud": 115200,
+  "image_mode_stopped_only": true
+}

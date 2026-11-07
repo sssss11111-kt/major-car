@@ -1,0 +1,3 @@
+Before LAP28 image changes, the new captured-entry assertion was run against the copied LAP27 owner. Original synthetic cases passed, then failed:
+AssertionError: (real clipped island missed, False, [1, -41, 76, 2])
+The old stationary replay and distant-entry steering reproduction are archived in records/lap27-field-20261022/entry-snapshot-01/replay-diagnosis.json. These do not establish the historical fault4 trigger.

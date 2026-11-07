@@ -1,0 +1,6 @@
+PROGRAMMING C11LAP30R11: sector erase; smart comparison and preservation disabled
+[---|---|---|---|---|---|---|---|---|----]
+[========================================]
+[---|---|---|---|---|---|---|---|---|----]
+[========================================]
+{"version": "C11LAP30R11", "started_utc": "2026-11-07T11:20:09.795360+00:00", "success": true, "old_application_read_or_backed_up": false, "prepared_confirmed": true, "programming_started": true, "hex_sha256": "dc9ffd0d4f829c5a45617916a6792d49f61df78a18e3dafbd600b67e834b991c", "segments": [[1879048192, 1879140096]], "image_bytes": 91904, "readback_match": true, "verified_bytes": 91904, "programmed_data_sha256": "af971ca5653c5a351f1d858c4a8ea1f897c6f529877c6975df449c8ac660dc1d", "state": "HALTED", "cold_boot_required": true, "hardware_track_tested": false, "finished_utc": "2026-11-07T11:20:18.861518+00:00"}

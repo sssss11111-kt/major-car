@@ -1,0 +1,26 @@
+{
+  "version": "C11LAP29SF",
+  "built": true,
+  "build_errors": 0,
+  "build_warnings": 0,
+  "flashed": false,
+  "hex_sha256": "713cfa77b28b4fc5cc8eeb629683a4001cafc13973147b9e73e78d76c150380f",
+  "image_bytes": 78976,
+  "segments": [
+    [
+      1879048192,
+      1879127168
+    ]
+  ],
+  "image_protocols": [
+    "Seekfree V1",
+    "Seekfree V2"
+  ],
+  "image_size": [
+    94,
+    60
+  ],
+  "baud": 115200,
+  "view_mode_stopped_only": true,
+  "view_mode_inhibits_autostart": true
+}

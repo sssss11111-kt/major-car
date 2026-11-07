@@ -1,0 +1,50 @@
+{
+  "version": "C11LAP30R11",
+  "hex_sha256": "dc9ffd0d4f829c5a45617916a6792d49f61df78a18e3dafbd600b67e834b991c",
+  "flash_success": true,
+  "readback_match": true,
+  "verified_bytes": 91904,
+  "user_track_started": true,
+  "acceptance_passed": false,
+  "wireless_port": "COM6",
+  "wireless_baud": 115200,
+  "boot_r11_received": true,
+  "first_boot": {
+    "run_reports_ticks": [
+      120,
+      140,
+      160
+    ],
+    "first_fault6_tick": 180,
+    "fault_state_pwms": [
+      0,
+      0
+    ],
+    "visual_valid": true,
+    "observed_encoders_during_run": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "physical_motion_user_confirmation": "User reports actual track movement, but correspondence to this early boot is unconfirmed."
+  },
+  "trace_requested_after_stopped": true,
+  "user_feedback": "Vehicle stopped after passing the roundabout exit.",
+  "user_confirmed_motor_power_off_after_stop": true,
+  "current_logic_power_user_confirmed": true,
+  "multiple_r11_boots_seen": true,
+  "additional_recorded_faults": [
+    4
+  ],
+  "trace_received_complete": false,
+  "first_boot_relation_to_reported_track_stop": "not established"
+}

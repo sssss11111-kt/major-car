@@ -1,0 +1,33 @@
+{
+  "version": "C11LAP29",
+  "date_asia_shanghai": "2026-10-23",
+  "baseline_commit": "875db50e3c1a55b35ae38a2cda5fa8520a939755",
+  "branch": "codex/20261022-lap21-stripes",
+  "main_update_authorized": false,
+  "built": true,
+  "build_errors": 0,
+  "build_warnings": 0,
+  "flashed": false,
+  "hardware_tested": false,
+  "hardware_track_accepted": false,
+  "hex_sha256": "3dbfd5966a0baf6befb10d373b2b1b501097aa5a21e15997c45b93114f44b5e7",
+  "hex_bytes": 73728,
+  "hex_segments": [
+    [
+      1879048192,
+      1879121920
+    ]
+  ],
+  "straight_target": 100,
+  "curve_target": 80,
+  "ring_cap": 80,
+  "stripe_cap": 24,
+  "rear_track_m": 0.155,
+  "servo_command_bounds": [
+    69,
+    116
+  ],
+  "build_zi_bytes": 149824,
+  "host_checks": "19 production supervisor/PID cases; steering and 5 S-bend groups; stripes; 120 real straight frames; full & side-clipped island topology + 4 auxiliary geometric evidences (lower corner, arc apex, outer continuity, width anomaly); decoupled candidate & guided branch segmentation; corner-constrained continuous entry target centerline (0 missing rows on real entry frame, 1px transition at y=58->59); RB_SUSPECT pre-deceleration and 0-frame confirmation-to-servo response; 496 negative curve/wave/meander frames with 0 false positives.",
+  "remaining": "Built and host-verified only; not flashed and not track-tested."
+}

@@ -1,0 +1,58 @@
+{
+  "version": "C11LAP30R11",
+  "baseline_version": "C11LAP30R10",
+  "baseline_commit": "b9f9ce640827d460debec1d716b166ce1b750cc8 plus locally preserved R10 candidate",
+  "built": true,
+  "build_errors": 0,
+  "build_warnings": 0,
+  "hardware_accessed": false,
+  "flashed": false,
+  "real_track_tested": false,
+  "release_ready": false,
+  "last_flashed_version": "C11LAP30R9",
+  "last_flashed_hex_sha256": "626e55594f709d94a9c3b8cae6a027796ba9af542233737a8c62e0e3cfbd6b4c",
+  "hex_sha256": "dc9ffd0d4f829c5a45617916a6792d49f61df78a18e3dafbd600b67e834b991c",
+  "axf_sha256": "347e1d53c450047d4bd8c8450a983a51f535841bbded2ff3511917a8d8b6a485",
+  "original_host_checks": "passed",
+  "actual_supervisor_scenarios": 28,
+  "ordered_path_assertions": 877,
+  "handoff_assertions": 2015,
+  "source_changes": [
+    {
+      "path": "demo/user/src/img_process.c",
+      "r11_worktree_sha256": "6a8bf468facfe21e89a07826c8905fbc4487814fca7b929bbecce6fe659f5fbd"
+    },
+    {
+      "path": "demo/user/src/main.c",
+      "r11_worktree_sha256": "28ce8d920f15ac2cf86818fe440b46426dae1cef78e2646a1e376e6018e0fa90"
+    },
+    {
+      "path": "verification/vision-replay-wrapper.c",
+      "r11_worktree_sha256": "f2ed7391339936f56605fed62dd8c2acd760404dc00a7e861d3bade1dc2c0058"
+    }
+  ],
+  "manual02": {
+    "checks": 2015,
+    "passed": true,
+    "continuous_bridge_frames": [
+      40,
+      52
+    ],
+    "first_ordered_path_frame": 53,
+    "frame52_command_before": 88.19,
+    "frame52_command_after": 92.57,
+    "frame53_command_after": 88.14,
+    "all_312_validity_phase_and_entry_paths_preserved": true,
+    "first_invalid_after_entry": 74,
+    "limits": {
+      "max_age_calls": 30,
+      "max_age_10ms_ticks": 250
+    }
+  },
+  "known_limits": [
+    "No physical closed-loop validation or MCU worst-case timing measurement.",
+    "Learned approach width expires after30 processing calls or250 10ms ticks; no current opposite boundary or far anchor means no continuation.",
+    "Manual02 still first invalid at frame74 after ENTER at52.",
+    "Captured replay lacks synchronized odometry. Actual servo response and encoder protection cause remain unverified."
+  ]
+}

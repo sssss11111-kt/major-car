@@ -1,0 +1,21 @@
+{
+  "version": "C11LAP29D1",
+  "built": true,
+  "build_errors": 0,
+  "build_warnings": 0,
+  "flashed": false,
+  "host_checks_passed": true,
+  "hardware_track_accepted": false,
+  "hex_sha256": "14c6d8aedd3b8699469d29ccb853ad650affde9709e8ecc25ff38fc9e9fb5d15",
+  "image_bytes": 78400,
+  "segments": [
+    [
+      1879048192,
+      1879126592
+    ]
+  ],
+  "algorithm_change": false,
+  "trace_bytes": 2215680,
+  "trace_sdram_address": "0x80010ca0",
+  "baseline_commit": "58f5a731bf041a4bd2e3058934a819739d4b6eb8"
+}

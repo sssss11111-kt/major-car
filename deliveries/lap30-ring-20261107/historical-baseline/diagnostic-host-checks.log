@@ -1,0 +1,87 @@
+['cl', '/nologo', '/TC', '/std:c17', '/W4', '/WX', '/utf-8', '/ID:\\桌面\\智能车\\major-car-LAP29-20261028\\deliveries\\lap29-assistant-20261028\\project\\demo\\user\\inc', 'D:\\桌面\\智能车\\major-car-LAP29-20261028\\deliveries\\lap29-assistant-20261028\\project\\verification\\test-ring-diag.c', '/FeD:\\桌面\\智能车\\major-car-LAP29-20261028\\deliveries\\lap29-assistant-20261028\\project\\verification\\test-ring-diag.exe']
+test-ring-diag.c
+['D:\\桌面\\智能车\\major-car-LAP29-20261028\\deliveries\\lap29-assistant-20261028\\project\\verification\\test-ring-diag.exe']
+PASS: chronological pretrigger/posttrigger, no overwrite after freeze, stop and no-candidate export, CRC, actual confirmation validity gate
+['C:\\Program Files\\Python314\\python.exe', 'D:\\桌面\\智能车\\major-car-LAP29-20261028\\deliveries\\lap29-assistant-20261028\\tools\\run-host-checks.py']
+steering_control.c
+test-steering.c
+�������ɴ���...
+PASS: continuous bend response, symmetric bounds, LAP29 targets, isolated spikes, slew bound, sharp bend/reversal authority, speed recovery, preview loss, invalid reset, duplicate tick, tick wrap
+auto-integration-generated.c
+D:\����\���ܳ�\major-car-LAP29-20261028\deliveries\lap29-assistant-20261028\project\demo\user\inc\pid.h(1): warning C4819: ���ļ����������ڵ�ǰ����ҳ(936)�б�ʾ���ַ����뽫���ļ�����Ϊ Unicode ��ʽ�Է�ֹ���ݶ�ʧ
+D:\����\���ܳ�\major-car-LAP29-20261028\deliveries\lap29-assistant-20261028\project\verification\auto-integration-generated.c(167): warning C4244: ��=��: �ӡ�int��ת������float�������ܶ�ʧ����
+D:\����\���ܳ�\major-car-LAP29-20261028\deliveries\lap29-assistant-20261028\project\verification\auto-integration-generated.c(170): warning C4244: ��=��: �ӡ�int��ת������float�������ܶ�ʧ����
+D:\����\���ܳ�\major-car-LAP29-20261028\deliveries\lap29-assistant-20261028\project\verification\auto-integration-generated.c(174): warning C4244: ��������: �ӡ�volatile int��ת������float�������ܶ�ʧ����
+D:\����\���ܳ�\major-car-LAP29-20261028\deliveries\lap29-assistant-20261028\project\verification\auto-integration-generated.c(175): warning C4244: ��������: �ӡ�volatile int��ת������float�������ܶ�ʧ����
+pid.c
+D:\����\���ܳ�\major-car-LAP29-20261028\deliveries\lap29-assistant-20261028\project\demo\user\src\pid.c(1): warning C4819: ���ļ����������ڵ�ǰ����ҳ(936)�б�ʾ���ַ����뽫���ļ�����Ϊ Unicode ��ʽ�Է�ֹ���ݶ�ʧ
+D:\����\���ܳ�\major-car-LAP29-20261028\deliveries\lap29-assistant-20261028\project\demo\user\inc\pid.h(1): warning C4819: ���ļ����������ڵ�ǰ����ҳ(936)�б�ʾ���ַ����뽫���ļ�����Ϊ Unicode ��ʽ�Է�ֹ���ݶ�ʧ
+D:\����\���ܳ�\major-car-LAP29-20261028\deliveries\lap29-assistant-20261028\project\demo\user\inc\main.h(1): warning C4819: ���ļ����������ڵ�ǰ����ҳ(936)�б�ʾ���ַ����뽫���ļ�����Ϊ Unicode ��ʽ�Է�ֹ���ݶ�ʧ
+D:\����\���ܳ�\major-car-LAP29-20261028\deliveries\lap29-assistant-20261028\project\demo\user\inc\img_process.h(1): warning C4819: ���ļ����������ڵ�ǰ����ҳ(936)�б�ʾ���ַ����뽫���ļ�����Ϊ Unicode ��ʽ�Է�ֹ���ݶ�ʧ
+auto_start.c
+�������ɴ���...
+PASS: actual trial_tick view
+PASS: actual trial_tick auto
+PASS: actual trial_tick lost
+PASS: actual trial_tick snapshot
+PASS: actual trial_tick stale
+PASS: actual trial_tick running_stale
+PASS: actual trial_tick bench
+PASS: actual trial_tick pwm100
+PASS: actual trial_tick single
+PASS: actual trial_tick curve_speed
+PASS: actual trial_tick stripe_start
+PASS: actual trial_tick stripe_recovery
+PASS: actual trial_tick stripe_stale
+PASS: actual trial_tick stripe_lost
+PASS: actual trial_tick stripe_encoder
+PASS: actual trial_tick stripe_stall
+PASS: actual trial_tick stripe_degraded
+PASS: actual trial_tick no_stripe_target_change
+PASS: actual trial_tick ring_speed
+PASS: actual trial_tick ring_fault
+steering_control.c
+test-s-bend.c
+�������ɴ���...
+PASS: S-bend linear
+PASS: S-bend preview
+PASS: S-bend limits
+PASS: S-bend reverse
+PASS: S-bend spike
+img_process.c
+steering_control.c
+vision-replay-wrapper.c
+�������ɴ���...
+  ���ڴ����� D:\����\���ܳ�\major-car-LAP29-20261028\deliveries\lap29-assistant-20261028\project\verification\stripe-replay.lib �Ͷ��� D:\����\���ܳ�\major-car-LAP29-20261028\deliveries\lap29-assistant-20261028\project\verification\stripe-replay.exp
+PASS: measured stripe corridor preserves centered/left/right steering and reacquires
+PASS: no blind continuation from historical centers
+PASS: clean distant track cannot mask a missing near corridor
+PASS: stripe-only startup rejected
+PASS: isolated marks, body mask, and uniform scenes
+PASS: mirrored normal curves do not trigger stripes
+PASS: combined vision/stateful steering retains history, preview gating and 69..116 soft bounds
+img_process.c
+D:\����\���ܳ�\major-car-LAP29-20261028\deliveries\lap29-assistant-20261028\project\demo\user\src\img_process.c(1): warning C4819: ���ļ����������ڵ�ǰ����ҳ(936)�б�ʾ���ַ����뽫���ļ�����Ϊ Unicode ��ʽ�Է�ֹ���ݶ�ʧ
+D:\����\���ܳ�\major-car-LAP29-20261028\deliveries\lap29-assistant-20261028\project\demo\user\inc\img_process.h(1): warning C4819: ���ļ����������ڵ�ǰ����ҳ(936)�б�ʾ���ַ����뽫���ļ�����Ϊ Unicode ��ʽ�Է�ֹ���ݶ�ʧ
+D:\����\���ܳ�\major-car-LAP29-20261028\deliveries\lap29-assistant-20261028\project\demo\user\src\img_process.c(658): warning C4819: ���ļ����������ڵ�ǰ����ҳ(936)�б�ʾ���ַ����뽫���ļ�����Ϊ Unicode ��ʽ�Է�ֹ���ݶ�ʧ
+steering_control.c
+vision-replay-wrapper.c
+D:\����\���ܳ�\major-car-LAP29-20261028\deliveries\lap29-assistant-20261028\project\demo\user\inc\img_process.h(1): warning C4819: ���ļ����������ڵ�ǰ����ҳ(936)�б�ʾ���ַ����뽫���ļ�����Ϊ Unicode ��ʽ�Է�ֹ���ݶ�ʧ
+D:\����\���ܳ�\major-car-LAP29-20261028\deliveries\lap29-assistant-20261028\project\demo\user\inc\main.h(1): warning C4819: ���ļ����������ڵ�ǰ����ҳ(936)�б�ʾ���ַ����뽫���ļ�����Ϊ Unicode ��ʽ�Է�ֹ���ݶ�ʧ
+�������ɴ���...
+  ���ڴ����� D:\����\���ܳ�\major-car-LAP29-20261028\deliveries\lap29-assistant-20261028\project\verification\vision-replay.lib �Ͷ��� D:\����\���ܳ�\major-car-LAP29-20261028\deliveries\lap29-assistant-20261028\project\verification\vision-replay.exp
+[{"source": "snapshot-20261021-180609", "frames": 60, "first": [1, -4, 88, 43], "last": [1, -4, 88, 43]}, {"source": "snapshot-20261021-180619", "frames": 60, "first": [1, -4, 88, 38], "last": [1, -4, 88, 38]}]
+test-roundabout.c
+PASS: roundabout entry, signed yaw, 270/360 exit gates, clean exit, cooldown and timeout
+img_process.c
+steering_control.c
+vision-replay-wrapper.c
+�������ɴ���...
+  ���ڴ����� D:\����\���ܳ�\major-car-LAP29-20261028\deliveries\lap29-assistant-20261028\project\verification\roundabout-replay.lib �Ͷ��� D:\����\���ܳ�\major-car-LAP29-20261028\deliveries\lap29-assistant-20261028\project\verification\roundabout-replay.exp
+PASS: both islands and mirrored guidance; 6 open-lobe variants x8 frames; 27 continuous-wave variants x8 frames; original negative and near-field cases
+PASS: captured side-clipped island and mirror
+PASS: side-open/rectangular negatives; integrated distant entry, loss, stripe priority and production wiring
+PASS: actual captured entry remains valid through confirmation and guide activation
+PASS: LAP29 auxiliary evidence, continuous entry target centerline, zero-frame entry response and curve negatives
+PASS: all LAP29 host-only checks
+PASS: all diagnostic and original regressions
