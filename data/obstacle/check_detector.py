@@ -91,6 +91,9 @@ def check(dll):
                              "host_ms": round(elapsed, 4), "interpolated_rows": raw[12]}
         records.append({"frame": frame["replay_frame"], "label_box": box, "results": results})
     assert totals["sf2_frozen"]["tp"] >= 13 and totals["sf2_frozen"]["fp"] == 0
+    assert totals["sf2_recomputed"]["tp"] >= 13 and totals["sf2_recomputed"]["fp"] == 0
+    assert totals["main_measured"]["tp"] >= 8 and totals["main_measured"]["fp"] == 0
+    assert totals["main_measured"]["wrong_location"] <= 2
     print(json.dumps(totals, indent=2))
     assert dll.detector_unit_tests() == 0, "Synthetic detector/track safety case failed"
     print("PASS: ROI isolation, invalid rows, queue overflow, temporal confirmation/reset")

@@ -2,8 +2,9 @@
 from pathlib import Path
 import subprocess
 import sys
+import os
 root = Path(__file__).resolve().parents[1]
-zig = root / '.tools/ziglang/zig.exe'
+zig = Path(os.environ.get('ZIG', root / '.tools/ziglang/zig.exe'))
 out = root / 'tests/out'
 out.mkdir(exist_ok=True)
 exe = out / 'test_core.exe'
@@ -26,6 +27,12 @@ subprocess.run([str(zig), 'cc', '-std=c99', '-Wall', '-Wextra', '-Werror',
                '-O1', '-UNDEBUG', '-I', str(root/'demo/user/inc'),
                str(root/'tests/test_vision_scenarios.c'), str(root/'demo/user/src/car_core.c'),
                '-o', str(scene_exe)], check=True)
-subprocess.run([str(scene_exe), str(scene_out)], check=True)
-subprocess.run([sys.executable,str(root/'tests/render_vision_report.py')], check=True)
-sys.exit(subprocess.run([sys.executable,str(root/'tests/test_capture.py')]).returncode)
+subprocess.run([str(scene_exe), 'out/vision'], cwd=root/'tests', check=True)
+subprocess.run([sys.executable, '-X', 'utf8', str(root/'tests/render_vision_report.py')], check=True)
+bypass_exe = out / 'test_obstacle_bypass.exe'
+subprocess.run([str(zig), 'cc', '-std=c99', '-Wall', '-Wextra', '-Werror',
+               '-O1', '-UNDEBUG', '-I', str(root/'demo/user/inc'),
+               str(root/'tests/test_obstacle_bypass.c'), str(root/'demo/user/src/obstacle_bypass.c'),
+               '-o', str(bypass_exe)], check=True)
+subprocess.run([str(bypass_exe)], check=True)
+sys.exit(subprocess.run([sys.executable, '-X', 'utf8', str(root/'tests/test_capture.py')]).returncode)

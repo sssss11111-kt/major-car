@@ -68,7 +68,7 @@ OBS frame=100 cand=1 confirmed=1 box=87,63,109,69 area=146 contrast=60 binary_da
 
 已有 `tests/run_tests.py` 在 ASCII 路径副本运行通过，包含 150 项场景合同、2 项表征场景、17 帧时序和 48,986 次检查。应用测试另以 `-DOBSTACLE_SHADOW_ENABLED=1` 编译，并给测试程序传入第 200 张原始灰度帧，观察期间两路电机占空比为零，舵机保持中位。
 
-uVision 5.39 在本机启动时以 `0xC0000005` 退出。使用同一套 Arm Compiler 6.21，读取 `nor_sdram_zf_dtcm` 工程源文件、包含目录、宏和 scatter 配置直接构建。默认版与停车观测版各编译 155 个文件并链接生成 HEX。
+uVision 5.39 在本机启动时以 `0xC0000005` 退出。使用同一套 Arm Compiler 6.21，读取 `nor_sdram_zf_dtcm` 工程源文件、包含目录、宏和 scatter 配置直接构建。默认版与停车观测版各编译 156 个文件并链接生成 HEX。独立绕行模块参与编译，未引用的规划代码由链接器移除。
 
 ```powershell
 python data/obstacle/build_armclang.py "$env:TEMP/brick-arm-default"

@@ -6,3 +6,4 @@ demo/mdk/*.uvoptx
 demo/mdk/*.uvguix.*
 demo/iar/
 *.bak
+**/__pycache__/

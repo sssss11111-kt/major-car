@@ -398,6 +398,11 @@
               <FilePath>..\user\src\obstacle_detect.c</FilePath>
             </File>
             <File>
+              <FileName>obstacle_bypass.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\src\obstacle_bypass.c</FilePath>
+            </File>
+            <File>
               <FileName>car_app.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\user\src\car_app.c</FilePath>
