@@ -3,6 +3,7 @@
 #include "car_config.h"
 #include "car_core.h"
 #include "car_app.h"
+#include "obstacle_vision.h"
 #include <stdio.h>
 #include <string.h>
 #if MT9V03X_W != CAR_W || MT9V03X_H != CAR_H
@@ -32,6 +33,10 @@ static volatile uint8_t servo_test_active;
 static volatile float servo_test_us;
 static volatile uint32_t servo_test_until;
 static const uint8_t image_header[4]={0x00,0xff,0x01,0x01};
+#if OBSTACLE_SHADOW_ENABLED && !CAR_SIMULATED
+static obstacle_track_t obstacle_track;
+static uint32_t obstacle_report_ms;
+#endif
 
 static uint32_t lock(void) { return interrupt_global_disable(); }
 static void unlock(uint32_t key) { interrupt_global_enable(key); }
@@ -42,6 +47,26 @@ static void text_queue(const char *text) {
         text_tx[text_head]=*text++; text_head=next;
     }
 }
+#if OBSTACLE_SHADOW_ENABLED && !CAR_SIMULATED
+static void obstacle_shadow_observe(uint32_t now)
+{
+    obstacle_lane_row_t lane[OBS_HEIGHT];
+    obstacle_lane_from_vision(&result, lane);
+    obstacle_result_t observed = obstacle_detect_frame(gray, binary, 0, lane, frame_count, &obstacle_track);
+    if (now - obstacle_report_ms >= 1000 && !image_requested && image_position >= image_length) {
+        const obstacle_candidate_t *b = &observed.best;
+        char line[160];
+        obstacle_report_ms = now;
+        snprintf(line, sizeof line,
+            "OBS frame=%lu cand=%u confirmed=%u box=%u,%u,%u,%u area=%u contrast=%u binary_dark=%u interp=%u overflow=%u\r\n",
+            (unsigned long)frame_count, (unsigned)observed.candidate_count, (unsigned)observed.confirmed,
+            (unsigned)b->x_min, (unsigned)b->y_min, (unsigned)b->x_max, (unsigned)b->y_max,
+            (unsigned)b->area, (unsigned)b->contrast, (unsigned)b->binary_dark_permille,
+            (unsigned)observed.interpolated_rows, (unsigned)observed.overflow);
+        text_queue(line);
+    }
+}
+#endif
 static void uart_flush_some(void) {
     /* At most 16 bytes per foreground iteration, never wait on the UART. */
     for(unsigned i=0;i<16;i++) {
@@ -107,6 +132,10 @@ static void telemetry(void) {
 static void camera_init_once(void) {
     uint32_t key=lock(); control_stop(&control); apply_outputs(); unlock(key);
     servo_test_active=0; frame_count=0; memset(&result,0,sizeof result);
+#if OBSTACLE_SHADOW_ENABLED && !CAR_SIMULATED
+    obstacle_track = (obstacle_track_t){0};
+    obstacle_report_ms = milliseconds;
+#endif
     vision_reset(&vision);
 #if CAR_SIMULATED
     camera_ready=1; text_queue("SIMULATED: motors disabled\r\n");
@@ -257,6 +286,13 @@ void car_app_foreground(void) {
     if(new_frame) {
         vision_process(&vision,&vision_cfg,gray,binary,&result); frame_count++;
         key=lock(); control_frame(&control,&result,milliseconds); unlock(key);
+#if OBSTACLE_SHADOW_ENABLED && !CAR_SIMULATED
+        /* Stationary foreground observation, after the original control call. */
+        if (control.mode == CAR_IDLE && !servo_test_active && result.valid)
+            obstacle_shadow_observe(milliseconds);
+        else
+            obstacle_track.hits = 0;
+#endif
     }
     if(image_requested && frame_count && text_tail==text_head && image_position>=image_length) {
         memcpy(image_tx,image_requested==1?gray:binary,sizeof image_tx);

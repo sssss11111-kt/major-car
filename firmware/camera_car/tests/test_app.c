@@ -1,6 +1,7 @@
 #include "zf_common_headfile.h"
 #include "car_app.h"
 #include "car_config.h"
+#include "obstacle_detect.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -40,7 +41,7 @@ void tft180_draw_point(int x,int y,int c) {(void)x;(void)y;(void)c;}
 static void frame(void) {
     car_app_tick_10ms(); mt9v03x_finish_flag=1; car_app_foreground();
 }
-int main(void) {
+int main(int argc, char **argv) {
     for(int y=0;y<120;y++) for(int x=0;x<188;x++) camera[y][x]=(uint8_t)(x>=50 && x<=138?210:30);
     car_app_init(); CHECK(duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0);
     car_app_uart_rx_isr('a'); car_app_foreground(); car_app_tick_10ms();
@@ -78,6 +79,40 @@ int main(void) {
     car_app_uart_rx_isr('1'); stop_on_lock=3;
     car_app_foreground(); car_app_tick_10ms();
     CHECK(stop_on_lock==0 && duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0);
+#if OBSTACLE_SHADOW_ENABLED && !CAR_SIMULATED
+    if (argc == 2) {
+        FILE *fixture = fopen(argv[1], "rb");
+        CHECK(fixture);
+        CHECK(fread(camera, 1, sizeof camera, fixture) == sizeof camera);
+        CHECK(fgetc(fixture) == EOF);
+        fclose(fixture);
+        tx_len = 0;
+        car_app_init();
+        for (int i = 0; i < 120; ++i) {
+            frame();
+            CHECK(duties[CAR_LEFT_PWM] == 0 && duties[CAR_RIGHT_PWM] == 0 &&
+                  duties[CAR_SERVO_PWM] == 750);
+        }
+        unsigned reports = 0;
+        for (unsigned i = 0; i + 4 < tx_len; ++i) {
+            if (memcmp(tx + i, "OBS ", 4) != 0) continue;
+            unsigned end = i;
+            while (end < tx_len && tx[end] != '\r') ++end;
+            CHECK(end < tx_len && end - i < 160);
+            char line[160];
+            memcpy(line, tx + i, end - i);
+            line[end - i] = '\0';
+            CHECK(strstr(line, "frame=100 cand=1 confirmed=1"));
+            CHECK(strstr(line, "box=87,63,109,69"));
+            puts(line);
+            ++reports;
+        }
+        CHECK(reports == 1);
+    }
+#else
+    (void)argc;
+    (void)argv;
+#endif
     puts("hardware adapter tests: PASS (host I/O double, not physical hardware)");
     return 0;
 }

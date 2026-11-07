@@ -393,6 +393,11 @@
               <FilePath>..\user\src\car_core.c</FilePath>
             </File>
             <File>
+              <FileName>obstacle_detect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\src\obstacle_detect.c</FilePath>
+            </File>
+            <File>
               <FileName>car_app.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\user\src\car_app.c</FilePath>
