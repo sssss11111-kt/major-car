@@ -1,0 +1,31 @@
+{
+  "box_format": "inclusive x_min,y_min,x_max,y_max of visible front face only",
+  "status": "developer_visual_annotation_pending_independent_review",
+  "positive": {
+    "100": [115, 48, 135, 56],
+    "104": [121, 45, 140, 53],
+    "108": [122, 47, 142, 55],
+    "112": [123, 52, 145, 60],
+    "116": [126, 60, 152, 69],
+    "118": [129, 68, 159, 78],
+    "120": [136, 87, 173, 100],
+    "152": [139, 92, 179, 105],
+    "154": [121, 65, 149, 76],
+    "160": [69, 47, 88, 55],
+    "162": [76, 43, 96, 51],
+    "166": [69, 47, 87, 55],
+    "168": [58, 53, 79, 62],
+    "170": [56, 59, 81, 70],
+    "172": [40, 70, 73, 82],
+    "190": [16, 92, 56, 106],
+    "200": [86, 59, 109, 69]
+  },
+  "negative": [132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 178, 180, 182, 184, 186],
+  "excluded": {
+    "122-129": "right face or brick clipped at bottom/right",
+    "156-158": "hand contacts or occludes brick",
+    "174-177": "left face or brick clipped at bottom/left",
+    "188": "partial brick enters at bottom",
+    "192-198": "hand occlusion or person in the lane"
+  }
+}
