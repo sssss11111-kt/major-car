@@ -39,14 +39,25 @@ def load_frames():
 def road_reference(gray, lines):
     roi = np.zeros_like(gray, dtype=bool)
     reference = np.zeros(HEIGHT, dtype=np.int16)
+    lefts, centers, rights = lines.astype(int)
+    valid = ((lefts > 2) & (lefts < centers) & (centers < rights) & (rights < WIDTH - 3)
+             & (rights - lefts >= 35) & (rights - lefts <= 170))
     for y in range(TOP, BOTTOM + 1):
         # Use a row just below the front face as a corridor proxy, limiting
         # false boundaries caused by the face itself. SF2 display rows are
         # approximate. On board the input must carry measured-row provenance.
         anchor = min(y + ANCHOR_OFFSET, 105)
-        left, center, right = map(int, lines[:, anchor])
-        if not (2 < left < center < right < WIDTH - 3 and 35 <= right - left <= 170):
-            continue
+        if valid[anchor]:
+            left, right = lefts[anchor], rights[anchor]
+        else:
+            before = next((i for i in range(anchor - 1, max(-1, anchor - 13), -1) if valid[i]), None)
+            after = next((i for i in range(anchor + 1, min(106, anchor + 13)) if valid[i]), None)
+            if before is None or after is None or after - before > 12:
+                continue
+            if abs(lefts[after] - lefts[before]) > 24 or abs(rights[after] - rights[before]) > 24:
+                continue
+            left = lefts[before] + int((lefts[after] - lefts[before]) * (anchor - before) / (after - before))
+            right = rights[before] + int((rights[after] - rights[before]) * (anchor - before) / (after - before))
         l, r = left + MARGIN, right - MARGIN
         roi[y, l:r + 1] = True
         row = gray[y, l:r + 1]
