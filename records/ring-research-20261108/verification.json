@@ -1,0 +1,39 @@
+{
+  "version": "C11LAP30R12",
+  "baseline": "C11LAP30R11",
+  "baseline_commit": "98fbb1fa226ba0a2d003a4b24c214cd433d3b361",
+  "research_complete": true,
+  "keil_build": {
+    "command": "tools/build-candidate.ps1",
+    "errors": 0,
+    "warnings": 0,
+    "passed": true,
+    "hardware_accessed": false
+  },
+  "host_checks": {
+    "passed": false,
+    "reason": "zig executable was not available in this workspace, so the existing Zig replay suite was not run"
+  },
+  "hardware": {
+    "flashed": false,
+    "reset": false,
+    "real_track_tested": false
+  },
+  "algorithm_change": {
+    "primary": "retain the complete measured opening path when observable",
+    "fallback": "follow a current-frame white corridor from the near row toward the selected branch",
+    "guards": [
+      "every target point must be current-frame white",
+      "adjacent samples are limited to 10 pixels laterally",
+      "at least 12 samples are required",
+      "same-side displacement of at least 4 pixels is required",
+      "fallback is enabled only with active roundabout guidance and current near-field validity"
+    ]
+  },
+  "limits": [
+    "The fallback has only software and Keil build evidence.",
+    "Servo direction, speed delay, encoder scale and physical lateral displacement remain uncalibrated.",
+    "R11 exit recovery and field fault timing remain unresolved.",
+    "This candidate must not be described as a real-track pass."
+  ]
+}

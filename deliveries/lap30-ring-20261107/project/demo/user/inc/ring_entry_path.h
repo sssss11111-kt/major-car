@@ -560,5 +560,102 @@ static int ep_build(const uint8_t *raw, const uint8_t *thresholds,
     ep_commit_opening(&openings[accepted], side);
     return 1;
 }
+
+/*
+ * Stage-specific fallback used when the full opening-to-endpoint search has no
+ * solution.  The original search is useful when the whole branch is visible,
+ * but a 188x120 camera often sees only a short white corridor at the throat.
+ * This fallback follows that corridor from the near row toward the selected
+ * side.  It never writes a point that is not white in the current frame and it
+ * bounds the lateral step between adjacent samples.
+ */
+static int ep_build_measured_corridor(const uint8_t *raw, const uint8_t *thresholds,
+                                      int side, int start_x, entry_path_t *path) {
+    const int direction = side < 0 ? -1 : 1;
+    int previous = start_x;
+    int first = -1, last = -1;
+    int previous_y = EP_BOTTOM;
+    int count = 0;
+    int lateral_shift = 0;
+    memset(path, 0, sizeof *path);
+    path->inferred = 0;
+    path->boundary_source = 1;
+    path->support = 0;
+    for (int y = EP_BOTTOM; y >= EP_TOP + 8; y -= 2) {
+        int best_start = -1, best_end = -1, best_score = 1000000;
+        int desired = start_x + direction * ((EP_BOTTOM - y) * 35 / 100);
+        if (desired < 12) desired = 12;
+        if (desired > EP_WIDTH - 13) desired = EP_WIDTH - 13;
+        for (int x = 0; x < EP_WIDTH;) {
+            int run_start, run_end, width, center, score;
+            while (x < EP_WIDTH && !ep_white(raw, thresholds, x, y)) ++x;
+            run_start = x;
+            while (x < EP_WIDTH && ep_white(raw, thresholds, x, y)) ++x;
+            run_end = x - 1;
+            width = run_end - run_start + 1;
+            if (width < 10) continue;
+            center = desired;
+            if (center < run_start + 2 || center > run_end - 2)
+                center = run_start + width / 2;
+            if (count && ep_abs(center - previous) > 12) continue;
+            /* Prefer the run that continues the selected side while retaining
+             * temporal continuity. A branch on the opposite side is rejected
+             * once a same-side displacement is already observed. */
+            if (count && lateral_shift > 3 &&
+                direction * (center - start_x) < -2) continue;
+            score = 3 * ep_abs(center - previous) + ep_abs(center - desired);
+            if (score < best_score) {
+                best_score = score;
+                best_start = run_start;
+                best_end = run_end;
+            }
+        }
+        if (best_start < 0) {
+            if (count < 6) { memset(path, 0, sizeof *path); path->failure = 8; return 0; }
+            break;
+        }
+        {
+            int center = best_start + (best_end - best_start) / 2;
+            int delta = center - previous;
+            if (count && ep_abs(delta) > 10) {
+                center = previous + (delta > 0 ? 10 : -10);
+                if (center < best_start || center > best_end) {
+                    if (count < 6) { memset(path, 0, sizeof *path); path->failure = 8; return 0; }
+                    break;
+                }
+            }
+            if (count == 0) first = center;
+            last = center;
+            if (direction * (center - start_x) > lateral_shift)
+                lateral_shift = direction * (center - start_x);
+            memset(&path->points[count], 0, sizeof(path->points[count]));
+            path->points[count].x = (uint8_t)center;
+            path->points[count].y = (uint8_t)y;
+            path->points[count].left_x = (uint8_t)best_start;
+            path->points[count].left_y = (uint8_t)y;
+            path->points[count].right_x = (uint8_t)best_end;
+            path->points[count].right_y = (uint8_t)y;
+            path->points[count].measured = 3;
+            path->curve_t[count] = (float)(EP_BOTTOM - y) / (float)(EP_BOTTOM - EP_TOP);
+            ++count;
+            previous = center;
+            previous_y = y;
+        }
+        if (first >= 0 && previous_y <= EP_TOP + 10 && count >= 12) break;
+    }
+    if (count < 12 || last < 0 || first < 0 || lateral_shift < 4) {
+        memset(path, 0, sizeof *path);
+        path->failure = 8;
+        return 0;
+    }
+    path->count = (uint16_t)count;
+    path->error = (int16_t)(path->points[count / 2].x - EP_WIDTH / 2);
+    path->preview = (int16_t)(path->points[(count * 3) / 4].x - EP_WIDTH / 2);
+    path->goal_x = path->points[count - 1].x;
+    path->goal_y = path->points[count - 1].y;
+    path->estimated_width = (float)(path->points[count / 2].right_x -
+                                    path->points[count / 2].left_x + 1);
+    return 1;
+}
 #endif /* RING_ENTRY_IMPLEMENTATION */
 #endif

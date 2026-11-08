@@ -120,7 +120,7 @@ void Init()
     {
         if (mt9v03x_init()) {
             tft180_show_string(0, 16, "mt9v03x reinit.");
-            telemetry_send("C11LAP30R11 CAMERA_RETRY\r\n");
+            telemetry_send("C11LAP30R12 CAMERA_RETRY\r\n");
         }
         else
             break;
@@ -275,11 +275,11 @@ int main(void)
     system_delay_ms(300);          // 等待主板其他外设上电完成
 
     wireless_ready = (wireless_uart_init() == 0); /* Supplied wireless driver: RTS and IRQ RX FIFO. */
-    telemetry_send("C11LAP30R11 AUTO BOOT\r\n");
+    telemetry_send("C11LAP30R12 AUTO BOOT\r\n");
     Init();
     img_process_reset();
     steering_reset(&steering_state,servo_motor_duty_middle,trial_ticks);
-    telemetry_send("C11LAP30R11 AUTO READY\r\n");
+    telemetry_send("C11LAP30R12 AUTO READY\r\n");
     tft180_clear();
     tft180_show_string(0, 0, wireless_ready ? "W:OK GRAY/BINARY" : "W:FAIL GRAY/BIN");
     interrupt_global_enable(0);
@@ -512,7 +512,7 @@ int main(void)
                 telemetry_send(timing_report);
             }
             char report[200]; report_tick=trial_ticks;
-            sprintf(report, "C11LAP30R11 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
+            sprintf(report, "C11LAP30R12 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
                 (unsigned long)trial_ticks,trial_running,trial_fault,(unsigned long)frame_count,
                 (unsigned long)good_frames,(unsigned long)(trial_ticks-frame_tick),
                 encoder_data_1,encoder_data_2,trial_left_pwm,trial_right_pwm);

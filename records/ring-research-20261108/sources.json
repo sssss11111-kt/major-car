@@ -1,0 +1,44 @@
+[
+  {
+    "repo": "FredBill1/RT1064_Smartcar",
+    "commit": "d0c6a78b6cfc51817c4a8012eb2137920e93e17d",
+    "url": "https://github.com/FredBill1/RT1064_Smartcar/tree/d0c6a78b6cfc51817c4a8012eb2137920e93e17d",
+    "platform": "RT1064",
+    "role": "platform and architecture reference"
+  },
+  {
+    "repo": "0Leeeezy0/20th_smart_vision",
+    "commit": "8dd003ecc91a148ccfa51cb7a695e41e88a86752",
+    "url": "https://github.com/0Leeeezy0/20th_smart_vision/tree/8dd003ecc91a148ccfa51cb7a695e41e88a86752",
+    "platform": "RT1064",
+    "role": "distance and angle gated ring phases"
+  },
+  {
+    "repo": "GTshenmi/AI-SmartCar",
+    "commit": "bef1e88e490452106038c7942bd3f45fd2d081e8",
+    "url": "https://github.com/GTshenmi/AI-SmartCar/tree/bef1e88e490452106038c7942bd3f45fd2d081e8",
+    "platform": "camera smart car",
+    "role": "multi-stage visual evidence"
+  },
+  {
+    "repo": "hccc1203/RunACCM2025",
+    "commit": "23e60c66605f53d6473dd264f16040f43db0178c",
+    "url": "https://github.com/hccc1203/RunACCM2025/tree/23e60c66605f53d6473dd264f16040f43db0178c",
+    "platform": "camera smart car",
+    "role": "stage-specific boundary tracking and exit confirmation"
+  },
+  {
+    "repo": "pancacake/Smart-Car-Competition",
+    "commit": "e1c274e998eb214d65be42e4510dad37e7f41ede",
+    "url": "https://github.com/pancacake/Smart-Car-Competition/tree/e1c274e998eb214d65be42e4510dad37e7f41ede",
+    "platform": "TC264",
+    "role": "visual plus motion feedback comparison"
+  },
+  {
+    "repo": "Sakuramdd/SeekFree_RT1064_Opensource_Library",
+    "commit": "35e14acf8733becc8a0235d10536f2705caaed65",
+    "url": "https://github.com/Sakuramdd/SeekFree_RT1064_Opensource_Library/tree/35e14acf8733becc8a0235d10536f2705caaed65",
+    "platform": "RT1064",
+    "role": "build and runtime reference"
+  }
+]

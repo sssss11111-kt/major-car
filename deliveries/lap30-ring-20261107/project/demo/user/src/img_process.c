@@ -1469,6 +1469,19 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
         s_entry_path.count = 0;
         if (s_scene_ok) {
             built = ep_build(_src_pixel_mat, row_thr, s_ring_guide, IP_W / 2, &s_entry_path);
+            /* A complete center-to-endpoint path is not always observable at
+             * the throat. Keep the measured-branch controller alive when the
+             * current frame contains a shorter, white corridor. This is a
+             * stage-specific fallback, not historical line continuation. */
+            if (!built && s_ring_guide && s_near_valid) {
+                entry_path_t measured_path;
+                if (ep_build_measured_corridor(_src_pixel_mat, row_thr,
+                                               s_ring_guide, IP_W / 2,
+                                               &measured_path)) {
+                    s_entry_path = measured_path;
+                    built = 1;
+                }
+            }
         } else {
             memset(&s_entry_path, 0, sizeof s_entry_path);
             s_entry_path.failure = 5;

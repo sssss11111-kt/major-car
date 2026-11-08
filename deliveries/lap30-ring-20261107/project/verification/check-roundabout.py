@@ -104,6 +104,25 @@ for side in [-1,1]:
   for x in range(110,188):raw[y*188+x]=20
  if side>0:raw=bytearray(v for y in range(120) for v in reversed(raw[y*188:(y+1)*188]))
  d.replay_reset();frame(raw);assert not d.replay_island(),('side rectangle',side)
+
+# R12 entry fallback: the far endpoint is outside the current white corridor,
+# so the complete opening search must fail while the measured corridor remains
+# usable. Every accepted path point is checked against the same current frame.
+raw=bytearray([20]*(188*120))
+for y in range(18,106):
+ left=30
+ right=160 if y>=80 else 120
+ for x in range(left,right+1): raw[y*188+x]=220
+d.replay_reset(); d.replay_guide(-1); d.replay_entry_mode(1)
+d.replay_frame((C.c_uint8*len(raw))(*raw))
+path=(C.c_uint8*(160*7))(); count=d.replay_entry_path(path)
+assert count>=12, ('measured corridor fallback path',count)
+for i in range(count):
+ x=path[i*7]; y=path[i*7+1]
+ assert raw[y*188+x]>100, ('fallback point outside current white corridor',i,x,y)
+assert path[(count-1)*7] < 94, ('fallback did not move toward selected branch',count)
+print('PASS: measured current-frame entry corridor fallback',count,'points')
+
 # Full camera -> 3-frame confirmation -> entry assistance -> stateful servo.
 # A distant island leaves near error zero: the old near-only path went straight.
 raw=scene()
