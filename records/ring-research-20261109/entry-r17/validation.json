@@ -1,0 +1,135 @@
+{
+  "version": "C11LAP30R17",
+  "baseline_commit": "0f28f865d92c7b75c9e66669d6c9ecaf082fb88b",
+  "created_utc": "2026-11-09T15:42:06.601473+00:00",
+  "build": {
+    "passed": true,
+    "errors": 0,
+    "warnings": 0,
+    "version_marker_in_hex": true,
+    "hex_sha256": "479f5c11e2c03ad49e01e95cf2a6e3d0b5ba757c2ee1acd72d9dfdbcfea378db"
+  },
+  "current_host_suite": {
+    "passed": true,
+    "command": "run-host-checks.py --current",
+    "supervisor_cases": 29,
+    "recovery_integration_checks": 105,
+    "final_state_machine_followup_passed": true
+  },
+  "historical_regression": {
+    "passed": false,
+    "reason": "Missing records/ring-research-20261107/entry-r8/comparison.html",
+    "exit_code": 1
+  },
+  "replay": [
+    {
+      "version": "R16",
+      "total": 239,
+      "valid": 228,
+      "path_frames": 161,
+      "first_entry": 52,
+      "first_invalid_after_entry": 155,
+      "max_angle_deg": 36.86989764584402,
+      "angle_violating_frames": []
+    },
+    {
+      "version": "R17",
+      "total": 239,
+      "valid": 228,
+      "path_frames": 144,
+      "first_entry": 58,
+      "first_invalid_after_entry": 155,
+      "max_angle_deg": 36.86989764584402,
+      "angle_violating_frames": [],
+      "invalid_frames": [
+        155,
+        156,
+        157,
+        158,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224
+      ],
+      "reacquisition_pending_frames": [
+        158,
+        224
+      ],
+      "forward_fit_frames": 133,
+      "max_forward_curve_inflections": 1,
+      "observed_island_side_violations": [],
+      "command_min": 78.95652770996094,
+      "command_max": 100.65126037597656,
+      "segments": [
+        {
+          "start": 1,
+          "end": 85,
+          "total": 85,
+          "valid": 85,
+          "path_frames": 28,
+          "invalid_frames": []
+        },
+        {
+          "start": 111,
+          "end": 264,
+          "total": 154,
+          "valid": 143,
+          "path_frames": 116,
+          "invalid_frames": [
+            155,
+            156,
+            157,
+            158,
+            218,
+            219,
+            220,
+            221,
+            222,
+            223,
+            224
+          ]
+        }
+      ]
+    }
+  ],
+  "key_frames_visually_reviewed": [
+    52,
+    55,
+    58,
+    60,
+    130,
+    198,
+    218,
+    224
+  ],
+  "source_hashes": {
+    "project/demo/user/inc/auto_start.h": "02a8325f6dd70483301217fc967067b78e73706b5852987cddd07aea75acbb7f",
+    "project/demo/user/inc/entry_bridge.h": "dfbe5d7d0411cf1034bebb56206a1f5ca19612bd285ff5af245a632e17d71975",
+    "project/demo/user/inc/img_process.h": "631bb914aea5b36a6c5986d05c31c1238b3a9a93bfcd90e38e11b3736053a102",
+    "project/demo/user/inc/isr.h": "ca84581f6686a0c1a88a5f211b286ec300257f9205ae6b3d909ab9f039518496",
+    "project/demo/user/inc/main.h": "cbf4da501a86c9679780a50740fb508b3827918f948473b8068c0dc863d0e7b3",
+    "project/demo/user/inc/pid.h": "eaaa5bab01a6dc4a76c57482e741d10223b5beae9b43baa3716325133065e3e7",
+    "project/demo/user/inc/ring_diag.h": "abc883c65daa84185c21e8ba562f6c48b17516638f918371ee284679f110ad09",
+    "project/demo/user/inc/ring_entry_path.h": "b6ff84bdadf12e28b24ecaf2cc23ae42b30fecdf76aede8057f0c12ef5ad7252",
+    "project/demo/user/inc/roundabout_control.h": "ec1591ad7b80fa8cbb14f64055a4b9f95074d49140e20965913ed962776d0e98",
+    "project/demo/user/inc/RT106X_config.h": "c594e50681cd7854958f300be01af793a6e044348a6ed691ce67db9f94300493",
+    "project/demo/user/inc/steering_control.h": "95457f7ffa369371cb1cbd67a6547464271ec0f8208db4a4009fbde590c4a2bc",
+    "project/demo/user/inc/track_geometry.h": "e4f59d12d46ebcf639f184ff25da62dd6052846f8941c27335a06af198069426",
+    "project/demo/user/src/auto_start.c": "7bf36364cbb50ce4086a5207074d57e848857e2250b6cf4148e23c2d978e91e6",
+    "project/demo/user/src/img_process.c": "fe4a0005ab6b39462ca7edc60a4f1e892bc91222c6520dd5d5ae3460d1bdb558",
+    "project/demo/user/src/isr.c": "a748a5f95066fa255294afe2e05fbdf35b55578cbdff829a725744504ff58c44",
+    "project/demo/user/src/main.c": "b090a2b13ba4806c9566b47869d810df512defeb339b6b93753aee9163eb3042",
+    "project/demo/user/src/pid.c": "cd1affd77e0af653cef8afa92483140fe530005453aba6b107b07f59c4c81357",
+    "project/demo/user/src/steering_control.c": "d5fab0915ee4195dca5badce7689b9c917c7cb1d9ba8d97d5fc7f8231e4b8b15"
+  },
+  "geometry_calibrated": false,
+  "metric_control_enabled": false,
+  "hardware_accessed": false,
+  "flashed": false,
+  "real_track_tested": false,
+  "release_ready": false,
+  "pushed": false
+}

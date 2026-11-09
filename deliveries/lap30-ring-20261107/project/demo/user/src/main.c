@@ -120,7 +120,7 @@ void Init()
     {
         if (mt9v03x_init()) {
             tft180_show_string(0, 16, "mt9v03x reinit.");
-            telemetry_send("C11LAP30R11 CAMERA_RETRY\r\n");
+            telemetry_send("C11LAP30R17 CAMERA_RETRY\r\n");
         }
         else
             break;
@@ -275,11 +275,11 @@ int main(void)
     system_delay_ms(300);          // 等待主板其他外设上电完成
 
     wireless_ready = (wireless_uart_init() == 0); /* Supplied wireless driver: RTS and IRQ RX FIFO. */
-    telemetry_send("C11LAP30R11 AUTO BOOT\r\n");
+    telemetry_send("C11LAP30R17 AUTO BOOT\r\n");
     Init();
     img_process_reset();
     steering_reset(&steering_state,servo_motor_duty_middle,trial_ticks);
-    telemetry_send("C11LAP30R11 AUTO READY\r\n");
+    telemetry_send("C11LAP30R17 AUTO READY\r\n");
     tft180_clear();
     tft180_show_string(0, 0, wireless_ready ? "W:OK GRAY/BINARY" : "W:FAIL GRAY/BIN");
     interrupt_global_enable(0);
@@ -314,6 +314,7 @@ int main(void)
             int applied_ring_guide=rb_guiding(&roundabout_state) ? -RB_TURN_SIGN:0;
             img_set_roundabout_guidance(applied_ring_guide);
             img_set_roundabout_entry(rb_guiding(&roundabout_state) ? roundabout_state.phase : 0);
+            img_set_exit_search((uint8_t)rb_exit_search(&roundabout_state));
             uint32 odometry_mask=interrupt_global_disable();
             float entry_distance=roundabout_state.distance_m, entry_yaw=roundabout_state.yaw_deg;
             uint32 entry_tick=trial_ticks;
@@ -341,16 +342,19 @@ int main(void)
             uint32 vision_mask=interrupt_global_disable();
             rd_pre[RD_PHASE_BEFORE]=roundabout_state.phase;
             rd_pre[RD_CONFIRM_BEFORE]=roundabout_state.confirm;
+            rb_geometry(&roundabout_state,img_get_entry_ready(),
+                        img_get_roundabout_corner_row(),img_get_exit_ready(),img_get_exit_error());
             rb_observe(&roundabout_state,img_get_roundabout_candidate(),img_get_near_valid(),
                        img_get_stripe_active(),img_get_road_recovered(),trial_running && !trial_bench);
             uint8 just_entered = roundabout_state.just_entered;
             rd_pre[RD_PHASE_AFTER]=roundabout_state.phase;
             rd_pre[RD_CONFIRM_AFTER]=roundabout_state.confirm;
             interrupt_global_enable(vision_mask);
-            if (just_entered) {
-                applied_ring_guide = -RB_TURN_SIGN;
+            if (rd_pre[RD_PHASE_BEFORE] != roundabout_state.phase) {
+                applied_ring_guide = rb_guiding(&roundabout_state) ? -RB_TURN_SIGN:0;
                 img_set_roundabout_guidance(applied_ring_guide);
-                img_set_roundabout_entry(1);
+                img_set_roundabout_entry(rb_guiding(&roundabout_state) ? roundabout_state.phase:0);
+                img_set_exit_search((uint8_t)rb_exit_search(&roundabout_state));
                 auxiliary_process((uint8_t *)raw_image, MT9V03X_H, MT9V03X_W, 127,
                                   left_line, mid_line, right_line);
                 valid = img_get_valid();
@@ -403,10 +407,12 @@ int main(void)
             float turn_error=rb_plan_entry_error(roundabout_state.phase,applied_ring_guide,
                 detected_error,img_get_roundabout_entry_error(),img_get_preview_error(),img_get_roundabout_preview_valid(),
                 valid,img_get_stripe_active());
+            if (entry_path->count) turn_error = detected_error;
+            uint8 metric_control=(uint8)ep_metric_error(entry_path,&turn_error);
             if (just_entered || (entry_was_preparing && img_get_entry_path()->count))
                 steering_prime_entry(&steering_state, turn_error);
             steering_result_t turn = steering_update(&steering_state,(int)turn_error,img_get_preview_error(),
-                img_get_preview_valid(),valid,(uint8)(trial_running && !trial_bench),trial_ticks,
+                (uint8)(!metric_control && img_get_preview_valid()),valid,(uint8)(trial_running && !trial_bench),trial_ticks,
                 servo_motor_duty_middle,SERVO_DIR,
                 MIN(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX),MAX(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX));
             steering_curve = turn.curve; steering_limited = turn.limited;
@@ -512,7 +518,7 @@ int main(void)
                 telemetry_send(timing_report);
             }
             char report[200]; report_tick=trial_ticks;
-            sprintf(report, "C11LAP30R11 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
+            sprintf(report, "C11LAP30R17 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
                 (unsigned long)trial_ticks,trial_running,trial_fault,(unsigned long)frame_count,
                 (unsigned long)good_frames,(unsigned long)(trial_ticks-frame_tick),
                 encoder_data_1,encoder_data_2,trial_left_pwm,trial_right_pwm);
@@ -521,7 +527,7 @@ int main(void)
             sprintf(vision_report,"VIS12 valid=%u error=%d rows=%u both=%u ready=%u\r\n",
                 vision_mode != 0, vision_error, usable_rows, both_rows, model_good);
             telemetry_send(vision_report);
-            char stripe_report[100];
+            char stripe_report[192];
             sprintf(stripe_report,"STRIPE29 active=%u rows=%u\r\n",
                 img_get_stripe_active(),img_get_stripe_rows());
             telemetry_send(stripe_report);
@@ -531,8 +537,9 @@ int main(void)
                 img_get_roundabout_evidence(),img_get_roundabout_corner_row(),
                 (int)img_get_roundabout_entry_error());
             telemetry_send(stripe_report);
-            sprintf(stripe_report,"RING30EXIT road=%u confirm=%u clear=%u\r\n",
-                img_get_road_recovered(),roundabout_state.exit_confirm,roundabout_state.clear);
+            sprintf(stripe_report,"RING30EXIT road=%u confirm=%u clear=%u search=%u branch=%u entry_ready=%u commit=%u\r\n",
+                img_get_road_recovered(),roundabout_state.exit_confirm,roundabout_state.clear,
+                rb_exit_search(&roundabout_state),img_get_exit_ready(),img_get_entry_ready(),roundabout_state.commit_confirm);
             telemetry_send(stripe_report);
             sprintf(stripe_report,"ENTRY30 status=%u points=%u goal_x=%u goal_y=%u reason=%u\r\n",
                 img_get_entry_status(),img_get_entry_path()->count,
@@ -545,8 +552,8 @@ int main(void)
                 telemetry_send(stripe_report);
             }
             char steering_report[192];
-            sprintf(steering_report,"STEER29 curve=%u near=%d preview=%d command10=%d limited=%u scale1000=%d bend=%u sev1000=%d slew=%u geom_cal=0\r\n",
-                steering_curve,vision_error,preview_error,(int)(steering_command*10.0f),steering_limited,(int)(steering_speed_scale*1000.0f),steering_bend,(int)(steering_severity*1000.0f),steering_slew);
+            sprintf(steering_report,"STEER29 curve=%u near=%d preview=%d command10=%d limited=%u scale1000=%d bend=%u sev1000=%d slew=%u geom_cal=%u\r\n",
+                steering_curve,vision_error,preview_error,(int)(steering_command*10.0f),steering_limited,(int)(steering_speed_scale*1000.0f),steering_bend,(int)(steering_severity*1000.0f),steering_slew,TRACK_GEOMETRY_CALIBRATED);
             telemetry_send(steering_report);
             char auto_report[80];
             uint8 phase = auto_phase;
@@ -655,11 +662,11 @@ void trial_tick(void)
     if (trial_running) {
         float effective_target = speed_target;
         if (!trial_bench) {
+            if (vision_ring && effective_target > RB_TARGET_COUNTS)
+                effective_target=RB_TARGET_COUNTS;
             effective_target *= steering_speed_scale;
             if (vision_degraded && effective_target > TRIAL_DRIVE_DEGRADED_TARGET)
                 effective_target = TRIAL_DRIVE_DEGRADED_TARGET;
-            if (vision_ring && effective_target > RB_TARGET_COUNTS)
-                effective_target=RB_TARGET_COUNTS;
             if ((vision_entry_kind==2 || vision_entry_kind==4) && effective_target>ENTRY_SINGLE_EDGE_TARGET)
                 effective_target=ENTRY_SINGLE_EDGE_TARGET;
             if (vision_entry_kind==5 && effective_target>ENTRY_BRIDGE_TARGET)

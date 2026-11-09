@@ -50,7 +50,12 @@ static uint8_t  s_ring_miny, s_ring_maxy;
 static int16_t  s_ring_entry_error;
 static int      s_ring_guide;
 static uint8_t s_entry_mode, s_entry_locked, s_entry_status;
-static entry_path_t s_entry_path;
+static entry_path_t s_entry_path, s_exit_path;
+static uint8_t s_entry_ready, s_exit_ready, s_exit_search, s_exit_separated;
+static int16_t s_exit_reference;
+static uint8_t s_exit_reference_valid;
+static uint8_t s_entry_half_width[IP_H], s_entry_island_mask[IP_H];
+static uint8_t s_entry_lost_frames, s_entry_reacquire;
 static entry_bridge_guard_t s_bridge_guard;
 static uint8_t s_bridge_near_threshold[7];
 static float s_odometry_distance, s_odometry_yaw, s_bridge_curvature;
@@ -395,7 +400,7 @@ static void ip_approach_bridge(const uint8_t *raw, const uint8_t *thr)
     memset(s_approach_side, 0, sizeof s_approach_side);
     s_approach_active = 0;
     if (s_approach_width_side && s_approach_width_age < 255) ++s_approach_width_age;
-    if (s_entry_locked || s_entry_mode > 1 || s_stripe_recovery || !s_scene_ok) {
+    if (s_entry_locked || (s_entry_mode > 1 && s_entry_mode != 5) || s_stripe_recovery || !s_scene_ok) {
         s_approach_width_side = 0;
         return;
     }
@@ -832,6 +837,8 @@ unsigned char get_threshold_otsu(const short *_hist_gram)
 
 void img_process_reset(void)
 {
+    memset(&ep_context, 0, sizeof ep_context);
+    s_entry_lost_frames = s_entry_reacquire = 0;
     memset(s_half, 0, sizeof s_half);
     memset(s_last_center, 0xff, sizeof s_last_center);
     s_half_ready = 0;
@@ -853,6 +860,7 @@ void img_process_reset(void)
     s_ring_entry_error = 0;
     s_ring_guide = 0;
     s_entry_mode = s_entry_locked = s_entry_status = 0;
+    s_entry_ready=s_exit_ready=s_exit_search=s_exit_reference_valid=0;
     memset(s_approach_side, 0, sizeof s_approach_side);
     s_approach_active = s_approach_width_side = s_approach_width_age = 0;
     ip_bridge_reset();s_odometry_valid=0;
@@ -868,8 +876,20 @@ void img_process_reset(void)
 }
 
 uint8_t img_get_road_recovered(void) { return s_valid && s_near_valid && s_road_recovered; }
+void img_set_exit_search(uint8_t enabled) { s_exit_search=enabled; }
+uint8_t img_get_entry_ready(void) { return s_entry_ready; }
+uint8_t img_get_exit_ready(void) { return s_exit_ready; }
+int16_t img_get_exit_error(void) { return s_exit_path.preview; }
 void img_set_roundabout_entry(uint8_t enabled) {
+    if (enabled != s_entry_mode) {
+        ip_bridge_reset();
+        s_exit_reference_valid=0;
+        s_entry_lost_frames=s_entry_reacquire=0;
+        if(enabled==3)s_entry_locked=1;
+    }
     if (!enabled) {
+        memset(&ep_context, 0, sizeof ep_context);
+        s_entry_lost_frames = s_entry_reacquire = 0;
         s_entry_locked = s_entry_status = 0;
         s_entry_path.count = 0;
         ep_reset();
@@ -930,6 +950,8 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
     uint8_t measured_pair[IP_H] = {0};
     int measured_l[IP_H] = {0}, measured_r[IP_H] = {0};
     s_road_recovered = 0;
+    s_entry_ready=s_exit_ready=s_exit_separated=0;
+    memset(&s_exit_path,0,sizeof s_exit_path);
     int      branch_hw_delta = 0, have_branch_hw_delta = 0;
 
     (void)_threshold_val;
@@ -959,7 +981,16 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
             int lo=0,hi=255;
             while(lo<255 && !band_hist[lo])++lo;
             while(hi>lo && !band_hist[hi])--hi;
-            if(hi-lo<IP_MIN_DR && lo>band_thr[b-1])band_thr[b]=band_thr[b-1];
+            uint32_t cumulative = 0;
+            int p05 = lo, p95 = hi, got_low = 0;
+            for (int value = lo; value <= hi; ++value) {
+                cumulative += band_hist[value];
+                if (!got_low && cumulative*100U >= total*5U) { p05 = value; got_low = 1; }
+                if (cumulative*100U >= total*95U) { p95 = value; break; }
+            }
+            /* A few dark speckles cannot turn a uniformly bright road band
+             * into a measured boundary. Check the supported intensity spread. */
+            if (p95-p05 < 16 && p05 > band_thr[b-1]) band_thr[b] = band_thr[b-1];
         }
         s_scene_ok = 0;
     }
@@ -1107,7 +1138,7 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
         ref = (y < IP_H - 1 && s_last_center[y + 1] >= 0) ? s_last_center[y + 1] : seed;
         {
             int pred_left = ref - ip_half(y);
-            if (s_ring_guide && !s_approach_active && (s_ring_mask[y] & (s_ring_guide<0 ? 1:2)) && !s_stripe_recovery) {
+            if (s_entry_mode != 5 && s_entry_mode != 3 && s_ring_guide && !s_approach_active && (s_ring_mask[y] & (s_ring_guide<0 ? 1:2)) && !s_stripe_recovery) {
                 in_guided_branch = 1;
                 if(s_ring_guide<0) {
                     r=s_ring_l[y];l=r;while(l>0 && bin[l-1])--l;
@@ -1225,7 +1256,7 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
      * up to the measured island lower corner (y_low) and arc apex (y_apex).
      * Every generated target point is strictly verified to lie on a current white pixel. */
     s_ring_entry_error = 0;
-    if (!s_approach_active && !s_stripe_recovery && near_rows >= 6 && s_ring_miny && s_ring_maxy >= s_ring_miny) {
+    if (s_entry_mode != 5 && s_entry_mode != 3 && !s_approach_active && !s_stripe_recovery && near_rows >= 6 && s_ring_miny && s_ring_maxy >= s_ring_miny) {
         int active_side = s_ring_guide;
         if (!active_side && s_ring_candidate) {
             active_side = (s_ring_mask[s_ring_maxy] == 2) ? 1 : -1;
@@ -1466,16 +1497,137 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
      * opening. Every target comes from the current binary image. */
     if (s_entry_mode && s_ring_guide && !s_stripe_recovery) {
         int built = 0;
+        for (int row = 0; row < IP_H; ++row) s_entry_half_width[row] = (uint8_t)ip_half(row);
+        entry_context_t context = {0};
+        context.active = 1;
+        /* Guided split rows can include disconnected background marks. Use
+         * one coherent current contour, never the union of unrelated rows. */
+        int chain = 0, best_chain = 0, best_end = 0;
+        memset(s_entry_island_mask,0,sizeof s_entry_island_mask);
+        for (int row = EP_TOP; row <= EP_BOTTOM; ++row) {
+            if (!(s_ring_mask[row] & (s_ring_guide < 0 ? 1 : 2))) { chain = 0; continue; }
+            if (chain && (ip_abs((int)s_ring_l[row]-s_ring_l[row-1]) > 8 ||
+                          ip_abs((int)s_ring_r[row]-s_ring_r[row-1]) > 8)) chain = 0;
+            ++chain;
+            if (chain > best_chain) { best_chain = chain; best_end = row; }
+        }
+        context.fresh_island = (uint8_t)(s_ring_miny && !s_ring_hold_age && best_chain >= 12);
+        if (context.fresh_island)
+            for (int row = best_end-best_chain+1; row <= best_end; ++row)
+                s_entry_island_mask[row] = s_ring_mask[row];
+        context.island_left = s_ring_l; context.island_right = s_ring_r;
+        context.island_mask = s_entry_island_mask; context.half_width = s_entry_half_width;
+        context.tick = s_odometry_tick; context.distance_m = s_odometry_distance;
+        context.odometry_valid = s_odometry_valid;
+        ep_set_context(&context);
         s_entry_path.count = 0;
-        if (s_scene_ok) {
-            built = ep_build(_src_pixel_mat, row_thr, s_ring_guide, IP_W / 2, &s_entry_path);
+        if (s_scene_ok && s_exit_search) {
+            entry_context_t exit_context=context;
+            exit_context.fresh_island=0;
+            exit_context.exit_mode=(uint8_t)(s_exit_reference_valid ? 2:1);
+            exit_context.exit_reference=s_exit_reference;
+            ep_set_context(&exit_context);
+            if(ep_build_measured_corridor(_src_pixel_mat,row_thr,s_ring_guide,IP_W/2,&s_exit_path)) {
+                /* Straight-enough measured far corridor plus a current widening
+                 * or divergence from the island bank. The motion window is
+                 * supplied by the FSM, never inferred from frame numbers. */
+                int far_pairs=0, separated=0;
+                for(int i=0;i<s_exit_path.count;++i) {
+                    const entry_point_t *p=&s_exit_path.points[i];
+                    if(p->y<=75 && p->measured==3)++far_pairs;
+                    if(context.fresh_island && context.island_mask[p->y] &&
+                       ((s_ring_guide<0 && p->x>context.island_right[p->y]+2) ||
+                        (s_ring_guide>0 && p->x+2<context.island_left[p->y])))++separated;
+                }
+                s_exit_separated=(uint8_t)(separated>=3);
+                s_exit_ready=(uint8_t)(far_pairs>=4 &&
+                    (s_entry_mode==3 || s_road_recovered || separated>=3 ||
+                     (s_ring_evidence & IP_RING_EV_CORNER_LOW)));
+            }
+            ep_set_context(&context);
+        }
+        if (s_scene_ok && s_entry_mode==3) {
+            /* Never fall back to the orbit branch after exit commitment. */
+            if(s_exit_ready) {
+                s_entry_path=s_exit_path;built=1;
+                s_exit_reference=s_exit_path.preview;s_exit_reference_valid=1;
+            }else {s_entry_path.failure=13;s_entry_locked=1;}
+        } else if (s_scene_ok) {
+            /* In ORBIT, follow the visible forward corridor first. A side
+             * opening is an ENTER target, never evidence to leave the ring. */
+            if (s_entry_mode == 2)
+                built = ep_build_measured_corridor(_src_pixel_mat, row_thr,
+                            s_ring_guide, IP_W / 2, &s_entry_path);
+            if (!built)
+                built = ep_build(_src_pixel_mat, row_thr, s_ring_guide, IP_W / 2, &s_entry_path);
+            /* A complete center-to-endpoint path is not always observable at
+             * the throat. Keep the measured-branch controller alive when the
+             * current frame contains a shorter, white corridor. This is a
+             * stage-specific fallback, not historical line continuation. */
+            if (!built && s_entry_path.failure != 7 && s_ring_guide) {
+                entry_path_t measured_path;
+                if (ep_build_measured_corridor(_src_pixel_mat, row_thr,
+                                               s_ring_guide, IP_W / 2,
+                                               &measured_path)) {
+                    s_entry_path = measured_path;
+                    built = 1;
+                } else if (s_entry_path.failure == 1 || s_entry_path.failure == 5) {
+                    s_entry_path.failure = measured_path.failure;
+                }
+            }
         } else {
             memset(&s_entry_path, 0, sizeof s_entry_path);
             s_entry_path.failure = 5;
             /* A brief loss of image contrast does not change the learned width.
              * Motion continuation is separately bounded by the bridge guard. */
         }
+#if TRACK_GEOMETRY_CALIBRATED
+        if(built) {
+            float command_error;
+            if(!ep_metric_error(&s_entry_path,&command_error)) {
+                built=0;s_entry_path.count=0;s_entry_path.failure=14;s_entry_locked=1;
+            }
+        }
+#endif
+        /* A usual ring bend is not an exit. Require independent, distinct
+         * continuations or a measured opposite-bank/ordinary-road continuation. */
+        if(s_exit_ready && s_entry_mode!=3 && !s_road_recovered && !s_exit_separated &&
+           (!built || ip_abs(s_exit_path.preview-s_entry_path.preview)<12))s_exit_ready=0;
+        if(s_entry_mode==5) {
+            /* Shadow planning: retain the measured approach command until the
+             * FSM confirms corner progress and a current executable path. */
+            s_entry_ready=(uint8_t)(built && context.fresh_island &&
+                s_entry_path.count>=12 && ip_abs(s_entry_path.error)<=42);
+            s_entry_path.count=0;s_entry_status=0;s_entry_locked=0;
+            /* The island-side rows above the throat must not pull the alignment
+             * command. Prefer raw near-bank midpoints while still in the stem. */
+            int sum=0,n=0;
+            for(int row=90;row<=IP_TRACK_BOTTOM;++row) {
+                if(!ep_white(_src_pixel_mat,row_thr,IP_W/2,row))continue;
+                int l=IP_W/2,r=l;
+                while(l>0 && ep_white(_src_pixel_mat,row_thr,l-1,row))--l;
+                while(r<IP_W-1 && ep_white(_src_pixel_mat,row_thr,r+1,row))++r;
+                if(l>2 && r<IP_W-3 && ip_width_matches(row,r-l+1)) {
+                    sum+=(l+r)/2;++n;
+                }
+            }
+            if(n>=6)s_error=(int16_t)(sum/n-IP_W/2);
+            s_ring_entry_error=s_error;
+            s_preview_valid=s_ring_preview_valid=0;
+            ip_bridge_reset();
+            return;
+        }
         if (s_entry_path.failure == 6) s_entry_locked = 1;
+        if (built && s_entry_lost_frames >= 2 && ++s_entry_reacquire < 2) {
+            built = 0; s_entry_locked = 1;
+            s_entry_path.count = 0; s_entry_path.failure = 9;
+        } else if (built) {
+            s_entry_lost_frames = s_entry_reacquire = 0;
+        } else {
+            s_entry_reacquire = 0;
+            if (s_entry_lost_frames < 255) ++s_entry_lost_frames;
+            if (s_entry_lost_frames >= 2) ep_reset();
+        }
         if (built) {
             memset(s_approach_side, 0, sizeof s_approach_side);
             s_approach_active = s_approach_width_side = 0;
@@ -1497,7 +1649,7 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
                 if (!_mid_line[point->y]) _mid_line[point->y] = point->x;
             }
         } else if (s_entry_locked) {
-            int bridged=(s_entry_path.failure==1 || s_entry_path.failure==5) &&
+            int bridged=(s_entry_path.failure==1 || s_entry_path.failure==5 || s_entry_path.failure==10) &&
                         ip_bridge_apply(_src_pixel_mat,row_thr);
             if (!bridged) {
                 ip_bridge_reset();

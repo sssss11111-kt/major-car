@@ -104,19 +104,55 @@ for side in [-1,1]:
   for x in range(110,188):raw[y*188+x]=20
  if side>0:raw=bytearray(v for y in range(120) for v in reversed(raw[y*188:(y+1)*188]))
  d.replay_reset();frame(raw);assert not d.replay_island(),('side rectangle',side)
-# Full camera -> 3-frame confirmation -> entry assistance -> stateful servo.
-# A distant island leaves near error zero: the old near-only path went straight.
+
+# R12 entry fallback: the far endpoint is outside the current white corridor,
+# so the complete opening search must fail while the measured corridor remains
+# usable. Every accepted path point is checked against the same current frame.
+raw=bytearray([20]*(188*120))
+for y in range(18,106):
+ center=94-(105-y)//3
+ left=center-40
+ right=center+40
+ for x in range(left,right+1): raw[y*188+x]=220
+d.replay_reset(); d.replay_guide(-1); d.replay_entry_mode(1)
+frame(raw)
+path=(C.c_uint8*(160*7))(); count=d.replay_entry_path(path)
+assert count>=12, ('measured corridor fallback path',count)
+for i in range(count):
+ x=path[i*7]; y=path[i*7+1]
+ assert raw[y*188+x]>100, ('fallback point outside current white corridor',i,x,y)
+assert path[(count-1)*7] < 94, ('fallback did not move toward selected branch',count)
+print('PASS: measured current-frame entry corridor fallback',count,'points')
+
+# Distant recognition starts alignment without pulling the near controller.
 raw=scene()
 for y in range(42,77):
  h=int((1-((y-59)/18)**2)**0.5*26)
  for x in range(94-h,95+h):raw[y*188+x]=20
 d.replay_ring_reset();out=(C.c_float*5)()
-for n in range(20):
+for n in range(12):
  d.replay_ring_step((C.c_uint8*len(raw))(*raw),n*2,out)
  assert out[3] and 69<=out[0]<=116,list(out)
- if n<2:assert out[1]==0 and out[2]==out[4],list(out)
- if n==2:assert out[1]==1 and out[0]>94.0,('zero-frame entry latency',list(out))
-assert out[1]==1 and out[2]<-20 and out[0]>105,list(out)
+ if n>=2:assert out[1]==5 and abs(out[2])<=1,('distant alignment',list(out))
+assert d.replay_entry_path((C.c_uint8*(160*7))())==0
+# Move the island's corner toward the camera, retaining current path evidence.
+d.replay_ring_reset()
+for n in range(3):
+ d.replay_ring_step((C.c_uint8*len(real))(*real),n*2,out)
+raw=bytearray(real)
+for y in range(21,106):raw[y*188:(y+1)*188]=real[(y-3)*188:(y-2)*188]
+for n in range(3,10):
+ d.replay_ring_step((C.c_uint8*len(raw))(*raw),n*2,out)
+ assert out[3] and 69<=out[0]<=116,list(out)
+path=(C.c_uint8*(160*7))(); count=d.replay_entry_path(path)
+assert count>=12,list(out)
+arc=0.0;near_x=path[(count-1)*7];preview_x=near_x;near_found=False
+for i in range(1,count):
+ arc+=math.hypot(int(path[i*7])-int(path[(i-1)*7]),int(path[i*7+1])-int(path[(i-1)*7+1]))
+ if arc>=30 and not near_found:near_x=path[i*7];near_found=True
+ if arc>=60:preview_x=path[i*7];break
+assert out[1]==1 and out[2]==near_x-94 and out[2]<-5 and out[0]>94.0,list(out)
+assert preview_x<94,('current ordered path preview points toward selected branch',preview_x)
 # Loss must revoke guidance even after entry, and stripes suppress entry aid.
 raw[80*188:106*188]=bytes([20])*(26*188)
 d.replay_ring_step((C.c_uint8*len(raw))(*raw),42,out)
@@ -136,7 +172,7 @@ d.replay_ring_reset();out=(C.c_float*5)()
 for n in range(12):
  d.replay_ring_step((C.c_uint8*len(real))(*real),n*2,out)
  assert out[3] and 69<=out[0]<=116,('integrated captured frame',n,list(out))
- assert out[1]==(0 if n<2 else 1),('confirmation timing',n,list(out))
+ assert out[1]==(0 if n<2 else 5),('stationary corner must not commit',n,list(out))
 print('PASS: actual captured entry remains valid through confirmation and guide activation')
 
 # LAP29 checks: zero missing rows on real entry frame, smooth transition at y=58->59,
@@ -153,4 +189,18 @@ for curvature in [-35,-25,-18,18,25,35]:
   for x in range(max(0,cx-hw),min(187,cx+hw)+1):raw[y*188+x]=220
  d.replay_reset()
  for _ in range(8):frame(raw);assert not d.replay_island(),('single-side curve fp',curvature)
-print('PASS: LAP29 auxiliary evidence, continuous entry target centerline, zero-frame entry response and curve negatives')
+print('PASS: LAP29 auxiliary evidence, continuous entry target centerline, alignment and measured entry response and curve negatives')
+
+# A nearly uniform bright road may contain texture. Splitting that bright
+# population must not create near-field boundary evidence.
+for road_level in [220,250]:
+ d.replay_reset();d.replay_guide(-1);d.replay_entry_mode(1)
+ base=bytearray(road_level if value==220 else value for value in scene())
+ for _ in range(3):assert frame(base)[0],('measured road primes texture test',road_level)
+ raw=bytearray(base)
+ for y in range(65,106):
+  for x in range(188):raw[y*188+x]=248+2*((7*x+3*y)%4)
+ for _ in range(3):
+  o=frame(raw)
+  assert not o[0],('bright road texture cannot authorize a near corridor',road_level,o)
+print('PASS: bright-only textured bands cannot manufacture current near boundaries')

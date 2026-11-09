@@ -245,6 +245,11 @@ int main(int argc,char **argv) {
         vision_bridge.active=0;good_frames=100;
         for(int i=0;i<110;i++)step();
         CHECK(!trial_running && auto_phase==AUTO_LOCKED && motor1==0 && motor2==0);
+    } else if (!strcmp(argv[1],"ring_curve_speed")) {
+        good_frames=5;for(int i=0;i<101;i++)step();
+        vision_ring=1;steering_speed_scale=0.8f;
+        encoder_data_1=64;encoder_data_2=64;step();
+        CHECK(trial_running && motor1==TRIAL_DRIVE_FEEDFORWARD && motor2==TRIAL_DRIVE_FEEDFORWARD);
     } else if (!strcmp(argv[1],"ring_fault")) {
         good_frames=5;for(int i=0;i<101;i++)step();
         roundabout_state.phase=RB_ENTER;roundabout_state.ticks=4499;
@@ -265,6 +270,6 @@ else:
     subprocess.run([zig,'cc','-Wall','-Wextra','-Werror','-I',str(p/'vision-stubs'),'-I',str(p.parent/'demo/user/inc'),str(generated),str(p.parent/'demo/user/src/pid.c'),str(p.parent/'demo/user/src/auto_start.c'),'-o',str(p/'auto-integration.exe')],check=True)
 for case in ['view','auto','lost','snapshot','stale','running_stale','bench','pwm100','single','curve_speed',
              'stripe_start','stripe_recovery','stripe_stale','stripe_lost','stripe_encoder',
-             'stripe_stall','stripe_degraded','no_stripe_target_change','ring_speed','ring_fault','entry_speed','bridge_time','bridge_distance','bridge_yaw',
+             'stripe_stall','stripe_degraded','no_stripe_target_change','ring_speed','ring_curve_speed','ring_fault','entry_speed','bridge_time','bridge_distance','bridge_yaw',
              'bridge_stale','bridge_encoder','bridge_stop','bridge_crossing']:
     subprocess.run([str(p/'auto-integration.exe'),case],check=True)

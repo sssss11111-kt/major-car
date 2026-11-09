@@ -1,6 +1,12 @@
-COMMAND ['C:\\Users\\liyuy\\AppData\\Local\\uv\\cache\\archive-v0\\lr7GmYIgFrzqabj5\\ziglang\\zig.exe', 'cc', '-I', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\demo\\user\\inc', '-I', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\vision-stubs', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\demo\\user\\src\\steering_control.c', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\test-steering.c', '-o', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\test-steering.exe']
+COMMAND ['D:\\桌面\\智能车\\.tmp\\ring-research-20261109\\toolchain\\ziglang\\zig.exe', 'cc', '-Wall', '-Wextra', '-Werror', '-I', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\demo\\user\\inc', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\test-track-geometry.c', '-o', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\test-track-geometry.exe']
+COMMAND ['D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\test-track-geometry.exe']
+PASS: metric projection, straight/arc curvature, mirror, infeasible radius, invalid data, pure-pursuit sign
+COMMAND ['D:\\桌面\\智能车\\.tmp\\ring-research-20261109\\toolchain\\ziglang\\zig.exe', 'cc', '-I', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\demo\\user\\inc', '-I', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\vision-stubs', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\demo\\user\\src\\steering_control.c', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\test-steering.c', '-o', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\test-steering.exe']
 COMMAND ['D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\test-steering.exe']
 PASS: continuous bend response, symmetric bounds, LAP29 targets, isolated spikes, slew bound, sharp bend/reversal authority, speed recovery, preview loss, invalid reset, duplicate tick, tick wrap
+COMMAND ['D:\\桌面\\智能车\\.tmp\\ring-research-20261109\\toolchain\\ziglang\\zig.exe', 'cc', '-O2', '-Wall', '-Wextra', '-Werror', '-I', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\demo\\user\\inc', '-I', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\vision-stubs', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\test-path-turn.c', '-o', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\test-path-turn.exe']
+COMMAND ['D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\test-path-turn.exe']
+PASS: 40-degree boundary, mirrors, zero/reversed segments, rounded curve, smooth global corridor, current island, expiry and dark gap
 COMMAND ['C:\\Program Files\\Python314\\python.exe', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\check-auto-integration.py']
 PASS: actual trial_tick view
 PASS: actual trial_tick auto
@@ -21,6 +27,7 @@ PASS: actual trial_tick stripe_stall
 PASS: actual trial_tick stripe_degraded
 PASS: actual trial_tick no_stripe_target_change
 PASS: actual trial_tick ring_speed
+PASS: actual trial_tick ring_curve_speed
 PASS: actual trial_tick ring_fault
 PASS: actual trial_tick entry_speed
 PASS: actual trial_tick bridge_time
@@ -46,18 +53,17 @@ PASS: mirrored normal curves do not trigger stripes
 PASS: combined vision/stateful steering retains history, preview gating and 69..116 soft bounds
 COMMAND ['C:\\Program Files\\Python314\\python.exe', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\check-hood-replay.py']
 [{"source": "snapshot-20261021-180609", "frames": 60, "first": [1, -4, 88, 38], "last": [1, -4, 88, 38]}, {"source": "snapshot-20261021-180619", "frames": 60, "first": [1, -4, 88, 34], "last": [1, -4, 88, 34]}]
-COMMAND ['C:\\Users\\liyuy\\AppData\\Local\\uv\\cache\\archive-v0\\lr7GmYIgFrzqabj5\\ziglang\\zig.exe', 'cc', '-Wall', '-Wextra', '-Werror', '-I', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\demo\\user\\inc', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\test-roundabout.c', '-o', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\test-roundabout.exe']
+COMMAND ['D:\\桌面\\智能车\\.tmp\\ring-research-20261109\\toolchain\\ziglang\\zig.exe', 'cc', '-Wall', '-Wextra', '-Werror', '-I', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\demo\\user\\inc', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\test-roundabout.c', '-o', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\test-roundabout.exe']
 COMMAND ['D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\test-roundabout.exe']
-PASS: roundabout entry, signed yaw, 270/360 visual exit gates, clean exit, cooldown and timeout
+PASS R17: alignment, corner progress, consecutive evidence, signed yaw, exit branch lock, recovery, cooldown, timeout
 COMMAND ['C:\\Program Files\\Python314\\python.exe', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\check-roundabout.py']
 PASS: both islands and mirrored guidance; 6 open-lobe variants x8 frames; 27 continuous-wave variants x8 frames; original negative and near-field cases
 PASS: captured side-clipped island and mirror
+PASS: measured current-frame entry corridor fallback 20 points
 PASS: side-open/rectangular negatives; integrated distant entry, loss, stripe priority and production wiring
 PASS: actual captured entry remains valid through confirmation and guide activation
-PASS: LAP29 auxiliary evidence, continuous entry target centerline, zero-frame entry response and curve negatives
+PASS: LAP29 auxiliary evidence, continuous entry target centerline, alignment and measured entry response and curve negatives
+PASS: bright-only textured bands cannot manufacture current near boundaries
 COMMAND ['C:\\Program Files\\Python314\\python.exe', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\deliveries\\lap30-ring-20261107\\project\\verification\\check-ring-recovery.py']
-PASS 67 R7 recovery/integrated checks [2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4] captured [{'frame': 113, 'phase': 1.0, 'entry_error': 43.05000305175781, 'valid': 1.0}, {'frame': 114, 'phase': 1.0, 'entry_error': 43.95000076293945, 'valid': 1.0}, {'frame': 115, 'phase': 1.0, 'entry_error': 46.400001525878906, 'valid': 1.0}, {'frame': 116, 'phase': 1.0, 'entry_error': 46.5, 'valid': 1.0}]
-COMMAND ['C:\\Program Files\\Python314\\python.exe', '-X', 'utf8', 'D:\\桌面\\智能车\\major-car-ring-fix-20261107\\records\\ring-research-20261107\\entry-r11\\entry-regression.py']
-PASS 877 ordered-path checks. First invalid: 205
-Selected results: [(117, 1, 122, 45.4, 72.99), (122, 1, 112, 50.3, 69.0), (126, 1, 100, 53.2, 69.0), (127, 2, 104, 51.3, 69.0), (128, 2, 110, 54.3, 69.0), (129, 2, 109, 48.85, 69.0), (130, 2, 107, 49.85, 69.0)]
-PASS: all LAP30 host-only checks
+PASS 105 R7 recovery/integrated checks [2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4] captured [{'frame': 113, 'phase': 5.0, 'entry_error': -10.0, 'valid': 1.0}, {'frame': 114, 'phase': 5.0, 'entry_error': -9.0, 'valid': 1.0}, {'frame': 115, 'phase': 5.0, 'entry_error': -8.0, 'valid': 1.0}, {'frame': 116, 'phase': 1.0, 'entry_error': 5.0, 'valid': 1.0}]
+PASS: scoped LAP30 host-only checks

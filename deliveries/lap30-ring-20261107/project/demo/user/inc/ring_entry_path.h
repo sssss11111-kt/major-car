@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <math.h>
+#include "track_geometry.h"
 
 /* Two-dimensional entrance path. Points are ordered from the car to the
  * selected side opening. Left/right are relative to that local direction. */
@@ -13,6 +14,20 @@
 #define EP_ROWS 44
 #define EP_CELLS (EP_COLS * EP_ROWS)
 #define EP_MAX_POINTS 160
+/* Image-space direction change between consecutive ordered segments. */
+#define EP_MAX_SEGMENT_TURN_DEG 40.0f
+#define EP_MIN_CURVE_POINT_DISTANCE 4
+#define EP_WIDTH_MAX_TICKS 100U
+#define EP_WIDTH_MAX_TRAVEL_M 0.20f
+
+typedef struct {
+    const uint8_t *island_left, *island_right, *island_mask, *half_width;
+    uint32_t tick;
+    float distance_m;
+    uint8_t active, fresh_island, odometry_valid;
+    uint8_t exit_mode;
+    int16_t exit_reference;
+} entry_context_t;
 
 typedef struct {
     uint8_t x, y, left_x, left_y, right_x, right_y, measured;
@@ -27,6 +42,28 @@ typedef struct {
     float curve[8]; /* Cubic control points, used by the native controller path. */
 } entry_path_t;
 
+/* Calibrated pure pursuit produces a complete command-equivalent error.
+ * Callers must disable pixel preview fusion when this succeeds. */
+static inline int ep_metric_error(const entry_path_t *path,float *error) {
+#if TRACK_GEOMETRY_CALIBRATED
+    float x=0,y=0;
+    if(path->count<2)return 0;
+    for(int i=0;i<path->count;++i) {
+        if(!track_project(path->points[i].x,path->points[i].y,&x,&y))return 0;
+        if(x*x+y*y>=TRACK_LOOKAHEAD_M*TRACK_LOOKAHEAD_M)break;
+    }
+    float d=x*x+y*y;
+    if(d<0.0001f)return 0;
+    float curvature=2*y/d;
+    if(fabsf(curvature)>TRACK_MAX_CURVATURE)return 0;
+    /* The existing controller is u=middle-0.5*error. Keep its filtering and slew. */
+    *error=-2.0f*TRACK_STEER_PER_RAD*atanf(0.200f*curvature);
+    return isfinite(*error);
+#else
+    (void)path;(void)error;return 0;
+#endif
+}
+
 #ifdef RING_ENTRY_IMPLEMENTATION
 static uint8_t ep_clearance[EP_CELLS];
 static uint32_t ep_cost[EP_CELLS];
@@ -36,6 +73,10 @@ static int ep_heap_count;
 static int ep_previous_width, ep_previous_side, ep_width_age;
 static float ep_width_reference_row, ep_previous_goal_y;
 static int ep_previous_outer[3], ep_previous_inner[3];
+static entry_context_t ep_context;
+static uint32_t ep_width_tick;
+static float ep_width_distance;
+static uint8_t ep_width_odometry_valid;
 static void ep_reset(void) {
     ep_previous_width = 0;
     ep_previous_side = 0;
@@ -45,10 +86,47 @@ static void ep_reset(void) {
     memset(ep_previous_inner,0,sizeof ep_previous_inner);
 }
 
+static void ep_set_context(const entry_context_t *context) {
+    ep_context = *context;
+    if (ep_previous_width && ((uint32_t)(context->tick - ep_width_tick) > EP_WIDTH_MAX_TICKS ||
+        (context->odometry_valid && ep_width_odometry_valid &&
+         (context->distance_m < ep_width_distance ||
+          context->distance_m - ep_width_distance > EP_WIDTH_MAX_TRAVEL_M)))) ep_reset();
+}
+
 static int ep_abs(int v) { return v < 0 ? -v : v; }
 static int ep_white(const uint8_t *raw, const uint8_t *thresholds, int x, int y) {
     return x >= 0 && x < EP_WIDTH && y >= EP_TOP && y <= EP_BOTTOM &&
            raw[y * EP_WIDTH + x] > thresholds[y];
+}
+
+static int ep_turn_allowed(float ax, float ay, float bx, float by) {
+    const float cosine = cosf(EP_MAX_SEGMENT_TURN_DEG * 0.01745329252f);
+    float dot = ax * bx + ay * by;
+    float length_product = (ax * ax + ay * ay) * (bx * bx + by * by);
+    return length_product > 0 && dot > 0 &&
+           dot * dot >= cosine * cosine * length_product;
+}
+
+static int ep_path_turn_allowed(const entry_path_t *path, int x, int y) {
+    if (!path->count) return 1;
+    const entry_point_t *last = &path->points[path->count - 1];
+    if (last->x == x && last->y == y) return 0;
+    if (path->count < 2) return 1;
+    const entry_point_t *before = &path->points[path->count - 2];
+    return ep_turn_allowed((float)last->x - before->x, (float)last->y - before->y,
+                           (float)x - last->x, (float)y - last->y);
+}
+
+static int ep_segment_white(const uint8_t *raw, const uint8_t *thresholds,
+                             int ax, int ay, int bx, int by) {
+    int dx = bx - ax, dy = by - ay;
+    int steps = ep_abs(dx) > ep_abs(dy) ? ep_abs(dx) : ep_abs(dy);
+    if (!steps) return ep_white(raw, thresholds, ax, ay);
+    for (int i = 0; i <= steps; ++i) {
+        if (!ep_white(raw, thresholds, ax + dx * i / steps, ay + dy * i / steps)) return 0;
+    }
+    return 1;
 }
 
 /* Indexed binary heap bounds both work and memory to the image grid. */
@@ -103,13 +181,14 @@ static int ep_edge_contrast(const uint8_t *raw,int x,int edge,int outer) {
     if (white_row < EP_TOP || white_row > EP_BOTTOM || dark_row < EP_TOP || dark_row > EP_BOTTOM) return 0;
     return (int)raw[white_row*EP_WIDTH+x] - raw[dark_row*EP_WIDTH+x] >= 12;
 }
+static int ep_goal_column(int side);
 /* Validate the selected boundary on a current 40-pixel contour. The nearest
  * previous contour selects its identity; it never supplies target pixels. */
 static int ep_contour_support(const uint8_t *raw,const uint8_t *thresholds,
                                int side,int edge,int outer) {
     int support = 0, previous = edge;
     for (int column=0; column<11; ++column) {
-        int x = side < 0 ? 182-4*column : 5+4*column;
+        int x = ep_goal_column(side) + (side < 0 ? -4 : 4) * column;
         int best = -1, distance = 8;
         for (int row=previous-6; row<=previous+6; ++row) {
             int transition;
@@ -136,13 +215,45 @@ typedef struct {
 
 typedef struct {
     int goal_y, source, support;
+    int goal_x;
     int outer[3], inner[3];
     float width, slope, score;
 } ep_opening_t;
 
+/* The goal follows the currently observed island extent. The outer image
+ * border is only a crop limit; it cannot identify the selected ring branch. */
+static int ep_goal_column(int side) {
+    int edge = side < 0 ? 0 : EP_WIDTH - 1;
+    if (!ep_context.active) return side < 0 ? 182 : 5;
+    if (!ep_context.fresh_island) return -1;
+    for (int y = EP_TOP; y <= EP_BOTTOM; ++y) {
+        if (!ep_context.island_mask[y]) continue;
+        if (side < 0 && ep_context.island_right[y] > edge) edge = ep_context.island_right[y];
+        if (side > 0 && ep_context.island_left[y] < edge) edge = ep_context.island_left[y];
+    }
+    if (side < 0) {
+        edge -= 6;
+        return edge > EP_WIDTH/2 + 12 ? edge : -1;
+    }
+    edge += 6;
+    return edge < EP_WIDTH/2 - 12 ? edge : -1;
+}
+
+static int ep_opening_borders_island(const uint8_t *raw, const uint8_t *thresholds,
+                                     int x, int last_white_row) {
+    if (!ep_context.active) return 1;
+    int y = last_white_row + 1;
+    return ep_context.fresh_island && y >= EP_TOP && y <= EP_BOTTOM &&
+           ep_context.island_mask[y] &&
+           x > ep_context.island_left[y] && x < ep_context.island_right[y] &&
+           !ep_white(raw, thresholds, x, y);
+}
+
 static int ep_column_openings(const uint8_t *raw, const uint8_t *thresholds,
                               int side, int column, ep_column_opening_t *out) {
-    int x = side < 0 ? 182 - 4 * column : 5 + 4 * column;
+    int goal_x = ep_goal_column(side);
+    if (goal_x < 0) return 0;
+    int x = goal_x + (side < 0 ? -4 : 4) * column;
     int count = 0, y = EP_TOP;
     while (y <= EP_BOTTOM && count < EP_MAX_OPENINGS) {
         int start, end, width, center, source;
@@ -152,6 +263,9 @@ static int ep_column_openings(const uint8_t *raw, const uint8_t *thresholds,
         end = y - 1;
         width = end - start + 1;
         if (width < 10) continue;
+        /* During entry/orbit, the current island must border this branch on
+         * its lower side. A white run BELOW that island is an exit candidate. */
+        if (!ep_opening_borders_island(raw, thresholds, x, end)) continue;
         if (start > EP_TOP + 2 && end < EP_BOTTOM - 1) {
             source = 1;
         } else {
@@ -221,6 +335,7 @@ static int ep_collect_openings(const uint8_t *raw, const uint8_t *thresholds,
             if (column != 2) continue;
             if (has_outer && has_inner) break;
             candidate.source = has_outer ? 2 : (has_inner ? 3 : 1);
+            candidate.goal_x = ep_goal_column(side);
             candidate.goal_y = sum / 3;
             candidate.slope = (columns[0][seed].center - previous) / 8.0f;
             candidate.support = 3;
@@ -255,6 +370,9 @@ static void ep_commit_opening(const ep_opening_t *opening, int side) {
         ep_width_reference_row = (float)opening->goal_y;
         ep_previous_side = side;
         ep_width_age = 0;
+        ep_width_tick = ep_context.tick;
+        ep_width_distance = ep_context.distance_m;
+        ep_width_odometry_valid = ep_context.odometry_valid;
     } else if (ep_width_age < 60000) {
         ++ep_width_age;
     }
@@ -323,6 +441,9 @@ static float ep_curve_score(const uint8_t *raw, const uint8_t *thresholds,
         if (!ep_white(raw, thresholds, px, py) || !ep_white(raw, thresholds, px-1, py) ||
             !ep_white(raw, thresholds, px+1, py) || !ep_white(raw, thresholds, px, py-1) ||
             !ep_white(raw, thresholds, px, py+1)) return -1;
+        if (ep_context.active && ep_context.fresh_island && ep_context.island_mask[py] &&
+            ((turn_side < 0 && px > ep_context.island_left[py]) ||
+             (turn_side > 0 && px < ep_context.island_right[py]))) return -1;
         if (last_x >= 0) {
             int steps = ep_abs(px-last_x) > ep_abs(py-last_y) ? ep_abs(px-last_x) : ep_abs(py-last_y);
             if (steps > 3) return -1;
@@ -396,6 +517,55 @@ static float ep_curve_score(const uint8_t *raw, const uint8_t *thresholds,
     return score;
 }
 
+/* Four-pixel spacing avoids 45-degree one-pixel stair steps caused by rounding
+ * an otherwise smooth curve. Validate the actual exported integer segments,
+ * including the final endpoint and every connecting white segment. */
+static int ep_sample_curve(const uint8_t *raw, const uint8_t *thresholds,
+                            const float *control, entry_path_t *path) {
+    path->count = 0;
+#if TRACK_GEOMETRY_CALIBRATED
+    float gx[3]={0},gy[3]={0};
+    for(int i=0;i<=32;++i) {
+        float x,y,dx,dy,ddx,ddy,k;
+        ep_curve_sample(control,i/32.0f,&x,&y,&dx,&dy,&ddx,&ddy);
+        gx[0]=gx[1];gx[1]=gx[2];gy[0]=gy[1];gy[1]=gy[2];
+        if(!track_project(x,y,&gx[2],&gy[2]))return 0;
+        if(i>=2 && !track_curvature(gx[0],gy[0],gx[1],gy[1],gx[2],gy[2],&k))return 0;
+    }
+#endif
+    for (int sample = 0; sample <= 128; ++sample) {
+        float x, y, dx, dy, ddx, ddy;
+        int px, py;
+        ep_curve_sample(control, sample / 128.0f, &x, &y, &dx, &dy, &ddx, &ddy);
+        px = (int)(x + 0.5f); py = (int)(y + 0.5f);
+        if (path->count) {
+            const entry_point_t *last = &path->points[path->count - 1];
+            int delta_x = px - last->x, delta_y = py - last->y;
+            if (delta_x * delta_x + delta_y * delta_y <
+                EP_MIN_CURVE_POINT_DISTANCE * EP_MIN_CURVE_POINT_DISTANCE) {
+                if (sample < 128) continue;
+                /* Merge the short terminal tail into the preceding segment. */
+                --path->count;
+            }
+        }
+        entry_point_t *point = &path->points[path->count];
+        memset(point, 0, sizeof *point);
+        point->x = (uint8_t)px; point->y = (uint8_t)py;
+        path->curve_t[path->count++] = sample / 128.0f;
+    }
+    int count = path->count;
+    path->count = 0;
+    for (int i = 0; i < count; ++i) {
+        const entry_point_t *point = &path->points[i];
+        if (!ep_path_turn_allowed(path, point->x, point->y)) return 0;
+        if (!ep_white(raw, thresholds, point->x, point->y)) return 0;
+        if (i && !ep_segment_white(raw, thresholds, path->points[i-1].x,
+                                  path->points[i-1].y, point->x, point->y)) return 0;
+        ++path->count;
+    }
+    return path->count >= 12;
+}
+
 static int ep_fit_curve(const uint8_t *raw, const uint8_t *thresholds,
                          int side, float end_slope, entry_path_t *path) {
     float start_x = path->points[0].x, start_y = path->points[0].y;
@@ -404,6 +574,7 @@ static int ep_fit_curve(const uint8_t *raw, const uint8_t *thresholds,
     float direction = side < 0 ? 1.0f : -1.0f;
     float tangent_scale = sqrtf(1.0f+end_slope*end_slope);
     float best = -1;
+    static entry_path_t sampled_path;
     for (int a = 0; a < 5; ++a) {
         for (int b = 0; b < 5; ++b) {
             float first_length = height*(0.40f+0.15f*a);
@@ -419,32 +590,40 @@ static int ep_fit_curve(const uint8_t *raw, const uint8_t *thresholds,
             control[5]=end_y-end_slope*last_length/tangent_scale;
             control[6]=end_x; control[7]=end_y;
             score = ep_curve_score(raw,thresholds,control,side,path->estimated_width,path->boundary_source);
-            if (score >= 0 && (best < 0 || score < best)) {
+            if (score >= 0 && (best < 0 || score < best) &&
+                ep_sample_curve(raw, thresholds, control, &sampled_path)) {
                 best = score;
                 memcpy(path->curve,control,sizeof control);
+                memcpy(path->points,sampled_path.points,sizeof path->points);
+                memcpy(path->curve_t,sampled_path.curve_t,sizeof path->curve_t);
+                path->count = sampled_path.count;
             }
         }
     }
     if (best < 0) return 0;
-    path->count = 0;
-    for (int sample = 0; sample <= 128; ++sample) {
-        float x,y,dx,dy,ddx,ddy;
-        int px,py;
-        ep_curve_sample(path->curve,sample/128.0f,&x,&y,&dx,&dy,&ddx,&ddy);
-        px=(int)(x+0.5f); py=(int)(y+0.5f);
-        if (path->count && path->points[path->count-1].x == px && path->points[path->count-1].y == py) continue;
-        memset(&path->points[path->count],0,sizeof(entry_point_t));
-        path->points[path->count].x = (uint8_t)px;
-        path->points[path->count].y = (uint8_t)py;
-        path->curve_t[path->count] = sample/128.0f;
-        ++path->count;
-    }
     return path->count >= 12;
+}
+
+/* Select control and preview by distance along the path. Extending a distant
+ * endpoint must not move the near controller to half of that longer path. */
+static void ep_control_points(entry_path_t *path) {
+    int near_index = path->count - 1, preview_index = path->count - 1;
+    float distance = 0;
+    for (int i = 1; i < path->count; ++i) {
+        float dx = (float)path->points[i].x - path->points[i-1].x;
+        float dy = (float)path->points[i].y - path->points[i-1].y;
+        distance += sqrtf(dx*dx + dy*dy);
+        if (distance >= 30.0f && near_index == path->count - 1) near_index = i;
+        if (distance >= 60.0f) { preview_index = i; break; }
+    }
+    path->error = (int16_t)(path->points[near_index].x - EP_WIDTH/2);
+    path->preview = (int16_t)(path->points[preview_index].x - EP_WIDTH/2);
 }
 
 static int ep_build_opening(const uint8_t *raw, const uint8_t *thresholds,
                             int side, int start_x, const ep_opening_t *opening, entry_path_t *path) {
-    int goal_y = opening->goal_y, goal_x = side < 0 ? 182 : 5;
+    int goal_y = opening->goal_y;
+    int goal_x = ep_context.active ? opening->goal_x : (side < 0 ? 182 : 5);
     int start, goal, current;
     memset(path, 0, sizeof *path);
     path->inferred = (uint8_t)(opening->source != 1);
@@ -530,6 +709,7 @@ static int ep_build_opening(const uint8_t *raw, const uint8_t *thresholds,
         int preview = path->count * 3 / 4;
         path->error = (int16_t)(path->points[lookahead].x - EP_WIDTH / 2);
         path->preview = (int16_t)(path->points[preview].x - EP_WIDTH / 2);
+        if (ep_context.active) ep_control_points(path);
     }
     return 1;
 }
@@ -559,6 +739,170 @@ static int ep_build(const uint8_t *raw, const uint8_t *thresholds,
     if (accepted < 0) { path->failure = (uint8_t)failure; return 0; }
     ep_commit_opening(&openings[accepted], side);
     return 1;
+}
+
+/* Fit the complete currently measured forward corridor with one cubic. The
+ * row observations constrain the fit, but are never exported as steering
+ * targets. This prevents edge-visibility changes from producing a snake. */
+static int ep_build_measured_corridor(const uint8_t *raw, const uint8_t *thresholds,
+                                      int side, int start_x, entry_path_t *path) {
+    float target[EP_ROWS], weight[EP_ROWS];
+    int left[EP_ROWS], right[EP_ROWS];
+    int rows = 0, observations = 0, near_observations = 0;
+    int reference = start_x, previous_left = start_x, previous_right = start_x;
+    static entry_path_t candidate, best_path;
+    memset(path, 0, sizeof *path);
+    path->failure = 8;
+    if (!side || !ep_white(raw, thresholds, start_x, EP_BOTTOM)) return 0;
+    for (int y = EP_BOTTOM; y >= EP_TOP+8; y -= 2) {
+        int selected_left = -1, selected_right = -1, selected_center = 0;
+        int selected_score = 1000000;
+        float selected_weight = 0;
+        for (int x = 0; x < EP_WIDTH;) {
+            int begin, end, center, score;
+            while (x < EP_WIDTH && !ep_white(raw, thresholds, x, y)) ++x;
+            begin = x;
+            while (x < EP_WIDTH && ep_white(raw, thresholds, x, y)) ++x;
+            end = x-1;
+            if (end-begin+1 < 10) continue;
+            if (!rows && (begin > start_x-2 || end < start_x+2)) continue;
+            if (rows && (end < previous_left || begin > previous_right)) continue;
+            center = (begin+end)/2;
+            float confidence = 1;
+            if (ep_context.active) {
+                int half = ep_context.half_width[y];
+                if (!begin && end == EP_WIDTH-1) {
+                    center = reference;
+                    confidence = 0;
+                } else if (!begin) center = end-half;
+                else if (end == EP_WIDTH-1) center = begin+half;
+                if (ep_context.fresh_island && ep_context.island_mask[y]) {
+                    if (side < 0 && end > ep_context.island_left[y]+1) continue;
+                    if (side > 0 && begin < ep_context.island_right[y]-1) continue;
+                    confidence = 2;
+                }
+            }
+            /* Exit search needs measured road banks, not an unbounded white
+             * opening or a transverse near edge. The selected branch must stay
+             * compatible with the last accepted exit endpoint. */
+            if (ep_context.exit_mode && y <= 75) {
+                int expected = 2*ep_context.half_width[y];
+                if (begin<=2 || end>=EP_WIDTH-3 ||
+                    end-begin+1<24 || end-begin+1>expected+20) continue;
+                if (ep_context.exit_mode==2 &&
+                    ep_abs(center-(EP_WIDTH/2+ep_context.exit_reference))>40) continue;
+            }
+            if (center < begin+2) center = begin+2;
+            if (center > end-2) center = end-2;
+            score = ep_abs(center-reference);
+            if (score >= selected_score) continue;
+            selected_score = score;
+            selected_left = begin; selected_right = end;
+            selected_center = center; selected_weight = confidence;
+        }
+        if (selected_left < 0) break;
+        /* An observed edge that jumps to another bank ends this lookahead.
+         * Joining both banks would bend the curve into a different branch. */
+        if (ep_context.active && !ep_context.fresh_island && !ep_context.exit_mode && rows &&
+            selected_weight > 0 && weight[rows-1] > 0 &&
+            ((selected_left > 0 && previous_left > 0 &&
+              ep_abs(selected_left-previous_left) > 16) ||
+             (selected_right < EP_WIDTH-1 && previous_right < EP_WIDTH-1 &&
+              ep_abs(selected_right-previous_right) > 16))) break;
+        left[rows] = selected_left; right[rows] = selected_right;
+        target[rows] = (float)selected_center;
+        weight[rows] = selected_weight;
+        if (selected_weight > 0) {
+            ++observations;
+            if (y >= EP_BOTTOM-30) ++near_observations;
+        }
+        reference = selected_center;
+        previous_left = selected_left; previous_right = selected_right;
+        ++rows;
+    }
+    path->support = (uint8_t)observations;
+    path->goal_y = (uint8_t)(EP_BOTTOM-2*(rows-1));
+#ifdef EP_FIT_DIAGNOSTICS
+    ep_fit_trace(rows,observations,near_observations,target,weight,left,right);
+#endif
+    if (rows < 12 || observations < 12 || near_observations < 4) { path->failure = 10; return 0; }
+    int measured_rows = rows;
+    for (rows = measured_rows; rows >= 12; rows -= 4) {
+        float bb = 0, be = 0, ee = 0, bx = 0, ex = 0;
+        int fit_observations = 0, fit_near = 0, fit_single = 0;
+        float height = 2.0f*(rows-1);
+        for (int i = 0; i < rows; ++i) {
+            float t = i/(float)(rows-1), b = 3*(1-t)*t*t, e = t*t*t;
+            float delta = target[i]-start_x, w = weight[i];
+            bb += w*b*b; be += w*b*e; ee += w*e*e;
+            bx += w*b*delta; ex += w*e*delta;
+            if (w > 0) {
+                ++fit_observations;
+                if (2*i <= 30) ++fit_near;
+                if (!left[i] || right[i] == EP_WIDTH-1) ++fit_single;
+            }
+        }
+        if (fit_observations < 12 || fit_near < 4) continue;
+        if (ep_context.exit_mode && EP_BOTTOM-(int)height>55) continue;
+        /* Integral of squared x'' penalizes bends across the entire curve. */
+        bb += 0.072f; be -= 0.036f; ee += 0.024f;
+        float determinant = bb*ee-be*be;
+        if (determinant < 0.0001f) { path->failure = 11; return 0; }
+        float fitted_b = (bx*ee-ex*be)/determinant;
+        float fitted_e = (ex*bb-bx*be)/determinant;
+        float initial_b_limit = 0.025f*height*height;
+        if (fitted_b > initial_b_limit) fitted_b = initial_b_limit;
+        if (fitted_b < -initial_b_limit) fitted_b = -initial_b_limit;
+        float best_score = -1;
+        for (int bend = -3; bend <= 3; ++bend) {
+            for (int end = -3; end <= 3; ++end) {
+                float b = fitted_b + 6*bend, e = fitted_e + 6*end;
+                float control[8] = {(float)start_x, EP_BOTTOM, (float)start_x, EP_BOTTOM-height/3,
+                                    start_x+b, EP_BOTTOM-2*height/3, start_x+e, EP_BOTTOM-height};
+                float score = 0.002f*(36*b*b-36*b*e+12*e*e);
+                int feasible = 1;
+                for (int i = 0; i < rows; ++i) {
+                    float t = i/(float)(rows-1);
+                    float x = start_x + 3*(1-t)*t*t*b + t*t*t*e;
+                    float delta = x-target[i];
+                    if (x < left[i]+2 || x > right[i]-2) { feasible = 0; break; }
+                    score += weight[i]*delta*delta;
+                }
+                if (!feasible || (best_score >= 0 && score >= best_score)) continue;
+                if (!ep_sample_curve(raw, thresholds, control, &candidate)) continue;
+                /* Check the continuous curve as well as the exported integer path. */
+                for (int i = 0; i <= 128; ++i) {
+                    float x,y,dx,dy,ddx,ddy;
+                    ep_curve_sample(control,i/128.0f,&x,&y,&dx,&dy,&ddx,&ddy);
+                    int px = (int)(x+0.5f), py = (int)(y+0.5f);
+                    float speed2 = dx*dx+dy*dy, cross = dx*ddy-dy*ddx;
+                    if (!ep_white(raw,thresholds,px-1,py) || !ep_white(raw,thresholds,px+1,py) ||
+                        cross*cross > 0.0225f*speed2*speed2*speed2 ||
+                        (ep_context.active && ep_context.fresh_island && ep_context.island_mask[py] &&
+                         ((side < 0 && px > ep_context.island_left[py]) ||
+                          (side > 0 && px < ep_context.island_right[py])))) { feasible = 0; break; }
+                }
+                if (!feasible) continue;
+                best_score = score;
+                best_path = candidate;
+                memcpy(best_path.curve,control,sizeof control);
+            }
+        }
+        if (best_score < 0) continue;
+        *path = best_path;
+        path->failure = 0;
+        path->boundary_source = 5;
+        path->support = (uint8_t)fit_observations;
+        path->inferred = (uint8_t)(fit_single > fit_observations/2);
+        path->goal_x = path->points[path->count-1].x;
+        path->goal_y = path->points[path->count-1].y;
+        path->estimated_width = (float)(right[rows/2]-left[rows/2]+1);
+        ep_measure_edges(raw,thresholds,path);
+        ep_control_points(path);
+        return 1;
+    }
+    path->failure = 12;
+    return 0;
 }
 #endif /* RING_ENTRY_IMPLEMENTATION */
 #endif

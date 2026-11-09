@@ -52,17 +52,21 @@ __declspec(dllexport) void replay_ring_step(uint8_t *raw,uint32_t tick,float *ou
  int guide=rb_guiding(&integrated_ring) ? -RB_TURN_SIGN:0;
  img_set_roundabout_guidance(guide);
  img_set_roundabout_entry(rb_guiding(&integrated_ring) ? integrated_ring.phase : 0);
+ img_set_exit_search((uint8_t)rb_exit_search(&integrated_ring));
  img_set_entry_odometry(integrated_ring.distance_m,integrated_ring.yaw_deg,tick,replay_odometry_enabled);
  auxiliary_process(raw,120,188,127,left,mid,right);
  int valid=img_get_valid();
  if(rb_busy(&integrated_ring) && !img_get_near_valid())valid=0;
+ int old_phase=integrated_ring.phase;
+ rb_geometry(&integrated_ring,img_get_entry_ready(),img_get_roundabout_corner_row(),img_get_exit_ready(),img_get_exit_error());
  rb_observe(&integrated_ring,img_get_roundabout_candidate(),img_get_near_valid(),img_get_stripe_active(),img_get_road_recovered(),1);
- if(integrated_ring.just_entered) {
-  /* Zero-frame confirmation-to-guidance activation: re-evaluate branch path
-   * immediately on the confirmation frame rather than waiting for the next frame. */
-  guide = -RB_TURN_SIGN;
+ if(old_phase!=integrated_ring.phase) {
+  /* Mirror production: any phase transition recomputes the same frame using
+   * the new planner mode, without counting the frame twice in the FSM. */
+  guide = rb_guiding(&integrated_ring) ? -RB_TURN_SIGN:0;
   img_set_roundabout_guidance(guide);
-  img_set_roundabout_entry(1);
+  img_set_roundabout_entry(rb_guiding(&integrated_ring) ? integrated_ring.phase:0);
+  img_set_exit_search((uint8_t)rb_exit_search(&integrated_ring));
   auxiliary_process(raw,120,188,127,left,mid,right);
   valid=img_get_valid();
   if(!img_get_near_valid())valid=0;
@@ -70,9 +74,11 @@ __declspec(dllexport) void replay_ring_step(uint8_t *raw,uint32_t tick,float *ou
  float e=rb_plan_entry_error(integrated_ring.phase,guide,img_get_error(),
      img_get_roundabout_entry_error(),img_get_preview_error(),
      img_get_roundabout_preview_valid(),valid,img_get_stripe_active());
+ if(img_get_entry_path()->count)e=img_get_error();
+ int metric_control=ep_metric_error(img_get_entry_path(),&e);
  if(integrated_ring.just_entered || (entry_was_preparing && img_get_entry_path()->count))
   steering_prime_entry(&replay_steering,e);
- steering_result_t r=steering_update(&replay_steering,(int)e,img_get_preview_error(),img_get_preview_valid(),valid,1,tick,
+ steering_result_t r=steering_update(&replay_steering,(int)e,img_get_preview_error(),!metric_control && img_get_preview_valid(),valid,1,tick,
      SERVO_MOTOR_MIDDLE,SERVO_DIR,SERVO_MOTOR_R_MAX,SERVO_MOTOR_L_MAX);
  out[0]=r.command;out[1]=(float)integrated_ring.phase;out[2]=e;
  out[3]=(float)valid;out[4]=(float)img_get_error();
@@ -82,6 +88,16 @@ __declspec(dllexport) int replay_road_recovered(void) {return img_get_road_recov
 
 __declspec(dllexport) void replay_ring_tick(int left,int right) {replay_odometry_enabled=1;rb_tick(&integrated_ring,left,right,1);}
 __declspec(dllexport) int replay_ring_phase(void) {return integrated_ring.phase;}
+/* Host-only scenario initialization. Never exported by firmware. */
+__declspec(dllexport) void replay_ring_scenario(int phase,float yaw) {
+ integrated_ring.phase=(uint8_t)phase;integrated_ring.yaw_deg=yaw;
+}
+__declspec(dllexport) void replay_gate_facts(int *out) {
+ out[0]=img_get_entry_ready();out[1]=img_get_roundabout_corner_row();
+ out[2]=img_get_entry_path()->failure;out[3]=img_get_entry_path()->error;
+ out[4]=img_get_exit_ready();out[5]=integrated_ring.commit_confirm;
+ out[6]=img_get_exit_error();out[7]=img_get_entry_path()->boundary_source;
+}
 
 __declspec(dllexport) int replay_entry_path(uint8_t *out) {
  const entry_path_t *path=img_get_entry_path();
