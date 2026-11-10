@@ -72,7 +72,9 @@
     "captured entry frame114: align before measured corner commitment",
     "captured entry frame115: align before measured corner commitment",
     "captured entry frame116: align before measured corner commitment",
-    "committed current branch retains measured direction",
+    "committed forward corridor has current ordered observations",
+    "entry command follows measured forward corridor at 30px",
+    "entry corridor remains in current white road",
     "captured sequence remains in entry phase during entrance",
     "current measured path primes reacquisition test",
     "current measured path primes reacquisition test",
@@ -114,12 +116,12 @@
     2,
     2,
     2,
-    2,
-    2,
     3,
     3,
     3,
     3,
+    4,
+    4,
     4,
     4,
     4,
@@ -148,7 +150,7 @@
     {
       "frame": 116,
       "phase": 1.0,
-      "entry_error": 5.0,
+      "entry_error": -5.0,
       "valid": 1.0
     }
   ]

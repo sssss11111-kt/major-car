@@ -6,8 +6,8 @@
 #define IP_WIDTH_CAL_ROW       90
 #define IP_WIDTH_CAL_PX        142
 #define IP_WIDTH_TOLERANCE_PX  15
-/* User-confirmed vehicle body enters the image at row 107 (zero based).
- * Keep one extra row of clearance; track processing ends at row 105. */
+/* Legacy control ROI ends at row 105. The current camera sees road below it.
+ * Lower rows may confirm entrance visibility without changing width calibration. */
 #define IP_BODY_MASK_START_ROW 107
 #define IP_HALF_PERSPECTIVE_SPAN 32.0f
 #include "ring_entry_path.h"
@@ -66,9 +66,10 @@ void img_set_exit_search(uint8_t enabled);
 uint8_t img_get_entry_ready(void);
 uint8_t img_get_exit_ready(void);
 int16_t img_get_exit_error(void);
+uint8_t img_get_ring_local_active(void);
 const entry_path_t *img_get_entry_path(void);
 /* 0 approach, 1 current paired path, 2 width-assisted path, 3 invalid,
- * 4 inner-edge path, 5 bounded odometry bridge. */
+ * 4 inner-edge path, 5 bounded odometry bridge, 6 local ring bend. */
 uint8_t img_get_entry_status(void);
 void img_set_entry_odometry(float distance_m,float yaw_deg,uint32_t tick,uint8_t valid);
 const entry_bridge_guard_t *img_get_entry_bridge_guard(void);

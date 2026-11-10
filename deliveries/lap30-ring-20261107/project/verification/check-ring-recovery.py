@@ -81,7 +81,18 @@ for meta,raw in captured[100:130]:
     if 113<=idx<=116:
         check(out[3]==1 and out[1]==(5 if idx<116 else 1),
               f'captured entry frame{idx}: align before measured corner commitment')
-        if idx==116:check(out[2]>=3.0,'committed current branch retains measured direction')
+        if idx==116:
+            path=(C.c_uint8*(160*7))();count=d.replay_entry_path(path)
+            check(count>=12,'committed forward corridor has current ordered observations')
+            arc=0.0;near_x=path[(count-1)*7]
+            for i in range(1,count):
+                arc+=((int(path[i*7])-int(path[(i-1)*7]))**2+
+                      (int(path[i*7+1])-int(path[(i-1)*7+1]))**2)**0.5
+                if arc>=30:
+                    near_x=path[i*7];break
+            check(out[2]==near_x-94,'entry command follows measured forward corridor at 30px')
+            check(all(raw[path[i*7+1]*188+path[i*7]]>100 for i in range(count)),
+                  'entry corridor remains in current white road')
         entry_rows.append({'frame':idx,'phase':out[1],'entry_error':out[2],'valid':out[3]})
 check(all(d.replay_ring_phase()==1 for _ in [0]),'captured sequence remains in entry phase during entrance')
 report={'hardware_accessed':False,'flashed':False,'real_track_tested':False,'checks':checks,'phases':phases,'captured_entry':entry_rows}

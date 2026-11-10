@@ -134,7 +134,12 @@ for n in range(12):
  d.replay_ring_step((C.c_uint8*len(raw))(*raw),n*2,out)
  assert out[3] and 69<=out[0]<=116,list(out)
  if n>=2:assert out[1]==5 and abs(out[2])<=1,('distant alignment',list(out))
-assert d.replay_entry_path((C.c_uint8*(160*7))())==0
+# R17-4 may publish a smooth alignment candidate before committing the turn.
+# The current near command above must remain centered in the approach stem.
+alignment_path=(C.c_uint8*(160*7))()
+alignment_count=d.replay_entry_path(alignment_path)
+for i in range(alignment_count):
+ assert raw[alignment_path[i*7+1]*188+alignment_path[i*7]]>100
 # Move the island's corner toward the camera, retaining current path evidence.
 d.replay_ring_reset()
 for n in range(3):

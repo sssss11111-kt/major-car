@@ -1,3 +1,51 @@
+# R17-4 已发布至 GitHub
+
+2026-11-11，通过 GitHub 连接器发布到 `codex/20261110-r17-4`。本分支保存 R17-4 的源码、已烧录 HEX、AXF、MAP、软件验证及回放资料。原始本地提交为 `23fc11365b196fbaa1df303d181bcc01b84389a6`。发布以已核对的 R17 提交为父提交生成快照，源码和固件按本地字节上传并校验 Git blob SHA。现场烧录原始记录保留本机。
+
+以下保留开发、验证和烧录过程。
+
+---
+
+# R17-4 已烧录
+
+2026-11-10 北京时间23:10:35，下载工具报告C11LAP30R17-4烧录成功，写入99904字节。固件HEX SHA-256为47dc143d0dfb78afb26dbb00f1e602e1a5b68acffa640935ca44321edd21e77f。结束状态HALTED，需要断电重新上电启动。按用户偏好以下载工具报告确认成功，readback_compared=false，real_track_tested=false，release_ready=false。
+
+前三次连接分别在1MHz、100kHz、50kHz报SWD No ACK，均未开始擦写。用户检查供电并重新插牢后，第4次在1MHz成功。原始结果保留本机records/lap30r17-4-field-20261110/flash-01～04/及同级日志。有效源码提交e17298b，说明修正3e3da8b，当前本地分支codex/20261110-r17-4。构建哈希清单与本次烧录HEX一致。
+
+已向用户通知烧录成功及冷启动要求。后续实车结果由用户反馈，离线仍有156、157、219～223共7帧拒绝。
+
+以下保留连接失败与候选开发过程。
+
+---
+
+# R17-4 烧录连接受阻
+
+2026-11-10 北京时间23:06～23:09，按用户要求烧录已编译R17-4。已核对源码/构建哈希，HEX为47dc143d0dfb78afb26dbb00f1e602e1a5b68acffa640935ca44321edd21e77f，99904字节，检测到一个ZF CMSIS-DAP下载器。1MHz、100kHz、50kHz三次连接核心板均报SWD No ACK，全部programming_started=false，R17-4尚未写入。当前hardware_accessed=true、flash_attempted=true、flashed=false。最近已确认烧录仍为R17-3。
+
+已请用户检查核心板逻辑供电及下载器到核心板的调试线，保持电机动力断开，接好后继续。三次原始结果在本机records/lap30r17-4-field-20261110/flash-01～03，烧录脚本为deliveries/lap30-ring-20261107/tools/flash-r17-4.py。下次选新输出目录flash-04，核对结果success后再更新已烧录状态。
+
+以下为软件候选开发记录。
+
+---
+
+# R17-4 已编译候选
+
+当前软件为 C11LAP30R17-4，基于 GitHub 1109环岛 的 R17 提交 d62a1b2608b931298ec4013092ef18f050cabba2。独立工作目录 D:/桌面/智能车/major-car-R17-4-20261110，本地分支 codex/20261110-r17-4。用户确认顺时针采集，第203帧正确出口朝右前方，相机下方可见道路且没有车头。
+
+ALIGN 从第127帧显示当前前向走廊候选，正式转入仍为第138帧。ENTER 优先拟合前向道路，完全入环后使用普通弯道近端/预瞄控制，并将接管延续至 EXIT。利用第106～119行补充判断入口下端是否仍可见，本段第143帧接管。远端丢支后结束预瞄，避免第203帧接向上方横向白带。
+
+本次页面仅含原编号120～247共128帧。R17有效117，R17-4有效121，新增失效0，仍拒绝156、157、219～223。第224帧只有较远7行观测恢复有效，保留问题说明。缺同步轮速，EXIT场景在203帧注入阶段，只能验证已确认出环后的路径选择。
+
+Keil 0错误0警告，当前主机检查通过，含29组监督器与107项恢复/集成检查，另260项专项通过。128帧/512画布浏览器检查通过。历史R11回归仍缺entry-r8/comparison.html。
+
+R17-4本轮 hardware_accessed=false、flashed=false、real_track_tested=false、release_ready=false。最近已核对的历史烧录为R17-3，HEX b7ebfa9d1ddc29e1fb193e7505f2f6ff8ba5bd020a85420fcc8f29d7f9c8be5b，见此前major-car-R17-orbit-only-20261110的现场记录。R17-4 HEX SHA-256为47dc143d0dfb78afb26dbb00f1e602e1a5b68acffa640935ca44321edd21e77f。Git命令行推送返回HTTP 403，本地结果尚未同步至GitHub。
+
+修改报告、裁剪后逐帧页面、CSV、关键帧对比及验证清单位于records/ring-research-20261110/r17-4/。源码、HEX、AXF、MAP及构建哈希位于deliveries/lap30-ring-20261107/。后续从本候选进行软件检查，硬件运行结果仍以现场记录为准。
+
+以下为R17基线历史。
+
+---
+
 # R17 已烧录，发布到 1109环岛
 
 2026-11-09 北京时间 23:47，下载工具报告 C11LAP30R17 烧录成功，写入 98,048 字节。HEX SHA-256 为 479f5c11e2c03ad49e01e95cf2a6e3d0b5ba757c2ee1acd72d9dfdbcfea378db，烧录结束状态为 HALTED，需要冷启动。用户随后要求停止，再于 2026-11-10 要求将 R17 发布到 1109环岛。
