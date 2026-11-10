@@ -57,3 +57,6 @@
 /deliveries/lap30-ring-20261107/tools/flash-candidate.py -text
 /deliveries/lap30-ring-20261107/historical-baseline/** -text
 /records/lap30r11-field-20261107/flash-01/flash.log -text
+
+# Preserve exact R17 source and firmware bytes in release checkouts.
+/deliveries/lap30-ring-20261107/** -text
