@@ -64,6 +64,7 @@ void img_set_roundabout_guidance(int side);
 void img_set_roundabout_entry(uint8_t enabled);
 void img_set_exit_search(uint8_t enabled);
 uint8_t img_get_entry_ready(void);
+uint8_t img_get_entry_path_safe(void);
 uint8_t img_get_exit_ready(void);
 int16_t img_get_exit_error(void);
 const entry_path_t *img_get_entry_path(void);

@@ -71,12 +71,17 @@ __declspec(dllexport) void replay_ring_step(uint8_t *raw,uint32_t tick,float *ou
   valid=img_get_valid();
   if(!img_get_near_valid())valid=0;
  }
+ if(integrated_ring.just_entered && !img_get_entry_path_safe()) {
+  rb_reject_entry(&integrated_ring);
+  valid=0;
+ }
  float e=rb_plan_entry_error(integrated_ring.phase,guide,img_get_error(),
      img_get_roundabout_entry_error(),img_get_preview_error(),
      img_get_roundabout_preview_valid(),valid,img_get_stripe_active());
  if(img_get_entry_path()->count)e=img_get_error();
  int metric_control=ep_metric_error(img_get_entry_path(),&e);
- if(integrated_ring.just_entered || (entry_was_preparing && img_get_entry_path()->count))
+ if(integrated_ring.just_entered)steering_blend_entry(&replay_steering,e);
+ else if(entry_was_preparing && img_get_entry_path()->count)
   steering_prime_entry(&replay_steering,e);
  steering_result_t r=steering_update(&replay_steering,(int)e,img_get_preview_error(),!metric_control && img_get_preview_valid(),valid,1,tick,
      SERVO_MOTOR_MIDDLE,SERVO_DIR,SERVO_MOTOR_R_MAX,SERVO_MOTOR_L_MAX);

@@ -78,6 +78,41 @@ static void check_current_branch(void) {
     ep_reset();
 }
 
+static void check_entry_island_clearance(void) {
+    entry_context_t context = {0};
+    context.active = context.fresh_island = 1;
+    context.island_left = island_left;
+    context.island_right = island_right;
+    context.island_mask = island_mask;
+    ep_set_context(&context);
+    memset(island_mask, 0, sizeof island_mask);
+    for (int y = 45; y <= 80; ++y) {
+        island_mask[y] = 3;
+        island_left[y] = 80;
+        island_right[y] = 107;
+    }
+    path.count = 2;
+    for (int side = -1; side <= 1; side += 2) {
+        path.points[0].x = path.points[1].x = (uint8_t)(side < 0 ? 60 : 127);
+        path.points[0].y = 95;
+        path.points[1].y = 55;
+        assert(ep_entry_clearance_ok(&path, side));
+        /* The ends are above and below the bank. Check the interior of the
+         * segment, where it would pass one pixel from the current island. */
+        path.points[0].x = path.points[1].x = (uint8_t)(side < 0 ? 79 : 108);
+        path.points[1].y = 30;
+        assert(!ep_entry_clearance_ok(&path, side));
+        /* The island corner is visible slightly below the end of the path. */
+        path.points[0].y = 39;
+        assert(!ep_entry_clearance_ok(&path, side));
+    }
+    context.fresh_island = 0;
+    ep_set_context(&context);
+    assert(!ep_entry_clearance_ok(&path, -1));
+    memset(&context, 0, sizeof context);
+    ep_set_context(&context);
+}
+
 static void check_exported_path(void) {
     assert(path.count >= 12);
     for (int i = 0; i < path.count; ++i) {
@@ -151,6 +186,7 @@ int main(void) {
     memset(raw, 220, sizeof raw);
     memset(thresholds, 100, sizeof thresholds);
     check_current_branch();
+    check_entry_island_clearance();
     memset(raw,220,sizeof raw);
     const float curve[8] = {94,100,94,60,150,50,182,50};
     assert(ep_sample_curve(raw, thresholds, curve, &path));

@@ -120,7 +120,7 @@ void Init()
     {
         if (mt9v03x_init()) {
             tft180_show_string(0, 16, "mt9v03x reinit.");
-            telemetry_send("C11LAP30R17 CAMERA_RETRY\r\n");
+            telemetry_send("C11LAP30R17E1 CAMERA_RETRY\r\n");
         }
         else
             break;
@@ -275,11 +275,11 @@ int main(void)
     system_delay_ms(300);          // 等待主板其他外设上电完成
 
     wireless_ready = (wireless_uart_init() == 0); /* Supplied wireless driver: RTS and IRQ RX FIFO. */
-    telemetry_send("C11LAP30R17 AUTO BOOT\r\n");
+    telemetry_send("C11LAP30R17E1 AUTO BOOT\r\n");
     Init();
     img_process_reset();
     steering_reset(&steering_state,servo_motor_duty_middle,trial_ticks);
-    telemetry_send("C11LAP30R17 AUTO READY\r\n");
+    telemetry_send("C11LAP30R17E1 AUTO READY\r\n");
     tft180_clear();
     tft180_show_string(0, 0, wireless_ready ? "W:OK GRAY/BINARY" : "W:FAIL GRAY/BIN");
     interrupt_global_enable(0);
@@ -362,7 +362,14 @@ int main(void)
                 detected_both = img_get_both_rows();
                 detected_error = img_get_error();
             }
+            uint8 rejected_entry = just_entered && !img_get_entry_path_safe();
             vision_mask=interrupt_global_disable();
+            if (rejected_entry) {
+                rb_reject_entry(&roundabout_state);
+                rd_pre[RD_PHASE_AFTER]=roundabout_state.phase;
+                just_entered=0;
+                valid=0; /* Existing loss supervisor handles this frame. */
+            }
             uint8 degraded = valid && (detected_both < 3 || img_get_stripe_active() ||
                                       img_get_roundabout_candidate() || rb_busy(&roundabout_state) ||
                                       rb_suspect(&roundabout_state));
@@ -409,7 +416,8 @@ int main(void)
                 valid,img_get_stripe_active());
             if (entry_path->count) turn_error = detected_error;
             uint8 metric_control=(uint8)ep_metric_error(entry_path,&turn_error);
-            if (just_entered || (entry_was_preparing && img_get_entry_path()->count))
+            if (just_entered) steering_blend_entry(&steering_state, turn_error);
+            else if (entry_was_preparing && entry_path->count)
                 steering_prime_entry(&steering_state, turn_error);
             steering_result_t turn = steering_update(&steering_state,(int)turn_error,img_get_preview_error(),
                 (uint8)(!metric_control && img_get_preview_valid()),valid,(uint8)(trial_running && !trial_bench),trial_ticks,
@@ -518,7 +526,7 @@ int main(void)
                 telemetry_send(timing_report);
             }
             char report[200]; report_tick=trial_ticks;
-            sprintf(report, "C11LAP30R17 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
+            sprintf(report, "C11LAP30R17E1 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
                 (unsigned long)trial_ticks,trial_running,trial_fault,(unsigned long)frame_count,
                 (unsigned long)good_frames,(unsigned long)(trial_ticks-frame_tick),
                 encoder_data_1,encoder_data_2,trial_left_pwm,trial_right_pwm);

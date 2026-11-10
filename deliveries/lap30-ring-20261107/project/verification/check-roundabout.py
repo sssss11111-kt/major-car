@@ -141,9 +141,19 @@ for n in range(3):
  d.replay_ring_step((C.c_uint8*len(real))(*real),n*2,out)
 raw=bytearray(real)
 for y in range(21,106):raw[y*188:(y+1)*188]=real[(y-3)*188:(y-2)*188]
-for n in range(3,10):
+for n in range(3,7):
+ d.replay_ring_step((C.c_uint8*len(raw))(*raw),n*2,out)
+ assert out[3] and out[1]==5 and 69<=out[0]<=116,('close but unsafe throat',list(out))
+assert d.replay_entry_path((C.c_uint8*(160*7))())==0
+# Move the whole measured corridor away from the image center. The more
+# open branch must appear in two consecutive current frames before turning.
+for y in range(21,106):
+ row=bytes(raw[y*188:(y+1)*188])
+ raw[y*188:(y+1)*188]=row[9:]+row[-1:]*9
+for n in range(7,14):
  d.replay_ring_step((C.c_uint8*len(raw))(*raw),n*2,out)
  assert out[3] and 69<=out[0]<=116,list(out)
+ if n==7: assert out[1]==5,list(out)
 path=(C.c_uint8*(160*7))(); count=d.replay_entry_path(path)
 assert count>=12,list(out)
 arc=0.0;near_x=path[(count-1)*7];preview_x=near_x;near_found=False

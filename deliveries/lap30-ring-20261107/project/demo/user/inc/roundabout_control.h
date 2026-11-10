@@ -9,7 +9,7 @@
 #define RB_SECOND_EXIT_DEG 360.0f
 #define RB_TURN_SIGN 1 /* +1 clockwise; -1 counterclockwise */
 #define RB_ALIGN 5 /* Append: preserve recorded phase IDs 0..4. */
-#define RB_ENTRY_CORNER_ROW 80
+#define RB_ENTRY_CORNER_ROW 90 /* Start of the measured near-field approach rows. */
 #define RB_EXIT_SEARCH_LEAD_DEG 45.0f
 /* Encounter order: photo1 then photo2. Positive yaw = clockwise, left wheel faster. */
 enum {RB_IDLE,RB_ENTER,RB_ORBIT,RB_EXIT,RB_COOLDOWN};
@@ -102,6 +102,14 @@ static inline void rb_observe(volatile rb_state_t *s,int island,int near_valid,i
   }else if(s->phase==RB_COOLDOWN && s->clear>=15 && s->distance_m>=0.30f) {
    s->phase=RB_IDLE;s->confirm=0;s->clear=0;
   }
+ }
+}
+/* The same-frame ENTER recomputation must also pass the fresh path gate. */
+static inline void rb_reject_entry(volatile rb_state_t *s) {
+ if(s->phase==RB_ENTER && s->just_entered) {
+  s->phase=RB_ALIGN;
+  s->just_entered=0;
+  s->commit_confirm=0;
  }
 }
 /* Legacy scalar entry assistance retained for unit-test compatibility. */

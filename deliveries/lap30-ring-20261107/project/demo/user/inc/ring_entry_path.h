@@ -17,6 +17,7 @@
 /* Image-space direction change between consecutive ordered segments. */
 #define EP_MAX_SEGMENT_TURN_DEG 40.0f
 #define EP_MIN_CURVE_POINT_DISTANCE 4
+#define EP_ENTRY_ISLAND_CLEARANCE_PX 12 /* Provisional image-space entry margin. */
 #define EP_WIDTH_MAX_TICKS 100U
 #define EP_WIDTH_MAX_TRAVEL_M 0.20f
 
@@ -125,6 +126,32 @@ static int ep_segment_white(const uint8_t *raw, const uint8_t *thresholds,
     if (!steps) return ep_white(raw, thresholds, ax, ay);
     for (int i = 0; i <= steps; ++i) {
         if (!ep_white(raw, thresholds, ax + dx * i / steps, ay + dy * i / steps)) return 0;
+    }
+    return 1;
+}
+
+/* Gate the handoff against the current island silhouette, including diagonal
+ * proximity to its tip and pixels between the exported path samples. */
+static int ep_entry_clearance_ok(const entry_path_t *path, int side) {
+    const int margin = EP_ENTRY_ISLAND_CLEARANCE_PX;
+    if (!ep_context.fresh_island || !side || path->count < 2 ||
+        path->count > EP_MAX_POINTS) return 0;
+    for (unsigned i = 1; i < path->count; ++i) {
+        const entry_point_t *a = &path->points[i-1], *b = &path->points[i];
+        int dx = b->x - a->x, dy = b->y - a->y;
+        int steps = ep_abs(dx) > ep_abs(dy) ? ep_abs(dx) : ep_abs(dy);
+        if (!steps) return 0;
+        for (int k = (i == 1 ? 0 : 1); k <= steps; ++k) {
+            int x = a->x + dx*k/steps, y = a->y + dy*k/steps;
+            for (int row = y-margin+1; row < y+margin; ++row) {
+                if (row < EP_TOP || row > EP_BOTTOM || !ep_context.island_mask[row]) continue;
+                int left = ep_context.island_left[row], right = ep_context.island_right[row];
+                if (row == y && (side < 0 ? x >= left : x <= right)) return 0;
+                int gap = x < left ? left-x : (x > right ? x-right : 0);
+                int delta_y = row-y;
+                if (gap*gap + delta_y*delta_y < margin*margin) return 0;
+            }
+        }
     }
     return 1;
 }
