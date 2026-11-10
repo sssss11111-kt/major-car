@@ -6,6 +6,9 @@ root = Path(__file__).resolve().parents[1]
 zig = root / '.tools/ziglang/zig.exe'
 out = root / 'tests/out'
 out.mkdir(exist_ok=True)
+src = root / 'demo/user/src'
+special_sources = [str(src / f'{name}.c') for name in
+                   ('special_track', 'special_track_scan', 'special_route', 'cross_island', 'roundabout')]
 exe = out / 'test_core.exe'
 subprocess.run([str(zig), 'cc', '-std=c99', '-Wall', '-Wextra', '-Werror',
                 '-O1', '-UNDEBUG', '-I', str(root/'demo/user/inc'),
@@ -16,7 +19,7 @@ app_exe = out / 'test_app.exe'
 subprocess.run([str(zig), 'cc', '-std=c99', '-Wall', '-Wextra', '-Werror',
                '-O1', '-UNDEBUG', '-I', str(root/'tests/sdk'),
                '-I', str(root/'demo/user/inc'), str(root/'tests/test_app.c'),
-               str(root/'demo/user/src/car_core.c'), str(root/'demo/user/src/car_app.c'),
+               str(src/'car_core.c'), str(src/'car_app.c'), *special_sources,
                '-o', str(app_exe)], check=True)
 subprocess.run([str(app_exe)], check=True)
 scene_exe = out / 'test_vision_scenarios.exe'
@@ -27,5 +30,17 @@ subprocess.run([str(zig), 'cc', '-std=c99', '-Wall', '-Wextra', '-Werror',
                str(root/'tests/test_vision_scenarios.c'), str(root/'demo/user/src/car_core.c'),
                '-o', str(scene_exe)], check=True)
 subprocess.run([str(scene_exe), str(scene_out)], check=True)
+special_out = out / 'special'
+special_out.mkdir(exist_ok=True)
+(special_out / 'results.tsv').write_text(
+    'scene\tverdict\ttype\tstate\tscore\tconfidence\trows\tmulti\tdark\tcurve\tflags\n',
+    encoding='utf-8')
+for name, args in [('test_special_track', [str(special_out)]), ('test_special_routes', [])]:
+    program = out / f'{name}.exe'
+    subprocess.run([str(zig), 'cc', '-std=c99', '-Wall', '-Wextra', '-Werror',
+                    '-O1', '-UNDEBUG', '-I', str(root/'demo/user/inc'),
+                    str(root/f'tests/{name}.c'), str(src/'car_core.c'), *special_sources,
+                    '-o', str(program)], check=True)
+    subprocess.run([str(program), *args], check=True)
 subprocess.run([sys.executable,str(root/'tests/render_vision_report.py')], check=True)
 sys.exit(subprocess.run([sys.executable,str(root/'tests/test_capture.py')]).returncode)

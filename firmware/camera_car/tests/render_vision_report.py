@@ -1,5 +1,7 @@
 """Render generated fixtures and actual C results; Python standard library only."""
 from pathlib import Path
+from base64 import b64encode
+import csv
 import html
 import json
 import struct
@@ -46,5 +48,49 @@ def render(folder):
 OBSERVE 仅记录算法表现，不计为准确识别通过。合成图像不能替代真实镜头、光照和实车验收。</p><main>'''+''.join(cards)+'</main></html>'
     (folder/'report.html').write_text(document,encoding='utf-8')
     print(f'Visual report: {folder / "report.html"}')
+
+def render_special(folder):
+    cards = []
+    with (folder / 'results.tsv').open(encoding='utf-8', newline='') as report:
+        records = list(csv.DictReader(report, delimiter='\t'))
+    for record in records:
+        scene = record['scene']
+        images = []
+        for suffix, channels, label in [('gray.pgm', 1, '原始灰度'),
+                                        ('binary.pgm', 1, '二值图'),
+                                        ('overlay.ppm', 3, '扫描叠加')]:
+            data = (folder / f'{scene}-{suffix}').read_bytes()
+            header = b'P5\n188 120\n255\n' if channels == 1 else b'P6\n188 120\n255\n'
+            if not data.startswith(header) or len(data) != len(header) + 188 * 120 * channels:
+                raise ValueError(f'Invalid special-track image: {scene}-{suffix}')
+            pixels = data[len(header):]
+            if channels == 1:
+                pixels = bytes(c for v in pixels for c in (v, v, v))
+            png = b64encode(png_rgb(188, 120, pixels)).decode('ascii')
+            images.append(f'<figure><img src="data:image/png;base64,{png}" width="188" height="120" alt="{label}"><figcaption>{label}</figcaption></figure>')
+        stats = ' · '.join(f'{html.escape(k)}={html.escape(v)}' for k, v in record.items()
+                           if k not in ('scene', 'verdict'))
+        cards.append(f'<article><h2>{html.escape(scene)} · {html.escape(record["verdict"])}</h2>'
+                     f'<p>{stats}</p><section>{"".join(images)}</section></article>')
+    page = '''<!doctype html><html lang="zh-CN"><meta charset="utf-8">
+<title>特殊赛道扫描报告</title>
+<style>
+body{font:16px system-ui,sans-serif;color:#122824;background:#eef4f1;margin:24px auto;padding:0 16px;max-width:1100px}
+article{background:#fff;border:1px solid #c5d7d0;border-radius:9px;padding:12px 16px;margin:16px 0}
+h2{font-size:17px;margin:0}p{line-height:1.6}section{display:flex;flex-wrap:wrap;gap:12px}
+figure{margin:0}img{image-rendering:pixelated;display:block}figcaption{color:#3a5650}
+</style>
+<h1>特殊赛道扫描报告</h1>
+<p>合成画面上的主机结果。绿色标出扫描区间，蓝色标出普通边界，红色标出普通中线。
+类型编号依次为普通、十字岛、环岛、未知。状态编号依次为空闲、候选、十字岛、环岛、未知、冷却、故障。</p>
+<p>PASS 表示预期识别或空闲行为通过，REJECT 表示通过普通或干扰场景拒识，
+UNKNOWN 表示证据不足，OBSERVE 表示仅记录可见环岛缺少接近时序的表现。</p>
+''' + ''.join(cards)
+    (folder / 'report.html').write_text(page, encoding='utf-8')
+    print(f'Special-track report: {folder / "report.html"}')
+
 if __name__=='__main__':
     render(Path(__file__).resolve().parent/'out/vision')
+    special = Path(__file__).resolve().parent/'out/special'
+    if (special / 'results.tsv').exists():
+        render_special(special)

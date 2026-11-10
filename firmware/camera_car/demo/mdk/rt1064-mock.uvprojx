@@ -397,6 +397,31 @@
               <FileType>1</FileType>
               <FilePath>..\user\src\car_app.c</FilePath>
             </File>
+            <File>
+              <FileName>special_track.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\src\special_track.c</FilePath>
+            </File>
+            <File>
+              <FileName>special_track_scan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\src\special_track_scan.c</FilePath>
+            </File>
+            <File>
+              <FileName>special_route.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\src\special_route.c</FilePath>
+            </File>
+            <File>
+              <FileName>cross_island.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\src\cross_island.c</FilePath>
+            </File>
+            <File>
+              <FileName>roundabout.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\src\roundabout.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

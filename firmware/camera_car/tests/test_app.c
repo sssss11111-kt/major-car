@@ -78,6 +78,26 @@ int main(void) {
     car_app_uart_rx_isr('1'); stop_on_lock=3;
     car_app_foreground(); car_app_tick_10ms();
     CHECK(stop_on_lock==0 && duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0);
+
+    /* A confirmed diagnostic element leaves the original control and STOP live. */
+    for(int i=0;i<4;i++) frame();
+    car_app_uart_rx_isr('a'); car_app_foreground(); car_app_tick_10ms();
+    CHECK(duties[CAR_LEFT_PWM]>0 && duties[CAR_RIGHT_PWM]>0);
+    for(int y=0;y<120;y++) for(int x=0;x<188;x++)
+        camera[y][x]=(uint8_t)(x>=28 && x<=159 &&
+                              (y<56 || y>87 || x<83 || x>104)?210:30);
+    unsigned log_start=tx_len;
+    for(int i=0;i<5;i++) frame();
+    car_app_uart_rx_isr('p');
+    for(int i=0;i<100;i++) car_app_foreground();
+    CHECK(tx_len<sizeof tx);
+    tx[tx_len]=0;
+    const char *log=(const char *)tx+log_start;
+    CHECK(strstr(log,"to=2 type=1") && strstr(log,"cross=1 round=0 route=0 target=0"));
+    CHECK(strstr(log,"sp_state=2 sp_type=1") && strstr(log,"sp_route_ready=0 target_valid=0"));
+    CHECK(duties[CAR_LEFT_PWM]>0 && duties[CAR_RIGHT_PWM]>0);
+    car_app_uart_rx_isr('s');
+    CHECK(duties[CAR_LEFT_PWM]==0 && duties[CAR_RIGHT_PWM]==0);
     puts("hardware adapter tests: PASS (host I/O double, not physical hardware)");
     return 0;
 }

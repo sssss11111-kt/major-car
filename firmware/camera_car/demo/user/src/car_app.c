@@ -3,6 +3,7 @@
 #include "car_config.h"
 #include "car_core.h"
 #include "car_app.h"
+#include "special_track.h"
 #include <stdio.h>
 #include <string.h>
 #if MT9V03X_W != CAR_W || MT9V03X_H != CAR_H
@@ -12,6 +13,9 @@ static control_state_t control;
 static vision_state_t vision;
 static vision_config_t vision_cfg;
 static vision_result_t result;
+static special_track_state_t special_track;
+static special_track_config_t special_cfg;
+static special_track_output_t special_output;
 static uint8_t gray[CAR_W*CAR_H], binary[CAR_W*CAR_H];
 static uint8_t image_tx[CAR_W*CAR_H];
 static volatile uint32_t milliseconds;
@@ -103,11 +107,40 @@ static void telemetry(void) {
         (unsigned)snapshot.duty[0],(unsigned)snapshot.duty[1],
         (unsigned)snapshot.servo_us,(unsigned)snapshot.cfg.speed_target);
     text_queue(line);
+    snprintf(line,sizeof line,
+        "sp_state=%u sp_type=%u sp_candidate=%u sp_score=%u sp_conf=%u sp_rows=%u sp_full=%u sp_diag=%u cross_state=%u round_state=%u sp_route_ready=%u target_valid=%u\r\n",
+        (unsigned)special_output.state,(unsigned)special_output.type,
+        special_output.candidate,special_output.candidate_score,special_output.confidence,
+        special_track.scan.row_count,special_output.full_scan_valid,special_output.diagnostic_flags,
+        (unsigned)special_output.cross_state,(unsigned)special_output.round_state,
+        special_output.route_ready,special_output.target_valid);
+    text_queue(line);
+}
+static void special_transition(special_track_state_id_t previous,
+                               cross_island_state_id_t previous_cross,
+                               roundabout_state_id_t previous_round) {
+    if(previous==special_output.state && previous_cross==special_output.cross_state &&
+       previous_round==special_output.round_state) return;
+    char line[256];
+    snprintf(line,sizeof line,
+        "SP_TRANSITION frame=%lu from=%u to=%u type=%u frame_type=%u score=%u conf=%u rows=%u multi=%u dark=%u curve=%u clip=%u edge_loss=%u overflow=%u diag=%u cross=%u round=%u route=%u target=%u err10=%d\r\n",
+        (unsigned long)frame_count,(unsigned)previous,(unsigned)special_output.state,
+        (unsigned)special_output.type,(unsigned)special_output.frame_type,
+        special_output.candidate_score,special_output.confidence,special_track.scan.row_count,
+        special_track.scan.multi_run_rows,special_track.scan.central_dark_rows,
+        special_track.scan.curved_boundary_rows,special_track.scan.clipped_bank_rows,
+        special_track.scan.normal_edge_loss_rows,
+        special_track.scan.overflow,special_output.diagnostic_flags,
+        (unsigned)special_output.cross_state,(unsigned)special_output.round_state,
+        special_output.route_ready,special_output.target_valid,(int)(special_output.target_error*10));
+    text_queue(line);
 }
 static void camera_init_once(void) {
     uint32_t key=lock(); control_stop(&control); apply_outputs(); unlock(key);
     servo_test_active=0; frame_count=0; memset(&result,0,sizeof result);
     vision_reset(&vision);
+    special_track_init(&special_track);
+    memset(&special_output,0,sizeof special_output);
 #if CAR_SIMULATED
     camera_ready=1; text_queue("SIMULATED: motors disabled\r\n");
 #else
@@ -129,6 +162,7 @@ void car_app_init(void) {
     cfg.frame_timeout_ms=CAR_FRAME_TIMEOUT_MS;
     cfg.heartbeat_timeout_ms=CAR_FOREGROUND_TIMEOUT_MS; cfg.simulated=CAR_SIMULATED;
     control_init(&control,&cfg); vision_reset(&vision); vision_config_default(&vision_cfg);
+    special_track_config_default(&special_cfg);
     gpio_init(CAR_LEFT_DIR,GPO,CAR_LEFT_FORWARD,GPO_PUSH_PULL);
     gpio_init(CAR_RIGHT_DIR,GPO,CAR_RIGHT_FORWARD,GPO_PUSH_PULL);
     pwm_init(CAR_LEFT_PWM,CAR_MOTOR_HZ,0); pwm_init(CAR_RIGHT_PWM,CAR_MOTOR_HZ,0);
@@ -257,6 +291,12 @@ void car_app_foreground(void) {
     if(new_frame) {
         vision_process(&vision,&vision_cfg,gray,binary,&result); frame_count++;
         key=lock(); control_frame(&control,&result,milliseconds); unlock(key);
+        /* Foreground diagnostics only, outside the interrupt mask and control path. */
+        special_track_state_id_t previous=special_output.state;
+        cross_island_state_id_t previous_cross=special_output.cross_state;
+        roundabout_state_id_t previous_round=special_output.round_state;
+        special_track_update(&special_track,&special_cfg,binary,&result,milliseconds,&special_output);
+        special_transition(previous,previous_cross,previous_round);
     }
     if(image_requested && frame_count && text_tail==text_head && image_position>=image_length) {
         memcpy(image_tx,image_requested==1?gray:binary,sizeof image_tx);
