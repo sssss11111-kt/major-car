@@ -878,6 +878,10 @@ void img_process_reset(void)
 uint8_t img_get_road_recovered(void) { return s_valid && s_near_valid && s_road_recovered; }
 void img_set_exit_search(uint8_t enabled) { s_exit_search=enabled; }
 uint8_t img_get_entry_ready(void) { return s_entry_ready; }
+uint8_t img_get_entry_path_safe(void) {
+    return s_valid && s_near_valid && s_entry_path.count>=12 &&
+        ip_abs(s_entry_path.error)<=42 && ep_entry_clearance_ok(&s_entry_path,s_ring_guide);
+}
 uint8_t img_get_exit_ready(void) { return s_exit_ready; }
 int16_t img_get_exit_error(void) { return s_exit_path.preview; }
 void img_set_roundabout_entry(uint8_t enabled) {
@@ -1596,8 +1600,7 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
         if(s_entry_mode==5) {
             /* Shadow planning: retain the measured approach command until the
              * FSM confirms corner progress and a current executable path. */
-            s_entry_ready=(uint8_t)(built && context.fresh_island &&
-                s_entry_path.count>=12 && ip_abs(s_entry_path.error)<=42);
+            s_entry_ready=(uint8_t)(built && img_get_entry_path_safe());
             s_entry_path.count=0;s_entry_status=0;s_entry_locked=0;
             /* The island-side rows above the throat must not pull the alignment
              * command. Prefer raw near-bank midpoints while still in the stem. */

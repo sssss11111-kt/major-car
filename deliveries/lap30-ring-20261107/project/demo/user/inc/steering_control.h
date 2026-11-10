@@ -31,9 +31,12 @@ steering_result_t steering_control(int near,int preview,uint8_t pv,
 void steering_reset(steering_state_t *s,float middle,uint32_t tick);
 steering_result_t steering_update(steering_state_t *s,int near,int preview,uint8_t pv,
     uint8_t valid,uint8_t active,uint32_t tick,float middle,float direction,float low,float high);
-/* Prime the 3-sample median history on the exact frame RB_ENTER is confirmed
- * (after 3 consecutive island frames), eliminating the extra 1-frame zero hold
- * while preserving IIR filtering, slew-rate limits and 69..116 bounds. */
+/* On the first turn frame, prefill only halfway from the measured approach
+ * to the new path. Keep the existing median, IIR and servo slew limits. */
+static inline void steering_blend_entry(steering_state_t *s,float entry_error) {
+    if(s->initialized)s->near_history[0]+=0.5f*(entry_error-s->near_history[0]);
+}
+/* A new path appearing outside the alignment handoff may prefill the median. */
 static inline void steering_prime_entry(steering_state_t *s,float entry_error) {
     if(s->initialized)s->near_history[0]=entry_error;
 }

@@ -1,3 +1,12 @@
+# R17-2 入环修正候选
+
+- [整车工程与 SDK](deliveries/lap30-ring-20261107/project/) · [Keil 工程](deliveries/lap30-ring-20261107/project/demo/mdk/rt1064.uvprojx)
+- 固件遥测版本为 `C11LAP30R17-2`。本版延后入环判断，校验本帧岛边余量，并平滑首次转向切换。
+- `python deliveries/lap30-ring-20261107/tools/run-host-checks.py --current` 已通过，含 107 项恢复和集成检查。Arm Compiler 6.21 命令行编译链接通过，33 条 SDK 警告与改名前一致。历史夹具回归未运行。R17-2 尚未烧录或实车验证。
+- `project/demo/mdk/Objects/` 中已有的固件及 `LAP30-status.json`、`SOURCE-AND-BUILD-SHA256.json` 属于原 R17 归档，可在 `1109环岛` 的 `d62a1b2608b931298ec4013092ef18f050cabba2` 核对其原始源码和哈希。使用 R17-2 时，应从本分支源码重新构建。`flash-r17.py` 对应原 R17 归档。
+
+---
+
 # RT1064 镜头组：LAP19 已完成中期检查
 
 用户于2026-10-21明确反馈：“LAP19成功完成中期检查的要求”。
