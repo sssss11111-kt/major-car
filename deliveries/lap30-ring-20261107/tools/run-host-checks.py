@@ -21,6 +21,7 @@ commands=[[zig,'cc','-I',str(inc),'-I',str(v/'vision-stubs'),str(src/'steering_c
           [zig,'cc','-Wall','-Wextra','-Werror','-I',str(inc),str(v/'test-roundabout.c'),'-o',str(v/'test-roundabout.exe')],
           [str(v/'test-roundabout.exe')],
           [sys.executable,str(v/'check-roundabout.py')],
+          [sys.executable,str(v/'check-r17-3.py')],
           [sys.executable,str(v/'check-ring-recovery.py')],
           [sys.executable,'-X','utf8',str(base.parents[1]/'records/ring-research-20261107/entry-r11/entry-regression.py')]]
 commands[0:0]=[[zig,'cc','-Wall','-Wextra','-Werror','-I',str(inc),str(v/'test-track-geometry.c'),'-o',str(v/'test-track-geometry.exe')],[str(v/'test-track-geometry.exe')]]

@@ -64,6 +64,18 @@ static uint32_t s_odometry_tick, s_motion_tick;
 static int16_t s_bridge_error, s_bridge_preview;
 static uint8_t s_odometry_valid, s_motion_ready, s_bridge_stable;
 
+/* Post-entry handoff only. R17's entrance planner continues until the observed
+ * lower entrance cap has left the image and current local banks settle. */
+static uint8_t s_ring_local_active, s_ring_entrance_seen, s_ring_local_confirm;
+static uint32_t s_ring_local_tick;
+typedef struct {
+    uint8_t left[IP_H], center[IP_H], right[IP_H];
+    int near_count, near_chain, near_bottom, single_count, usable, paired;
+    int preview_count;
+    long near_sum, near_weight, preview_sum;
+} ring_bend_t;
+static ring_bend_t s_ring_bend;
+
 static void ip_bridge_reset(void) {
     memset(&s_bridge_guard,0,sizeof s_bridge_guard);
     s_bridge_curvature=0;
@@ -310,7 +322,6 @@ static int ip_row_run(const uint8_t *bin, const uint8_t *src, int thr,
     *right = best_r;
     return 1;
 }
-
 
 /* Close a side opening only while approaching on a measured straight corridor.
  * Coordinates are mirrored for a left-side opening. Both endpoints and the
@@ -835,6 +846,106 @@ unsigned char get_threshold_otsu(const short *_hist_gram)
     return ip_band_threshold(hist, total, 0);
 }
 
+/* The ordinary bend row selector, midpoint/single-bank width model and control
+ * windows are shared. Keep these observations separate from entrance repairs. */
+static void ip_ring_bend_observe(const uint8_t *raw, const uint8_t *thresholds) {
+    ring_bend_t *bend = &s_ring_bend;
+    uint8_t bin[IP_W];
+    int reference = IP_W / 2, previous_row = -1, previous_center = reference;
+    int chain = 0, bottom = 0;
+    memset(bend, 0, sizeof *bend);
+    for (int y = IP_TRACK_BOTTOM; y >= IP_TRACK_TOP; --y) {
+        const uint8_t *src = raw + y * IP_W;
+        int left, right, center, half = ip_half(y);
+        for (int x = 0; x < IP_W; ++x) bin[x] = (uint8_t)(src[x] > thresholds[y]);
+        /* Retain the selected ring bank when both branches remain in view. */
+        if (!s_ring_hold_age && (s_ring_mask[y] & (s_ring_guide < 0 ? 1 : 2))) {
+            for (int x = 0; x < IP_W; ++x)
+                if ((s_ring_guide < 0 && x >= s_ring_l[y]) ||
+                    (s_ring_guide > 0 && x <= s_ring_r[y])) bin[x] = 0;
+        }
+        if (!ip_row_run(bin, src, thresholds[y], reference-half, half, reference, &left, &right)) continue;
+        int left_ok = left > 2 && src[left-1] <= thresholds[y];
+        int right_ok = right < IP_W-3 && src[right+1] <= thresholds[y];
+        if (!left_ok && !right_ok) continue;
+        if (right-left+1 > 3*half) continue;
+        center = left_ok && right_ok ? (left+right)/2 : (left_ok ? left+half : right-half);
+        if (center <= left || center >= right || center < 2 || center >= IP_W-2 ||
+            !bin[center-1] || !bin[center] || !bin[center+1]) continue;
+        if (previous_row >= 0) {
+            /* An edge can leave the image between two measured rows. Use the
+             * ordinary row association, checking their current white link;
+             * missing rows do not contribute observations or control weight. */
+            if (!ep_segment_white(raw,thresholds,previous_center,previous_row,center,y)) continue;
+        }
+        bend->left[y]=(uint8_t)left; bend->right[y]=(uint8_t)right;
+        bend->center[y]=(uint8_t)center;
+        ++bend->usable;
+        if (left_ok && right_ok) ++bend->paired;
+        if (y >= 55 && y <= 75) { bend->preview_sum+=center; ++bend->preview_count; }
+        if (y >= IP_ERROR_ROW_TOP) {
+            if (!chain) bottom=y;
+            ++chain;
+            bend->near_chain=chain; bend->near_bottom=bottom;
+            int weight=IP_ERROR_NEAR+y-IP_ERROR_ROW_TOP;
+            bend->near_sum+=(long)center*weight; bend->near_weight+=weight;
+            ++bend->near_count;
+            if (!left_ok || !right_ok) ++bend->single_count;
+        }
+        reference=previous_center=center; previous_row=y;
+    }
+}
+
+static void ip_ring_local_handoff(const uint8_t *raw, const uint8_t *thresholds) {
+    if (s_entry_mode!=1 && s_entry_mode!=2) return;
+    int entrance_visible = s_approach_active ||
+        (s_ring_miny && !s_ring_hold_age && s_ring_maxy < IP_TRACK_BOTTOM);
+    if (entrance_visible) s_ring_entrance_seen=1;
+    if (s_ring_local_active) return;
+    if (s_ring_local_tick==s_odometry_tick) return; /* Same-frame reprocessing. */
+    s_ring_local_tick=s_odometry_tick;
+    int ready=s_scene_ok && !s_stripe_recovery && !entrance_visible &&
+        s_ring_entrance_seen && s_ring_bend.near_chain>=18 && s_ring_bend.near_bottom>=100 &&
+        ep_white(raw,thresholds,IP_W/2,IP_TRACK_BOTTOM);
+    if (ready) {
+        if (++s_ring_local_confirm>=3) {
+            s_ring_local_active=1;
+            ip_bridge_reset();
+        }
+    } else s_ring_local_confirm=0;
+}
+
+static void ip_ring_bend_apply(const uint8_t *raw, const uint8_t *thresholds,
+                               uint8_t *left, uint8_t *mid, uint8_t *right, int previous_error, int had_error) {
+    const ring_bend_t *bend=&s_ring_bend;
+    s_entry_path.count=0;
+    s_ring_preview_valid=0;
+    s_usable_rows=(uint8_t)bend->usable; s_both_rows=(uint8_t)bend->paired;
+    s_diag_near_rows=(uint8_t)bend->near_count;
+    s_valid=s_near_valid=(uint8_t)(s_scene_ok && bend->near_chain>=6 &&
+        ep_white(raw,thresholds,IP_W/2,IP_TRACK_BOTTOM));
+    if (s_valid) {
+        int error=(int)(bend->near_sum/bend->near_weight)-IP_W/2;
+        if (had_error) error=ip_clamp(error,previous_error-16,previous_error+16);
+        if (error>-3 && error<3) error=0;
+        s_error=s_ring_entry_error=(int16_t)error; s_have_error=1;
+        s_preview_valid=(uint8_t)(bend->preview_count>=10);
+        s_preview_error=s_preview_valid ? (int16_t)(bend->preview_sum/bend->preview_count-IP_W/2) : 0;
+        s_entry_status=bend->single_count>bend->near_count/2 ? 2 : 6;
+        s_entry_path.failure=0;
+        memcpy(left,bend->left,IP_H); memcpy(mid,bend->center,IP_H); memcpy(right,bend->right,IP_H);
+        for (int y=IP_TRACK_TOP;y<=IP_TRACK_BOTTOM;++y)
+            s_last_center[y]=mid[y] ? mid[y] : -1;
+        ip_bridge_observe(thresholds);
+    } else if (!ip_bridge_apply(raw,thresholds)) {
+        ip_bridge_reset(); s_entry_status=3; s_entry_path.failure=10;
+        s_error=s_ring_entry_error=s_preview_error=0;
+        s_preview_valid=0;
+        memset(mid,0,IP_H); memset(left,0,IP_H); memset(right,IP_W-1,IP_H);
+    }
+}
+
+
 void img_process_reset(void)
 {
     memset(&ep_context, 0, sizeof ep_context);
@@ -860,6 +971,8 @@ void img_process_reset(void)
     s_ring_entry_error = 0;
     s_ring_guide = 0;
     s_entry_mode = s_entry_locked = s_entry_status = 0;
+    s_ring_local_active=s_ring_entrance_seen=s_ring_local_confirm=0;
+    s_ring_local_tick=UINT32_MAX;
     s_entry_ready=s_exit_ready=s_exit_search=s_exit_reference_valid=0;
     memset(s_approach_side, 0, sizeof s_approach_side);
     s_approach_active = s_approach_width_side = s_approach_width_age = 0;
@@ -880,7 +993,12 @@ void img_set_exit_search(uint8_t enabled) { s_exit_search=enabled; }
 uint8_t img_get_entry_ready(void) { return s_entry_ready; }
 uint8_t img_get_exit_ready(void) { return s_exit_ready; }
 int16_t img_get_exit_error(void) { return s_exit_path.preview; }
+uint8_t img_get_ring_local_active(void) { return s_ring_local_active; }
 void img_set_roundabout_entry(uint8_t enabled) {
+    if (enabled!=1 && enabled!=2) {
+        s_ring_local_active=s_ring_entrance_seen=s_ring_local_confirm=0;
+        s_ring_local_tick=UINT32_MAX;
+    }
     if (enabled != s_entry_mode) {
         ip_bridge_reset();
         s_exit_reference_valid=0;
@@ -947,6 +1065,7 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
     long     preview_sum = 0;
     int      preview_n = 0;
     int      near_rows = 0;
+    int ring_previous_error=s_error, ring_had_error=s_have_error;
     uint8_t measured_pair[IP_H] = {0};
     int measured_l[IP_H] = {0}, measured_r[IP_H] = {0};
     s_road_recovered = 0;
@@ -1038,6 +1157,7 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
         if (!s_stripe_rows) memset(s_stripe_mask, 0, sizeof s_stripe_mask);
         if (s_stripe_rows) s_stripe_recovery = 3;
         else if (s_stripe_recovery) --s_stripe_recovery;
+        if (s_stripe_recovery) s_ring_local_confirm=0;
     }
 
     ip_island(_src_pixel_mat, row_thr);
@@ -1521,6 +1641,10 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
         context.odometry_valid = s_odometry_valid;
         ep_set_context(&context);
         s_entry_path.count = 0;
+        if (s_entry_mode==1 || s_entry_mode==2) {
+            ip_ring_bend_observe(_src_pixel_mat,row_thr);
+            ip_ring_local_handoff(_src_pixel_mat,row_thr);
+        }
         if (s_scene_ok && s_exit_search) {
             entry_context_t exit_context=context;
             exit_context.fresh_island=0;
@@ -1545,6 +1669,16 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
                      (s_ring_evidence & IP_RING_EV_CORNER_LOW)));
             }
             ep_set_context(&context);
+        }
+        if (s_ring_local_active) {
+            /* R17 exit candidates still run independently. Compare them with
+             * the active bend preview before publishing them to the same FSM. */
+            ip_ring_bend_apply(_src_pixel_mat,row_thr,_left_line,_mid_line,_right_line,
+                               ring_previous_error,ring_had_error);
+            if (s_exit_ready && !s_road_recovered && !s_exit_separated &&
+                (!s_valid || !s_preview_valid || ip_abs(s_exit_path.preview-s_preview_error)<12))
+                s_exit_ready=0;
+            return;
         }
         if (s_scene_ok && s_entry_mode==3) {
             /* Never fall back to the orbit branch after exit commitment. */

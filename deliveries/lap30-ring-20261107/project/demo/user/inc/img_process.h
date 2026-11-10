@@ -66,9 +66,10 @@ void img_set_exit_search(uint8_t enabled);
 uint8_t img_get_entry_ready(void);
 uint8_t img_get_exit_ready(void);
 int16_t img_get_exit_error(void);
+uint8_t img_get_ring_local_active(void);
 const entry_path_t *img_get_entry_path(void);
 /* 0 approach, 1 current paired path, 2 width-assisted path, 3 invalid,
- * 4 inner-edge path, 5 bounded odometry bridge. */
+ * 4 inner-edge path, 5 bounded odometry bridge, 6 local ring bend. */
 uint8_t img_get_entry_status(void);
 void img_set_entry_odometry(float distance_m,float yaw_deg,uint32_t tick,uint8_t valid);
 const entry_bridge_guard_t *img_get_entry_bridge_guard(void);

@@ -74,7 +74,7 @@ __declspec(dllexport) void replay_ring_step(uint8_t *raw,uint32_t tick,float *ou
  float e=rb_plan_entry_error(integrated_ring.phase,guide,img_get_error(),
      img_get_roundabout_entry_error(),img_get_preview_error(),
      img_get_roundabout_preview_valid(),valid,img_get_stripe_active());
- if(img_get_entry_path()->count)e=img_get_error();
+ if(img_get_entry_path()->count || img_get_ring_local_active())e=img_get_error();
  int metric_control=ep_metric_error(img_get_entry_path(),&e);
  if(integrated_ring.just_entered || (entry_was_preparing && img_get_entry_path()->count))
   steering_prime_entry(&replay_steering,e);
@@ -110,6 +110,7 @@ __declspec(dllexport) int replay_entry_path(uint8_t *out) {
  return path->count;
 }
 __declspec(dllexport) int replay_entry_status(void) { return img_get_entry_status(); }
+__declspec(dllexport) int replay_ring_local_active(void) { return img_get_ring_local_active(); }
 __declspec(dllexport) void replay_entry_mode(int enabled) {img_set_roundabout_entry((uint8_t)enabled);}
 
 __declspec(dllexport) void replay_ring_odometry(float distance_m,float yaw_deg) {
