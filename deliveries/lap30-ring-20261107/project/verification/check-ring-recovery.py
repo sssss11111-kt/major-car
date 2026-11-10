@@ -1,9 +1,11 @@
 """R7 curved entrance path + actual integrated vision/FSM regression, host only."""
 from pathlib import Path
+from special_scanner_host import scanner_args
 import os, subprocess, ctypes as C, json
 p=Path(__file__).resolve().parent
 src=p.parent/'demo/user/src'
-subprocess.run([os.environ['ZIG'],'cc','-shared','-O2','-Wall','-Wextra','-Werror','-I',str(p/'vision-stubs'),'-I',str(src.parent/'inc'),str(src/'img_process.c'),str(src/'steering_control.c'),str(p/'vision-replay-wrapper.c'),'-o',str(p/'recovery-replay.dll')],check=True)
+subprocess.run([os.environ['ZIG'],'cc','-shared','-O2','-Wall','-Wextra','-Werror','-I',str(p/'vision-stubs'),'-I',str(src.parent/'inc'),str(src/'img_process.c'),str(src/'steering_control.c'),str(p/'vision-replay-wrapper.c'),
+                '-DR17_WITH_SPECIAL_TRACK',*scanner_args(),'-o',str(p/'recovery-replay.dll')],check=True)
 d=C.CDLL(str(p/'recovery-replay.dll'));checks=[]
 def check(x,label):
  assert x,label

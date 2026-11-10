@@ -1,3 +1,12 @@
+# 新赛道扫描器整车工程
+
+- [Keil 工程入口](deliveries/lap30-ring-20261107/project/demo/mdk/rt1064.uvprojx)
+- [整车构建与验证说明](deliveries/lap30-ring-20261107/project/SCAN1.md)
+
+整车源码使用本仓库中的共享扫描器与 R17-2 寻路控制。请使用完整分支目录构建。
+
+---
+
 # RT1064 镜头组：LAP19 已完成中期检查
 
 用户于2026-10-21明确反馈：“LAP19成功完成中期检查的要求”。

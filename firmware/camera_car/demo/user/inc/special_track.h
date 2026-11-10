@@ -44,7 +44,7 @@ typedef struct {
 typedef struct {
     uint8_t scan_top, scan_bottom, monitor_rows, min_run_width, min_channel_width;
     uint8_t min_gap_width, center_tolerance, max_row_shift, min_curve_step, min_contrast;
-    uint8_t min_cross_rows, min_ring_rows, min_arc_rows;
+    uint8_t min_cross_rows, min_cross_width_percent, min_ring_rows, min_arc_rows;
     uint8_t candidate_on, candidate_off, min_confidence, vote_window, vote_required;
     uint8_t recover_frames;
     uint16_t cooldown_ms, candidate_timeout_ms, approach_window_ms, loss_timeout_ms;
@@ -80,5 +80,10 @@ void special_track_init(special_track_state_t *state);
 void special_track_update(special_track_state_t *state, const special_track_config_t *cfg,
                           const uint8_t *binary, const vision_result_t *normal,
                           uint32_t now, special_track_output_t *out);
+/* Consume an existing vision pipeline's per-row thresholds without rebuilding a frame. */
+void special_track_update_rows(special_track_state_t *state, const special_track_config_t *cfg,
+                               const uint8_t *pixels, const uint8_t *row_thresholds,
+                               const vision_result_t *normal, uint32_t now, int force_full,
+                               special_track_output_t *out);
 
 #endif

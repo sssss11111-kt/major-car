@@ -1,8 +1,16 @@
 """Synthetic topology regression, not real camera calibration."""
 from pathlib import Path
+from special_scanner_host import scanner_args
 import ctypes as C, os, subprocess
 p=Path(__file__).resolve().parent;src=p.parent/'demo/user/src'
-subprocess.run([os.environ['ZIG'],'cc','-shared','-O2','-Wall','-Wextra','-Werror','-I',str(p/'vision-stubs'),'-I',str(src.parent/'inc'),os.environ.get('IP_TEST_VISION_SOURCE',str(src/'img_process.c')),str(src/'steering_control.c'),str(p/'vision-replay-wrapper.c'),'-o',str(p/'roundabout-replay.dll')],check=True)
+scanner_test=p/'test-rb-scan.exe'
+subprocess.run([os.environ['ZIG'],'cc','-std=c99','-Wall','-Wextra','-Werror',
+                '-I',str(p/'vision-stubs'),'-I',str(src.parent/'inc'),
+                str(src/'img_process.c'),str(p/'test-rb-scan.c'),*scanner_args(),
+                '-o',str(scanner_test)],check=True)
+subprocess.run([str(scanner_test)],check=True)
+subprocess.run([os.environ['ZIG'],'cc','-shared','-O2','-Wall','-Wextra','-Werror','-I',str(p/'vision-stubs'),'-I',str(src.parent/'inc'),os.environ.get('IP_TEST_VISION_SOURCE',str(src/'img_process.c')),str(src/'steering_control.c'),str(p/'vision-replay-wrapper.c'),
+                '-DR17_WITH_SPECIAL_TRACK',*scanner_args(),'-o',str(p/'roundabout-replay.dll')],check=True)
 d=C.CDLL(str(p/'roundabout-replay.dll'))
 def scene(island=0,shift=0,stripe=False):
  raw=bytearray([20]*(188*120))
@@ -171,8 +179,23 @@ d.replay_ring_reset()
 for n in range(10):
  raw=scene(stripe=True);d.replay_ring_step((C.c_uint8*len(raw))(*raw),n*2,out)
  assert out[1]==0,list(out)
+# A confirmed cross island without a route must inhibit ordinary control.
+cross = scene()
+for y in range(56, 88):
+ cross[y*188+83:y*188+105]=bytes([20])*22
+d.replay_ring_reset()
+assert frame(cross)[0], 'primary vision alone would drive'
+d.replay_ring_reset()
+for n in range(5):
+ d.replay_ring_step((C.c_uint8*len(cross))(*cross),n*2,out)
+scan=(C.c_int*5)()
+d.replay_scan_status(scan)
+assert scan[0]==1 and scan[4] and out[1]==0 and out[3]==0,(list(scan),list(out))
+print('PASS: confirmed cross island with no route suppresses ordinary guidance')
 # Guard actual production integration against omitting the measured-branch gate.
 main=(src/'main.c').read_text(encoding='utf-8')
+assert 'scan = rb_scan_frame(' in main
+assert 'rb_scan_observe(&roundabout_state,island,scan_entry_allowed,' in main
 assert 'turn_error=rb_plan_entry_error(roundabout_state.phase,applied_ring_guide,' in main
 assert 'img_get_preview_error(),img_get_roundabout_preview_valid(),' in main
 assert 'steering_update(&steering_state,(int)turn_error,' in main

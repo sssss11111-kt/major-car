@@ -8,7 +8,7 @@ void special_track_config_default(special_track_config_t *cfg)
         .scan_top = 40, .scan_bottom = 106, .monitor_rows = 6, .min_run_width = 6,
         .min_channel_width = 16, .min_gap_width = 8, .center_tolerance = 14,
         .max_row_shift = 18, .min_curve_step = 2, .min_contrast = 16,
-        .min_cross_rows = 4, .min_ring_rows = 5, .min_arc_rows = 2,
+        .min_cross_rows = 4, .min_cross_width_percent = 75, .min_ring_rows = 5, .min_arc_rows = 2,
         .candidate_on = 30, .candidate_off = 14, .min_confidence = 70,
         .vote_window = 5, .vote_required = 3, .recover_frames = 3,
         .cooldown_ms = 400, .candidate_timeout_ms = 300, .approach_window_ms = 650,
@@ -30,6 +30,7 @@ static int config_valid(const special_track_config_t *c)
            c->center_tolerance > 0 && c->center_tolerance < CAR_W / 2 &&
            c->max_row_shift > 0 && c->min_curve_step > 0 && c->min_contrast > 0 &&
            c->min_cross_rows >= 3 && c->min_cross_rows <= SPECIAL_SCAN_ROWS - 2 &&
+           c->min_cross_width_percent > 0 && c->min_cross_width_percent <= 100 &&
            c->min_ring_rows >= 4 && c->min_ring_rows <= SPECIAL_SCAN_ROWS - 1 &&
            c->min_arc_rows >= 2 && c->min_arc_rows <= c->min_ring_rows - 2 &&
            c->candidate_off < c->candidate_on && c->candidate_on <= 100 &&
@@ -142,9 +143,10 @@ static void active_update(special_track_state_t *s, const special_track_config_t
     else if (++s->recovery >= c->recover_frames) transition(s, SPECIAL_COOLDOWN, now);
 }
 
-void special_track_update(special_track_state_t *s, const special_track_config_t *c,
-                          const uint8_t *binary, const vision_result_t *normal,
-                          uint32_t now, special_track_output_t *out)
+void special_track_update_rows(special_track_state_t *s, const special_track_config_t *c,
+                               const uint8_t *pixels, const uint8_t *row_thresholds,
+                               const vision_result_t *normal, uint32_t now, int force_full,
+                               special_track_output_t *out)
 {
     *out = (special_track_output_t){0};
     if (!config_valid(c)) {
@@ -163,18 +165,19 @@ void special_track_update(special_track_state_t *s, const special_track_config_t
     s->frame_ms = now;
     s->frame_seen = 1;
 
-    special_track_scan(binary, c, normal, c->monitor_rows, &s->scan);
+    special_track_scan(pixels, row_thresholds, c, normal, c->monitor_rows, &s->scan);
     out->candidate_score = special_monitor_score(&s->scan, normal);
     if (normal->contrast < c->min_contrast) out->diagnostic_flags |= SPECIAL_DIAG_LOW_CONTRAST;
-    if (out->candidate_score >= c->candidate_on) s->candidate = 1;
+    if (force_full || out->candidate_score >= c->candidate_on) s->candidate = 1;
     else if (out->candidate_score <= c->candidate_off) s->candidate = 0;
     if (s->state == SPECIAL_COOLDOWN && now - s->state_since_ms >= c->cooldown_ms)
         transition(s, SPECIAL_IDLE, now);
 
     int active = s->state == SPECIAL_ACTIVE_CROSS || s->state == SPECIAL_ACTIVE_ROUNDABOUT;
-    if (active || (s->candidate && s->state != SPECIAL_COOLDOWN && s->state != SPECIAL_FAULT)) {
+    if (force_full || active ||
+        (s->candidate && s->state != SPECIAL_COOLDOWN && s->state != SPECIAL_FAULT)) {
         out->full_scan_attempted = 1;
-        special_track_scan(binary, c, normal, SPECIAL_SCAN_ROWS, &s->scan);
+        special_track_scan(pixels, row_thresholds, c, normal, SPECIAL_SCAN_ROWS, &s->scan);
         int approach = s->state == SPECIAL_ACTIVE_ROUNDABOUT ||
                        (s->approach_seen && now - s->approach_ms <= c->approach_window_ms);
         classify(&s->scan, c, normal, approach, out);
@@ -228,4 +231,11 @@ void special_track_update(special_track_state_t *s, const special_track_config_t
     out->state = s->state;
     out->cross_state = s->cross.phase;
     out->round_state = s->round.phase;
+}
+
+void special_track_update(special_track_state_t *s, const special_track_config_t *c,
+                          const uint8_t *binary, const vision_result_t *normal,
+                          uint32_t now, special_track_output_t *out)
+{
+    special_track_update_rows(s, c, binary, NULL, normal, now, 0, out);
 }

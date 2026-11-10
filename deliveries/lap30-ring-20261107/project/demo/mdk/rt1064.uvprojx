@@ -336,7 +336,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb -Wno-invalid-source-encoding</MiscControls>
               <Define>CPU_MIMXRT1064DVL6A,SKIP_SYSCLK_INIT,XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_DCD_ENABLE =1, XIP_BOOT_HEADER_ENABLE =1,PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0, USB_STACK_BM, DEBUG, MCUXPRESSO_SDK, SD_ENABLED</Define>
               <Undefine></Undefine>
-              <IncludePath>..\user\inc;..\code;..\..\libraries\sdk\startup\mdk;..\..\libraries\sdk\deceive;..\..\libraries\sdk\drives;..\..\libraries\sdk\xip;..\..\libraries\sdk\utilities;..\..\libraries\sdk\utilities\debug_console;..\..\libraries\sdk\utilities\str;..\..\libraries\sdk\cmsis_drivers;..\..\libraries\sdk\CMSIS\Include;..\..\libraries\sdk\CMSIS\Driver\Include;..\..\libraries\sdk\components\lists;..\..\libraries\sdk\components\osa;..\..\libraries\sdk\components\serial_manager;..\..\libraries\sdk\components\uart;..\..\libraries\sdk\board;..\..\libraries\components\fatfs\source;..\..\libraries\components\fatfs\source\fsl_sd_disk;..\..\libraries\components\sdmmc;..\..\libraries\components\sdmmc\common;..\..\libraries\components\sdmmc\host\usdhc;..\..\libraries\components\sdmmc\osa;..\..\libraries\components\sdmmc\sd;..\..\libraries\components\usb\device;..\..\libraries\components\usb\include;..\..\libraries\components\usb\phy;..\..\libraries\components\usb\usb_cdc_adapter;..\..\libraries\zf_common;..\..\libraries\zf_driver;..\..\libraries\zf_device</IncludePath>
+              <IncludePath>..\user\inc;..\..\..\..\..\firmware\camera_car\demo\user\inc;..\code;..\..\libraries\sdk\startup\mdk;..\..\libraries\sdk\deceive;..\..\libraries\sdk\drives;..\..\libraries\sdk\xip;..\..\libraries\sdk\utilities;..\..\libraries\sdk\utilities\debug_console;..\..\libraries\sdk\utilities\str;..\..\libraries\sdk\cmsis_drivers;..\..\libraries\sdk\CMSIS\Include;..\..\libraries\sdk\CMSIS\Driver\Include;..\..\libraries\sdk\components\lists;..\..\libraries\sdk\components\osa;..\..\libraries\sdk\components\serial_manager;..\..\libraries\sdk\components\uart;..\..\libraries\sdk\board;..\..\libraries\components\fatfs\source;..\..\libraries\components\fatfs\source\fsl_sd_disk;..\..\libraries\components\sdmmc;..\..\libraries\components\sdmmc\common;..\..\libraries\components\sdmmc\host\usdhc;..\..\libraries\components\sdmmc\osa;..\..\libraries\components\sdmmc\sd;..\..\libraries\components\usb\device;..\..\libraries\components\usb\include;..\..\libraries\components\usb\phy;..\..\libraries\components\usb\usb_cdc_adapter;..\..\libraries\zf_common;..\..\libraries\zf_driver;..\..\libraries\zf_device</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -394,6 +394,36 @@
               <FileName>img_process.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\user\src\img_process.c</FilePath>
+            </File>
+            <File>
+              <FileName>roundabout_scan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\src\roundabout_scan.c</FilePath>
+            </File>
+            <File>
+              <FileName>special_track.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\firmware\camera_car\demo\user\src\special_track.c</FilePath>
+            </File>
+            <File>
+              <FileName>special_track_scan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\firmware\camera_car\demo\user\src\special_track_scan.c</FilePath>
+            </File>
+            <File>
+              <FileName>special_route.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\firmware\camera_car\demo\user\src\special_route.c</FilePath>
+            </File>
+            <File>
+              <FileName>cross_island.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\firmware\camera_car\demo\user\src\cross_island.c</FilePath>
+            </File>
+            <File>
+              <FileName>roundabout.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\firmware\camera_car\demo\user\src\roundabout.c</FilePath>
             </File>
             <File><FileName>auto_start.c</FileName><FileType>1</FileType><FilePath>..\user\src\auto_start.c</FilePath></File>
             <File><FileName>steering_control.c</FileName><FileType>1</FileType><FilePath>..\user\src\steering_control.c</FilePath></File>

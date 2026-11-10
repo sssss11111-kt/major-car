@@ -51,6 +51,8 @@ uint8_t img_get_stripe_rows(void);
  * Candidate recognition and entry target path generation are separated. */
 uint8_t img_get_roundabout_candidate(void);
 uint8_t img_get_roundabout_evidence(void);
+const uint8_t *img_get_row_thresholds(void);
+uint8_t img_get_scene_contrast(void);
 uint8_t img_get_roundabout_corner_row(void);
 int16_t img_get_roundabout_entry_error(void);
 uint8_t img_get_near_valid(void);

@@ -10,13 +10,14 @@ typedef struct {
 static int magnitude(int v) { return v < 0 ? -v : v; }
 static unsigned capped(unsigned value, unsigned limit) { return value < limit ? value : limit; }
 
-static void scan_row(const uint8_t *row, unsigned min_width, special_scan_row_t *out)
+static void scan_row(const uint8_t *row, uint8_t threshold, unsigned min_width,
+                     special_scan_row_t *out)
 {
     int x = 0;
     while (x < CAR_W) {
-        while (x < CAR_W && row[x] != 255) ++x;
+        while (x < CAR_W && row[x] <= threshold) ++x;
         int left = x;
-        while (x < CAR_W && row[x] == 255) ++x;
+        while (x < CAR_W && row[x] > threshold) ++x;
         int width = x - left;
         if (width < (int)min_width) continue;
         if (out->run_count == SPECIAL_MAX_RUNS_PER_ROW) {
@@ -128,6 +129,19 @@ static unsigned arc_rows(const row_gap_t *gaps, unsigned start, unsigned end,
     return best;
 }
 
+static int cross_width_consistent(const row_gap_t *gaps, unsigned start, unsigned end,
+                                  const special_track_config_t *cfg)
+{
+    unsigned min_width = CAR_W, max_width = 0;
+    for (unsigned i = start; i < end; ++i) {
+        unsigned width = (unsigned)(gaps[i].right->left - gaps[i].left->right - 1);
+        if (width < min_width) min_width = width;
+        if (width > max_width) max_width = width;
+    }
+    /* A centered rounded island can also split and rejoin, but narrows at its tips. */
+    return min_width * 100u >= max_width * cfg->min_cross_width_percent;
+}
+
 static void summarize_gaps(const row_gap_t *gaps, special_scan_result_t *scan,
                            const special_track_config_t *cfg)
 {
@@ -143,7 +157,8 @@ static void summarize_gaps(const row_gap_t *gaps, special_scan_result_t *scan,
         if (side == 0) {
             if (span > scan->central_dark_rows) scan->central_dark_rows = (uint8_t)span;
             if (near_join && start > 0 && joins(&scan->rows[start - 1], &gaps[start]) &&
-                span > scan->cross_rows) scan->cross_rows = (uint8_t)span;
+                span > scan->cross_rows && cross_width_consistent(gaps, start, end, cfg))
+                scan->cross_rows = (uint8_t)span;
         } else {
             unsigned arc = arc_rows(gaps, start, end, scan, cfg);
             if (arc > scan->curved_boundary_rows) scan->curved_boundary_rows = (uint8_t)arc;
@@ -195,7 +210,8 @@ static void count_clipped_bank(special_scan_result_t *scan, const special_track_
     }
 }
 
-void special_track_scan(const uint8_t *binary, const special_track_config_t *cfg,
+void special_track_scan(const uint8_t *pixels, const uint8_t *row_thresholds,
+                        const special_track_config_t *cfg,
                         const vision_result_t *normal, unsigned count, special_scan_result_t *out)
 {
     row_gap_t gaps[SPECIAL_SCAN_ROWS] = {{0}};
@@ -206,7 +222,8 @@ void special_track_scan(const uint8_t *binary, const special_track_config_t *cfg
     for (unsigned i = 0; i < count; ++i) {
         special_scan_row_t *row = &out->rows[i];
         row->y = (uint8_t)(cfg->scan_top + (cfg->scan_bottom - cfg->scan_top) * i / (count - 1));
-        scan_row(binary + row->y * CAR_W, cfg->min_run_width, row);
+        uint8_t threshold = row_thresholds ? row_thresholds[row->y] : 254;
+        scan_row(pixels + row->y * CAR_W, threshold, cfg->min_run_width, row);
         out->overflow |= row->overflow;
         if (row->run_count > 1) ++out->multi_run_rows;
         if (row->run_count > 0 && row->runs[0].width < CAR_W) ++out->usable_rows;

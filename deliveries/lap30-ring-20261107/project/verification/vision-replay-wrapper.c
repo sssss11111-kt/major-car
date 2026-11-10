@@ -3,6 +3,9 @@
 #include "main.h"
 #include "roundabout_control.h"
 #include <stdint.h>
+#ifdef R17_WITH_SPECIAL_TRACK
+#include "roundabout_scan.h"
+#endif
 static uint8_t left[120],mid[120],right[120];
 static steering_state_t replay_steering;
 __declspec(dllexport) void replay_reset(void) {
@@ -46,7 +49,20 @@ __declspec(dllexport) void replay_guide(int side) {img_set_roundabout_guidance(s
 
 static rb_state_t integrated_ring;
 static uint8_t replay_odometry_enabled;
-__declspec(dllexport) void replay_ring_reset(void) {replay_reset();integrated_ring=(rb_state_t){0};replay_odometry_enabled=0;}
+#ifdef R17_WITH_SPECIAL_TRACK
+static special_track_output_t replay_scan;
+__declspec(dllexport) void replay_scan_status(int *out) {
+ out[0]=replay_scan.type; out[1]=replay_scan.frame_type; out[2]=replay_scan.diagnostic_flags;
+ out[3]=rb_scan_allows_entry(&replay_scan,RB_TURN_SIGN);
+ out[4]=replay_scan.full_scan_attempted;
+}
+#endif
+__declspec(dllexport) void replay_ring_reset(void) {
+ replay_reset();integrated_ring=(rb_state_t){0};replay_odometry_enabled=0;
+#ifdef R17_WITH_SPECIAL_TRACK
+ rb_scan_reset();
+#endif
+}
 __declspec(dllexport) void replay_ring_step(uint8_t *raw,uint32_t tick,float *out) {
  int entry_was_preparing = img_get_entry_status() == 0;
  int guide=rb_guiding(&integrated_ring) ? -RB_TURN_SIGN:0;
@@ -58,8 +74,14 @@ __declspec(dllexport) void replay_ring_step(uint8_t *raw,uint32_t tick,float *ou
  int valid=img_get_valid();
  if(rb_busy(&integrated_ring) && !img_get_near_valid())valid=0;
  int old_phase=integrated_ring.phase;
+#ifdef R17_WITH_SPECIAL_TRACK
+ int island = img_get_roundabout_candidate();
+ replay_scan = rb_scan_frame(raw,tick,island || rb_busy(&integrated_ring));
+ rb_scan_observe(&integrated_ring,island,rb_scan_allows_entry(&replay_scan,RB_TURN_SIGN),1);
+#else
  rb_geometry(&integrated_ring,img_get_entry_ready(),img_get_roundabout_corner_row(),img_get_exit_ready(),img_get_exit_error());
  rb_observe(&integrated_ring,img_get_roundabout_candidate(),img_get_near_valid(),img_get_stripe_active(),img_get_road_recovered(),1);
+#endif
  if(old_phase!=integrated_ring.phase) {
   /* Mirror production: any phase transition recomputes the same frame using
    * the new planner mode, without counting the frame twice in the FSM. */
@@ -71,6 +93,9 @@ __declspec(dllexport) void replay_ring_step(uint8_t *raw,uint32_t tick,float *ou
   valid=img_get_valid();
   if(!img_get_near_valid())valid=0;
  }
+#ifdef R17_WITH_SPECIAL_TRACK
+ if(!rb_busy(&integrated_ring) && replay_scan.type==SPECIAL_CROSS_ISLAND)valid=0;
+#endif
  if(integrated_ring.just_entered && !img_get_entry_path_safe()) {
   rb_reject_entry(&integrated_ring);
   valid=0;

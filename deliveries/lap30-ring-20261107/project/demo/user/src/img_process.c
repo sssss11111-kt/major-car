@@ -13,7 +13,7 @@ static int ip_abs(int v) { return v < 0 ? -v : v; }
 #define IP_LOW_MARGIN_PCT 22         /* 阈值下限 = 带内最暗 + (最亮-最暗)*22/100 */
 #define IP_MIN_DR          10        /* 一帧内最亮-最暗低于这个值，视为无有效场景 */
 
-static uint8_t s_scene_ok;
+static uint8_t s_scene_ok, s_scene_contrast;
 #define IP_TRACK_TOP      18         /* 只处理 y>=IP_TRACK_TOP 的行 */
 #define IP_TRACK_BOTTOM   (IP_BODY_MASK_START_ROW-2) /* Row 105 */
 #define IP_RUN_MIN        10         /* 白色连通段最少像素 */
@@ -845,7 +845,7 @@ void img_process_reset(void)
     s_half_bias = 0;
     s_half_bias_ready = 0;
     s_have_error = 0;
-    s_scene_ok = 0;
+    s_scene_ok = s_scene_contrast = 0;
     s_valid = 0;
     s_error = 0;
     s_preview_error = 0;
@@ -910,6 +910,8 @@ const entry_path_t *img_get_entry_path(void) { return &s_entry_path; }
 uint8_t img_get_entry_status(void) { return s_entry_status; }
 uint8_t img_get_roundabout_candidate(void) { return s_ring_candidate; }
 uint8_t img_get_roundabout_evidence(void) { return s_ring_evidence; }
+const uint8_t *img_get_row_thresholds(void) { return s_row_thr; }
+uint8_t img_get_scene_contrast(void) { return s_scene_contrast; }
 uint8_t img_get_roundabout_corner_row(void) { return s_ring_corner_row; }
 int16_t img_get_roundabout_entry_error(void) { return s_ring_entry_error; }
 uint8_t img_get_roundabout_preview_valid(void) { return s_ring_preview_valid; }
@@ -1021,7 +1023,8 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
             const uint8_t *src = _src_pixel_mat + (unsigned)y * IP_W;
             for (int x = 0; x < IP_W; ++x) { if (src[x] < lo) lo = src[x]; if (src[x] > hi) hi = src[x]; }
         }
-        s_scene_ok = (uint8_t)(hi - lo >= IP_MIN_DR);
+        s_scene_contrast = (uint8_t)(hi - lo);
+        s_scene_ok = (uint8_t)(s_scene_contrast >= IP_MIN_DR);
     }
 
     /* ---- 1b. 条纹检测 ---- */
