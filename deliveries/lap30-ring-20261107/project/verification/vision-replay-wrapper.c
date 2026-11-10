@@ -5,6 +5,7 @@
 #include <stdint.h>
 #ifdef R17_WITH_SPECIAL_TRACK
 #include "roundabout_scan.h"
+#include "cross_drive.h"
 #endif
 static uint8_t left[120],mid[120],right[120];
 static steering_state_t replay_steering;
@@ -51,6 +52,8 @@ static rb_state_t integrated_ring;
 static uint8_t replay_odometry_enabled;
 #ifdef R17_WITH_SPECIAL_TRACK
 static special_track_output_t replay_scan;
+static cross_drive_t replay_cross;
+__declspec(dllexport) int replay_cross_phase(void) { return replay_cross.phase; }
 __declspec(dllexport) void replay_scan_status(int *out) {
  out[0]=replay_scan.type; out[1]=replay_scan.frame_type; out[2]=replay_scan.diagnostic_flags;
  out[3]=rb_scan_allows_entry(&replay_scan,RB_TURN_SIGN);
@@ -60,7 +63,7 @@ __declspec(dllexport) void replay_scan_status(int *out) {
 __declspec(dllexport) void replay_ring_reset(void) {
  replay_reset();integrated_ring=(rb_state_t){0};replay_odometry_enabled=0;
 #ifdef R17_WITH_SPECIAL_TRACK
- rb_scan_reset();
+ rb_scan_reset(); replay_cross=(cross_drive_t){0};
 #endif
 }
 __declspec(dllexport) void replay_ring_step(uint8_t *raw,uint32_t tick,float *out) {
@@ -76,8 +79,8 @@ __declspec(dllexport) void replay_ring_step(uint8_t *raw,uint32_t tick,float *ou
  int old_phase=integrated_ring.phase;
 #ifdef R17_WITH_SPECIAL_TRACK
  int island = img_get_roundabout_candidate();
- replay_scan = rb_scan_frame(raw,tick,island || rb_busy(&integrated_ring));
- rb_scan_observe(&integrated_ring,island,rb_scan_allows_entry(&replay_scan,RB_TURN_SIGN),1);
+ replay_scan = rb_scan_frame(raw,tick,island || rb_busy(&integrated_ring) || replay_cross.phase != CROSS_DRIVE_IDLE);
+ rb_scan_observe(&integrated_ring,island,rb_scan_allows_entry(&replay_scan,RB_TURN_SIGN) && replay_cross.phase == CROSS_DRIVE_IDLE,1);
 #else
  rb_geometry(&integrated_ring,img_get_entry_ready(),img_get_roundabout_corner_row(),img_get_exit_ready(),img_get_exit_error());
  rb_observe(&integrated_ring,img_get_roundabout_candidate(),img_get_near_valid(),img_get_stripe_active(),img_get_road_recovered(),1);
@@ -94,7 +97,9 @@ __declspec(dllexport) void replay_ring_step(uint8_t *raw,uint32_t tick,float *ou
   if(!img_get_near_valid())valid=0;
  }
 #ifdef R17_WITH_SPECIAL_TRACK
- if(!rb_busy(&integrated_ring) && replay_scan.type==SPECIAL_CROSS_ISLAND)valid=0;
+ cross_drive_output_t cross_path=cross_drive_step(&replay_cross,&replay_scan,raw,img_get_row_thresholds(),tick,
+                                                  1,rb_busy(&integrated_ring),img_get_road_recovered());
+ if(cross_path.active) valid=cross_path.valid && !img_get_stripe_active();
 #endif
  if(integrated_ring.just_entered && !img_get_entry_path_safe()) {
   rb_reject_entry(&integrated_ring);
@@ -108,7 +113,11 @@ __declspec(dllexport) void replay_ring_step(uint8_t *raw,uint32_t tick,float *ou
  if(integrated_ring.just_entered)steering_blend_entry(&replay_steering,e);
  else if(entry_was_preparing && img_get_entry_path()->count)
   steering_prime_entry(&replay_steering,e);
- steering_result_t r=steering_update(&replay_steering,(int)e,img_get_preview_error(),!metric_control && img_get_preview_valid(),valid,1,tick,
+ int preview=img_get_preview_error(), preview_valid=!metric_control && img_get_preview_valid();
+#ifdef R17_WITH_SPECIAL_TRACK
+ if(cross_path.active) { e=cross_path.near_error; preview=cross_path.preview_error; preview_valid=valid; }
+#endif
+ steering_result_t r=steering_update(&replay_steering,(int)e,preview,preview_valid,valid,1,tick,
      SERVO_MOTOR_MIDDLE,SERVO_DIR,SERVO_MOTOR_R_MAX,SERVO_MOTOR_L_MAX);
  out[0]=r.command;out[1]=(float)integrated_ring.phase;out[2]=e;
  out[3]=(float)valid;out[4]=(float)img_get_error();

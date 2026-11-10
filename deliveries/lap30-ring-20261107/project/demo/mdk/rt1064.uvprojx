@@ -401,6 +401,11 @@
               <FilePath>..\user\src\roundabout_scan.c</FilePath>
             </File>
             <File>
+              <FileName>cross_drive.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\src\cross_drive.c</FilePath>
+            </File>
+            <File>
               <FileName>special_track.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\firmware\camera_car\demo\user\src\special_track.c</FilePath>

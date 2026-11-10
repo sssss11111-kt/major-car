@@ -1,5 +1,6 @@
 #include "roundabout_control.h"
 #include "roundabout_scan.h"
+#include "cross_drive.h"
 #include "auto_start.h"
 #include "steering_control.h"
 #include "ring_diag.h"
@@ -121,7 +122,7 @@ void Init()
     {
         if (mt9v03x_init()) {
             tft180_show_string(0, 16, "mt9v03x reinit.");
-            telemetry_send("C11LAP30SCAN1 CAMERA_RETRY\r\n");
+            telemetry_send("C11LAP30SCAN2 CAMERA_RETRY\r\n");
         }
         else
             break;
@@ -276,12 +277,12 @@ int main(void)
     system_delay_ms(300);          // 等待主板其他外设上电完成
 
     wireless_ready = (wireless_uart_init() == 0); /* Supplied wireless driver: RTS and IRQ RX FIFO. */
-    telemetry_send("C11LAP30SCAN1 AUTO BOOT\r\n");
+    telemetry_send("C11LAP30SCAN2 AUTO BOOT\r\n");
     Init();
     img_process_reset();
     rb_scan_reset();
     steering_reset(&steering_state,servo_motor_duty_middle,trial_ticks);
-    telemetry_send("C11LAP30SCAN1 AUTO READY\r\n");
+    telemetry_send("C11LAP30SCAN2 AUTO READY\r\n");
     tft180_clear();
     tft180_show_string(0, 0, wireless_ready ? "W:OK GRAY/BINARY" : "W:FAIL GRAY/BIN");
     interrupt_global_enable(0);
@@ -289,6 +290,7 @@ int main(void)
     uint32 report_tick = 0, display_tick = 0, timing_report_tick = 0;
     special_track_output_t scan = {0};
     uint8_t scan_entry_allowed = 0;
+    cross_drive_t cross = {0};
     while (1)
     {
         if(auto_run && !trial_running && !mt9v03x_finish_flag) rd29_freeze(&rd29_state);
@@ -328,7 +330,7 @@ int main(void)
             auxiliary_process((uint8_t *)raw_image, MT9V03X_H, MT9V03X_W, 127,
                               left_line, mid_line, right_line);
             uint8 island = img_get_roundabout_candidate();
-            scan = rb_scan_frame((const uint8_t *)raw_image, entry_tick, island || rb_busy(&roundabout_state));
+            scan = rb_scan_frame((const uint8_t *)raw_image, entry_tick, island || rb_busy(&roundabout_state) || cross.phase != CROSS_DRIVE_IDLE);
             scan_entry_allowed = (uint8_t)rb_scan_allows_entry(&scan, RB_TURN_SIGN);
             uint8 valid = img_get_valid();
             if(rb_busy(&roundabout_state) && !img_get_near_valid())valid=0;
@@ -349,7 +351,7 @@ int main(void)
             uint32 vision_mask=interrupt_global_disable();
             rd_pre[RD_PHASE_BEFORE]=roundabout_state.phase;
             rd_pre[RD_CONFIRM_BEFORE]=roundabout_state.confirm;
-            rb_scan_observe(&roundabout_state,island,scan_entry_allowed,trial_running && !trial_bench);
+            rb_scan_observe(&roundabout_state,island,scan_entry_allowed && cross.phase == CROSS_DRIVE_IDLE,trial_running && !trial_bench);
             uint8 just_entered = roundabout_state.just_entered;
             rd_pre[RD_PHASE_AFTER]=roundabout_state.phase;
             rd_pre[RD_CONFIRM_AFTER]=roundabout_state.confirm;
@@ -366,8 +368,13 @@ int main(void)
                 detected_both = img_get_both_rows();
                 detected_error = img_get_error();
             }
-            /* A cross-island route needs its own calibrated plan. */
-            if (!rb_busy(&roundabout_state) && scan.type == SPECIAL_CROSS_ISLAND) valid = 0;
+            cross_drive_output_t cross_path = cross_drive_step(&cross, &scan,
+                (const uint8_t *)raw_image, img_get_row_thresholds(), entry_tick, entry_running,
+                rb_busy(&roundabout_state), img_get_road_recovered());
+            if (cross_path.active) {
+                valid = cross_path.valid && !img_get_stripe_active();
+                detected_error = cross_path.near_error;
+            }
             uint8 rejected_entry = just_entered && !img_get_entry_path_safe();
             vision_mask=interrupt_global_disable();
             if (rejected_entry) {
@@ -376,7 +383,7 @@ int main(void)
                 just_entered=0;
                 valid=0; /* Existing loss supervisor handles this frame. */
             }
-            uint8 degraded = valid && (detected_both < 3 || img_get_stripe_active() ||
+            uint8 degraded = valid && (cross_path.active || detected_both < 3 || img_get_stripe_active() ||
                                       img_get_roundabout_candidate() || rb_busy(&roundabout_state) ||
                                       rb_suspect(&roundabout_state));
             vision_ring = (uint8)(rb_busy(&roundabout_state) || rb_suspect(&roundabout_state));
@@ -422,17 +429,24 @@ int main(void)
                 valid,img_get_stripe_active());
             if (entry_path->count) turn_error = detected_error;
             uint8 metric_control=(uint8)ep_metric_error(entry_path,&turn_error);
+            int16_t turn_preview = img_get_preview_error();
+            uint8 turn_preview_valid = (uint8)(!metric_control && img_get_preview_valid());
+            if (cross_path.active) {
+                turn_error = cross_path.near_error;
+                turn_preview = cross_path.preview_error;
+                turn_preview_valid = valid;
+            }
             if (just_entered) steering_blend_entry(&steering_state, turn_error);
             else if (entry_was_preparing && entry_path->count)
                 steering_prime_entry(&steering_state, turn_error);
-            steering_result_t turn = steering_update(&steering_state,(int)turn_error,img_get_preview_error(),
-                (uint8)(!metric_control && img_get_preview_valid()),valid,(uint8)(trial_running && !trial_bench),trial_ticks,
+            steering_result_t turn = steering_update(&steering_state,(int)turn_error,turn_preview,
+                turn_preview_valid,valid,(uint8)(trial_running && !trial_bench),trial_ticks,
                 servo_motor_duty_middle,SERVO_DIR,
                 MIN(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX),MAX(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX));
             steering_curve = turn.curve; steering_limited = turn.limited;
             steering_bend=turn.bend_level;steering_slew=turn.slew_limited;steering_severity=turn.severity;
             steering_speed_scale = valid ? turn.speed_scale : 1.0f;
-            preview_error = img_get_preview_error();
+            preview_error = turn_preview;
             float tmp_duty = turn.command;
             if (trial_running && !trial_bench && vision_mode)
             {
@@ -532,7 +546,7 @@ int main(void)
                 telemetry_send(timing_report);
             }
             char report[200]; report_tick=trial_ticks;
-            sprintf(report, "C11LAP30SCAN1 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
+            sprintf(report, "C11LAP30SCAN2 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
                 (unsigned long)trial_ticks,trial_running,trial_fault,(unsigned long)frame_count,
                 (unsigned long)good_frames,(unsigned long)(trial_ticks-frame_tick),
                 encoder_data_1,encoder_data_2,trial_left_pwm,trial_right_pwm);
@@ -559,6 +573,11 @@ int main(void)
                 sprintf(stripe_report,"SP_SCAN type=%u frame_type=%u state=%u score=%u conf=%u flags=%u entry_ok=%u\r\n",
                     (unsigned)scan.type,(unsigned)scan.frame_type,(unsigned)scan.state,
                     scan.candidate_score,scan.confidence,scan.diagnostic_flags,scan_entry_allowed);
+                telemetry_send(stripe_report);
+            }
+            if (cross.phase != CROSS_DRIVE_IDLE) {
+                sprintf(stripe_report,"CROSS30 phase=%u side=%d clear=%u\r\n",
+                    (unsigned)cross.phase,(int)cross.side,cross.clear_frames);
                 telemetry_send(stripe_report);
             }
             sprintf(stripe_report,"ENTRY30 status=%u points=%u goal_x=%u goal_y=%u reason=%u\r\n",

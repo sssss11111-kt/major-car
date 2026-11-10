@@ -63,7 +63,8 @@ static void gpio_set_level(int a,int b) {(void)a;(void)b;}
 '''
 stubs += source[source.index('/* FIRST_FAULT4_BEGIN'):source.index('/* FIRST_FAULT4_END */')] + '\nstatic uint8 usable_rows=0;\n'
 publication = source[source.index('uint8 degraded ='):source.index('            vision_error =')]
-publication = 'static void publish_mode(uint8 valid,uint8 detected_both) {\n' + publication + '\n}\n'
+publication = ('static struct {uint8 active;} cross_path;\n'
+               'static void publish_mode(uint8 valid,uint8 detected_both) {\n' + publication + '\n}\n')
 tests = r'''
 static void step(void) {frame_tick=trial_ticks;trial_tick();}
 int main(int argc,char **argv) {
@@ -205,6 +206,13 @@ int main(int argc,char **argv) {
         CHECK(trial_running && speed_pid_l.last_error==0 && motor1==1500 && motor2==1500);
         marker=1;publish_mode(1,40);step();
         CHECK(speed_pid_l.last_error+80==24); /* stripe cap always wins */
+    } else if (!strcmp(argv[1],"cross_speed")) {
+        good_frames=5;for(int i=0;i<101;i++)step();
+        cross_path.active=1;publish_mode(1,40);
+        encoder_data_1=80;encoder_data_2=80;step();
+        CHECK(trial_running && vision_mode==2 && speed_pid_l.last_error==0);
+        publish_mode(0,40);good_frames=0;step();
+        CHECK(!trial_running && trial_fault==4 && motor1==0 && motor2==0);
     } else if (!strcmp(argv[1],"entry_speed")) {
         good_frames=5;for(int i=0;i<101;i++)step();
         encoder_data_1=30;encoder_data_2=30;
@@ -271,5 +279,5 @@ else:
 for case in ['view','auto','lost','snapshot','stale','running_stale','bench','pwm100','single','curve_speed',
              'stripe_start','stripe_recovery','stripe_stale','stripe_lost','stripe_encoder',
              'stripe_stall','stripe_degraded','no_stripe_target_change','ring_speed','ring_curve_speed','ring_fault','entry_speed','bridge_time','bridge_distance','bridge_yaw',
-             'bridge_stale','bridge_encoder','bridge_stop','bridge_crossing']:
+             'bridge_stale','bridge_encoder','bridge_stop','bridge_crossing','cross_speed']:
     subprocess.run([str(p/'auto-integration.exe'),case],check=True)

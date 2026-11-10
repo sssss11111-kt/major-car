@@ -9,6 +9,11 @@ subprocess.run([os.environ['ZIG'],'cc','-std=c99','-Wall','-Wextra','-Werror',
                 str(src/'img_process.c'),str(p/'test-rb-scan.c'),*scanner_args(),
                 '-o',str(scanner_test)],check=True)
 subprocess.run([str(scanner_test)],check=True)
+cross_test=p/'test-cross-drive.exe'
+subprocess.run([os.environ['ZIG'],'cc','-std=c99','-Wall','-Wextra','-Werror',
+                '-I',str(src.parent/'inc'),'-I',str(p.parents[3]/'firmware/camera_car/demo/user/inc'),
+                str(src/'cross_drive.c'),str(p/'test-cross-drive.c'),'-o',str(cross_test)],check=True)
+subprocess.run([str(cross_test)],check=True)
 subprocess.run([os.environ['ZIG'],'cc','-shared','-O2','-Wall','-Wextra','-Werror','-I',str(p/'vision-stubs'),'-I',str(src.parent/'inc'),os.environ.get('IP_TEST_VISION_SOURCE',str(src/'img_process.c')),str(src/'steering_control.c'),str(p/'vision-replay-wrapper.c'),
                 '-DR17_WITH_SPECIAL_TRACK',*scanner_args(),'-o',str(p/'roundabout-replay.dll')],check=True)
 d=C.CDLL(str(p/'roundabout-replay.dll'))
@@ -179,7 +184,7 @@ d.replay_ring_reset()
 for n in range(10):
  raw=scene(stripe=True);d.replay_ring_step((C.c_uint8*len(raw))(*raw),n*2,out)
  assert out[1]==0,list(out)
-# A confirmed cross island without a route must inhibit ordinary control.
+# Confirmed cross island supplies the current connected corridor to steering.
 cross = scene()
 for y in range(56, 88):
  cross[y*188+83:y*188+105]=bytes([20])*22
@@ -190,12 +195,25 @@ for n in range(5):
  d.replay_ring_step((C.c_uint8*len(cross))(*cross),n*2,out)
 scan=(C.c_int*5)()
 d.replay_scan_status(scan)
-assert scan[0]==1 and scan[4] and out[1]==0 and out[3]==0,(list(scan),list(out))
-print('PASS: confirmed cross island with no route suppresses ordinary guidance')
+assert scan[0]==1 and scan[4] and out[1]==0 and out[3]==1,(list(scan),list(out))
+assert d.replay_cross_phase()==1 and abs(out[2])>=8,(list(scan),list(out))
+exit_view=scene()
+offset=28 if out[2]<0 else -28
+for y in range(86,106):
+ exit_view[y*188+83+offset:y*188+105+offset]=bytes([20])*22
+d.replay_ring_step((C.c_uint8*len(exit_view))(*exit_view),10,out)
+assert d.replay_cross_phase()==2 and out[3]==1,list(out)
+for n in range(6,16):
+ raw=scene()
+ d.replay_ring_step((C.c_uint8*len(raw))(*raw),n*2,out)
+ assert out[3]==1,list(out)
+assert d.replay_cross_phase()==0 and abs(out[2])<=1,list(out)
+print('PASS: confirmed cross island drives the selected corridor, exits and restores ordinary steering')
 # Guard actual production integration against omitting the measured-branch gate.
 main=(src/'main.c').read_text(encoding='utf-8')
 assert 'scan = rb_scan_frame(' in main
-assert 'rb_scan_observe(&roundabout_state,island,scan_entry_allowed,' in main
+assert 'rb_scan_observe(&roundabout_state,island,scan_entry_allowed &&' in main
+assert 'cross_drive_step(&cross, &scan,' in main
 assert 'turn_error=rb_plan_entry_error(roundabout_state.phase,applied_ring_guide,' in main
 assert 'img_get_preview_error(),img_get_roundabout_preview_valid(),' in main
 assert 'steering_update(&steering_state,(int)turn_error,' in main
