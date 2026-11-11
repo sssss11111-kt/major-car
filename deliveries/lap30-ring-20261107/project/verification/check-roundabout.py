@@ -15,7 +15,7 @@ subprocess.run([os.environ['ZIG'],'cc','-std=c99','-Wall','-Wextra','-Werror',
                 str(src/'cross_drive.c'),str(p/'test-cross-drive.c'),'-o',str(cross_test)],check=True)
 subprocess.run([str(cross_test)],check=True)
 subprocess.run([os.environ['ZIG'],'cc','-shared','-O2','-Wall','-Wextra','-Werror','-I',str(p/'vision-stubs'),'-I',str(src.parent/'inc'),os.environ.get('IP_TEST_VISION_SOURCE',str(src/'img_process.c')),str(src/'steering_control.c'),str(p/'vision-replay-wrapper.c'),
-                '-DR17_WITH_SPECIAL_TRACK',*scanner_args(),'-o',str(p/'roundabout-replay.dll')],check=True)
+                '-DR17_WITH_SPECIAL_TRACK','-DRB_TURN_SIGN=1',*scanner_args(),'-o',str(p/'roundabout-replay.dll')],check=True)
 d=C.CDLL(str(p/'roundabout-replay.dll'))
 def scene(island=0,shift=0,stripe=False):
  raw=bytearray([20]*(188*120))
@@ -91,6 +91,35 @@ for amplitude in [6,12,18]:
     frame(raw);assert not d.replay_island(),('continuous wave',amplitude,width,phase)
 d.replay_reset();assert not d.replay_island()
 print('PASS: both islands and mirrored guidance; 6 open-lobe variants x8 frames; 27 continuous-wave variants x8 frames; original negative and near-field cases')
+
+# Before ring acquisition, a connected side opening must not move the stem.
+# A real curve shifts both banks and should continue to produce steering.
+for side in (-1, 1):
+ for opening in (True, False):
+  raw=bytearray([20]*(188*120))
+  for y in range(18,106):
+   half=int(71+32*(y-90)/119+0.5)
+   delta=max(0,min(55,(101-y)*2,(y-48)*4))
+   left,right=94-half,94+half
+   if opening:
+    left-=delta if side<0 else 0
+    right+=delta if side>0 else 0
+   else:
+    left+=side*delta//2
+    right+=side*delta//2
+   left,right=max(0,left),min(188,right)
+   raw[y*188+left:y*188+right]=bytes([220])*(right-left)
+  d.replay_ring_reset()
+  out=(C.c_float*5)()
+  for n in range(2,42,2):
+   image=scene() if n<18 else raw
+   d.replay_ring_step((C.c_uint8*len(image)).from_buffer_copy(image),n,out)
+   assert out[1]==0 and out[3]==1 and d.replay_cross_phase()==0,list(out)
+  if opening:
+   assert abs(out[2])<=1 and abs(out[0]-92.5)<0.75,('side opening pulls steering',side,list(out))
+  else:
+   assert out[2]*side>=4,('ordinary bend lost steering',side,list(out))
+print('PASS: ordinary approach holds through either side opening and still follows bends')
 
 # Captured stationary LAP27 entry, not the historical fault-triggering frame.
 real=(p/'fixtures/ring-entry-gray.bin').read_bytes()
@@ -209,6 +238,91 @@ for n in range(6,16):
  assert out[3]==1,list(out)
 assert d.replay_cross_phase()==0 and abs(out[2])<=1,list(out)
 print('PASS: confirmed cross island drives the selected corridor, exits and restores ordinary steering')
+
+# Same centered island, but its far end is above the scanner's first row.
+d.replay_ring_reset()
+clipped_cross=scene()
+for y in range(28,88):
+ clipped_cross[y*188+83:y*188+105]=bytes([20])*22
+for n in range(3):
+ raw=scene()
+ d.replay_ring_step((C.c_uint8*len(raw))(*raw),n*2,out)
+for n in range(3,9):
+ d.replay_ring_step((C.c_uint8*len(clipped_cross))(*clipped_cross),n*2,out)
+d.replay_scan_status(scan)
+assert scan[0]==1 and d.replay_cross_phase()==1 and out[3]==1 and abs(out[2])>=8,(list(scan),list(out))
+print('PASS: cross-island entry stays available when the far merge is outside the scan')
+
+def cross_step(raw, n):
+ d.replay_ring_step((C.c_uint8*len(raw))(*raw),n*2,out)
+ d.replay_scan_status(scan)
+ return scan[0],d.replay_cross_phase(),int(out[1]),int(out[3])
+
+# Four sampled split rows and one bounded near merge remain visible.
+# Full-width white rows are skipped in the scanner's coverage count.
+limited_cross=scene()
+limited_cross[:72*188]=bytes([220])*(72*188)
+limited_cross[105*188:106*188]=bytes([220])*188
+for y in range(72,94):
+ limited_cross[y*188+83:y*188+105]=bytes([20])*22
+d.replay_ring_reset()
+for n in range(2):
+ result=cross_step(limited_cross,n)
+ assert result[1]==0,('reduced coverage still needs three votes',result)
+result=cross_step(limited_cross,2)
+assert result==(1,1,0,1),('five usable rows and measured corridor should enter',result)
+
+blocked_cross=bytearray(limited_cross)
+blocked_cross[96*188:97*188]=bytes([20])*188
+d.replay_ring_reset()
+for n in range(2): cross_step(limited_cross,n)
+assert cross_step(blocked_cross,2)==(1,3,0,0), 'lower coverage cannot bypass a blocked near corridor'
+
+limited_cross[99*188:100*188]=bytes([220])*188
+d.replay_ring_reset()
+for n in range(6): result=cross_step(limited_cross,n)
+assert result[:2]==(3,0),('four usable rows must remain unconfirmed',result)
+
+for offset in (-20,20):
+ d.replay_ring_reset()
+ shifted=scene(shift=offset)
+ for y in range(56,88):
+  shifted[y*188+83+offset:y*188+105+offset]=bytes([20])*22
+ for n in range(6):
+  result=cross_step(shifted,n)
+ assert result==(1,1,0,1),('road-relative cross',offset,result)
+
+d.replay_ring_reset()
+for n in range(2): cross_step(cross,n)
+interrupted=bytearray(cross)
+interrupted[70*188:71*188]=bytes([20])*188
+result=cross_step(interrupted,2)
+assert result==(1,4,0,1),('short measured approach keeps entry pending',result)
+assert cross_step(cross,3)==(1,1,0,1)
+
+d.replay_ring_reset()
+for n in range(2): cross_step(cross,n)
+for n in (2,3): assert cross_step(interrupted,n)==(1,4,0,1)
+assert cross_step(interrupted,4)==(1,3,0,0), 'persistent gap exhausts the approach window'
+assert cross_step(cross,5)==(1,3,0,0), 'loss remains latched after the window expires'
+
+d.replay_ring_reset()
+for n in range(2): cross_step(cross,n)
+interrupted=bytearray(cross)
+interrupted[96*188:97*188]=bytes([20])*188
+assert cross_step(interrupted,2)==(1,3,0,0), 'blocked near approach must stop'
+
+d.replay_ring_reset()
+for n in range(4): result=cross_step(real,n)
+assert result[2]==5,('ring alignment fixture',result)
+for n in range(4,10): result=cross_step(cross,n)
+assert result==(1,1,0,1),('confirmed cross cancels uncommitted ring alignment',result)
+
+d.replay_ring_reset()
+d.replay_ring_scenario(2,C.c_float(0))
+for n in range(6): result=cross_step(cross,n)
+assert result[:3]==(1,0,2),('confirmed cross cannot take over during orbit',result)
+print('PASS: road-relative entry, bounded measured retry, near loss and mode handoff')
 # Guard actual production integration against omitting the measured-branch gate.
 main=(src/'main.c').read_text(encoding='utf-8')
 assert 'scan = rb_scan_frame(' in main
@@ -226,13 +340,15 @@ for n in range(12):
  assert out[1]==(0 if n<2 else 5),('stationary corner must not commit',n,list(out))
 print('PASS: actual captured entry remains valid through confirmation and guide activation')
 
-# LAP29 checks: zero missing rows on real entry frame, smooth transition at y=58->59,
-# auxiliary evidence mask, and zero false positives on single-side-loss curves and S-bends.
+# Current-frame evidence: missing banks stay unknown; every published target
+# must lie on observed white road. Do not demand the removed historical ramp.
 d.replay_reset(); d.replay_guide(-1); o=frame(real)
 lines=(C.c_uint8*360)(); d.replay_lines(lines)
-assert all(lines[120+y]>0 for y in range(18,106)), 'missing mid_line rows in 18..105'
-assert abs(int(lines[120+59])-int(lines[120+58]))<=2, (lines[120+58],lines[120+59])
-assert d.replay_evidence()==0x3e and d.replay_corner_row()==93 and d.replay_entry_error()<=-25
+assert o[0], ('captured approach remains valid', o)
+assert sum(lines[120+y]>0 for y in range(18,106))>=20
+assert all(not lines[120+y] or real[y*188+lines[120+y]]>100 for y in range(18,106)), 'target outside observed road'
+assert all(x==0 or 2<x<185 for x in list(lines[:120])+list(lines[240:])), 'crop edge is not a bank'
+assert d.replay_evidence()==0x3e and d.replay_corner_row()==93
 for curvature in [-35,-25,-18,18,25,35]:
  raw=bytearray([20]*(188*120))
  for y in range(18,106):
@@ -240,7 +356,7 @@ for curvature in [-35,-25,-18,18,25,35]:
   for x in range(max(0,cx-hw),min(187,cx+hw)+1):raw[y*188+x]=220
  d.replay_reset()
  for _ in range(8):frame(raw);assert not d.replay_island(),('single-side curve fp',curvature)
-print('PASS: LAP29 auxiliary evidence, continuous entry target centerline, alignment and measured entry response and curve negatives')
+print('PASS: current white-road targets, unknown crop boundaries, auxiliary evidence and curve negatives')
 
 # A nearly uniform bright road may contain texture. Splitting that bright
 # population must not create near-field boundary evidence.

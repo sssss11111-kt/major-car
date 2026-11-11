@@ -1,0 +1,63 @@
+SCOPE: current production tests; historical R11 regression excluded explicitly (--current)
+PASS: metric projection, straight/arc curvature, mirror, infeasible radius, invalid data, pure-pursuit sign
+PASS: continuous bend response, symmetric bounds, LAP29 targets, isolated spikes, slew bound, sharp bend/reversal authority, speed recovery, preview loss, invalid reset, duplicate tick, tick wrap
+PASS: 40-degree boundary, mirrors, zero/reversed segments, rounded curve, smooth global corridor, current island, expiry and dark gap
+PASS: actual trial_tick view
+PASS: actual trial_tick auto
+PASS: actual trial_tick lost
+PASS: actual trial_tick snapshot
+PASS: actual trial_tick stale
+PASS: actual trial_tick running_stale
+PASS: actual trial_tick bench
+PASS: actual trial_tick pwm100
+PASS: actual trial_tick single
+PASS: actual trial_tick curve_speed
+PASS: actual trial_tick stripe_start
+PASS: actual trial_tick stripe_recovery
+PASS: actual trial_tick stripe_stale
+PASS: actual trial_tick stripe_lost
+PASS: actual trial_tick stripe_encoder
+PASS: actual trial_tick stripe_stall
+PASS: actual trial_tick stripe_degraded
+PASS: actual trial_tick no_stripe_target_change
+PASS: actual trial_tick ring_speed
+PASS: actual trial_tick ring_curve_speed
+PASS: actual trial_tick ring_fault
+PASS: actual trial_tick entry_speed
+PASS: actual trial_tick bridge_time
+PASS: actual trial_tick bridge_distance
+PASS: actual trial_tick bridge_yaw
+PASS: actual trial_tick bridge_stale
+PASS: actual trial_tick bridge_encoder
+PASS: actual trial_tick bridge_stop
+PASS: actual trial_tick bridge_crossing
+PASS: actual trial_tick cross_speed
+PASS: S-bend linear
+PASS: S-bend preview
+PASS: S-bend limits
+PASS: S-bend reverse
+PASS: S-bend spike
+PASS: measured stripe corridor preserves centered/left/right steering and reacquires
+PASS: no blind continuation from historical centers
+PASS: clean distant track cannot mask a missing near corridor
+PASS: stripe-only startup rejected
+PASS: isolated marks, body mask, and uniform scenes
+PASS: mirrored normal curves do not trigger stripes
+PASS: combined vision/stateful steering retains history, preview gating and 69..116 soft bounds
+[{"source": "snapshot-20261021-180609", "frames": 60, "first": [1, -4, 88, 38], "last": [1, -4, 88, 38]}, {"source": "snapshot-20261021-180619", "frames": 60, "first": [1, -4, 88, 34], "last": [1, -4, 88, 34]}]
+PASS R17: alignment, corner progress, consecutive evidence, signed yaw, exit branch lock, recovery, cooldown, timeout
+PASS: row-adaptive scanner, cross-island and overflow rejection, mirrored ring gating
+PASS: cross-island left/right latch, measured merge, three-frame exit and loss lock
+PASS: both islands and mirrored guidance; 6 open-lobe variants x8 frames; 27 continuous-wave variants x8 frames; original negative and near-field cases
+PASS: ordinary approach holds through either side opening and still follows bends
+PASS: captured side-clipped island and mirror
+PASS: measured current-frame entry corridor fallback 20 points
+PASS: confirmed cross island drives the selected corridor, exits and restores ordinary steering
+PASS: cross-island entry stays available when the far merge is outside the scan
+PASS: road-relative entry, bounded measured retry, near loss and mode handoff
+PASS: side-open/rectangular negatives; integrated distant entry, loss, stripe priority and production wiring
+PASS: actual captured entry remains valid through confirmation and guide activation
+PASS: current white-road targets, unknown crop boundaries, auxiliary evidence and curve negatives
+PASS: bright-only textured bands cannot manufacture current near boundaries
+PASS 107 recovery/integrated checks [2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4]
+PASS: scoped LAP30 host-only checks

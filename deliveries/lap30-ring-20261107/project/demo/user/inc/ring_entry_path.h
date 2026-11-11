@@ -26,7 +26,7 @@ typedef struct {
     uint32_t tick;
     float distance_m;
     uint8_t active, fresh_island, odometry_valid;
-    uint8_t exit_mode;
+    uint8_t exit_mode, ring_phase;
     int16_t exit_reference;
 } entry_context_t;
 
@@ -130,14 +130,24 @@ static int ep_segment_white(const uint8_t *raw, const uint8_t *thresholds,
     return 1;
 }
 
-/* Gate the handoff against the current island silhouette, including diagonal
- * proximity to its tip and pixels between the exported path samples. */
+/* Check the current island tip along every exported segment. In the distant
+ * narrow opening, scale clearance to the two measured banks; the near-field
+ * clearance stays capped by the existing provisional pixel margin. */
 static int ep_entry_clearance_ok(const entry_path_t *path, int side) {
-    const int margin = EP_ENTRY_ISLAND_CLEARANCE_PX;
-    if (!ep_context.fresh_island || !side || path->count < 2 ||
-        path->count > EP_MAX_POINTS) return 0;
+    if (!side || path->count < 2 || path->count > EP_MAX_POINTS) return 0;
+    if (!ep_context.fresh_island || !ep_context.island_mask ||
+        !ep_context.island_left || !ep_context.island_right)
+        return 0;
     for (unsigned i = 1; i < path->count; ++i) {
         const entry_point_t *a = &path->points[i-1], *b = &path->points[i];
+        int margin = EP_ENTRY_ISLAND_CLEARANCE_PX;
+        if (a->measured == 3 && b->measured == 3) {
+            float wa = hypotf((float)a->left_x-a->right_x, (float)a->left_y-a->right_y);
+            float wb = hypotf((float)b->left_x-b->right_x, (float)b->left_y-b->right_y);
+            int paired_margin = (int)(0.35f*(wa<wb ? wa:wb));
+            if (paired_margin<3) paired_margin=3;
+            if (paired_margin<margin) margin=paired_margin;
+        }
         int dx = b->x - a->x, dy = b->y - a->y;
         int steps = ep_abs(dx) > ep_abs(dy) ? ep_abs(dx) : ep_abs(dy);
         if (!steps) return 0;
@@ -259,10 +269,10 @@ static int ep_goal_column(int side) {
         if (side > 0 && ep_context.island_left[y] < edge) edge = ep_context.island_left[y];
     }
     if (side < 0) {
-        edge -= 6;
+        edge -= 4;
         return edge > EP_WIDTH/2 + 12 ? edge : -1;
     }
-    edge += 6;
+    edge += 4;
     return edge < EP_WIDTH/2 - 12 ? edge : -1;
 }
 
@@ -280,7 +290,7 @@ static int ep_column_openings(const uint8_t *raw, const uint8_t *thresholds,
                               int side, int column, ep_column_opening_t *out) {
     int goal_x = ep_goal_column(side);
     if (goal_x < 0) return 0;
-    int x = goal_x + (side < 0 ? -4 : 4) * column;
+    int x = goal_x + (side < 0 ? -2 : 2) * column;
     int count = 0, y = EP_TOP;
     while (y <= EP_BOTTOM && count < EP_MAX_OPENINGS) {
         int start, end, width, center, source;
@@ -292,7 +302,7 @@ static int ep_column_openings(const uint8_t *raw, const uint8_t *thresholds,
         if (width < 10) continue;
         /* During entry/orbit, the current island must border this branch on
          * its lower side. A white run BELOW that island is an exit candidate. */
-        if (!ep_opening_borders_island(raw, thresholds, x, end)) continue;
+        if (end < EP_BOTTOM && !ep_opening_borders_island(raw, thresholds, x, end)) continue;
         if (start > EP_TOP + 2 && end < EP_BOTTOM - 1) {
             source = 1;
         } else {
@@ -319,7 +329,7 @@ static int ep_column_openings(const uint8_t *raw, const uint8_t *thresholds,
             int tolerance = expected / 2;
             if (tolerance < 8) tolerance = 8;
             if (!expected || ep_abs(width - expected) > tolerance ||
-                ep_abs(center - (int)ep_previous_goal_y) > 12) continue;
+                ep_abs(center - (int)ep_previous_goal_y) > (tolerance>12 ? tolerance:12)) continue;
         }
         out[count].outer = start;
         out[count].inner = end;
@@ -364,7 +374,7 @@ static int ep_collect_openings(const uint8_t *raw, const uint8_t *thresholds,
             candidate.source = has_outer ? 2 : (has_inner ? 3 : 1);
             candidate.goal_x = ep_goal_column(side);
             candidate.goal_y = sum / 3;
-            candidate.slope = (columns[0][seed].center - previous) / 8.0f;
+            candidate.slope = (columns[0][seed].center - previous) / 4.0f;
             candidate.support = 3;
             if (candidate.source != 1) {
                 int outer = candidate.source == 2;
@@ -485,7 +495,7 @@ static float ep_curve_score(const uint8_t *raw, const uint8_t *thresholds,
             float scale = fabsf(dx) > fabsf(dy) ? fabsf(dx) : fabsf(dy);
             float speed_sq = dx*dx + dy*dy;
             float cross = dx*ddy - dy*ddx;
-            int inner_distance = 0, inner_x = 0, inner_y = 0;
+            int inner_distance = 0, outer_distance = 0, inner_x = 0, inner_y = 0;
             int inner_side = turn_side < 0 ? 1 : -1;
             if (boundary_source == 2) inner_side = -inner_side;
             if (scale < 1 || speed_sq < 1) return -1;
@@ -501,7 +511,7 @@ static float ep_curve_score(const uint8_t *raw, const uint8_t *thresholds,
                         if (side == inner_side) {
                             inner_distance = distance;
                             inner_x = xx; inner_y = yy;
-                        }
+                        } else outer_distance = distance;
                         break;
                     }
                 }
@@ -517,6 +527,10 @@ static float ep_curve_score(const uint8_t *raw, const uint8_t *thresholds,
                 float end_dx = control[6]-control[4], end_dy = control[7]-control[5];
                 float normal_scale = fabsf(end_dx)/sqrtf(end_dx*end_dx+end_dy*end_dy);
                 float half_width = 0.5f*measured_width*normal_scale*model_here/model_goal;
+                /* A measured pair defines the local corridor centre. Width
+                 * history is needed only while the opposite bank is cropped. */
+                if (inner_distance && outer_distance)
+                    half_width = 0.5f*(inner_distance+outer_distance)*sqrtf(speed_sq)/scale;
                 if (inner_distance && half_width >= 3) {
                     float actual_distance = inner_distance*sqrtf(speed_sq)/scale;
                     float difference = (actual_distance-half_width)/half_width;
@@ -806,6 +820,13 @@ static int ep_build_measured_corridor(const uint8_t *raw, const uint8_t *thresho
                 if (ep_context.fresh_island && ep_context.island_mask[y]) {
                     if (side < 0 && end > ep_context.island_left[y]+1) continue;
                     if (side > 0 && begin < ep_context.island_right[y]-1) continue;
+                    confidence = 2;
+                }
+                if (ep_context.fresh_island && ep_context.ring_phase == 1 && side < 0 &&
+                    ep_context.island_left[y] > start_x + 20 &&
+                    center < ep_context.island_left[y]) {
+                    center += ep_context.island_left[y] - center > 6 ? 6 :
+                              ep_context.island_left[y] - center - 2;
                     confidence = 2;
                 }
             }

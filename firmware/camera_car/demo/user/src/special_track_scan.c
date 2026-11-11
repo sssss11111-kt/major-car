@@ -54,8 +54,7 @@ static row_gap_t find_gap(const special_scan_row_t *row, const special_track_con
 
 static int gap_linked(const row_gap_t *a, const row_gap_t *b, unsigned shift)
 {
-    return a->side == b->side &&
-           a->left->right + 1 < b->right->left && b->left->right + 1 < a->right->left &&
+    return a->left->right + 1 < b->right->left && b->left->right + 1 < a->right->left &&
            a->left->left <= b->left->right && b->left->left <= a->left->right &&
            a->right->left <= b->right->right && b->right->left <= a->right->right &&
            magnitude(a->left->right - b->left->right) <= (int)shift &&
@@ -149,6 +148,7 @@ static void summarize_gaps(const row_gap_t *gaps, special_scan_result_t *scan,
         if (!gaps[start].left) { ++start; continue; }
         unsigned end = start + 1;
         while (end < scan->row_count && gaps[end].left &&
+               gaps[end].side == gaps[start].side &&
                gap_linked(&gaps[end - 1], &gaps[end], cfg->max_row_shift)) ++end;
         unsigned span = end - start;
         int side = gaps[start].side;
@@ -156,7 +156,10 @@ static void summarize_gaps(const row_gap_t *gaps, special_scan_result_t *scan,
         if (span > scan->linked_gap_rows) scan->linked_gap_rows = (uint8_t)span;
         if (side == 0) {
             if (span > scan->central_dark_rows) scan->central_dark_rows = (uint8_t)span;
-            if (near_join && start > 0 && joins(&scan->rows[start - 1], &gaps[start]) &&
+            /* The far merge may lie beyond the scan. A missing merge inside
+             * the scan is still inconsistent with a single connected split. */
+            int far_merge_or_clipped = start == 0 || joins(&scan->rows[start - 1], &gaps[start]);
+            if (near_join && far_merge_or_clipped &&
                 span > scan->cross_rows && cross_width_consistent(gaps, start, end, cfg))
                 scan->cross_rows = (uint8_t)span;
         } else {
@@ -172,6 +175,59 @@ static void summarize_gaps(const row_gap_t *gaps, special_scan_result_t *scan,
         }
         start = end;
     }
+}
+
+/* Road-relative split test. The split need not sit at the image centre: a
+ * cross island is approached from either branch, and at close range one road
+ * bank is outside the field of view altogether (the same wide-throat geometry
+ * the primary vision path handles). What must hold is that the island sits
+ * inside the road, i.e. the dark gap is bounded on both sides by road runs of
+ * comparable width and its centre is referenced to the measured road centre
+ * rather than to the image centre. A clipped bank is reconstructed from the
+ * opposite bank and the stem width, and never from an assumed image position. */
+static unsigned road_relative_cross(const row_gap_t *gaps, const special_scan_result_t *scan,
+                                    const special_track_config_t *cfg)
+{
+    unsigned best = 0;
+    for (unsigned start = 0; start < scan->row_count;) {
+        if (!gaps[start].left) { ++start; continue; }
+        unsigned end = start + 1;
+        while (end < scan->row_count && gaps[end].left &&
+               gap_linked(&gaps[end - 1], &gaps[end], cfg->max_row_shift)) ++end;
+        unsigned span = end - start;
+        const row_gap_t *near = &gaps[end - 1];
+        if (span >= cfg->min_cross_rows && end < scan->row_count &&
+            joins(&scan->rows[end], near) &&
+            (start == 0 || joins(&scan->rows[start - 1], &gaps[start])) &&
+            cross_width_consistent(gaps, start, end, cfg)) {
+            const special_run_t *stem = &scan->rows[end].runs[0];
+            /* Road centre measured from the merge row below the island. */
+            int stem_centre = (stem->left + stem->right) / 2;
+            int cross_ok = 1;
+            for (unsigned i = start; cross_ok && i < end; ++i) {
+                const row_gap_t *gap = &gaps[i];
+                int road_left = gap->left->left, road_right = gap->right->right;
+                /* Reconstruct a bank that left the image, using this row's
+                 * visible bank and the stem's road width. */
+                if (road_left <= 0 && road_right < CAR_W - 1)
+                    road_left = road_right - (stem->right - stem->left);
+                else if (road_right >= CAR_W - 1 && road_left > 0)
+                    road_right = road_left + (stem->right - stem->left);
+                if (road_right <= road_left) { cross_ok = 0; break; }
+                int road_centre = (road_left + road_right) / 2;
+                int gap_centre = (gap->left->right + gap->right->left) / 2;
+                /* Island must be inside the road and near the road centre. */
+                if (road_left < 0 || road_right >= CAR_W) { cross_ok = 0; break; }
+                if (gap->left->width < cfg->min_channel_width ||
+                    gap->right->width < cfg->min_channel_width) { cross_ok = 0; break; }
+                if (magnitude(gap_centre - road_centre) > 2 * cfg->center_tolerance) cross_ok = 0;
+            }
+            if (cross_ok && magnitude(stem_centre - CAR_W / 2) < CAR_W / 2 &&
+                span > best) best = span;
+        }
+        start = end;
+    }
+    return best;
 }
 
 /* A bank entering or leaving the image edge can trigger a scan. Its unseen
@@ -238,6 +294,8 @@ void special_track_scan(const uint8_t *pixels, const uint8_t *row_thresholds,
     }
     count_ordinary_bends(out, cfg);
     summarize_gaps(gaps, out, cfg);
+    unsigned relative_cross = road_relative_cross(gaps, out, cfg);
+    if (relative_cross > out->cross_rows) out->cross_rows = (uint8_t)relative_cross;
     count_clipped_bank(out, cfg, 1, 0);
     count_clipped_bank(out, cfg, 1, 1);
     count_clipped_bank(out, cfg, 0, 0);

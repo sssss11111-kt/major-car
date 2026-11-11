@@ -7,11 +7,16 @@
 #define RB_TARGET_COUNTS 80.0f
 #define RB_FIRST_EXIT_DEG 270.0f
 #define RB_SECOND_EXIT_DEG 360.0f
+#ifndef RB_TURN_SIGN
 #define RB_TURN_SIGN 1 /* +1 clockwise; -1 counterclockwise */
+#endif
+#if RB_TURN_SIGN != -1 && RB_TURN_SIGN != 1
+#error "RB_TURN_SIGN must be -1 or +1."
+#endif
 #define RB_ALIGN 5 /* Append: preserve recorded phase IDs 0..4. */
 #define RB_ENTRY_CORNER_ROW 90 /* Start of the measured near-field approach rows. */
 #define RB_EXIT_SEARCH_LEAD_DEG 45.0f
-/* Encounter order: photo1 then photo2. Positive yaw = clockwise, left wheel faster. */
+/* Encounter order: photo1 then photo2. Yaw is positive in the configured direction. */
 enum {RB_IDLE,RB_ENTER,RB_ORBIT,RB_EXIT,RB_COOLDOWN};
 typedef struct {
  float yaw_deg,distance_m;

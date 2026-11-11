@@ -1,0 +1,33 @@
+ANNOTATED 60 goal 182 34 banks 24 46 phase 5 points 29
+ANNOTATED 66 goal 182 62 banks 35 88 phase 1 points 25
+{
+  "version": "SCAN8入口修正版",
+  "valid": 236,
+  "scoped": 239,
+  "rejected": [
+    218,
+    219,
+    220
+  ],
+  "regression": [
+    218
+  ],
+  "improvement": [
+    156,
+    157,
+    211,
+    221,
+    222,
+    223,
+    224
+  ],
+  "first_enter": [
+    61,
+    141
+  ],
+  "checks": {
+    "white_points": 4193,
+    "white_segments": 19775,
+    "measured_banks": 4970
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "version": "SCAN8入口修正版",
+  "valid": 236,
+  "scoped": 239,
+  "rejected": [
+    218,
+    219,
+    220
+  ],
+  "regression": [
+    218
+  ],
+  "improvement": [
+    156,
+    157,
+    211,
+    221,
+    222,
+    223,
+    224
+  ],
+  "first_enter": [
+    61,
+    141
+  ],
+  "checks": {
+    "white_points": 4193,
+    "white_segments": 19775,
+    "measured_banks": 4970
+  },
+  "source_hashes": {
+    "deliveries/lap30-ring-20261107/project/demo/user/inc/auto_start.h": "02a8325f6dd70483301217fc967067b78e73706b5852987cddd07aea75acbb7f",
+    "deliveries/lap30-ring-20261107/project/demo/user/inc/cross_drive.h": "99cad7006688ce393315b495e77f83189cde6b373035e5d234e8f2aa993226d3",
+    "deliveries/lap30-ring-20261107/project/demo/user/inc/entry_bridge.h": "dfbe5d7d0411cf1034bebb56206a1f5ca19612bd285ff5af245a632e17d71975",
+    "deliveries/lap30-ring-20261107/project/demo/user/inc/img_process.h": "cd77b066c889af13ceaca26893a0106abe49c70b68441f9200ff0e3f7eee1670",
+    "deliveries/lap30-ring-20261107/project/demo/user/inc/isr.h": "ca84581f6686a0c1a88a5f211b286ec300257f9205ae6b3d909ab9f039518496",
+    "deliveries/lap30-ring-20261107/project/demo/user/inc/main.h": "ba8732ad0109bc72ec9ad94a7f23843f67309ff37343c3569cb668c5c6e3da64",
+    "deliveries/lap30-ring-20261107/project/demo/user/inc/pid.h": "eaaa5bab01a6dc4a76c57482e741d10223b5beae9b43baa3716325133065e3e7",
+    "deliveries/lap30-ring-20261107/project/demo/user/inc/ring_diag.h": "abc883c65daa84185c21e8ba562f6c48b17516638f918371ee284679f110ad09",
+    "deliveries/lap30-ring-20261107/project/demo/user/inc/ring_entry_path.h": "ec12d8972fc2f702b2e696d716cf40dafce7f028418f35dfee330988173d4f28",
+    "deliveries/lap30-ring-20261107/project/demo/user/inc/roundabout_control.h": "9854a51030e184943319f5b3b5b262343b0230d22da8d3fd216db1c37e35320a",
+    "deliveries/lap30-ring-20261107/project/demo/user/inc/roundabout_scan.h": "6c7261b40563f864fbf73aedd2e6222eacc4a7854a199fdfbfee2c9830e9f0b9",
+    "deliveries/lap30-ring-20261107/project/demo/user/inc/RT106X_config.h": "c594e50681cd7854958f300be01af793a6e044348a6ed691ce67db9f94300493",
+    "deliveries/lap30-ring-20261107/project/demo/user/inc/steering_control.h": "118dc6a116af4497a5e9d6226761a6db89d2ac66de05173c5c2aad7a909717e4",
+    "deliveries/lap30-ring-20261107/project/demo/user/inc/track_geometry.h": "e4f59d12d46ebcf639f184ff25da62dd6052846f8941c27335a06af198069426",
+    "deliveries/lap30-ring-20261107/project/demo/user/src/auto_start.c": "7bf36364cbb50ce4086a5207074d57e848857e2250b6cf4148e23c2d978e91e6",
+    "deliveries/lap30-ring-20261107/project/demo/user/src/cross_drive.c": "aad2912bf43d0d2d6a23be817e3f4b30d135fa5239afdd50f38fe12573ff862a",
+    "deliveries/lap30-ring-20261107/project/demo/user/src/img_process.c": "d4478a82b9b6a62be1e8f67f5a3a956ff4d6450f40a095c9eafcd233f7a4ff14",
+    "deliveries/lap30-ring-20261107/project/demo/user/src/isr.c": "a748a5f95066fa255294afe2e05fbdf35b55578cbdff829a725744504ff58c44",
+    "deliveries/lap30-ring-20261107/project/demo/user/src/main.c": "6520c4f82fa3347ce1a1eca89c1bb6b1c0fa487462fa95b7ff7b9c5d2a96acd1",
+    "deliveries/lap30-ring-20261107/project/demo/user/src/pid.c": "cd1affd77e0af653cef8afa92483140fe530005453aba6b107b07f59c4c81357",
+    "deliveries/lap30-ring-20261107/project/demo/user/src/roundabout_scan.c": "547b425d3cbac7b0b62c4da3d9d8fc35e60ebc513a4de7e133e464657905f7c5",
+    "deliveries/lap30-ring-20261107/project/demo/user/src/steering_control.c": "d5fab0915ee4195dca5badce7689b9c917c7cb1d9ba8d97d5fc7f8231e4b8b15",
+    "firmware/camera_car/demo/user/inc/car_app.h": "304a545ee70471c239d34be3a3cdadbdef7091eb7ce287925fee6352d8eecb48",
+    "firmware/camera_car/demo/user/inc/car_config.h": "58dc12c915e697a95d2043365ac6248d7f6c434dd352f4205d9b975b98753beb",
+    "firmware/camera_car/demo/user/inc/car_core.h": "bdce1edb4afe14d37147c571bb6232e7dbc6893a31bf7cb0cf68e74e55332a9c",
+    "firmware/camera_car/demo/user/inc/cross_island.h": "0e510c7e72fcd348e7a54ca05c5b004c9e743e539c82cfd39b4be9a4034bf7f8",
+    "firmware/camera_car/demo/user/inc/img_process.h": "e7a31e34a1ee84646f0c0b0c3fb1f2ec152caebd8429657041f4c5ce566b74f5",
+    "firmware/camera_car/demo/user/inc/isr.h": "ca84581f6686a0c1a88a5f211b286ec300257f9205ae6b3d909ab9f039518496",
+    "firmware/camera_car/demo/user/inc/main.h": "ca5aaa6a7ba628c2e0eb58147428de86e1417c2105f459ff2399dc3b7d08cbd6",
+    "firmware/camera_car/demo/user/inc/pid.h": "eaaa5bab01a6dc4a76c57482e741d10223b5beae9b43baa3716325133065e3e7",
+    "firmware/camera_car/demo/user/inc/roundabout.h": "49f334296738921fcfcda4d7949a4666f4c62278be98c5c5fbbfeac24df9dc12",
+    "firmware/camera_car/demo/user/inc/RT106X_config.h": "b4a75866ac51ea3e1f555be554db51ec83ea0114d9793596594c4fda77036a27",
+    "firmware/camera_car/demo/user/inc/special_route.h": "768e2f9a3b1895397ff44ac85e411466d6f24e58c836ec8a52cb1cf95d3a381c",
+    "firmware/camera_car/demo/user/inc/special_track.h": "3a704b96b71e620f9988f14e15a9fa40e72ec158098dad9ab6cc45de821edb36",
+    "firmware/camera_car/demo/user/src/car_app.c": "dda2c78cfed72c485f79d2e3b2290954c7cecd0a0dd65057c3e2a3201c3fd87b",
+    "firmware/camera_car/demo/user/src/car_core.c": "6480df176dfa17425db3f758de9b626a330672dff74cedccf0733fc4840918c4",
+    "firmware/camera_car/demo/user/src/cross_island.c": "6cc1f733c672a0b9b77c92bb72dd1320adec8c48e25cd708d5c773d53282bd5d",
+    "firmware/camera_car/demo/user/src/img_process.c": "adb07dbbe1b45c1f51a8ea6ecdcdf18f0e4ba69095e48e4c16c2787629c58598",
+    "firmware/camera_car/demo/user/src/isr.c": "f9a733fa88714ecd279b9340fa17dce299bc2108f3b41b68884e3565bd4530c0",
+    "firmware/camera_car/demo/user/src/main.c": "ddf7d09720ecc0b57fe58472f189898d20e36b17dec411fb2747ef790cbb40e3",
+    "firmware/camera_car/demo/user/src/pid.c": "3880fc5419aa2c7bf8f4a4a2b8df9755934859d15904f58e7573cc621c8d3ded",
+    "firmware/camera_car/demo/user/src/roundabout.c": "67857366e09b11f7162121ff2fec69224a172a3f16379b242d9756d0ad99c3af",
+    "firmware/camera_car/demo/user/src/special_route.c": "3c9f3450be7be86d8f605d75841386d2c5a2bf5648c10030aabb6960ad8de1e3",
+    "firmware/camera_car/demo/user/src/special_track.c": "0116fb40649f2fbe2660730d489357468e863dd96c19d970f3801a0a6e83fdf7",
+    "firmware/camera_car/demo/user/src/special_track_scan.c": "ed55502b1e5be782ec6a3b363c92acd901447357fb5153b86b1647ba357308f1",
+    "firmware/camera_car/demo/user/src/special_track_scan.h": "1f4deacdcbe9c4947edc3a5d443fe8e3803440fa829bdf236216a9e35018e307"
+  }
+}

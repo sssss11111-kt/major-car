@@ -55,12 +55,15 @@ static void classify(const special_scan_result_t *s, const special_track_config_
     out->frame_type = SPECIAL_UNKNOWN;
     if (s->overflow) out->diagnostic_flags |= SPECIAL_DIAG_OVERFLOW;
     if ((out->diagnostic_flags & SPECIAL_DIAG_LOW_CONTRAST) || s->overflow) return;
-    if (2u * s->usable_rows < s->row_count) {
+    int cross = s->cross_rows >= c->min_cross_rows;
+    unsigned min_usable_rows = (s->row_count + 1u) / 2u;
+    /* Let a single missing sampled row through only with a linked cross split
+     * and near merge. Classification, voting and the driving corridor still gate entry. */
+    if (s->usable_rows < min_usable_rows - (unsigned)cross) {
         out->diagnostic_flags |= SPECIAL_DIAG_WEAK;
         return;
     }
     out->full_scan_valid = 1;
-    int cross = s->cross_rows >= c->min_cross_rows;
     int ring = s->ring_rows >= c->min_ring_rows;
     if (s->ambiguous || s->ring_conflict || (cross && ring)) {
         out->diagnostic_flags |= SPECIAL_DIAG_CONFLICT;

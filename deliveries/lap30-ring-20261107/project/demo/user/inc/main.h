@@ -64,4 +64,5 @@ void trial_tick(void);
 
 #define TRIAL_DRIVE_TARGET (100.0f)
 #define TRIAL_DRIVE_DEGRADED_TARGET (80.0f)
+#define CROSS_APPROACH_TARGET (35.0f) /* counts/10 ms during measured entry retry */
 #define TRIAL_DRIVE_STRIPE_TARGET (24.0f)

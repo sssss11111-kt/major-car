@@ -60,3 +60,4 @@
 
 # Preserve exact R17 source and firmware bytes in release checkouts.
 /deliveries/lap30-ring-20261107/** -text
+deliveries/scan8-entry-fix-20261112/SCAN8-entry-fix.hex -text

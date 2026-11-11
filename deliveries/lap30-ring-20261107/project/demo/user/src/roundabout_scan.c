@@ -41,8 +41,14 @@ int rb_scan_allows_entry(const special_track_output_t *out, int expected_island_
     return 1;
 }
 
-void rb_scan_observe(volatile rb_state_t *state, int island, int entry_allowed, int running)
+void rb_scan_observe(volatile rb_state_t *state, int island, int entry_allowed,
+                     int cross_owned, int running)
 {
+    if (cross_owned && !state->fault && (state->phase == RB_IDLE || state->phase == RB_ALIGN)) {
+        /* Preserve the next exit index. Only an uncommitted alignment can yield. */
+        *state = (rb_state_t){.route = state->route};
+        return;
+    }
     int acquiring = state->phase == RB_IDLE || state->phase == RB_ALIGN;
     rb_geometry(state, img_get_entry_ready() && (!acquiring || entry_allowed),
                 img_get_roundabout_corner_row(), img_get_exit_ready(), img_get_exit_error());

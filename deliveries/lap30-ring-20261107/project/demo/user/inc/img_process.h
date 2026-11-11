@@ -41,6 +41,8 @@ uint8_t  img_get_valid(void);        /* 1 = 本帧可信 */
 int16_t  img_get_error(void);        /* 像素：正 = 赛道中心在画面中心右侧 */
 uint8_t  img_get_usable_rows(void);  /* 本帧可用行数（遥测用） */
 uint8_t  img_get_both_rows(void);    /* 本帧双边行数（遥测用） */
+uint8_t  img_get_single_rows(void);  /* 本帧单边重建行数（遥测用） */
+uint8_t  img_get_near_run(void);     /* 近场连续实测行数：有效性判据用 */
 int16_t  img_get_preview_error(void); /* Measured rows 55..75, before gap filling. */
 uint8_t  img_get_preview_valid(void);
 /* Flat stripe marker, including three clean-frame recovery. */
