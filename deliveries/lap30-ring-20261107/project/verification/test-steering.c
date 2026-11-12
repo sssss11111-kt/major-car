@@ -67,6 +67,56 @@ int main(void){
  steering_result_t same=step(&s,94,94,1,206);CHECK(same.command==r.command);
  steering_reset(&s,SERVO_MOTOR_MIDDLE,0xfffffffeU);
  r=step(&s,-94,-94,1,0);CHECK(r.command<=94.701f);
- puts("PASS: continuous bend response, symmetric bounds, LAP29 targets, isolated spikes, slew bound, sharp bend/reversal authority, speed recovery, preview loss, invalid reset, duplicate tick, tick wrap");
+ /* Increasing straight speed must not increase the full-bend target. */
+ const float targets[]={100.0f,120.0f,140.0f};
+ for(unsigned i=0;i<sizeof targets/sizeof targets[0];i++){
+  CHECK(ab(steering_speed_target(targets[i],STEERING_TIGHT_CURVE_SPEED_SCALE)-80.0f)<0.001f);
+  CHECK(steering_speed_target(targets[i],1.0f)==targets[i]);
+  float previous_target=targets[i];
+  for(int j=0;j<=200;j++){
+   float scale=1.0f-j*0.001f;
+   float target=steering_speed_target(targets[i],scale);
+   CHECK(target<=previous_target+0.001f && target<=targets[i]*scale+0.001f);
+   CHECK(previous_target-target<1.0f); /* No step at the straight/bend boundary. */
+   previous_target=target;
+  }
+ }
+ CHECK(ab(steering_speed_target(140.0f,0.9f)-110.0f)<0.001f);
+ CHECK(ab(steering_speed_target(50.0f,0.8f)-40.0f)<0.001f);
+ CHECK(steering_speed_target(50.0f,1.0f)==50.0f);
+ /* Preserve the existing slower ring target and preview-only braking. */
+ CHECK(ab(steering_speed_target(80.0f,0.8f)-64.0f)<0.001f);
+ r=steering_control(0,40,1,SERVO_MOTOR_MIDDLE,-1,SERVO_MOTOR_R_MAX,SERVO_MOTOR_L_MAX);
+ CHECK(r.command==SERVO_MOTOR_MIDDLE && ab(steering_speed_target(140,r.speed_scale)-80)<0.001f);
+ /* Irregular but fresh camera cadence must use real elapsed time. */
+ const uint32_t gaps[]={5,8,10,20};
+ for(unsigned g=0;g<sizeof gaps/sizeof gaps[0];g++){
+  uint32_t gap=gaps[g];
+  steering_reset(&s,SERVO_MOTOR_MIDDLE,0);steering_reset(&mirror,SERVO_MOTOR_MIDDLE,0);
+  step(&s,0,0,1,2);step(&s,0,0,1,4);
+  step(&mirror,0,0,1,2);step(&mirror,0,0,1,4);
+  r=step(&s,94,94,1,4+gap);CHECK(r.command==SERVO_MOTOR_MIDDLE);
+  step(&mirror,-94,-94,1,4+gap);
+  r=step(&s,94,94,1,4+2*gap);
+  steering_result_t m=step(&mirror,-94,-94,1,4+2*gap);
+  CHECK(ab(r.command-(SERVO_MOTOR_MIDDLE-STEERING_SLEW_OUTWARD*gap*0.01f))<0.001f);
+  CHECK(ab(r.command+m.command-2*SERVO_MOTOR_MIDDLE)<0.001f);
+ }
+ /* A gap beyond the image deadline cannot become a queued large movement. */
+ r=step(&s,94,94,1,s.last_tick+21);
+ CHECK(r.command==SERVO_MOTOR_MIDDLE && !s.initialized);
+ r=step(&s,94,94,1,s.last_tick+1);
+ CHECK(ab(r.command-(SERVO_MOTOR_MIDDLE-STEERING_SLEW_OUTWARD*0.01f))<0.001f);
+ r=steering_update(&s,94,94,1,1,0,s.last_tick+1,SERVO_MOTOR_MIDDLE,-1,SERVO_MOTOR_R_MAX,SERVO_MOTOR_L_MAX);
+ CHECK(r.command==SERVO_MOTOR_MIDDLE && !s.initialized);
+ r=step(&s,94,94,1,s.last_tick+1000);
+ CHECK(ab(r.command-(SERVO_MOTOR_MIDDLE-STEERING_SLEW_OUTWARD*0.01f))<0.001f);
+ /* The unsigned elapsed calculation must work across timer rollover. */
+ steering_reset(&s,SERVO_MOTOR_MIDDLE,0xffffffe0U);
+ step(&s,0,0,1,0xffffffe2U);step(&s,0,0,1,0xffffffe4U);
+ step(&s,94,94,1,0xfffffff8U);
+ r=step(&s,94,94,1,0U);
+ CHECK(ab(r.command-(SERVO_MOTOR_MIDDLE-STEERING_SLEW_OUTWARD*0.08f))<0.001f);
+ puts("PASS: continuous bend response, symmetric bounds, LAP29 targets, isolated spikes, slew bound, sharp bend/reversal authority, speed recovery, preview loss, invalid reset, duplicate tick, tick wrap, irregular cadence, stale-history reset, independent bend speed");
  return 0;
 }

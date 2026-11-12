@@ -19,7 +19,11 @@ def scene(shift=0,island=False):
    h=int((1-((y-72)/25)**2)**0.5*26)
    for x in range(94+shift-h,95+shift+h):raw[y*188+x]=20
  return raw
+frame_tick=0
+d.replay_set_entry_odometry.argtypes=[C.c_float,C.c_float,C.c_uint32,C.c_uint8]
 def frame(raw):
+ global frame_tick
+ frame_tick+=2;d.replay_set_entry_odometry(0,0,frame_tick,0)
  out=(C.c_int*4)();d.replay_frame((C.c_uint8*22560).from_buffer_copy(raw),out);return list(out)
 for guide in [-1,0,1]:
  for shift in [-12,0,12]:
@@ -56,22 +60,12 @@ for y in range(21,106):
  row=bytes(advanced[y*188:(y+1)*188])
  advanced[y*188:(y+1)*188]=row[9:]+row[-1:]*9
 for n in range(7,11):step(advanced,n*2)
-check(d.replay_ring_phase()==1,'current clearer approach frames enter')
+check(d.replay_ring_phase()==5,'static throat without continuous handoff remains aligned')
 for _ in range(410):d.replay_ring_tick(80,40)
-check(d.replay_ring_phase()==2,'encoder threshold retains orbit')
-for n in range(5):step(scene(island=True),830+n*2)
-check(d.replay_ring_phase()==2,'visible island blocks exit beyond yaw gate')
+check(d.replay_ring_phase()==5,'encoder rotation alone cannot advance visual phase')
 step(bytearray([220]*22560),842)
-check(d.replay_ring_phase()==2,'all white dropout does not exit')
-# Let frame-to-frame jump gate recover, then require the visual three-frame gate.
-phases=[]
-for n in range(15):
- step(scene(),850+n*2);phases.append(d.replay_ring_phase())
-check(3 in phases and 4 in phases,'measured normal road transitions EXIT then COOLDOWN')
-check(phases.index(3)>=2,'no immediate exit on first/second normal frame')
-# The older external manual-01 check encoded fixed R17 entry indices.
-# Current captured-sequence comparison is run separately from immutable frames.
-report={'hardware_accessed':False,'flashed':False,'real_track_tested':False,'checks':checks,'phases':phases}
+check(d.replay_ring_phase()==5,'all white dropout cannot establish orbit')
+report={'hardware_accessed':False,'flashed':False,'real_track_tested':False,'checks':checks}
 d.replay_reset();d.replay_guide(-1);d.replay_entry_mode(1)
 for _ in range(3):
  current=frame(scene())
@@ -82,27 +76,35 @@ check(not first[0] and d.replay_entry_status()==3,'first current path after loss
 second=frame(scene())
 check(second[0] and d.replay_entry_status() in [1,2,4],'second current path confirms reacquisition')
 
-# Synthetic split: continued orbit is left of the island, exit corridor right.
-# State/angle are injected assumptions, not reconstructed field telemetry.
-import math
-fork=scene()
-for y in range(30,91):
- h=int(math.sqrt(max(0,1-((y-60)/31)**2))*26)
- for x in range(65-h,66+h):fork[y*188+x]=20
+# Synthetic OUTER-bank convex tip; the production FSM must see it move.
+# Injected ORBIT/armed state tests only exit logic, not acquisition or a real lap.
+def tip_scene(row,side):
+ raw=bytearray([20]*22560)
+ for y in range(18,106):
+  bank=max(20,100-2*abs(y-row))
+  for x in range(bank+1,188):raw[y*188+(x if side>0 else 187-x)]=220
+ return raw
+
 d.replay_ring_scenario.argtypes=[C.c_int,C.c_float]
-for yaw,expected in [(224,2),(230,3)]:
- d.replay_ring_reset();d.replay_ring_scenario(2,yaw)
- for n in range(7):
-  out=step(fork,2*n)
-  if expected==2:check(d.replay_ring_phase()==2,'exit branch blocked before motion window')
- check(d.replay_island()==1,'synthetic island still visible during exit test')
- check(d.replay_ring_phase()==expected,'active exit commits only inside motion window')
- if expected==3:
-  check(out[3]==1 and out[2]>0,'current exit path selects right corridor while island is visible')
-  step(bytearray([20]*22560),16)
-  check(d.replay_ring_phase()==3,'exit loss never falls back to orbit branch')
-  check(d.replay_entry_status()==3,'missing exit stops vision instead of blind continuation')
+for side in (-1,1):
+ for yaw in (0,1000):
+  d.replay_ring_reset();d.replay_ring_scenario(2,yaw);d.replay_ring_direction(side)
+  for n in range(6):
+   step(tip_scene(55,side),n*2)
+   check(d.replay_ring_phase()==2,'repeating a stationary tip cannot exit')
+  for n,row in enumerate((59,62,65),6):step(tip_scene(row,side),n*2)
+  check(d.replay_ring_phase()==3,'current advancing tip commits mirrored visual exit regardless of yaw')
+  path=(C.c_uint8*(160*7))();count=d.replay_entry_path(path)
+  check(count>=12,'EXIT publishes the current measured curve')
+  current=tip_scene(65,side)
+  check(all(current[path[i*7+1]*188+path[i*7]]>100 for i in range(count)), 'exit curve stays in current white road')
+  step(bytearray([20]*22560),20)
+  check(d.replay_ring_phase()==3 and d.replay_entry_status()==0,'exit loss retains phase and invalid current rows')
+  phases=[]
+  for n in range(25):
+   result=step(scene(),22+n*2);phases.append(d.replay_ring_phase())
+  check(4 in phases and phases[-1]==0,'current normal road recovers through cooldown')
 
 report['checks']=checks
 (p/'recovery-checks.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
-print('PASS',len(checks),'recovery/integrated checks',phases)
+print('PASS',len(checks),'recovery/integrated checks; visual exit, no yaw transition')

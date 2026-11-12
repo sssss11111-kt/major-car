@@ -56,6 +56,22 @@ typedef struct {
 static volatile special_diag_t vision_special={0}, fault4_special={0};
 /* FIRST_FAULT4_END */
 static volatile rb_state_t roundabout_state={0};
+typedef struct {
+    uint8 candidate, recognized, entered, inside, rejected;
+} ring_test_display_t;
+
+static void show_ring_test(const ring_test_display_t *test, uint8 phase, uint8 fault)
+{
+    static const char *const names[] = {"IDLE", "ENTER", "ORBIT", "EXIT", "COOL", "ALIGN"};
+    const char *name = phase <= RB_ALIGN ? names[phase] : "?";
+    char line[24];
+    snprintf(line,sizeof line,"SEEN:%u ENTER:%u      ",test->recognized,test->entered);
+    tft180_show_string(0,72,line);
+    snprintf(line,sizeof line,"CAND:%u ORBIT:%u     ",test->candidate,test->inside);
+    tft180_show_string(0,88,line);
+    snprintf(line,sizeof line,"%-5s REJ:%u X:%u     ",name,test->rejected,fault);
+    tft180_show_string(0,104,line);
+}
 static volatile int16_t vision_error = 0;
 static volatile uint8 usable_rows = 0, both_rows = 0;
 static volatile uint8 steering_curve = 0, steering_limited = 0;
@@ -281,12 +297,12 @@ int main(void)
     system_delay_ms(300);          // 等待主板其他外设上电完成
 
     wireless_ready = (wireless_uart_init() == 0); /* Supplied wireless driver: RTS and IRQ RX FIFO. */
-    telemetry_send("C11LAP30SCAN7D AUTO BOOT\r\n");
+    telemetry_send("C11SCAN9U-RING-TEST AUTO BOOT\r\n");
     Init();
     img_process_reset();
     rb_scan_reset();
     steering_reset(&steering_state,servo_motor_duty_middle,trial_ticks);
-    telemetry_send("C11LAP30SCAN7D AUTO READY\r\n");
+    telemetry_send("C11SCAN9U-RING-TEST AUTO READY\r\n");
     tft180_clear();
     tft180_show_string(0, 0, wireless_ready ? "W:OK GRAY/BINARY" : "W:FAIL GRAY/BIN");
     interrupt_global_enable(0);
@@ -296,6 +312,7 @@ int main(void)
     uint8_t scan_entry_allowed = 0;
     cross_drive_t cross = {0};
     uint8 fault4_displayed=0;
+    ring_test_display_t ring_test = {0};
     while (1)
     {
         if(auto_run && !trial_running && !mt9v03x_finish_flag) rd29_freeze(&rd29_state);
@@ -322,7 +339,7 @@ int main(void)
             /* The new band-threshold detector reads raw grayscale without
              * modifying it. Global binary image is only for LCD comparison. */
             uint8 entry_was_preparing = img_get_entry_status() == 0;
-            int applied_ring_guide=rb_guiding(&roundabout_state) ? -RB_TURN_SIGN:0;
+            int applied_ring_guide=rb_guiding(&roundabout_state) ? -roundabout_state.turn_sign:0;
             img_set_roundabout_guidance(applied_ring_guide);
             img_set_roundabout_entry(rb_guiding(&roundabout_state) ? roundabout_state.phase : 0);
             img_set_exit_search((uint8_t)rb_exit_search(&roundabout_state));
@@ -336,7 +353,7 @@ int main(void)
                               left_line, mid_line, right_line);
             uint8 island = img_get_roundabout_candidate();
             scan = rb_scan_frame((const uint8_t *)raw_image, entry_tick, island || rb_busy(&roundabout_state) || cross.phase != CROSS_DRIVE_IDLE);
-            scan_entry_allowed = (uint8_t)rb_scan_allows_entry(&scan, RB_TURN_SIGN);
+            scan_entry_allowed = (uint8_t)rb_scan_allows_entry(&scan, rb_busy(&roundabout_state) ? roundabout_state.turn_sign : rb_scan_entry_side(&scan));
             cross_drive_output_t cross_path = cross_drive_step(&cross, &scan,
                 (const uint8_t *)raw_image, img_get_row_thresholds(), entry_tick, entry_running,
                 roundabout_state.fault || (rb_busy(&roundabout_state) && roundabout_state.phase != RB_ALIGN),
@@ -367,7 +384,7 @@ int main(void)
             rd_pre[RD_CONFIRM_AFTER]=roundabout_state.confirm;
             interrupt_global_enable(vision_mask);
             if (rd_pre[RD_PHASE_BEFORE] != roundabout_state.phase) {
-                applied_ring_guide = rb_guiding(&roundabout_state) ? -RB_TURN_SIGN:0;
+                applied_ring_guide = rb_guiding(&roundabout_state) ? -roundabout_state.turn_sign:0;
                 img_set_roundabout_guidance(applied_ring_guide);
                 img_set_roundabout_entry(rb_guiding(&roundabout_state) ? roundabout_state.phase:0);
                 img_set_exit_search((uint8_t)rb_exit_search(&roundabout_state));
@@ -416,6 +433,15 @@ int main(void)
             }
             frame_tick=trial_ticks; ++frame_count;
             interrupt_global_enable(vision_mask);
+            /* Keep the run evidence visible after the car passes the island or stops. */
+            if (entry_running) {
+                uint8 phase = (uint8)rd_pre[RD_PHASE_AFTER];
+                ring_test.candidate |= island != 0;
+                ring_test.recognized |= phase == RB_ALIGN;
+                ring_test.entered |= phase == RB_ENTER;
+                ring_test.inside |= phase == RB_ORBIT;
+                ring_test.rejected |= rejected_entry != 0;
+            }
             if (snapshot_requested && !trial_running) snapshot_send(threshold);
             const entry_path_t *entry_path = img_get_entry_path();
             if (entry_path->count) {
@@ -452,10 +478,11 @@ int main(void)
             if (just_entered) steering_blend_entry(&steering_state, turn_error);
             else if (entry_was_preparing && entry_path->count)
                 steering_prime_entry(&steering_state, turn_error);
-            steering_result_t turn = steering_update(&steering_state,(int)turn_error,turn_preview,
+            float entry_bias = cross_path.active || metric_control ? 0 : img_get_align_turn_bias();
+            steering_result_t turn = steering_update_with_entry_bias(&steering_state,(int)turn_error,turn_preview,
                 turn_preview_valid,valid,(uint8)(trial_running && !trial_bench),trial_ticks,
                 servo_motor_duty_middle,SERVO_DIR,
-                MIN(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX),MAX(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX));
+                MIN(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX),MAX(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX),entry_bias);
             steering_curve = turn.curve; steering_limited = turn.limited;
             steering_bend=turn.bend_level;steering_slew=turn.slew_limited;steering_severity=turn.severity;
             steering_speed_scale = valid ? turn.speed_scale : 1.0f;
@@ -520,7 +547,6 @@ int main(void)
             /* 5 Hz LCD: no full-screen clear, no text over the pictures.
              * Both pictures use the same captured frame at 80 x 51 pixels. */
             if (trial_ticks-display_tick >= 20) {
-                char line[24];
                 static const char * const phases[] = {"AUTO WAIT       ", "CENTER 1s       ", "AUTO RUN        ", "STOP RESET      "};
                 unsigned int sum=0, white=0;
                 uint8 low=255, high=0;
@@ -535,14 +561,8 @@ int main(void)
                 }
                 tft180_show_gray_image(0,16,(uint8 *)raw_image,MT9V03X_W,MT9V03X_H,80,51,0);
                 tft180_show_gray_image(80,16,(uint8 *)image,MT9V03X_W,MT9V03X_H,80,51,0);
-                if (trial_fault != 4) {
-                    sprintf(line,"T%3u M%u C%3u A%u P%u",threshold,vision_mode,control_center,model_good>=5,roundabout_state.phase);
-                    tft180_show_string(0,72,line);
-                    sprintf(line,"F%6lu V%3lu",(unsigned long)frame_count,(unsigned long)good_frames);
-                    tft180_show_string(0,88,line);
-                    sprintf(line,"R%u X%u E%4d/%4d",trial_running,trial_fault,encoder_data_1,encoder_data_2);
-                    tft180_show_string(0,104,line);
-                }
+                if (trial_fault != 4)
+                    show_ring_test(&ring_test,roundabout_state.phase,trial_fault);
                 char camera_report[128];
                 sprintf(camera_report,"CAM2 frame=%lu threshold=%u min=%u max=%u mean=%u white=%u\r\n",
                     (unsigned long)frame_count,threshold,low,high,sum/(unsigned int)sizeof(raw_image),
@@ -552,15 +572,8 @@ int main(void)
         }
         /* Draw even if the camera stopped producing frames. */
         if (trial_fault == 4 && !fault4_displayed) {
-            char line[24];
-            const special_diag_t diag=fault4_special;
             tft180_show_string(0,0,"STOP X4 DIAG    ");
-            snprintf(line,sizeof line,"D%u S%u F%u C%u       ",
-                     fault4_reason,diag.type,diag.frame_type,diag.cross_phase);
-            tft180_show_string(0,72,line);
-            snprintf(line,sizeof line,"B%u G%02X A%lu     ",diag.scan_status,diag.flags,(unsigned long)fault4_age);
-            tft180_show_string(0,88,line);
-            tft180_show_string(0,104,"R0 X4              ");
+            show_ring_test(&ring_test,roundabout_state.phase,trial_fault);
             fault4_displayed=1;
         }
         if (trial_ticks-report_tick >= 20) {
@@ -734,7 +747,7 @@ void trial_tick(void)
         if (!trial_bench) {
             if (vision_ring && effective_target > RB_TARGET_COUNTS)
                 effective_target=RB_TARGET_COUNTS;
-            effective_target *= steering_speed_scale;
+            effective_target = steering_speed_target(effective_target, steering_speed_scale);
             if (vision_degraded && effective_target > TRIAL_DRIVE_DEGRADED_TARGET)
                 effective_target = TRIAL_DRIVE_DEGRADED_TARGET;
             if ((vision_entry_kind==2 || vision_entry_kind==4) && effective_target>ENTRY_SINGLE_EDGE_TARGET)

@@ -175,7 +175,7 @@ d.replay_ring_reset();out=(C.c_float*5)()
 for n in range(12):
  d.replay_ring_step((C.c_uint8*len(raw))(*raw),n*2,out)
  assert out[3] and 69<=out[0]<=116,list(out)
- if n>=2:assert out[1]==5 and abs(out[2])<=1,('distant alignment',list(out))
+ if n>=2:assert out[1]==0 and abs(out[2])<=1,('ambiguous centered island must not choose direction',list(out))
 assert d.replay_entry_path((C.c_uint8*(160*7))())==0
 # Move the island's corner toward the camera, retaining current path evidence.
 d.replay_ring_reset()
@@ -186,7 +186,11 @@ for y in range(21,106):raw[y*188:(y+1)*188]=real[(y-3)*188:(y-2)*188]
 for n in range(3,7):
  d.replay_ring_step((C.c_uint8*len(raw))(*raw),n*2,out)
  assert out[3] and out[1]==5 and 69<=out[0]<=116,('close but unsafe throat',list(out))
-assert d.replay_entry_path((C.c_uint8*(160*7))())==0
+# ALIGN now publishes a measured ordinary curve, without authorizing entry.
+path=(C.c_uint8*(160*7))();count=d.replay_entry_path(path)
+assert (count==0 or count>=12) and out[1]==5
+for i in range(count):
+ assert raw[path[i*7+1]*188+path[i*7]]>100, ('alignment curve outside current road',i)
 # Move the whole measured corridor away from the image center. The more
 # open branch must appear in two consecutive current frames before turning.
 for y in range(21,106):
@@ -196,15 +200,15 @@ for n in range(7,14):
  d.replay_ring_step((C.c_uint8*len(raw))(*raw),n*2,out)
  assert out[3] and 69<=out[0]<=116,list(out)
  if n==7: assert out[1]==5,list(out)
-path=(C.c_uint8*(160*7))(); count=d.replay_entry_path(path)
-assert count>=12,list(out)
-arc=0.0;near_x=path[(count-1)*7];preview_x=near_x;near_found=False
-for i in range(1,count):
- arc+=math.hypot(int(path[i*7])-int(path[(i-1)*7]),int(path[i*7+1])-int(path[(i-1)*7+1]))
- if arc>=30 and not near_found:near_x=path[i*7];near_found=True
- if arc>=60:preview_x=path[i*7];break
-assert out[1]==1 and out[2]==near_x-94 and out[2]<-5 and out[0]>94.0,list(out)
-assert preview_x<94,('current ordered path preview points toward selected branch',preview_x)
+# This translated static throat has a safe distant entry curve but its
+# near ordinary corridor cannot join it continuously. Repetition must not
+# force entry; actual progressing entrances are checked by check-handoff.py.
+assert out[1]==5, ('incompatible stationary handoff must stay aligned',list(out))
+# ALIGN now publishes a measured ordinary curve, without authorizing entry.
+path=(C.c_uint8*(160*7))();count=d.replay_entry_path(path)
+assert (count==0 or count>=12) and out[1]==5
+for i in range(count):
+ assert raw[path[i*7+1]*188+path[i*7]]>100, ('alignment curve outside current road',i)
 # Loss must revoke guidance even after entry, and stripes suppress entry aid.
 raw[80*188:106*188]=bytes([20])*(26*188)
 d.replay_ring_step((C.c_uint8*len(raw))(*raw),42,out)
@@ -330,7 +334,8 @@ assert 'rb_scan_observe(&roundabout_state,island,scan_entry_allowed &&' in main
 assert 'cross_drive_step(&cross, &scan,' in main
 assert 'turn_error=rb_plan_entry_error(roundabout_state.phase,applied_ring_guide,' in main
 assert 'img_get_preview_error(),img_get_roundabout_preview_valid(),' in main
-assert 'steering_update(&steering_state,(int)turn_error,' in main
+assert 'steering_update_with_entry_bias(&steering_state,(int)turn_error,' in main
+assert 'float entry_bias = cross_path.active || metric_control ? 0 : img_get_align_turn_bias();' in main
 print('PASS: side-open/rectangular negatives; integrated distant entry, loss, stripe priority and production wiring')
 
 d.replay_ring_reset();out=(C.c_float*5)()

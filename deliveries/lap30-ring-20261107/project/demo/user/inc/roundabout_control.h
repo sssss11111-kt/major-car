@@ -1,22 +1,14 @@
 #ifndef ROUNDABOUT_CONTROL_H
 #define ROUNDABOUT_CONTROL_H
 #include <stdint.h>
-/* Provisional user dimension; both wheel scale and track need field calibration. */
+/* Provisional scale is used for watchdog/bridge diagnostics, never exit timing. */
 #define RB_REAR_TRACK_M 0.155f
 #define RB_METERS_PER_COUNT 0.00004620f
 #define RB_TARGET_COUNTS 80.0f
-#define RB_FIRST_EXIT_DEG 270.0f
-#define RB_SECOND_EXIT_DEG 360.0f
-#ifndef RB_TURN_SIGN
-#define RB_TURN_SIGN 1 /* +1 clockwise; -1 counterclockwise */
-#endif
-#if RB_TURN_SIGN != -1 && RB_TURN_SIGN != 1
-#error "RB_TURN_SIGN must be -1 or +1."
-#endif
-#define RB_ALIGN 5 /* Append: preserve recorded phase IDs 0..4. */
-#define RB_ENTRY_CORNER_ROW 90 /* Start of the measured near-field approach rows. */
-#define RB_EXIT_SEARCH_LEAD_DEG 45.0f
-/* Encounter order: photo1 then photo2. Yaw is positive in the configured direction. */
+#define RB_ALIGN 5
+#define RB_ENTRY_CORNER_ROW 90
+#define RB_VISUAL_CONFIRM_FRAMES 3
+/* Preserve recorded phase IDs. Direction is latched from the entrance image. */
 enum {RB_IDLE,RB_ENTER,RB_ORBIT,RB_EXIT,RB_COOLDOWN};
 typedef struct {
  float yaw_deg,distance_m;
@@ -24,98 +16,116 @@ typedef struct {
  uint8_t phase,route,confirm,clear,fault,just_entered,exit_confirm;
  uint8_t entry_ready,corner,first_corner,commit_confirm,exit_ready;
  int16_t exit_error,last_exit_error;
- float commit_yaw;
+ float commit_yaw; /* diagnostic only */
+ int8_t turn_sign,observed_side;
+ uint8_t inside,inside_confirm,exit_armed;
+ uint8_t exit_tip_row,exit_tip_x,exit_first_row,exit_last_row,exit_last_x,exit_gap;
 } rb_state_t;
 static inline int rb_guiding(const volatile rb_state_t *s) {
-  return s->phase==RB_ALIGN || s->phase==RB_ENTER || s->phase==RB_ORBIT || s->phase==RB_EXIT;
+ return s->phase==RB_ALIGN || s->phase==RB_ENTER || s->phase==RB_ORBIT || s->phase==RB_EXIT;
 }
-static inline int rb_busy(const volatile rb_state_t *s) {
-  return rb_guiding(s);
-}
+static inline int rb_busy(const volatile rb_state_t *s) { return rb_guiding(s); }
 static inline int rb_exit_search(const volatile rb_state_t *s) {
- return s->phase==RB_EXIT || (s->phase==RB_ORBIT &&
-  s->yaw_deg-s->commit_yaw >= (s->route==0 ? RB_FIRST_EXIT_DEG:RB_SECOND_EXIT_DEG)-RB_EXIT_SEARCH_LEAD_DEG);
+ /* Observe openings before arming too; absence must be measured, not gated. */
+ return s->phase==RB_EXIT || s->phase==RB_ORBIT;
 }
-/* Fresh image facts, never predictions. Feed before rb_observe, once per frame. */
+/* Current-image evidence: +1 island on entrance right, -1 on left, 0 unknown.
+ * inside means a continuous current inner bank reaches the near bottom, with
+ * an ordinary near corridor; a stored/white-only path cannot establish it. */
+static inline void rb_visual(volatile rb_state_t *s,int side,int inside) {
+ s->observed_side=(int8_t)(side==1 || side==-1 ? side:0);
+ s->inside=(uint8_t)inside;
+}
+static inline void rb_exit_tip(volatile rb_state_t *s,int row,int x) {
+ s->exit_tip_row=(uint8_t)row;s->exit_tip_x=(uint8_t)x;
+}
 static inline void rb_geometry(volatile rb_state_t *s,int entry_ready,int corner,int exit_ready,int exit_error) {
  s->entry_ready=(uint8_t)entry_ready;s->corner=(uint8_t)corner;
  s->exit_ready=(uint8_t)exit_ready;s->exit_error=(int16_t)exit_error;
 }
-/* Pre-entry suspect state: decelerate early before switching path. */
 static inline int rb_suspect(const volatile rb_state_t *s) {
  return s->phase==RB_IDLE && s->confirm>=1 && !s->fault;
 }
 static inline void rb_tick(volatile rb_state_t *s,int left,int right,int running) {
  if(!running || s->phase==RB_IDLE || s->fault)return;
- /* Invalid encoders are stopped by the existing supervisor, never integrated. */
  if(left<0 || right<0 || left>150 || right>150)return;
  s->distance_m+=(left+right)*0.5f*RB_METERS_PER_COUNT;
  if(s->phase==RB_COOLDOWN)return;
- s->yaw_deg+=RB_TURN_SIGN*(left-right)*RB_METERS_PER_COUNT/RB_REAR_TRACK_M*57.2957795f;
+ /* This estimate bounds the existing short loss bridge; no FSM transition
+  * below uses yaw or distance to select an entrance, orbit or exit. */
+ s->yaw_deg+=s->turn_sign*(left-right)*RB_METERS_PER_COUNT/RB_REAR_TRACK_M*57.2957795f;
  ++s->ticks;
-  if(s->phase==RB_ENTER && s->yaw_deg-s->commit_yaw>=45.0f)s->phase=RB_ORBIT;
- /* Yaw only arms visual exit recognition; it must never drop guidance alone. */
  if(s->ticks>=4500U || s->distance_m>=10.0f)s->fault=1;
 }
-/* Called once per new camera frame; repetition without motion cannot exit a ring. */
 static inline void rb_observe(volatile rb_state_t *s,int island,int near_valid,int stripe,int road_recovered,int running) {
  s->just_entered=0;
-  if(!running){s->confirm=0;s->exit_confirm=0;s->commit_confirm=0;s->clear=0;return;}
+ if(!running){s->confirm=s->exit_confirm=s->commit_confirm=s->inside_confirm=s->clear=0;return;}
  if(s->fault)return;
  if(s->phase==RB_IDLE) {
-  if(s->route>=2)return;
-  if(island && near_valid && !stripe) {
-   if(++s->confirm>=3){
-     s->phase=RB_ALIGN;s->yaw_deg=0;s->distance_m=0;s->ticks=0;s->clear=0;s->exit_confirm=0;
-     s->first_corner=s->corner;s->commit_confirm=0;
+  if(island && near_valid && !stripe && s->observed_side) {
+   if(s->turn_sign!=s->observed_side){s->turn_sign=s->observed_side;s->confirm=0;}
+   if(++s->confirm>=RB_VISUAL_CONFIRM_FRAMES) {
+    s->phase=RB_ALIGN;s->yaw_deg=0;s->distance_m=0;s->ticks=0;
+    s->clear=s->exit_confirm=s->inside_confirm=s->exit_armed=0;
+    s->exit_first_row=s->exit_last_row=s->exit_gap=0;
+    s->first_corner=s->corner;s->commit_confirm=0;
    }
   }else s->confirm=0;
-  }else if(s->phase==RB_ALIGN) {
-   if(!island && near_valid && road_recovered && !stripe) {
-    if(++s->clear>=5) {
-     s->phase=RB_IDLE;s->confirm=s->commit_confirm=s->clear=0;
-     s->first_corner=0;return;
+ }else if(s->phase==RB_ALIGN) {
+  if(!island && near_valid && road_recovered && !stripe) {
+   if(++s->clear>=5){s->phase=RB_IDLE;s->confirm=s->commit_confirm=s->clear=0;s->turn_sign=0;return;}
+  }else s->clear=0;
+  int progress=s->corner>=96 || (s->corner>=RB_ENTRY_CORNER_ROW &&
+      s->first_corner && s->corner>=s->first_corner+3);
+  if(!s->first_corner && s->corner)s->first_corner=s->corner;
+  if(s->entry_ready && near_valid && !stripe && progress) {
+   if(++s->commit_confirm>=2){s->phase=RB_ENTER;s->commit_yaw=s->yaw_deg;
+    s->just_entered=1;s->commit_confirm=s->inside_confirm=0;}
+  }else s->commit_confirm=0;
+ }else if(s->phase==RB_ENTER) {
+  if(s->inside && near_valid && !stripe) {
+   if(++s->inside_confirm>=RB_VISUAL_CONFIRM_FRAMES) {
+    s->phase=RB_ORBIT;s->inside_confirm=0;s->exit_armed=0;
+   }
+  }else s->inside_confirm=0;
+ }else if(s->phase==RB_ORBIT) {
+  /* First observe a clean inner arc after entry. A stationary entrance or an
+   * opening seen during entry cannot arm/commit exit, regardless of yaw. */
+  if(!s->exit_armed) {
+   if(s->inside && near_valid && !stripe && !s->exit_ready) {
+    if(++s->inside_confirm>=RB_VISUAL_CONFIRM_FRAMES)s->exit_armed=1;
+   }else s->inside_confirm=0;
+   s->exit_confirm=0;return;
+  }
+  if(s->exit_ready && near_valid && !stripe && s->exit_tip_row) {
+   int dy=(int)s->exit_tip_row-s->exit_last_row;
+   int dx=(int)s->exit_tip_x-s->exit_last_x;
+   if(!s->exit_first_row || (s->exit_last_row && (dy< -4 || dy>16 || dx< -24 || dx>24))) {
+    s->exit_first_row=s->exit_tip_row;s->exit_confirm=0;
+   }
+   s->exit_last_row=s->exit_tip_row;s->exit_last_x=s->exit_tip_x;s->exit_gap=0;
+   /* The same outer-bank corner must advance toward the camera into the
+    * preview window. Repeating a stationary image never completes a lap. */
+   if(s->exit_tip_row>=55 && s->exit_tip_row>=s->exit_first_row+3) {
+    if(++s->exit_confirm>=RB_VISUAL_CONFIRM_FRAMES) {
+     s->phase=RB_EXIT;s->clear=s->exit_confirm=0;
     }
-   }else s->clear=0;
-   /* A visible island starts alignment, not the turn. Close starts are allowed;
-    * otherwise require a measured corner moving toward the camera. */
-   int progress=s->corner>=96 || (s->corner>=RB_ENTRY_CORNER_ROW &&
-                s->first_corner && s->corner>=s->first_corner+3);
-   if(!s->first_corner && s->corner)s->first_corner=s->corner;
-   if(s->entry_ready && near_valid && !stripe && progress) {
-    if(++s->commit_confirm>=2) {
-     s->phase=RB_ENTER;s->commit_yaw=s->yaw_deg;s->just_entered=1;s->commit_confirm=0;
-    }
-   }else s->commit_confirm=0;
-  }else if(s->phase==RB_ENTER || s->phase==RB_ORBIT) {
-   int delta=s->exit_error-s->last_exit_error;
-   int branch=rb_exit_search(s) && s->exit_ready && delta>=-12 && delta<=12;
-   s->last_exit_error=s->exit_error;
-   /* A latched, current forward branch can commit before the island vanishes.
-    * Full ordinary-road recovery remains a conservative fallback. */
-   if(branch && near_valid && !stripe) {
-    if(++s->exit_confirm>=3){s->phase=RB_EXIT;s->clear=0;s->exit_confirm=0;}
-   }else
-  if(s->yaw_deg-s->commit_yaw>=(s->route==0 ? RB_FIRST_EXIT_DEG:RB_SECOND_EXIT_DEG) &&
-     road_recovered && near_valid && !island && !stripe) {
-   if(++s->exit_confirm>=3){s->phase=RB_EXIT;s->clear=0;s->exit_confirm=0;}
-  }else s->exit_confirm=0;
+   }else s->exit_confirm=0;
+  }else {
+   s->exit_confirm=0;
+   if(++s->exit_gap>=3){s->exit_first_row=s->exit_last_row=0;s->exit_gap=3;}
+  }
  }else if(s->phase==RB_EXIT || s->phase==RB_COOLDOWN) {
   if(road_recovered && near_valid && !island && !stripe){if(s->clear<30)++s->clear;}else s->clear=0;
-  if(s->phase==RB_EXIT && s->clear>=4) {
-   s->phase=RB_COOLDOWN;++s->route;s->distance_m=0;s->clear=0;
-  }else if(s->phase==RB_COOLDOWN && s->clear>=15 && s->distance_m>=0.30f) {
-   s->phase=RB_IDLE;s->confirm=0;s->clear=0;
-  }
+  if(s->phase==RB_EXIT && s->clear>=4){s->phase=RB_COOLDOWN;
+   if(s->route<255)++s->route;s->distance_m=0;s->clear=0;
+  }else if(s->phase==RB_COOLDOWN && s->clear>=15){s->phase=RB_IDLE;
+   s->confirm=s->clear=s->exit_armed=0;s->turn_sign=0;}
  }
 }
-/* The same-frame ENTER recomputation must also pass the fresh path gate. */
 static inline void rb_reject_entry(volatile rb_state_t *s) {
- if(s->phase==RB_ENTER && s->just_entered) {
-  s->phase=RB_ALIGN;
-  s->just_entered=0;
-  s->commit_confirm=0;
- }
+ if(s->phase==RB_ENTER && s->just_entered){s->phase=RB_ALIGN;
+  s->just_entered=0;s->commit_confirm=s->inside_confirm=0;}
 }
 /* Legacy scalar entry assistance retained for unit-test compatibility. */
 static inline float rb_entry_error(int phase,int guide,float near,float branch,
@@ -134,7 +144,7 @@ static inline float rb_entry_error(int phase,int guide,float near,float branch,
 static inline float rb_plan_entry_error(int phase,int guide,float near,float entry_target,
                                        float branch,int branch_valid,int valid,int stripe) {
  float base, delta;
- if((phase!=RB_ENTER && phase!=RB_ORBIT) || !guide || !valid || stripe)return near;
+ if(phase!=RB_ENTER || !guide || !valid || stripe)return near;
  /* guide selects which side of the island contains the road; it is NOT
   * the steering sign. Clockwise circulation keeps the island on the right,
   * but the same corridor can bend right after an initial left entry. */

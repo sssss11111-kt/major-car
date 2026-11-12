@@ -2,6 +2,7 @@
 #include "img_process.h"
 #undef RING_ENTRY_IMPLEMENTATION
 #include "string.h"
+#include "steering_control.h"
 
 static int ip_abs(int v) { return v < 0 ? -v : v; }
 
@@ -51,78 +52,28 @@ static uint8_t  s_ring_evidence, s_ring_corner_row, s_ring_apex_row;
 static uint8_t  s_ring_miny, s_ring_maxy;
 static int16_t  s_ring_entry_error;
 static int      s_ring_guide;
-static uint8_t s_entry_mode, s_entry_locked, s_entry_status;
-static entry_path_t s_entry_path, s_exit_path, s_last_entry_path;
-static uint8_t s_entry_ready, s_exit_ready, s_exit_search, s_exit_separated;
-static int16_t s_exit_reference;
-static uint8_t s_exit_reference_valid;
+static uint8_t s_entry_mode, s_entry_locked, s_entry_status, s_orbit_ready;
+static entry_path_t s_entry_path;
+#define IP_ENTRY_BLEND_STEP 0.20f
+#define IP_ENTRY_INSIDE_FRAMES 3U
+static float s_entry_weight;
+static float s_align_turn_bias;
+static uint32_t s_entry_weight_tick,s_entry_control_tick;
+static uint8_t s_entry_inside,s_entry_control_seen;
+static int16_t s_entry_control_error,s_entry_control_preview;
+static uint8_t s_exit_tip_row, s_exit_tip_x;
+static uint8_t s_entry_ready, s_exit_ready, s_exit_search;
 static uint8_t s_entry_half_width[IP_H], s_entry_island_mask[IP_H];
 static uint8_t s_entry_lost_frames, s_entry_reacquire;
 static entry_bridge_guard_t s_bridge_guard;
-static uint8_t s_bridge_near_threshold[7];
 static float s_odometry_distance, s_odometry_yaw, s_bridge_curvature;
-static float s_motion_distance, s_motion_yaw;
-static uint32_t s_odometry_tick, s_motion_tick;
-static int16_t s_bridge_error, s_bridge_preview;
+static uint32_t s_odometry_tick;
 static uint8_t s_odometry_valid, s_motion_ready, s_bridge_stable;
 
 static void ip_bridge_reset(void) {
     memset(&s_bridge_guard,0,sizeof s_bridge_guard);
     s_bridge_curvature=0;
     s_bridge_stable=s_motion_ready=0;
-}
-static void ip_bridge_observe(const uint8_t *thresholds) {
-    if (!s_odometry_valid) { ip_bridge_reset(); return; }
-    if (s_motion_ready) {
-        float travel=s_odometry_distance-s_motion_distance;
-        uint32_t elapsed=s_odometry_tick-s_motion_tick;
-        if (elapsed>20U || travel<0 || travel>0.10f) {
-            s_bridge_stable=0;s_motion_ready=0;
-        } else if (travel>=0.002f) {
-            float curvature=(s_odometry_yaw-s_motion_yaw)/57.2957795f/travel;
-            if (fabsf(curvature)>8.0f) s_bridge_stable=0;
-            else if (!s_bridge_stable || fabsf(curvature-s_bridge_curvature)>1.5f) {
-                s_bridge_curvature=curvature;s_bridge_stable=1;
-            } else {
-                s_bridge_curvature=0.75f*s_bridge_curvature+0.25f*curvature;
-                if (s_bridge_stable<10) ++s_bridge_stable;
-            }
-            s_motion_ready=0;
-        }
-    }
-    if (!s_motion_ready) {
-        s_motion_distance=s_odometry_distance;s_motion_yaw=s_odometry_yaw;
-        s_motion_tick=s_odometry_tick;s_motion_ready=1;
-    }
-    memcpy(s_bridge_near_threshold,thresholds+96,sizeof s_bridge_near_threshold);
-    s_bridge_guard.visual_tick=s_odometry_tick;
-    s_bridge_guard.distance_m=s_odometry_distance;
-    s_bridge_guard.yaw_deg=s_odometry_yaw;
-    s_bridge_guard.curvature=s_bridge_curvature;
-    s_bridge_guard.stable=(uint8_t)(s_bridge_stable>=3);
-    s_bridge_guard.active=0;
-    s_bridge_error=s_ring_entry_error;s_bridge_preview=s_preview_error;
-}
-static int ip_bridge_apply(const uint8_t *raw,const uint8_t *thresholds) {
-    float travel, heading_error, correction;
-    if (!s_odometry_valid || !entry_bridge_allowed(&s_bridge_guard,s_odometry_distance,s_odometry_yaw,s_odometry_tick)) return 0;
-    /* An observed dark area immediately under the car is a hard rejection. */
-    for (int y=96; y<=102; ++y)
-        for (int x=90; x<=98; ++x)
-            if (raw[y*IP_W+x] <= (s_scene_ok ? thresholds[y] : s_bridge_near_threshold[y-96])) return 0;
-    travel=s_odometry_distance-s_bridge_guard.distance_m;
-    heading_error=s_bridge_guard.yaw_deg+s_bridge_guard.curvature*travel*57.2957795f-s_odometry_yaw;
-    correction=heading_error*0.5f;
-    if (correction>1.5f) correction=1.5f;
-    if (correction< -1.5f) correction= -1.5f;
-    s_bridge_guard.active=1;
-    s_entry_path.count=0;
-    s_entry_path.boundary_source=4;
-    s_entry_status=5;
-    s_valid=s_near_valid=s_preview_valid=s_ring_preview_valid=1;
-    s_error=s_ring_entry_error=(int16_t)(s_bridge_error+correction);
-    s_preview_error=s_bridge_preview;
-    return 1;
 }
 static uint8_t  s_ring_l[IP_H], s_ring_r[IP_H], s_ring_mask[IP_H];
 /* A candidate can blink for one or two camera frames at the throat. Keep only
@@ -628,6 +579,29 @@ static uint8_t ip_eval_auxiliary_evidence(const uint8_t *raw, const uint8_t *thr
     return ev;
 }
 
+/* Reuse the island scratch buffer after segmentation. Four-connected WHITE
+ * pixels seeded under the car are the only road component row targets may use. */
+static void ip_road_add(const uint8_t *raw,const uint8_t *thr,int x,int y,int *tail) {
+    if(x<0 || x>=IP_W || y<IP_TRACK_TOP || y>IP_TRACK_BOTTOM)return;
+    uint8_t bit=(uint8_t)(1U<<(x&7));
+    if((s_exterior[y][x>>3]&bit) || raw[y*IP_W+x]<=thr[y])return;
+    s_exterior[y][x>>3]|=bit;
+    s_exterior_queue[(*tail)++]=(uint16_t)(y*IP_W+x);
+}
+static void ip_road_component(const uint8_t *raw,const uint8_t *thr) {
+    int head=0,tail=0;memset(s_exterior,0,sizeof s_exterior);
+    ip_road_add(raw,thr,IP_W/2,IP_TRACK_BOTTOM,&tail);
+    while(head<tail) {
+        int p=s_exterior_queue[head++],x=p%IP_W,y=p/IP_W;
+        ip_road_add(raw,thr,x-1,y,&tail);ip_road_add(raw,thr,x+1,y,&tail);
+        ip_road_add(raw,thr,x,y-1,&tail);ip_road_add(raw,thr,x,y+1,&tail);
+    }
+}
+static int ip_on_road(int x,int y) {
+    return x>=0 && x<IP_W && y>=IP_TRACK_TOP && y<=IP_TRACK_BOTTOM &&
+           (s_exterior[y][x>>3]&(1U<<(x&7)));
+}
+
 /* Side-clipped island detector & guided branch segmenter.
  * Separates (A) unguided candidate confirmation (strict closed top & bottom)
  * from (B) guided branch segmentation when s_ring_guide != 0 (allowing the
@@ -869,20 +843,349 @@ static void ip_island(const uint8_t *raw,const uint8_t *thresholds)
     s_ring_candidate=(uint8_t)found;
 }
 
-static int ip_last_entry_path_white(const uint8_t *raw, const uint8_t *thr, entry_path_t *path)
-{
-    if (path->count < 12) return 0;
-    for (int i=0; i<path->count; ++i) {
-        const entry_point_t *point=&path->points[i];
-        if (!ep_white(raw,thr,point->x,point->y)) {
-            /* Keep the near control corridor; discard only the overexposed
-             * far tail, and never accept a dark near target. */
-            if (point->y >= 60 || i < 12) return 0;
-            path->count=(uint8_t)i;
-            break;
+
+/* Every ring candidate starts at the same camera anchor and uses fixed
+ * path-distance windows. Horizontal turns never switch to a tail percentage.
+ * These pixel distances remain provisional until camera/vehicle calibration. */
+static int ip_path_row(const entry_path_t *path,int row,float *x) {
+    for(int i=1;i<path->count;++i) {
+        const entry_point_t *a=&path->points[i-1],*b=&path->points[i];
+        if(b->y>=a->y)return 0;
+        if(row<=a->y && row>=b->y) {
+            *x=a->x+(float)(b->x-a->x)*(a->y-row)/(a->y-b->y);return 1;
         }
     }
-    return path->count >= 12;
+    return 0;
+}
+static int ip_path_controls(entry_path_t *path,int *preview_valid) {
+    float distance=0,near_sum=0,far_sum=0;int near_n=0,far_n=0;
+    *preview_valid=0;path->preview=0;
+    if(path->count<2 || path->points[0].x!=94 || path->points[0].y!=EP_BOTTOM)return 0;
+    int sample=1;
+    for(int i=1;i<path->count && sample<=50;++i) {
+        float dx=path->points[i].x-path->points[i-1].x;
+        float dy=path->points[i].y-path->points[i-1].y;
+        float length=sqrtf(dx*dx+dy*dy);
+        if(length<0.001f)continue;
+        while(sample<=50 && sample<=distance+length) {
+            float x=path->points[i-1].x+dx*(sample-distance)/length;
+            if(sample>=5 && sample<=25){near_sum+=x;++near_n;}
+            if(sample>=30){far_sum+=x;++far_n;}
+            ++sample;
+        }
+        distance+=length;
+    }
+    if(near_n!=21)return 0;
+    path->error=(int16_t)lroundf(near_sum/near_n-94);
+    *preview_valid=far_n==21;
+    if(*preview_valid)path->preview=(int16_t)lroundf(far_sum/far_n-94);
+    return 1;
+}
+/* Fit a current ordinary corridor to the entrance's forward cubic parameter.
+ * There is no cached image/path: only blend progress survives a new frame. */
+static int ip_entry_transition(const uint8_t *raw,const uint8_t *thr,
+                              const uint8_t *ordinary,float weight,
+                              const entry_path_t *entry,entry_path_t *out) {
+    float end=1.0f,curve[8],normal[4],mat[3][4]={{0}};
+    if(entry->count<12)return 0;
+    /* Split the current cubic at y=55, keeping its forward control horizon. */
+    if(entry->curve[7]<55) {
+        float lo=0,hi=1;
+        for(int k=0;k<16;++k){float x,y,dx,dy,ddx,ddy;
+            end=(lo+hi)*0.5f;
+            ep_curve_sample(entry->curve,end,&x,&y,&dx,&dy,&ddx,&ddy);
+            if(y>55)lo=end;else hi=end;
+        }
+        end=(lo+hi)*0.5f;
+    }
+    float q[8];memcpy(q,entry->curve,sizeof q);
+    curve[0]=q[0];curve[1]=q[1];
+    for(int level=1;level<=3;++level){
+        for(int j=0;j<4-level;++j)for(int c=0;c<2;++c)
+            q[j*2+c]=(1-end)*q[j*2+c]+end*q[(j+1)*2+c];
+        curve[level*2]=q[0];curve[level*2+1]=q[1];
+    }
+    int bottom=(int)(curve[1]+0.5f);
+    if(bottom<90 || bottom>105 || !ordinary[bottom] || curve[7]>84)return 0;
+    normal[0]=ordinary[bottom];
+    for(int i=1;i<=32;++i) {
+        float t=i/32.0f,u=1-t,x,y,dx,dy,ddx,ddy;
+        ep_curve_sample(curve,t,&x,&y,&dx,&dy,&ddx,&ddy);
+        y=bottom+(55-bottom)*t;
+        int row=(int)(y+0.5f);
+        if(row<55 || row>105 || !ordinary[row])return 0;
+        float b[3]={3*u*u*t,3*u*t*t,t*t*t};
+        float target=ordinary[row]-u*u*u*normal[0];
+        for(int j=0;j<3;++j){for(int k=0;k<3;++k)mat[j][k]+=b[j]*b[k];mat[j][3]+=b[j]*target;}
+    }
+    for(int i=0;i<3;++i){
+        int pivot=i;for(int j=i+1;j<3;++j)if(fabsf(mat[j][i])>fabsf(mat[pivot][i]))pivot=j;
+        if(fabsf(mat[pivot][i])<0.0001f)return 0;
+        for(int k=i;k<4;++k){float v=mat[i][k];mat[i][k]=mat[pivot][k];mat[pivot][k]=v;}
+        float scale=mat[i][i];for(int k=i;k<4;++k)mat[i][k]/=scale;
+        for(int j=0;j<3;++j)if(j!=i){float v=mat[j][i];for(int k=i;k<4;++k)mat[j][k]-=v*mat[i][k];}
+    }
+    for(int i=1;i<4;++i)normal[i]=mat[i-1][3];
+    /* Fitting must not silently invent a different ordinary route. */
+    float normal_curve[8];memcpy(normal_curve,curve,sizeof curve);
+    for(int i=0;i<4;++i){normal_curve[2*i]=normal[i];normal_curve[2*i+1]=bottom+(55-bottom)*i/3.0f;}
+    for(int i=0;i<=32;++i){float x,y,dx,dy,ddx,ddy;
+        ep_curve_sample(normal_curve,i/32.0f,&x,&y,&dx,&dy,&ddx,&ddy);
+        int row=(int)(y+0.5f);
+        if(!ordinary[row] || fabsf(x-ordinary[row])>8.0f)return 0;
+    }
+    for(int i=0;i<8;++i)curve[i]=normal_curve[i]+weight*(curve[i]-normal_curve[i]);
+    *out=*entry;
+    if(!ep_sample_curve(raw,thr,curve,out))return 0;
+    memcpy(out->curve,curve,sizeof curve);
+    /* Sampled centres AND the intervening curve need current white clearance. */
+    for(int i=0;i<=128;++i){float x,y,dx,dy,ddx,ddy;
+        ep_curve_sample(curve,i/128.0f,&x,&y,&dx,&dy,&ddx,&ddy);
+        int xx=(int)(x+0.5f),yy=(int)(y+0.5f);
+        if(!ep_white(raw,thr,xx-2,yy) || !ep_white(raw,thr,xx+2,yy))return 0;
+    }
+    ep_measure_edges(raw,thr,out);
+    out->goal_x=out->points[out->count-1].x;out->goal_y=out->points[out->count-1].y;
+    int pv=0;return (!ep_context.fresh_island || ep_entry_clearance_ok(out,s_ring_guide)) && ip_path_controls(out,&pv) && pv;
+}
+
+/* Publish precisely the validated curve used for control and telemetry. */
+static void ip_publish_curve(const entry_path_t *path,uint8_t *left,uint8_t *mid,uint8_t *right) {
+    s_entry_path=*path;
+    int pv=0;
+    if(!ip_path_controls(&s_entry_path,&pv))return;
+    s_error=s_ring_entry_error=s_entry_path.error;
+    s_preview_error=s_entry_path.preview;s_preview_valid=(uint8_t)pv;
+    s_ring_preview_valid=0;s_valid=s_near_valid=1;s_have_error=1;
+    memset(left,0,IP_H);memset(mid,0,IP_H);memset(right,0,IP_H);
+    for(int i=0;i<s_entry_path.count;++i) {
+        const entry_point_t *p=&s_entry_path.points[i];
+        mid[p->y]=p->x;
+        if(p->measured&1)left[p->y]=p->left_x;
+        if(p->measured&2)right[p->y]=p->right_x;
+    }
+}
+/* The first persistent dark-to-light edge above current near white space is
+ * the outer bank. Three-pixel averages reject single-pixel texture; adjacent
+ * columns must track one contour, rather than another distant white road. */
+static int ip_turn_bank(const uint8_t *raw,const uint8_t *thr,int x) {
+    for(int y=72;y>=EP_TOP+4;--y) {
+        int above=0,below=0;
+        for(int d=1;d<=3;++d){above+=raw[(y-d)*IP_W+x];below+=raw[(y+d)*IP_W+x];}
+        if(below-above<90 || below<3*(int)thr[y])continue;
+        int dark=0,gap=0,max_gap=0;
+        for(int yy=y+3;yy<=y+15 && yy<=100;++yy) {
+            if(!ep_white(raw,thr,x,yy)){++dark;if(++gap>max_gap)max_gap=gap;}else gap=0;
+        }
+        if(max_gap<=2 && dark<=3)return y;
+    }
+    return -1;
+}
+/* The outer ridge must belong to a broad current dark region extending
+ * inward from the selected edge. A short high-contrast mark on white floor
+ * cannot provide a lateral bank. Local grey contrast remains usable when the
+ * row threshold leaks into the background. Scratch storage is no longer used
+ * by the row tracker at this point in the frame. */
+static int ip_outer_region(const uint8_t *raw,int guide,int edge) {
+    int x=guide<0 ? 182:5,above=0,below=0;
+    for(int d=1;d<=3;++d){above+=raw[(edge-d)*IP_W+x];below+=raw[(edge+d)*IP_W+x];}
+    int threshold=(above+below)/6,head=0,tail=0,reach=x,top=IP_TRACK_BOTTOM,bottom=IP_TRACK_TOP;
+    int seed=(edge-3)*IP_W+x;
+    if(raw[seed]>=threshold)return 0;
+    memset(s_exterior,0,sizeof s_exterior);
+    s_exterior_queue[tail++]=(uint16_t)seed;s_exterior[edge-3][x>>3]|=(uint8_t)(1U<<(x&7));
+    while(head<tail) {
+        int pos=s_exterior_queue[head++],xx=pos%IP_W,yy=pos/IP_W;
+        if(yy<top)top=yy;if(yy>bottom)bottom=yy;
+        if((guide<0 && xx<reach) || (guide>0 && xx>reach))reach=xx;
+        const int nx[4]={xx-1,xx+1,xx,xx},ny[4]={yy,yy,yy-1,yy+1};
+        for(int k=0;k<4;++k) {
+            int a=nx[k],b=ny[k];
+            if(a<0 || a>=IP_W || b<IP_TRACK_TOP || b>IP_TRACK_BOTTOM)continue;
+            uint8_t bit=(uint8_t)(1U<<(a&7));
+            if((s_exterior[b][a>>3]&bit) || raw[b*IP_W+a]>=threshold)continue;
+            s_exterior[b][a>>3]|=bit;s_exterior_queue[tail++]=(uint16_t)(b*IP_W+a);
+        }
+    }
+    return top==IP_TRACK_TOP && bottom-top>=12 && tail>=256 &&
+           (guide<0 ? reach<=110:reach>=77);
+}
+/* Current island clearance retains the original scaled tip margin whenever
+ * a coherent fresh island is visible; no held contour can veto a new image. */
+static int ip_curve_clearance(const entry_path_t *path,int guide) {
+    return !ep_context.fresh_island || ep_entry_clearance_ok(path,guide);
+}
+/* Pull the ALIGN curve toward the observed inner bank. Moving only the
+ * forward control points toward that bank prevents any outward displacement. */
+static int ip_bias_align_curve(const uint8_t *raw, const uint8_t *thr, int guide,
+                              entry_path_t *path) {
+    if (!ep_context.fresh_island || path->count < 2 || s_ring_corner_row <= 90) return 0;
+    /* Delay the inward offset until the current corner nears the car. */
+    float progress = ip_clamp(s_ring_corner_row - 90, 0, 15) / 15.0f;
+    progress = progress * progress * (3.0f - 2.0f * progress);
+    float signed_progress = guide < 0 ? progress : -progress;
+    int support = 0, gap_sum = 0;
+    for (int i = 0; i < path->count; ++i) {
+        int y = path->points[i].y;
+        if (!ep_context.island_mask[y]) continue;
+        int bank = guide < 0 ? ep_context.island_left[y] : ep_context.island_right[y];
+        int gap = guide < 0 ? bank-path->points[i].x : path->points[i].x-bank;
+        if (gap <= 0) continue;
+        gap_sum += gap;
+        ++support;
+    }
+    if (support < 4) return 0;
+    int shift = gap_sum/(4*support);
+    if (shift > 14) shift = 14;
+    static entry_path_t candidate;
+    for (; shift >= 2; shift -= 2) {
+        float curve[8];
+        memcpy(curve, path->curve, sizeof curve);
+        float bias = shift * signed_progress;
+        /* Start the inward bend within the near steering window. */
+        curve[2] += 0.65f*bias;
+        curve[4] += 1.5f*bias;
+        curve[6] += bias;
+        candidate = *path;
+        if (!ep_sample_curve(raw, thr, curve, &candidate)) continue;
+        int safe = 1;
+        for (int i = 0; i <= 128; ++i) {
+            float x,y,dx,dy,ddx,ddy;
+            ep_curve_sample(curve,i/128.0f,&x,&y,&dx,&dy,&ddx,&ddy);
+            int px = (int)(x+0.5f), py = (int)(y+0.5f);
+            float speed2 = dx*dx+dy*dy, cross = dx*ddy-dy*ddx;
+            if (!ep_white(raw,thr,px-2,py) || !ep_white(raw,thr,px+2,py) ||
+                cross*cross > 0.0225f*speed2*speed2*speed2) { safe = 0; break; }
+        }
+        if (!safe) continue;
+        memcpy(candidate.curve,curve,sizeof curve);
+        ep_measure_edges(raw,thr,&candidate);
+        int preview = 0;
+        if (!ip_curve_clearance(&candidate,guide) ||
+            !ip_path_controls(&candidate,&preview) || !preview) continue;
+        candidate.goal_x = candidate.points[candidate.count-1].x;
+        candidate.goal_y = candidate.points[candidate.count-1].y;
+        ep_control_points(&candidate);
+        *path = candidate;
+        s_align_turn_bias = signed_progress;
+        return 1;
+    }
+    return 0;
+}
+/* A lateral opening is measured across several columns. In ALIGN it must
+ * have two current banks and have reached the near preview window. In ENTER
+ * or EXIT a current outer contour may support a cropped inner bank. Width
+ * then remains an explicitly inferred, provisional pixel clearance. */
+static int ip_turn_curve(const uint8_t *raw,const uint8_t *thr,int guide,
+                         int allow_outer,entry_path_t *out,int *paired) {
+    int top[5],bottom[5],n=0;
+    *paired=0;
+    for(int k=0;k<5;++k) {
+        int x=guide<0 ? 182-2*k:5+2*k;
+        int best_a=-1,best_b=-1;
+        for(int y=EP_TOP;y<=EP_BOTTOM;) {
+            while(y<=EP_BOTTOM && !ep_white(raw,thr,x,y))++y;
+            int a=y;
+            while(y<=EP_BOTTOM && ep_white(raw,thr,x,y))++y;
+            int b=y-1;
+            if(a<=EP_TOP+2 || b>=EP_BOTTOM-2 || b-a+1<20)continue;
+            if(best_b>=0)return 0; /* Multiple eligible side branches. */
+            best_a=a;best_b=b;
+        }
+        if(best_b<0)break;
+        if(n && (ip_abs(best_a-top[n-1])>4 || ip_abs(best_b-bottom[n-1])>10))break;
+        top[n]=best_a;bottom[n]=best_b;++n;
+    }
+    float goal_y=0,width=0,slope=0;
+    if(n==5) {
+        for(int k=0;k<5;++k){goal_y+=(top[k]+bottom[k])/10.0f;width+=(bottom[k]-top[k]+1)/5.0f;}
+        slope=((top[0]+bottom[0])-(top[4]+bottom[4]))/16.0f;
+        *paired=1;
+    } else {
+        if(!allow_outer)return 0;
+        int prev=-1,first=-1,last=-1,observed=0;
+        /* Trace one continuous side ridge inward. Its dark component must
+         * also extend toward the middle of the current image. */
+        for(int k=0;k<=24;++k) {
+            int x=guide<0 ? 182-2*k:5+2*k;
+            int edge=ip_turn_bank(raw,thr,x);
+            if(edge<0)break;
+            if(prev>=0 && ip_abs(edge-prev)>4)return 0;
+            if(first<0)first=edge;
+            prev=last=edge;++observed;
+        }
+        if(observed<17 || first<28 || first>66 || ip_abs(last-first)>20 ||
+           !ip_outer_region(raw,guide,first))return 0;
+        /* Crop boundaries do not measure road width. A bounded provisional
+         * 48px normal width is tagged inferred; it is not a calibration. */
+        width=48.0f;goal_y=first+width*0.5f;
+        slope=(first-last)/(2.0f*(observed-1));n=observed;
+    }
+    if(goal_y<40 || goal_y>84 || width<20 || width>80)return 0;
+    entry_context_t saved=ep_context;
+    ep_context.active=0; /* branch association above uses this frame's columns */
+    memset(out,0,sizeof *out);
+    out->points[0].x=94;out->points[0].y=EP_BOTTOM;
+    out->points[1].x=(uint8_t)(guide<0 ? 182:5);out->points[1].y=(uint8_t)(goal_y+0.5f);
+    out->count=2;out->goal_x=out->points[1].x;out->goal_y=out->points[1].y;
+    out->estimated_width=width;out->boundary_source=(uint8_t)(*paired ? 1:2);
+    int ok=ep_fit_curve(raw,thr,guide,slope,out);
+    ep_context=saved;
+    if(!ok){out->count=0;return 0;}
+    out->support=(uint8_t)n;out->inferred=(uint8_t)!*paired;
+    ep_measure_edges(raw,thr,out);
+    int pv=0;
+    return ip_curve_clearance(out,guide) && ip_path_controls(out,&pv) && pv;
+}
+
+/* Track the OUTER-bank convex tip at the unique fixed exit. Work in a
+ * mirrored coordinate so clockwise/anticlockwise share exactly one detector.
+ * A dark component must touch >=6 actual near-bank observations; a speckle,
+ * image edge, monotone bend or detached distant stripe is not an exit. */
+static int ip_exit_tip(const uint8_t *raw,const uint8_t *thr,
+                       const int16_t *bank,int guide,int *tip_x,int *tip_y)
+{
+    int best_votes=0,best_x=0,best_y=0;
+    memset(s_exterior,0,sizeof s_exterior);
+    for(int seed_y=IP_TRACK_BOTTOM;seed_y>=85;--seed_y) {
+        int edge=bank[seed_y];
+        if(edge<=2 || edge>=IP_W-3)continue;
+        int seed_x=edge+guide;
+        if(raw[seed_y*IP_W+seed_x]>thr[seed_y])continue;
+        if(s_exterior[seed_y][seed_x>>3]&(1U<<(seed_x&7)))continue;
+        int head=0,tail=0,outline[IP_H],votes=0;
+        for(int y=0;y<IP_H;++y)outline[y]=-1;
+        ip_exterior_add(raw,thr,seed_x,seed_y,&tail);
+        while(head<tail) {
+            int idx=s_exterior_queue[head++],x=idx%IP_W,y=idx/IP_W;
+            int mirrored=guide<0 ? x:IP_W-1-x;
+            if(mirrored>outline[y])outline[y]=mirrored;
+            if(y>=85 && bank[y]>2 && bank[y]<IP_W-3 && x==bank[y]+guide)++votes;
+            for(int dy=-1;dy<=1;++dy)for(int dx=-1;dx<=1;++dx) {
+                int xx=x+dx,yy=y+dy;
+                if(xx>=0 && xx<IP_W && yy>=IP_TRACK_TOP && yy<=IP_TRACK_BOTTOM)
+                    ip_exterior_add(raw,thr,xx,yy,&tail);
+            }
+        }
+        if(votes<6 || votes<=best_votes)continue;
+        int y_tip=IP_TRACK_TOP;
+        for(int y=IP_TRACK_TOP+1;y<=IP_TRACK_BOTTOM;++y)
+            if(outline[y]>outline[y_tip])y_tip=y;
+        int x_tip=outline[y_tip],upper=x_tip,lower=x_tip,up_count=0,down_count=0;
+        if(x_tip<8 || x_tip>=IP_W-3 || y_tip<32 || y_tip>92)continue;
+        for(int d=6;d<=12;++d) {
+            if(y_tip-d>=IP_TRACK_TOP && outline[y_tip-d]>=0) {
+                if(outline[y_tip-d]<upper)upper=outline[y_tip-d];++up_count;
+            }
+            if(y_tip+d<=IP_TRACK_BOTTOM && outline[y_tip+d]>=0) {
+                if(outline[y_tip+d]<lower)lower=outline[y_tip+d];++down_count;
+            }
+        }
+        if(up_count<4 || down_count<4 || x_tip-upper<10 || x_tip-lower<10)continue;
+        best_votes=votes;best_x=guide<0 ? x_tip:IP_W-1-x_tip;best_y=y_tip;
+    }
+    if(!best_votes)return 0;
+    *tip_x=best_x;*tip_y=best_y;return 1;
 }
 
 void binaryzation_process(unsigned char *_img, const unsigned short _rows,
@@ -934,13 +1237,15 @@ void img_process_reset(void)
     s_ring_miny = s_ring_maxy = 0;
     s_ring_entry_error = 0;
     s_ring_guide = 0;
-    s_entry_mode = s_entry_locked = s_entry_status = 0;
-    s_entry_ready=s_exit_ready=s_exit_search=s_exit_reference_valid=0;
+    s_entry_mode = s_entry_locked = s_entry_status = s_orbit_ready = 0;
+    s_align_turn_bias = 0;
+    s_entry_weight=0;s_entry_weight_tick=s_entry_control_tick=0;s_entry_inside=s_entry_control_seen=0;
+    s_exit_tip_row=s_exit_tip_x=0;
+    s_entry_ready=s_exit_ready=s_exit_search=0;
     memset(s_approach_side, 0, sizeof s_approach_side);
     s_approach_active = s_approach_width_side = s_approach_width_age = 0;
     ip_bridge_reset();s_odometry_valid=0;
     memset(&s_entry_path, 0, sizeof s_entry_path);
-    memset(&s_last_entry_path, 0, sizeof s_last_entry_path);
     ep_reset();
     memset(s_ring_mask, 0, sizeof s_ring_mask);
     memset(s_ring_hold_l, 0, sizeof s_ring_hold_l);
@@ -953,17 +1258,33 @@ void img_process_reset(void)
 
 uint8_t img_get_road_recovered(void) { return s_valid && s_near_valid && s_road_recovered; }
 void img_set_exit_search(uint8_t enabled) { s_exit_search=enabled; }
+/* Side is measured at acquisition; ambiguous centered islands are not a
+ * direction command. Cross-island arbitration remains in roundabout_scan. */
+int img_get_roundabout_side(void) {
+    if(!s_ring_candidate || s_ring_hold_age || !s_ring_miny)return 0;
+    int row=(s_ring_miny+s_ring_maxy)/2;
+    if(s_ring_mask[row]==1)return 1;
+    if(s_ring_mask[row]==2)return -1;
+    int center=((int)s_ring_l[row]+s_ring_r[row])/2;
+    return center>IP_W/2+8 ? 1:(center<IP_W/2-8 ? -1:0);
+}
+uint8_t img_get_orbit_ready(void) { return s_orbit_ready; }
 uint8_t img_get_entry_ready(void) { return s_entry_ready; }
 uint8_t img_get_entry_path_safe(void) {
     return s_valid && s_near_valid && s_entry_path.count>=12 &&
-        ip_abs(s_entry_path.error)<=42 && ep_entry_clearance_ok(&s_entry_path,s_ring_guide);
+        ip_abs(s_entry_path.error)<=42 && s_entry_status==1 && s_entry_path.support>=5 &&
+        ip_curve_clearance(&s_entry_path,s_ring_guide);
 }
 uint8_t img_get_exit_ready(void) { return s_exit_ready; }
-int16_t img_get_exit_error(void) { return s_exit_path.preview; }
+int16_t img_get_exit_error(void) { return s_preview_error; }
+uint8_t img_get_exit_tip_row(void) { return s_exit_tip_row; }
+uint8_t img_get_exit_tip_x(void) { return s_exit_tip_x; }
 void img_set_roundabout_entry(uint8_t enabled) {
     if (enabled != s_entry_mode) {
+        s_align_turn_bias = 0;
+        if(enabled==1){s_entry_weight=0;s_entry_weight_tick=s_odometry_tick;s_entry_inside=s_entry_control_seen=0;}
         ip_bridge_reset();
-        s_exit_reference_valid=0;
+        s_exit_tip_row=s_exit_tip_x=0;
         s_entry_lost_frames=s_entry_reacquire=0;
         if(enabled==3)s_entry_locked=1;
     }
@@ -984,6 +1305,7 @@ void img_set_entry_odometry(float distance_m,float yaw_deg,uint32_t tick,uint8_t
 const entry_bridge_guard_t *img_get_entry_bridge_guard(void) { return &s_bridge_guard; }
 const entry_path_t *img_get_entry_path(void) { return &s_entry_path; }
 uint8_t img_get_entry_status(void) { return s_entry_status; }
+float img_get_align_turn_bias(void) { return s_align_turn_bias; }
 uint8_t img_get_roundabout_candidate(void) { return s_ring_candidate; }
 uint8_t img_get_roundabout_evidence(void) { return s_ring_evidence; }
 const uint8_t *img_get_row_thresholds(void) { return s_row_thr; }
@@ -1001,8 +1323,7 @@ void img_set_roundabout_guidance(int side) {
         ip_bridge_reset();
         s_entry_locked = s_entry_status = 0;
         s_entry_path.count = 0;
-        memset(&s_last_entry_path, 0, sizeof s_last_entry_path);
-    }
+        }
     s_ring_guide = guide;
 }
 uint8_t img_get_valid(void)       { return s_valid; }
@@ -1020,6 +1341,7 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
                        unsigned char _threshold_val,
                        uint8_t *_left_line, uint8_t *_mid_line, uint8_t *_right_line)
 {
+    s_align_turn_bias = 0;
     static uint32_t band_hist[256];
     uint8_t  band_thr[IP_BANDS];
     uint8_t  band_bright_supported[IP_BANDS] = {0};
@@ -1034,10 +1356,12 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
     int      near_rows = 0;
     uint8_t measured_pair[IP_H] = {0};
     uint8_t measured_center[IP_H] = {0};
+    int16_t outer_bank[IP_H];
+    for(int row=0;row<IP_H;++row)outer_bank[row]=-1;
     int measured_l[IP_H] = {0}, measured_r[IP_H] = {0};
     s_road_recovered = 0;
-    s_entry_ready=s_exit_ready=s_exit_separated=0;
-    memset(&s_exit_path,0,sizeof s_exit_path);
+    s_entry_ready=s_exit_ready=s_orbit_ready=0;
+    s_exit_tip_row=s_exit_tip_x=0;
     int      branch_hw_delta = 0, have_branch_hw_delta = 0;
 
     (void)_threshold_val;
@@ -1128,13 +1452,22 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
     }
 
     ip_island(_src_pixel_mat, row_thr);
-    ip_approach_bridge(_src_pixel_mat, row_thr);
+    if(s_entry_mode==1 || s_entry_mode==2 || s_entry_mode==3) {
+        memset(s_approach_side,0,sizeof s_approach_side);
+        s_approach_active=s_approach_width_side=0;
+    } else ip_approach_bridge(_src_pixel_mat, row_thr);
+    /* Retain island topology for exit recognition; it must not own the
+     * ordinary row follower during ORBIT. */
+    int row_guide=s_entry_mode ? 0:s_ring_guide;
+    int row_island=s_entry_mode ? 0:s_ring_candidate;
+
+    if(s_entry_mode)ip_road_component(_src_pixel_mat,row_thr);
 
     /* Pre-measure branch dual-edge half-width delta on the guided island rows
      * so single-edge branch rows (where outer edge leaves FOV) use the true
      * branch width rather than jumping to full-track half-width. */
-    if ((s_ring_guide || s_ring_candidate) && s_ring_miny && s_ring_maxy >= s_ring_miny) {
-        int g = s_ring_guide ? s_ring_guide : ((s_ring_mask[s_ring_miny] == 2) ? 1 : -1);
+    if ((row_guide || row_island) && s_ring_miny && s_ring_maxy >= s_ring_miny) {
+        int g = row_guide ? row_guide : ((s_ring_mask[s_ring_miny] == 2) ? 1 : -1);
         for (y = s_ring_maxy; y >= s_ring_miny; --y) {
             if (!(s_ring_mask[y] & (g < 0 ? 1 : 2))) continue;
             const uint8_t *src = _src_pixel_mat + (unsigned)y * IP_W;
@@ -1164,10 +1497,11 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
         int l, r, width;
         int ref = (y < IP_H - 1 && s_last_center[y + 1] >= 0) ? s_last_center[y + 1] : IP_W / 2;
 
-        if (s_stripe_rows || s_ring_candidate || s_ring_guide || s_approach_side[y]) continue;
+        if (s_stripe_rows || row_island || row_guide || s_approach_side[y]) continue;
 
         for (int x = 0; x < IP_W; ++x) bin[x] = (uint8_t)(src[x] > thr);
         if (!ip_row_run(bin, src, thr, -1, ip_half(y), ref, &l, &r)) continue;
+        if(s_entry_mode && (!ip_on_road((l+r)/2,y) || !ip_on_road(l,y) || !ip_on_road(r,y)))continue;
         width = r - l + 1;
         if (l <= 2 || r >= IP_W - 3) continue;
         if (width < 30 || width > IP_W - 20) continue;
@@ -1187,7 +1521,7 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
             if (!s_half_bias_ready) m = ip_half_default(y);
             if (w >= 20) { diff_sum += ((int)w) - m; ++diff_n; }
         }
-        if (!s_stripe_rows && !s_ring_candidate && !s_ring_guide && diff_n >= 8) {
+        if (!s_stripe_rows && !row_island && !row_guide && diff_n >= 8) {
             int bias = (int)(diff_sum / diff_n);
             bias = (bias < -20) ? -20 : ((bias > 20) ? 20 : bias);
             if (s_half_bias_ready) s_half_bias = (int16_t)((s_half_bias * 3 + bias) / 4);
@@ -1227,9 +1561,9 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
         ref = (y < IP_H - 1 && s_last_center[y + 1] >= 0) ? s_last_center[y + 1] : seed;
         {
             int pred_left = ref - ip_half(y);
-            if (s_entry_mode != 5 && s_entry_mode != 3 && s_ring_guide && !s_approach_active && (s_ring_mask[y] & (s_ring_guide<0 ? 1:2)) && !s_stripe_recovery) {
+            if (s_entry_mode != 5 && s_entry_mode != 3 && row_guide && !s_approach_active && (s_ring_mask[y] & (row_guide<0 ? 1:2)) && !s_stripe_recovery) {
                 in_guided_branch = 1;
-                if(s_ring_guide<0) {
+                if(row_guide<0) {
                     r=s_ring_l[y];l=r;while(l>0 && bin[l-1])--l;
                 }else{
                     l=s_ring_r[y];r=l;while(r<IP_W-1 && bin[r+1])++r;
@@ -1240,6 +1574,10 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
 
         width = r - l + 1;
         raw_l=l; raw_r=r;
+        outer_bank[y]=(int16_t)(s_ring_guide<0 ? raw_l:raw_r);
+        /* Count actual binary banks before gradient substitutions or synthetic
+         * approach edges. A crop edge is not an observed track boundary. */
+        single_edge=((raw_l>2) != (raw_r<IP_W-3)) && !s_approach_side[y];
         if (s_approach_side[y] == 2) r = s_approach_edge[y];
         else if (s_approach_side[y] == 1) l = s_approach_edge[y];
         width = r - l + 1;
@@ -1264,11 +1602,11 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
             }
             int mid = (l + r) / 2;
             half = ip_half(y);
-            if ((in_guided_branch || (s_ring_candidate && s_ring_mask[y])) && have_branch_hw_delta) {
+            if ((in_guided_branch || (row_island && s_ring_mask[y])) && have_branch_hw_delta) {
                 half = ip_clamp(half + branch_hw_delta, 16, half);
             }
             if (width > half * 2 + half) {
-                if(s_ring_guide || s_ring_candidate)continue;
+                if(row_guide || row_island)continue;
                 l = ip_clamp(mid - half, 1, IP_W - 2);
                 r = ip_clamp(mid + half, 1, IP_W - 2);
                 width = r - l + 1;
@@ -1299,7 +1637,7 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
                 if (!bin[center]) continue;
             } else if (left_ok && right_ok) {
                 center = mid;
-                if (in_guided_branch || (s_ring_candidate && s_ring_mask[y])) {
+                if (in_guided_branch || (row_island && s_ring_mask[y])) {
                     branch_hw_delta = ip_clamp(width / 2 - ip_half(y), -20, 0);
                     have_branch_hw_delta = 1;
                 }
@@ -1315,7 +1653,8 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
         }
 
         if (center < 2 || center >= IP_W - 2) continue;
-        if((s_ring_candidate || s_ring_guide) && !bin[center])continue;
+        if(s_entry_mode && !ip_on_road(center,y))continue;
+        if((row_island || row_guide) && !bin[center])continue;
         /* A verified current bridge replaces the old opening-biased center. */
         if (!in_guided_branch && !s_approach_side[y] &&
             s_last_center[y] >= 0 && ip_abs(center - s_last_center[y]) > IP_JUMP_MAX) {
@@ -1348,7 +1687,7 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
 
     /* A normal-road corridor must connect near field to preview continuously.
      * This is conservative recovery evidence, NOT a generic exit/corner detector. */
-    if (!s_ring_candidate && !s_ring_miny && !s_stripe_recovery) {
+    if (!row_island && (s_entry_mode==2 || s_entry_mode==3 || !s_ring_miny) && !s_stripe_recovery) {
         int chain=0, bottom=0;
         for(y=IP_TRACK_BOTTOM;y>=55;--y) {
             if(!measured_pair[y]) { chain=0; continue; }
@@ -1400,7 +1739,31 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
     /* Near validity remains tied to current near rows; single-bank mode
      * changes the path choice, not the scene-quality gate. */
     s_near_valid = (uint8_t)(near_rows >= 6);
-    if ((s_stripe_rows || s_ring_candidate || s_ring_guide) && !s_near_valid) s_valid = 0;
+    if ((s_stripe_rows || row_island || row_guide) && !s_near_valid) s_valid = 0;
+    /* Ordinary preview must belong to the current near corridor. Averaging
+     * every far row mixed in a different branch after an edge disappeared. */
+    if(!row_guide) {
+        int previous=-1, previous_y=0, gap=0;
+        preview_sum=0;preview_n=0;
+        for(int row=IP_TRACK_BOTTOM;row>=55;--row) {
+            if(!measured_center[row]) {
+                if(++gap>3)break;
+                continue;
+            }
+            int center=_mid_line[row];
+            if(previous>=0) {
+                if(ip_abs(center-previous)>16)break;
+                int connected=1;
+                for(int yy=row;yy<=previous_y;++yy) {
+                    int xx=center+(previous-center)*(yy-row)/(previous_y-row);
+                    if(!ep_white(_src_pixel_mat,row_thr,xx,yy)){connected=0;break;}
+                }
+                if(!connected)break;
+            }
+            gap=0;previous=center;previous_y=row;
+            if(row<=75){preview_sum+=center;++preview_n;}
+        }
+    }
     s_preview_valid = (uint8_t)(s_valid && preview_n >= 10 && !s_stripe_recovery);
     /* Guided preview must use the selected inner-edge corridor itself. The old
      * code validated branch rows but averaged unrelated straight-road rows.
@@ -1409,16 +1772,16 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
     {
         int total_branch_rows = 0;
         long branch_sum = 0;
-        if (s_ring_guide && !s_approach_active) {
+        if (row_guide && !s_approach_active) {
             int end = ip_clamp((int)s_ring_miny+19,IP_TRACK_TOP,IP_TRACK_BOTTOM);
             for (y = s_ring_miny; s_ring_miny && y <= end; ++y)
-                if (_mid_line[y] && (s_ring_mask[y] & (s_ring_guide < 0 ? 1 : 2))) {
+                if (_mid_line[y] && (s_ring_mask[y] & (row_guide < 0 ? 1 : 2))) {
                     ++total_branch_rows;branch_sum+=_mid_line[y];
                 }
             preview_n=total_branch_rows;preview_sum=branch_sum;
             s_preview_valid=(uint8_t)(s_valid && s_near_valid && total_branch_rows>=10 && !s_stripe_recovery);
         }
-        s_ring_preview_valid = (uint8_t)(!s_approach_active && s_ring_guide && s_preview_valid && total_branch_rows>=10);
+        s_ring_preview_valid = (uint8_t)(!s_approach_active && row_guide && s_preview_valid && total_branch_rows>=10);
     }
     if (s_preview_valid)
         s_preview_error = (int16_t)ip_clamp((int)(preview_sum/preview_n)-IP_W/2,-IP_W/2,IP_W/2);
@@ -1427,7 +1790,7 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
         int e = err_n ? (int)(err_sum / err_n) : (IP_W / 2);
         e -= IP_W / 2;
         if (s_have_error) {
-            int max_step = s_ring_guide ? 28 : 16;
+            int max_step = row_guide ? 28 : 16;
             if (e >  s_error + max_step) e = s_error + max_step;
             if (e <  s_error - max_step) e = s_error - max_step;
         }
@@ -1456,7 +1819,7 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
     /* Entrance branch owns the control path after its first visible side
      * opening. Every target comes from the current binary image. */
     if (s_entry_mode && s_ring_guide && !s_stripe_recovery) {
-        int built = 0;
+        int raw_valid=s_valid && s_near_valid;
         for (int row = 0; row < IP_H; ++row) s_entry_half_width[row] = (uint8_t)ip_half(row);
         entry_context_t context = {0};
         context.active = 1;
@@ -1481,182 +1844,111 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
         context.island_mask = s_entry_island_mask; context.half_width = s_entry_half_width;
         context.tick = s_odometry_tick; context.distance_m = s_odometry_distance;
         context.odometry_valid = s_odometry_valid;
+        s_orbit_ready=(uint8_t)(s_valid && s_near_valid && s_near_run>=8 &&
+            context.fresh_island && best_end>=IP_TRACK_BOTTOM-2 &&
+            best_end-best_chain+1<=75);
         ep_set_context(&context);
         s_entry_path.count = 0;
-        if (s_scene_ok && s_exit_search) {
-            entry_context_t exit_context=context;
-            exit_context.fresh_island=0;
-            exit_context.exit_mode=(uint8_t)(s_exit_reference_valid ? 2:1);
-            exit_context.ring_phase = s_entry_mode;
-            exit_context.exit_reference=s_exit_reference;
-            ep_set_context(&exit_context);
-            if(ep_build_measured_corridor(_src_pixel_mat,row_thr,s_ring_guide,IP_W/2,&s_exit_path)) {
-                /* Straight-enough measured far corridor plus a current widening
-                 * or divergence from the island bank. The motion window is
-                 * supplied by the FSM, never inferred from frame numbers. */
-                int far_pairs=0, separated=0;
-                for(int i=0;i<s_exit_path.count;++i) {
-                    const entry_point_t *p=&s_exit_path.points[i];
-                    if(p->y<=75 && p->measured==3)++far_pairs;
-                    if(context.fresh_island && context.island_mask[p->y] &&
-                       ((s_ring_guide<0 && p->x>context.island_right[p->y]+2) ||
-                        (s_ring_guide>0 && p->x+2<context.island_left[p->y])))++separated;
-                }
-                s_exit_separated=(uint8_t)(separated>=3);
-                s_exit_ready=(uint8_t)(far_pairs>=4 &&
-                    (s_entry_mode==3 || s_road_recovered || separated>=3 ||
-                     (s_ring_evidence & IP_RING_EV_CORNER_LOW)));
-            }
-            ep_set_context(&context);
-        }
-        if (s_scene_ok && s_entry_mode==3) {
-            /* Never fall back to the orbit branch after exit commitment. */
-            if(s_exit_ready) {
-                s_entry_path=s_exit_path;built=1;
-                s_exit_reference=s_exit_path.preview;s_exit_reference_valid=1;
-            }else {s_entry_path.failure=13;s_entry_locked=1;}
-        } else if (s_scene_ok) {
-            /* In ORBIT, follow the visible forward corridor first. A side
-             * opening is an ENTER target, never evidence to leave the ring. */
-            if (s_entry_mode == 2)
-                built = ep_build_measured_corridor(_src_pixel_mat, row_thr,
-                            s_ring_guide, IP_W / 2, &s_entry_path);
-            if (!built)
-                built = ep_build(_src_pixel_mat, row_thr, s_ring_guide, IP_W / 2, &s_entry_path);
-            /* A complete center-to-endpoint path is not always observable at
-             * the throat. Keep the measured-branch controller alive when the
-             * current frame contains a shorter, white corridor. This is a
-             * stage-specific fallback, not historical line continuation. */
-            if (!built && s_entry_path.failure != 7 && s_ring_guide) {
-                entry_path_t measured_path;
-                if (ep_build_measured_corridor(_src_pixel_mat, row_thr,
-                                               s_ring_guide, IP_W / 2,
-                                               &measured_path)) {
-                    s_entry_path = measured_path;
-                    built = 1;
-                } else if (s_entry_path.failure == 1 || s_entry_path.failure == 5) {
-                    s_entry_path.failure = measured_path.failure;
-                }
-            }
-        } else {
-            memset(&s_entry_path, 0, sizeof s_entry_path);
-            s_entry_path.failure = 5;
-            /* A brief loss of image contrast does not change the learned width.
-             * Motion continuation is separately bounded by the bridge guard. */
-        }
-        /* Exposure recovery: reuse only the immediately preceding valid
-         * entry path, for at most the ring hold window, and only after every
-         * center target is rechecked on the current white image. */
-        if (!built && s_entry_locked && s_ring_guide &&
-            s_ring_hold_age > 0 && s_ring_hold_age <= 3 &&
-            s_entry_lost_frames < 3 && s_usable_rows >= 20 && s_near_run < 6 &&
-            ip_last_entry_path_white(_src_pixel_mat,row_thr,&s_last_entry_path)) {
-            s_entry_path = s_last_entry_path;
-            s_entry_path.inferred = 1;
-            for (int i=0; i<s_entry_path.count; ++i) {
-                s_entry_path.points[i].measured = 0;
-                s_entry_path.points[i].left_x = s_entry_path.points[i].left_y = 0;
-                s_entry_path.points[i].right_x = s_entry_path.points[i].right_y = 0;
-            }
-            built = 1;
-        }
-#if TRACK_GEOMETRY_CALIBRATED
-        if(built) {
-            float command_error;
-            if(!ep_metric_error(&s_entry_path,&command_error)) {
-                built=0;s_entry_path.count=0;s_entry_path.failure=14;s_entry_locked=1;
+        static entry_path_t ordinary,turn,transition;
+        entry_context_t saved=ep_context;
+        if(s_entry_mode==2 || s_entry_mode==3)ep_context.fresh_island=0;
+        int ordinary_ok=s_scene_ok && ep_build_measured_corridor(_src_pixel_mat,row_thr,s_ring_guide,94,&ordinary);
+        ep_context=saved;
+        int ordinary_pv=0;
+        if(ordinary_ok)ordinary_ok=ip_path_controls(&ordinary,&ordinary_pv);
+        if(ordinary_ok && (s_entry_mode==1 || s_entry_mode==5))
+            ordinary_ok=ip_curve_clearance(&ordinary,s_ring_guide);
+        /* Exit recognition retains raw measured banks before any curve output. */
+        if((s_entry_mode==2 || s_entry_mode==3) && s_exit_search && raw_valid) {
+            int tx,ty;
+            if(ip_exit_tip(_src_pixel_mat,row_thr,outer_bank,s_ring_guide,&tx,&ty)) {
+                s_exit_tip_row=(uint8_t)ty;s_exit_tip_x=(uint8_t)tx;s_exit_ready=1;
             }
         }
-#endif
-        /* A usual ring bend is not an exit. Require independent, distinct
-         * continuations or a measured opposite-bank/ordinary-road continuation. */
-        if(s_exit_ready && s_entry_mode!=3 && !s_road_recovered && !s_exit_separated &&
-           (!built || ip_abs(s_exit_path.preview-s_entry_path.preview)<12))s_exit_ready=0;
+        if(ordinary_ok && raw_valid)ip_publish_curve(&ordinary,_left_line,_mid_line,_right_line);
+        if(s_entry_mode==2) {
+            /* Reject a partial/reversed orbit route instead of exposing the raw
+             * scan rows that the directional curve fitter just discarded. */
+            if(!ordinary_ok || !ordinary_pv || !raw_valid) {
+                s_entry_path.count=0;s_valid=s_near_valid=s_preview_valid=0;
+                s_preview_error=0;
+                memset(_left_line,0,IP_H);memset(_mid_line,0,IP_H);memset(_right_line,0,IP_H);
+            }
+            s_orbit_ready=(uint8_t)(s_valid && s_near_valid && s_preview_valid && !s_exit_ready);
+            s_entry_status=s_entry_locked=0;ip_bridge_reset();return;
+        }
+        if(s_entry_mode==3) {
+            int paired=0;
+            if(s_scene_ok && !s_road_recovered && ip_turn_curve(_src_pixel_mat,row_thr,s_ring_guide,1,&turn,&paired)) {
+                ip_publish_curve(&turn,_left_line,_mid_line,_right_line);s_entry_status=1;
+            } else s_entry_status=0;
+            s_entry_locked=0;ip_bridge_reset();return;
+        }
+        int paired=0;
+        int turn_ok=s_scene_ok && ip_turn_curve(_src_pixel_mat,row_thr,s_ring_guide,s_entry_mode==1,&turn,&paired);
+        uint8_t ordinary_mid[IP_H]={0};
+        if(ordinary_ok)for(int row=55;row<=105;++row){float x;if(ip_path_row(&ordinary,row,&x))ordinary_mid[row]=(uint8_t)(x+0.5f);}
         if(s_entry_mode==5) {
-            s_entry_ready=(uint8_t)(built && img_get_entry_path_safe());
-            /* At the near corner the confirmed entrance banks own the path,
-             * including the two-frame ALIGN-to-ENTER confirmation interval. */
-            if(!s_entry_ready || s_ring_corner_row<90 || s_entry_path.boundary_source==5) {
-                /* If the ordered corridor cannot see both banks, retain the
-                 * ordinary one-bank bend controller when current rows support
-                 * it. This is a measured fallback, never a historical path. */
-                int one_bank_fallback = s_valid && s_near_valid && s_single_rows >= 6;
-                /* A short exposure washout can erase the near rows while the
-                 * confirmed ring edge is still visible farther up. Allow the
-                 * existing bounded bridge for at most three frames; it is
-                 * never used to create a new entry or survive a reset. */
-                int exposure_bridge = s_entry_locked && s_ring_guide &&
-                                      s_ring_hold_age <= 3 && s_usable_rows >= 20 &&
-                                      s_near_run < 6;
-                if (one_bank_fallback) {
-                    s_entry_path.count=0; s_entry_status=0; s_entry_locked=0;
-                    s_ring_entry_error=s_error;
-                    s_ring_preview_valid=0;
-                } else if (exposure_bridge) {
-                    s_entry_path.count=0; s_entry_path.failure=10;
-                    s_ring_entry_error=s_error;
-                    s_preview_valid=s_ring_preview_valid=0;
-                    /* Keep s_entry_locked for ip_bridge_apply below. */
-                } else {
-                    s_entry_path.count=0;s_entry_status=0;s_entry_locked=0;
-                    s_ring_entry_error=s_error;
-                    s_preview_valid=s_ring_preview_valid=0;
-                    ip_bridge_reset();
-                    return;
-                }
-            }
+            /* A lateral passage must reach y49 on two actual observations.
+             * Its near-side island touching row105 alone is not entry. */
+            s_entry_ready=(uint8_t)(turn_ok && paired && turn.goal_y>=49 && ordinary_ok && raw_valid &&
+                ip_entry_transition(_src_pixel_mat,row_thr,ordinary_mid,0,&turn,&transition) &&
+                ip_abs(transition.error-s_error)<=4 && ip_abs(transition.preview-s_preview_error)<=12);
+            if(ordinary_ok && raw_valid && ip_bias_align_curve(_src_pixel_mat,row_thr,s_ring_guide,&ordinary))
+                ip_publish_curve(&ordinary,_left_line,_mid_line,_right_line);
+            s_entry_status=s_entry_locked=s_orbit_ready=0;
+            ip_bridge_reset();return;
         }
-        if (s_entry_path.failure == 6) s_entry_locked = 1;
-        if (built && s_entry_lost_frames >= 2 && ++s_entry_reacquire < 2) {
-            built = 0; s_entry_locked = 1;
-            s_entry_path.count = 0; s_entry_path.failure = 9;
-        } else if (built) {
-            s_entry_lost_frames = s_entry_reacquire = 0;
+        int fresh=s_odometry_tick!=s_entry_weight_tick;
+        int sign=s_ring_guide<0 ? 1:-1;
+        int follows_side=ordinary_ok && (ordinary.goal_x-94)*sign>=16;
+        if(follows_side)for(int i=1;i<ordinary.count;++i)
+            if((ordinary.points[i].x-ordinary.points[i-1].x)*sign< -2)follows_side=0;
+        int current_bend=follows_side && ordinary_pv && raw_valid && ordinary.preview*sign>=8;
+        /* The same 200 ms freshness limit as steering: an old target may not
+         * permanently block reacquisition after a camera interruption. */
+        int continuous=!s_entry_control_seen || s_odometry_tick-s_entry_control_tick>STEERING_MAX_UPDATE_TICKS ||
+            (ip_abs(ordinary.error-s_entry_control_error)<=4 &&
+             ip_abs(ordinary.preview-s_entry_control_preview)<=12);
+        int joins=current_bend && continuous && (!turn_ok ||
+            (turn_ok && ip_abs(ordinary.error-turn.error)<=4 &&
+                        ip_abs(ordinary.preview-turn.preview)<=12));
+        if(fresh){if(joins){if(s_entry_inside<3)++s_entry_inside;}else s_entry_inside=0;}
+        float next=s_entry_weight;
+        if(fresh && next<1){next+=IP_ENTRY_BLEND_STEP;if(next>1)next=1;}
+        int built=0;
+        if(joins){transition=ordinary;built=1;}
+        else if(turn_ok && ordinary_ok && next<0.99f)
+            built=ip_entry_transition(_src_pixel_mat,row_thr,ordinary_mid,next,&turn,&transition);
+        else if(turn_ok){transition=turn;built=1;}
+        /* A short loss of side-bank evidence does not erase a measured road.
+         * It cannot confirm ORBIT without current directional bend evidence. */
+        if(!built && ordinary_ok && raw_valid && continuous){transition=ordinary;built=1;}
+        /* After two lost images, require two distinct current observations.
+         * The last VALID target has its own timestamp; failed processing may
+         * never refresh it and permanently block reacquisition. */
+        if(built && s_entry_lost_frames>=2) {
+            if(fresh && s_entry_reacquire<2)++s_entry_reacquire;
+            if(s_entry_reacquire<2)built=0;
+            else s_entry_lost_frames=s_entry_reacquire=0;
+        } else if(built) s_entry_lost_frames=s_entry_reacquire=0;
+        else if(fresh) {
+            s_entry_reacquire=0;
+            if(s_entry_lost_frames<255)++s_entry_lost_frames;
+        }
+        s_entry_weight_tick=s_odometry_tick;s_orbit_ready=0;
+        if(built) {
+            s_entry_weight=next;
+            ip_publish_curve(&transition,_left_line,_mid_line,_right_line);
+            s_orbit_ready=(uint8_t)(s_entry_inside>=3);
+            s_entry_status=1;s_entry_locked=0;s_entry_control_seen=1;
+            s_entry_control_error=s_error;s_entry_control_preview=s_preview_error;s_entry_control_tick=s_odometry_tick;
         } else {
-            s_entry_reacquire = 0;
-            if (s_entry_lost_frames < 255) ++s_entry_lost_frames;
-            if (s_entry_lost_frames >= 2) ep_reset();
+            s_entry_inside=0;s_entry_status=3;s_entry_locked=1;s_entry_path.count=0;
+            s_valid=s_near_valid=s_preview_valid=0;s_preview_error=0;
+            memset(_left_line,0,IP_H);memset(_mid_line,0,IP_H);memset(_right_line,0,IP_H);
         }
-        if (built) {
-            memset(s_approach_side, 0, sizeof s_approach_side);
-            s_approach_active = s_approach_width_side = 0;
-            s_entry_locked = 1;
-            s_last_entry_path = s_entry_path;
-            s_entry_status = s_entry_path.boundary_source==3 ? 4 : (s_entry_path.inferred ? 2 : 1);
-            s_valid = s_near_valid = 1; /* Current boundary + connected near-white path. */
-            s_error = s_ring_entry_error = s_entry_path.error;
-            s_preview_error = s_entry_path.preview;
-            s_preview_valid = s_ring_preview_valid = 1;
-            ip_bridge_observe(row_thr);
-            /* The legacy row arrays contain ONLY the ordered path's points.
-             * They cannot store a horizontal turn's complete shape. The ordered
-             * API and LCD drawing below carry all points and paired boundaries. */
-            memset(_mid_line, 0, IP_H);
-            memset(_left_line, 0, IP_H);
-            memset(_right_line, 0, IP_H);
-            for (int i = 0; i < s_entry_path.count; ++i) {
-                const entry_point_t *point = &s_entry_path.points[i];
-                if (!_mid_line[point->y]) _mid_line[point->y] = point->x;
-            }
-        } else if (s_entry_locked) {
-            int bridged=(s_entry_path.failure==1 || s_entry_path.failure==5 || s_entry_path.failure==10) &&
-                        ip_bridge_apply(_src_pixel_mat,row_thr);
-            if (!bridged) {
-                ip_bridge_reset();
-                s_entry_status = 3;
-                s_ring_entry_error = s_preview_error = 0;
-                s_valid = s_near_valid = s_preview_valid = s_ring_preview_valid = 0;
-            }
-            memset(_mid_line,0,IP_H);
-            memset(_left_line,0,IP_H);
-            memset(_right_line,0,IP_H);
-        } else {
-            s_entry_status = 0; /* Preparatory approach before a side opening. */
-            if (s_approach_active) {
-                s_ring_entry_error = s_error;
-                s_ring_preview_valid = 0;
-            }
-        }
+        ip_bridge_reset();
     } else {
         ip_bridge_reset();
         s_entry_status = 0;

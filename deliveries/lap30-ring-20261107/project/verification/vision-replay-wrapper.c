@@ -56,7 +56,7 @@ static cross_drive_t replay_cross;
 __declspec(dllexport) int replay_cross_phase(void) { return replay_cross.phase; }
 __declspec(dllexport) void replay_scan_status(int *out) {
  out[0]=replay_scan.type; out[1]=replay_scan.frame_type; out[2]=replay_scan.diagnostic_flags;
- out[3]=rb_scan_allows_entry(&replay_scan,RB_TURN_SIGN);
+ out[3]=rb_scan_allows_entry(&replay_scan,rb_busy(&integrated_ring) ? integrated_ring.turn_sign : rb_scan_entry_side(&replay_scan));
  out[4]=replay_scan.full_scan_attempted;
 }
 #endif
@@ -68,7 +68,7 @@ __declspec(dllexport) void replay_ring_reset(void) {
 }
 __declspec(dllexport) void replay_ring_step(uint8_t *raw,uint32_t tick,float *out) {
  int entry_was_preparing = img_get_entry_status() == 0;
- int guide=rb_guiding(&integrated_ring) ? -RB_TURN_SIGN:0;
+ int guide=rb_guiding(&integrated_ring) ? -integrated_ring.turn_sign:0;
  img_set_roundabout_guidance(guide);
  img_set_roundabout_entry(rb_guiding(&integrated_ring) ? integrated_ring.phase : 0);
  img_set_exit_search((uint8_t)rb_exit_search(&integrated_ring));
@@ -80,15 +80,21 @@ __declspec(dllexport) void replay_ring_step(uint8_t *raw,uint32_t tick,float *ou
 #ifdef R17_WITH_SPECIAL_TRACK
  int island = img_get_roundabout_candidate();
  replay_scan = rb_scan_frame(raw,tick,island || rb_busy(&integrated_ring) || replay_cross.phase != CROSS_DRIVE_IDLE);
- rb_scan_observe(&integrated_ring,island,rb_scan_allows_entry(&replay_scan,RB_TURN_SIGN) && replay_cross.phase == CROSS_DRIVE_IDLE,1);
+ cross_drive_output_t cross_path=cross_drive_step(&replay_cross,&replay_scan,raw,img_get_row_thresholds(),tick,
+     1,integrated_ring.fault || (rb_busy(&integrated_ring) && integrated_ring.phase!=RB_ALIGN),img_get_road_recovered());
+ rb_scan_observe(&integrated_ring,island,
+     rb_scan_allows_entry(&replay_scan,rb_busy(&integrated_ring) ? integrated_ring.turn_sign : rb_scan_entry_side(&replay_scan)) && replay_cross.phase==CROSS_DRIVE_IDLE,
+     cross_path.valid && !img_get_stripe_active(),1);
 #else
+ rb_visual(&integrated_ring,img_get_roundabout_side(),img_get_orbit_ready());
+ rb_exit_tip(&integrated_ring,img_get_exit_tip_row(),img_get_exit_tip_x());
  rb_geometry(&integrated_ring,img_get_entry_ready(),img_get_roundabout_corner_row(),img_get_exit_ready(),img_get_exit_error());
  rb_observe(&integrated_ring,img_get_roundabout_candidate(),img_get_near_valid(),img_get_stripe_active(),img_get_road_recovered(),1);
 #endif
  if(old_phase!=integrated_ring.phase) {
   /* Mirror production: any phase transition recomputes the same frame using
    * the new planner mode, without counting the frame twice in the FSM. */
-  guide = rb_guiding(&integrated_ring) ? -RB_TURN_SIGN:0;
+  guide = rb_guiding(&integrated_ring) ? -integrated_ring.turn_sign:0;
   img_set_roundabout_guidance(guide);
   img_set_roundabout_entry(rb_guiding(&integrated_ring) ? integrated_ring.phase:0);
   img_set_exit_search((uint8_t)rb_exit_search(&integrated_ring));
@@ -97,8 +103,6 @@ __declspec(dllexport) void replay_ring_step(uint8_t *raw,uint32_t tick,float *ou
   if(!img_get_near_valid())valid=0;
  }
 #ifdef R17_WITH_SPECIAL_TRACK
- cross_drive_output_t cross_path=cross_drive_step(&replay_cross,&replay_scan,raw,img_get_row_thresholds(),tick,
-                                                  1,rb_busy(&integrated_ring),img_get_road_recovered());
  if(cross_path.active) valid=cross_path.valid && !img_get_stripe_active();
 #endif
  if(integrated_ring.just_entered && !img_get_entry_path_safe()) {
@@ -114,11 +118,12 @@ __declspec(dllexport) void replay_ring_step(uint8_t *raw,uint32_t tick,float *ou
  else if(entry_was_preparing && img_get_entry_path()->count)
   steering_prime_entry(&replay_steering,e);
  int preview=img_get_preview_error(), preview_valid=!metric_control && img_get_preview_valid();
+ float entry_bias=metric_control ? 0 : img_get_align_turn_bias();
 #ifdef R17_WITH_SPECIAL_TRACK
- if(cross_path.active) { e=cross_path.near_error; preview=cross_path.preview_error; preview_valid=valid; }
+ if(cross_path.active) { e=cross_path.near_error; preview=cross_path.preview_error; preview_valid=valid; entry_bias=0; }
 #endif
- steering_result_t r=steering_update(&replay_steering,(int)e,preview,preview_valid,valid,1,tick,
-     SERVO_MOTOR_MIDDLE,SERVO_DIR,SERVO_MOTOR_R_MAX,SERVO_MOTOR_L_MAX);
+ steering_result_t r=steering_update_with_entry_bias(&replay_steering,(int)e,preview,preview_valid,valid,1,tick,
+     SERVO_MOTOR_MIDDLE,SERVO_DIR,SERVO_MOTOR_R_MAX,SERVO_MOTOR_L_MAX,entry_bias);
  out[0]=r.command;out[1]=(float)integrated_ring.phase;out[2]=e;
  out[3]=(float)valid;out[4]=(float)img_get_error();
 }
@@ -130,6 +135,7 @@ __declspec(dllexport) int replay_ring_phase(void) {return integrated_ring.phase;
 /* Host-only scenario initialization. Never exported by firmware. */
 __declspec(dllexport) void replay_ring_scenario(int phase,float yaw) {
  integrated_ring.phase=(uint8_t)phase;integrated_ring.yaw_deg=yaw;
+ integrated_ring.turn_sign=1;integrated_ring.exit_armed=1;
 }
 __declspec(dllexport) void replay_gate_facts(int *out) {
  out[0]=img_get_entry_ready();out[1]=img_get_roundabout_corner_row();
@@ -156,3 +162,15 @@ __declspec(dllexport) void replay_ring_odometry(float distance_m,float yaw_deg) 
  replay_odometry_enabled=1;
 }
 __declspec(dllexport) int replay_bridge_active(void) {return img_get_entry_bridge_guard()->active;}
+
+/* Host-only diagnostics; no hardware or injected frames in the firmware. */
+__declspec(dllexport) void replay_visual_state(int *out) {
+ out[0]=integrated_ring.turn_sign;out[1]=integrated_ring.exit_armed;
+ out[2]=integrated_ring.inside_confirm;out[3]=integrated_ring.exit_confirm;
+ out[4]=img_get_exit_tip_row();out[5]=img_get_exit_tip_x();
+}
+__declspec(dllexport) void replay_ring_direction(int side) {integrated_ring.turn_sign=(int8_t)side;}
+
+__declspec(dllexport) void replay_set_entry_odometry(float distance, float yaw, uint32_t tick, uint8_t valid) {
+    img_set_entry_odometry(distance, yaw, tick, valid);
+}
