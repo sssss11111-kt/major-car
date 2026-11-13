@@ -62,7 +62,7 @@ void trial_tick(void);
 #define TRIAL_DRIVE_FEEDFORWARD (1500.0f)
 #define TRIAL_DRIVE_MAX (10000.0f)
 
-#define TRIAL_DRIVE_TARGET (100.0f)
+#define TRIAL_DRIVE_TARGET (129.0f) /* Per wheel, counts per 10 ms. */
 #define TRIAL_DRIVE_DEGRADED_TARGET (80.0f)
 #define CROSS_APPROACH_TARGET (35.0f) /* counts/10 ms during measured entry retry */
 #define TRIAL_DRIVE_STRIPE_TARGET (24.0f)

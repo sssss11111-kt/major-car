@@ -2,6 +2,7 @@
 #include "roundabout_scan.h"
 #include "cross_drive.h"
 #include "auto_start.h"
+#include "obstacle_bypass.h"
 #include "steering_control.h"
 #include "ring_diag.h"
 #include "main.h" // 所有引脚信息更改在main.h里改宏
@@ -57,6 +58,17 @@ static volatile special_diag_t vision_special={0}, fault4_special={0};
 /* FIRST_FAULT4_END */
 static volatile rb_state_t roundabout_state={0};
 static volatile int16_t vision_error = 0;
+static obstacle_track_t brick_track;
+static obstacle_result_t brick_observation;
+static obstacle_bypass_t brick_bypass;
+static uint32_t brick_frame;
+static volatile uint32_t forward_counts_twice;
+static volatile uint8_t brick_stop;
+/* Calibrate surveyed straight corridors and the vehicle together.
+ * counts_per_m uses the sum of the two wheel encoders.
+ * A zero point_count enables detection telemetry only. */
+static const obstacle_bypass_config_t brick_calibration = {0};
+static const uint16_t brick_corridor_left_mm = 0, brick_corridor_right_mm = 0;
 static volatile uint8 usable_rows = 0, both_rows = 0;
 static volatile uint8 steering_curve = 0, steering_limited = 0;
 static steering_state_t steering_state;
@@ -383,6 +395,42 @@ int main(void)
                 detected_error = cross_path.near_error;
             }
             uint8 rejected_entry = just_entered && !img_get_entry_path_safe();
+            uint8 brick_route = valid && !rejected_entry && !island &&
+                !img_get_roundabout_candidate() && !rb_busy(&roundabout_state) &&
+                !rb_suspect(&roundabout_state) && cross.phase == CROSS_DRIVE_IDLE &&
+                !cross_path.active && !cross_path.approach_only && !img_get_stripe_active();
+            const obstacle_lane_row_t *brick_lane = img_get_obstacle_lane();
+            obstacle_result_t brick = {0};
+            ++brick_frame;
+            if (brick_route)
+                brick = obstacle_detect_frame((const uint8_t *)raw_image, 0,
+                    img_get_row_thresholds(), brick_lane, brick_frame, &brick_track);
+            else
+                brick_track.hits = 0;
+            brick_observation = brick;
+            float brick_offset_px = 0;
+            if (brick_calibration.point_count && trial_running && !trial_bench) {
+                const obstacle_lane_row_t lane = brick_lane[brick.best.y_max];
+                obstacle_bypass_input_t input = {
+                    .target = brick,
+                    .lane_left_x = lane.left,
+                    .lane_center_x = (lane.left + lane.right) / 2,
+                    .lane_right_x = lane.right,
+                    .corridor_left_mm = brick_corridor_left_mm,
+                    .corridor_right_mm = brick_corridor_right_mm,
+                    .route_permitted = brick_route,
+                    .odometry_valid = 1,
+                    .forward_counts = forward_counts_twice
+                };
+                obstacle_bypass_result_t bypass =
+                    obstacle_bypass_update(&brick_bypass, &brick_calibration, &input);
+                brick_stop = bypass.stop_requested;
+                if (bypass.offset_mm) {
+                    uint16_t scale = obstacle_bypass_scale_at_row(&brick_calibration, IP_WIDTH_CAL_ROW);
+                    if (scale) brick_offset_px = bypass.offset_mm * 256.0f / scale;
+                    else brick_stop = 1;
+                }
+            }
             vision_mask=interrupt_global_disable();
             if (rejected_entry) {
                 rb_reject_entry(&roundabout_state);
@@ -448,6 +496,10 @@ int main(void)
                 turn_error = cross_path.near_error;
                 turn_preview = cross_path.preview_error;
                 turn_preview_valid = valid;
+            }
+            if (brick_offset_px != 0) {
+                turn_error += brick_offset_px;
+                turn_preview_valid = 0;
             }
             if (just_entered) steering_blend_entry(&steering_state, turn_error);
             else if (entry_was_preparing && entry_path->count)
@@ -573,6 +625,13 @@ int main(void)
                     (unsigned long)timing_ready_to_pwm_us,(unsigned long)timing_ready_max_us,
                     (unsigned long)timing_samples);
                 telemetry_send(timing_report);
+                char brick_report[104];
+                sprintf(brick_report, "BRICK hit=%u confirmed=%u box=%u,%u,%u,%u calibrated=%u\r\n",
+                    brick_observation.found, brick_observation.confirmed,
+                    brick_observation.best.x_min, brick_observation.best.y_min,
+                    brick_observation.best.x_max, brick_observation.best.y_max,
+                    brick_calibration.point_count != 0);
+                telemetry_send(brick_report);
             }
             char report[200]; report_tick=trial_ticks;
             sprintf(report, "C11LAP30SCAN7D t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
@@ -654,6 +713,17 @@ static uint32 sf_read_command(uint8 *ch) {
     uint32 n=wireless_uart_read_buffer(ch,1);
     return n ? n:debug_read_ring_buffer(ch,1);
 }
+static int drive_pwm(pid_param_t *pid, float target, int count)
+{
+    /* Drop positive torque as soon as a lower track target takes effect. */
+    if (target <= 0 || count > target || count >= TRIAL_DRIVE_TARGET) {
+        pid->integrator = 0;
+        speed_pwm = 0;
+        return 0;
+    }
+    speed_pwm = PidLocCtrl(pid, target-count, 1.f);
+    return (int)constrain_float(TRIAL_DRIVE_FEEDFORWARD+speed_pwm,0,TRIAL_DRIVE_MAX);
+}
 void trial_tick(void)
 {
     static char cmd[16]; static uint8 len=0;
@@ -725,6 +795,10 @@ void trial_tick(void)
             if (stall_ticks>=20) { trial_running=0; trial_fault=6; }
         }
     }
+    if (trial_running && !trial_bench) {
+        forward_counts_twice += (uint32_t)((int32_t)encoder_data_1 + encoder_data_2);
+        if (brick_stop) { trial_running=0; trial_fault=9; }
+    }
     if(trial_running && !trial_bench && roundabout_state.fault) {
         trial_running=0;trial_fault=8;
     }
@@ -754,12 +828,11 @@ void trial_tick(void)
             if (stripe_speed_recovering && effective_target > stripe_speed_cap)
                 effective_target=stripe_speed_cap;
         } else stripe_speed_recovering=0;
+        effective_target = constrain_float(effective_target, 0, TRIAL_DRIVE_TARGET);
         speed_real=encoder_data_1;
-        speed_pwm=PidLocCtrl(&speed_pid_l,effective_target-speed_real,1.f);
-        trial_left_pwm=(int)constrain_float(TRIAL_DRIVE_FEEDFORWARD+speed_pwm,0,TRIAL_DRIVE_MAX);
+        trial_left_pwm=drive_pwm(&speed_pid_l,effective_target,encoder_data_1);
         speed_real=encoder_data_2;
-        speed_pwm=PidLocCtrl(&speed_pid_r,effective_target-speed_real,1.f);
-        trial_right_pwm=(int)constrain_float(TRIAL_DRIVE_FEEDFORWARD+speed_pwm,0,TRIAL_DRIVE_MAX);
+        trial_right_pwm=drive_pwm(&speed_pid_r,effective_target,encoder_data_2);
     } else { trial_left_pwm=trial_right_pwm=0; speed_pwm=0; stripe_speed_recovering=0; }
     pwm_set_duty(MOTOR1_PWM,trial_left_pwm);
     pwm_set_duty(MOTOR2_PWM,trial_right_pwm);

@@ -48,6 +48,9 @@ static uint8_t  s_stripe_mask[IP_H];
 static uint8_t  s_ring_candidate, s_near_valid, s_ring_preview_valid;
 static uint8_t s_diag_near_rows;
 static uint8_t s_road_recovered;
+static obstacle_lane_row_t obstacle_lane[OBS_HEIGHT];
+
+const obstacle_lane_row_t *img_get_obstacle_lane(void) { return obstacle_lane; }
 static uint8_t  s_ring_evidence, s_ring_corner_row, s_ring_apex_row;
 static uint8_t  s_ring_miny, s_ring_maxy;
 static int16_t  s_ring_entry_error;
@@ -1359,6 +1362,7 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
     int16_t outer_bank[IP_H];
     for(int row=0;row<IP_H;++row)outer_bank[row]=-1;
     int measured_l[IP_H] = {0}, measured_r[IP_H] = {0};
+    memset(obstacle_lane, 0, sizeof obstacle_lane);
     s_road_recovered = 0;
     s_entry_ready=s_exit_ready=s_orbit_ready=0;
     s_exit_tip_row=s_exit_tip_x=0;
@@ -1665,6 +1669,7 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
         if (!in_guided_branch && !s_approach_side[y] && raw_l>2 && raw_r<IP_W-3 &&
             ip_width_matches(y,raw_r-raw_l+1)) {
             measured_pair[y]=1; measured_l[y]=raw_l; measured_r[y]=raw_r;
+            obstacle_lane[y] = (obstacle_lane_row_t){(uint8_t)raw_l, (uint8_t)raw_r, 1};
         }
         /* Zero marks an unobserved bank. The crop edge is never a track edge. */
         _left_line[y]  = (uint8_t)(l>2 && s_approach_side[y]!=1 ? l : 0);

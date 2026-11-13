@@ -391,6 +391,16 @@
               <FilePath>..\user\src\main.c</FilePath>
             </File>
             <File>
+              <FileName>obstacle_detect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\src\obstacle_detect.c</FilePath>
+            </File>
+            <File>
+              <FileName>obstacle_bypass.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\src\obstacle_bypass.c</FilePath>
+            </File>
+            <File>
               <FileName>img_process.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\user\src\img_process.c</FilePath>

@@ -12,6 +12,8 @@
 #define IP_HALF_PERSPECTIVE_SPAN 32.0f
 #include "ring_entry_path.h"
 #include "entry_bridge.h"
+#include "obstacle_detect.h"
+const obstacle_lane_row_t *img_get_obstacle_lane(void);
 
 /* Auxiliary roundabout evidence flags (bitmask exported by img_get_roundabout_evidence). */
 #define IP_RING_EV_FULL_ISLAND    0x01U /* Enclosed 8-connected hole between two corridors */
