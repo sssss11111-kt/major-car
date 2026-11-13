@@ -1,0 +1,782 @@
+#include "roundabout_control.h"
+#include "roundabout_scan.h"
+#include "cross_drive.h"
+#include "auto_start.h"
+#include "steering_control.h"
+#include "ring_diag.h"
+#include "main.h" // 所有引脚信息更改在main.h里改宏
+
+// *************************** 例程硬件连接说明 ***************************
+/*
+
+            连接好电机、主板、驱动板、摄像头、编码器
+            (请确保全部正确连接后在使用此例程，所有外设均会使用)
+*/
+// *************************** 例程测试说明 ***************************
+/*
+            本例程包含功能：
+            1.初始化摄像头并采集图像进行大津法二值化
+            2.初始化屏幕并显示关键信息
+            3.根据偏差计算最基本的舵机打角
+            4.运用最基本pid参数和pid算法使电机旋转 (pid参数在pid.c中)
+
+
+            注意！注意！注意！注意！
+            注意！注意！注意！注意！
+            注意！注意！注意！注意！
+
+            1.请仔细阅读main.h的所有注释，确保所有宏都和自己的硬件连接对应
+            2.若屏幕显示二值化后的图像有缺陷，可能不能正常走直线，
+            可以自行更改二值化算法或找光环境良好且均匀的环境测试例程（例程不提供更多的二值化算法）
+
+*/
+
+// **************************** 代码区域 ****************************
+
+// 舵机动作角度中值
+const float servo_motor_duty_middle = SERVO_MOTOR_MIDDLE; 
+
+static volatile uint8 wireless_ready = 0;
+static volatile uint8 trial_bench = 0;
+static volatile uint8 snapshot_requested = 0;
+static volatile uint8 rd29_requested=0;
+/* 0=normal, 1/2=radio V1/V2, 3/4=UART1 V1/V2. Stopped-only mode. */
+static volatile uint8 sf_view_mode=0;
+static volatile uint8 vision_mode=0, vision_degraded=0, model_good=0, control_center=94;
+static volatile uint8 vision_stripe=0;
+static volatile uint8 vision_ring=0;
+static volatile uint8 vision_entry_kind=0, vision_cross_approach=0;
+static volatile entry_bridge_guard_t vision_bridge={0};
+/* FIRST_FAULT4_BEGIN: immutable after latch, even if current vision recovers. */
+static volatile uint32 fault4_age=0,fault4_frame=0,fault4_good=0;
+static volatile uint8 fault4_reason=0,fault4_mode=0,fault4_rows=0,fault4_phase=0;
+typedef struct {
+    uint8 type, frame_type, cross_phase, scan_status, flags;
+} special_diag_t;
+static volatile special_diag_t vision_special={0}, fault4_special={0};
+/* FIRST_FAULT4_END */
+static volatile rb_state_t roundabout_state={0};
+static volatile int16_t vision_error = 0;
+static volatile uint8 usable_rows = 0, both_rows = 0;
+static volatile uint8 steering_curve = 0, steering_limited = 0;
+static steering_state_t steering_state;
+static uint8 steering_bend=0,steering_slew=0;
+static float steering_severity=0;
+static volatile int16_t preview_error = 0;
+static volatile float steering_command = 92.5f;
+static volatile float steering_speed_scale = 1.0f;
+volatile uint32 camera_ready_cycle = 0;
+static volatile uint32 timing_image_us=0, timing_recognized_to_pwm_us=0;
+static volatile uint32 timing_ready_to_pwm_us=0, timing_ready_max_us=0, timing_samples=0;
+static auto_start_t auto_start_state = {0}; /* Written only by the 10 ms ISR. */
+static volatile uint8 auto_phase = AUTO_WAIT, auto_run = 0;
+static volatile uint32 auto_center_since = 0;
+
+/* Diagnostic output must never wait for radio flow control while driving.
+ * SNAP retains the driver's full transfer routine while start is inhibited. */
+static uint32 telemetry_send(const char *text)
+{
+    uint32 remaining = (uint32)strlen(text);
+    if (sf_view_mode || !wireless_ready || mt9v03x_finish_flag) return remaining;
+    while (remaining) {
+        uint32 count = remaining > 30U ? 30U : remaining;
+        if (gpio_get_level(WIRELESS_UART_RTS_PIN)) return remaining;
+        uart_write_buffer(WIRELESS_UART_INDEX, (const uint8 *)text, count);
+        text += count;
+        remaining -= count;
+    }
+    return 0;
+}
+
+/* Capture the first 1.28 seconds at control rate, including the stop tick.
+ * VAL3 is a register readback, not a measurement at the connector. */
+typedef struct {
+    uint32 tick, run, fault, stall, p1, p2, val1, val3_l, val3_r;
+    uint32 outen, mask, mctrl, fsts, source, dir;
+    int32 e1, e2;
+} drive_trace_t;
+volatile drive_trace_t drive_trace[128];
+volatile uint32 drive_trace_count=0;
+static uint8 drive_trace_frozen=0;
+static void drive_trace_report(void)
+{
+    static uint32 sent=0;
+    if (!drive_trace_frozen || sent>=drive_trace_count) return;
+    volatile drive_trace_t *r=&drive_trace[sent++];
+    char b[256];
+    sprintf(b,"DRV t=%lu run=%lu fault=%lu stall=%lu p=%lu,%lu val=%lu,%lu,%lu out=%lx mask=%lx ctrl=%lx fs=%lx src=%lx dir=%lx e=%ld,%ld\r\n",
+        r->tick,r->run,r->fault,r->stall,r->p1,r->p2,r->val1,r->val3_l,r->val3_r,
+        r->outen,r->mask,r->mctrl,r->fsts,r->source,r->dir,r->e1,r->e2);
+    telemetry_send(b);
+}
+
+
+void Init()
+{
+
+    // 初始化flash, 储存参数. 一个扇区有8页, 一页可以储存4096字节, 一个参数占4个字节, 因此一页最多只能存64个参数
+    flash_init();
+
+    // tft180_set_dir(TFT180_CROSSWISE);                                           // 需要先横屏 不然显示不下
+    tft180_set_dir(TFT180_CROSSWISE);
+    tft180_init();
+
+    // mt9v03x摄像头初始化
+    while (1)
+    {
+        if (mt9v03x_init()) {
+            tft180_show_string(0, 16, "mt9v03x reinit.");
+            telemetry_send("C11LAP30CROSS13 CAMERA_RETRY\r\n");
+        }
+        else
+            break;
+        system_delay_ms(1000);
+    }
+    tft180_show_string(0, 16, "init success.");
+
+    // 编码器初始化
+    encoder_quad_init(ENCODER_1, ENCODER_1_A, ENCODER_1_B); // 初始化编码器模块与引脚 正交解码编码器模式
+    encoder_quad_init(ENCODER_2, ENCODER_2_A, ENCODER_2_B); // 初始化编码器模块与引脚 正交解码编码器模式
+
+    // 电机初始化
+    pwm_init(MOTOR1_PWM, 17000, 0); // PWM 通道初始化频率 17KHz 占空比初始为 0
+    gpio_init(MOTOR1_DIR, GPO, MOTOR1_FORWARD_DIR_LEVEL, GPO_PUSH_PULL); // GPIO 初始化为输出 默认上拉输出高
+    pwm_init(MOTOR2_PWM, 17000, 0); // PWM 通道初始化频率 17KHz 占空比初始为 0
+    gpio_init(MOTOR2_DIR, GPO, MOTOR2_FORWARD_DIR_LEVEL, GPO_PUSH_PULL); // GPIO 初始化为输出 默认上拉输出高
+
+    // 舵机
+    pwm_init(SERVO_MOTOR_PWM, SERVO_MOTOR_FREQ, 0);
+
+    // PID初始化
+    My_Pid_Init();
+
+    // 定时器0初始化，10ms可调
+    pit_ms_init(PIT_CH0, 10);
+}
+
+uint8_t image[MT9V03X_H][MT9V03X_W];
+static uint8_t raw_image[MT9V03X_H][MT9V03X_W];
+AT_SDRAM_SECTION_ALIGN(static rd29_frame_t rd29_frames[RD29_CAPACITY],32);
+static rd29_state_t rd29_state;
+short hist_gram[256];
+uint8_t left_line[MT9V03X_H];
+uint8_t mid_line[MT9V03X_H];
+uint8_t right_line[MT9V03X_H];
+
+
+/* SNAP is accepted only while stopped. Main owns these buffers and does not
+ * consume another camera frame until the complete snapshot has been sent.
+ * CSI DMA uses separate buffers; PIT/RX remain enabled and RUN/BENCH are gated. */
+#define SNAP_SIZE (MT9V03X_H * MT9V03X_W + 3 * MT9V03X_H)
+static uint8 snapshot_byte(uint32 i)
+{
+    if (i < sizeof(raw_image)) return ((uint8 *)raw_image)[i];
+    i -= sizeof(raw_image);
+    if (i < MT9V03X_H) return left_line[i];
+    i -= MT9V03X_H;
+    if (i < MT9V03X_H) return mid_line[i];
+    return right_line[i-MT9V03X_H];
+}
+static void snapshot_send(uint8 threshold)
+{
+    uint32 crc=0xffffffffU, capture_tick=frame_tick, capture_frame=frame_count;
+    char line[128];
+    static const char hex[]="0123456789abcdef";
+    for (uint32 i=0; i<SNAP_SIZE; ++i) {
+        crc ^= snapshot_byte(i);
+        for (uint8 b=0;b<8;++b) crc=(crc>>1)^((crc&1U)?0xedb88320U:0U);
+    }
+    crc ^= 0xffffffffU;
+    sprintf(line,"SNAP9 w=%u h=%u n=%u threshold=%u frame=%lu tick=%lu crc=%08lx\r\n",
+        MT9V03X_W,MT9V03X_H,SNAP_SIZE,threshold,(unsigned long)capture_frame,
+        (unsigned long)capture_tick,(unsigned long)crc);
+    if (wireless_uart_send_string(line)) goto failed;
+    for (uint32 off=0;off<SNAP_SIZE;off+=32) {
+        uint32 count=SNAP_SIZE-off; if(count>32) count=32;
+        int n=sprintf(line,"PX9 off=%lu data=",(unsigned long)off);
+        for(uint32 k=0;k<count;++k) {
+            uint8 v=snapshot_byte(off+k);line[n++]=hex[v>>4];line[n++]=hex[v&15];
+        }
+        line[n++]='\r';line[n++]='\n';line[n]=0;
+        if(wireless_uart_send_string(line)) goto failed;
+    }
+    sprintf(line,"END9 frame=%lu crc=%08lx\r\n",(unsigned long)capture_frame,(unsigned long)crc);
+    wireless_uart_send_string(line);
+    snapshot_requested=0;
+    return;
+failed:
+    wireless_uart_send_string("\r\nSNAP9_ABORT\r\n");
+    snapshot_requested=0;
+}
+
+
+/* Only main writes the frozen trace. The ISR can request export while stopped;
+ * snapshot_requested holds automatic start inhibited for the entire export.
+ * No trace bytes are transmitted while driving, and no reset/start is sent. */
+static void rd29_dump(void)
+{
+    char line[192];
+    rd29_freeze(&rd29_state);
+    sprintf(line,"RD29 BEGIN format=1 count=%lu bytes=%lu trigger=%lu reason=%lu stop_tick=%lu stop_fault=%u\r\n",
+        (unsigned long)rd29_state.count,(unsigned long)sizeof(rd29_frame_t),
+        (unsigned long)rd29_state.trigger_frame,(unsigned long)rd29_state.reason,
+        (unsigned long)trial_ticks,trial_fault);
+    if(wireless_uart_send_string(line))goto done;
+    for(uint32_t i=0;i<rd29_state.count;++i) {
+        const rd29_frame_t *r=&rd29_frames[rd29_index(&rd29_state,i)];
+        uint32_t crc=rd29_crc(r,sizeof(*r));
+        sprintf(line,"RD29 FRAME i=%lu n=%lu crc=%08lx\r\n",
+            (unsigned long)i,(unsigned long)sizeof(*r),(unsigned long)crc);
+        if(wireless_uart_send_string(line))goto done;
+        if(wireless_uart_send_buffer((const uint8 *)r,sizeof(*r)))goto done;
+        if(wireless_uart_send_string("\r\n"))goto done;
+    }
+    wireless_uart_send_string("RD29 END\r\n");
+done:
+    rd29_requested=0;snapshot_requested=0;
+}
+
+
+/* Official Seekfree V1/V2 grayscale framing, wireless 94x60 at 115200
+ * and wired original 188x120 at 460800
+ * baud. Same raw image is copied before sending; no line overlay alters it.
+ * All blocking transfer is restricted to a stopped, start-inhibited view mode. */
+static void sf_camera_send(void)
+{
+    static uint8 gray[94*60];
+    uint8 mode=sf_view_mode, h[12]={0};
+    uint8 width=mode>=3 ? 188:94, height=mode>=3 ? 120:60;
+    const uint8 *pixels=mode>=3 ? (const uint8 *)raw_image:gray;
+    uint32 payload=(uint32)width*height;
+    if(!mode || trial_running)return;
+    for(uint32 y=0;y<60;++y)for(uint32 x=0;x<94;++x)
+        gray[y*94+x]=raw_image[y*2][x*2];
+    h[0]=0xaa;
+    if(mode==2 || mode==4) {
+        /* V2: head, sum excluding sum byte, cmd=CAMERA, GRAY, LE size,
+         * data_type=UINT8, three reserved zeros (official config size 12). */
+        h[2]=2;h[3]=2;h[4]=width;h[6]=height;h[8]=1;
+        for(uint8 i=0;i<12;++i)if(i!=1)h[1]=(uint8)(h[1]+h[i]);
+    }else {
+        /* V1: head, CAMERA function, MT9V03X<<5, header size, LE size. */
+        h[1]=2;h[2]=0x40;h[3]=8;h[4]=width;h[6]=height;
+    }
+    uint32 n=(mode==2 || mode==4)?12:8;
+    if(mode>=3) {
+        debug_send_buffer(h,n);debug_send_buffer(pixels,payload);
+    }else {
+        if(wireless_uart_send_buffer(h,n))return;
+        wireless_uart_send_buffer(pixels,payload);
+    }
+}
+
+int main(void)
+{
+    clock_init(SYSTEM_CLOCK_600M); // 不可删除
+    debug_init();                  // 调试端口初始化
+    CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+    DWT->LAR = 0xC5ACCE55U;
+    DWT->CYCCNT = 0;
+    DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+    system_delay_ms(300);          // 等待主板其他外设上电完成
+
+    wireless_ready = (wireless_uart_init() == 0); /* Supplied wireless driver: RTS and IRQ RX FIFO. */
+    telemetry_send("C11LAP30CROSS13 AUTO BOOT\r\n");
+    Init();
+    img_process_reset();
+    rb_scan_reset();
+    steering_reset(&steering_state,servo_motor_duty_middle,trial_ticks);
+    telemetry_send("C11LAP30CROSS13 AUTO READY\r\n");
+    tft180_clear();
+    tft180_show_string(0, 0, wireless_ready ? "W:OK GRAY/BINARY" : "W:FAIL GRAY/BIN");
+    interrupt_global_enable(0);
+
+    uint32 report_tick = 0, display_tick = 0, timing_report_tick = 0;
+    special_track_output_t scan = {0};
+    uint8_t scan_entry_allowed = 0;
+    cross_drive_t cross = {0};
+    uint8 fault4_displayed=0;
+    while (1)
+    {
+        if(auto_run && !trial_running && !mt9v03x_finish_flag) rd29_freeze(&rd29_state);
+        if(rd29_requested && !trial_running) rd29_dump();
+        //  mt9v03x摄像头
+        if (mt9v03x_finish_flag)
+        {
+            uint32 process_begin_cycle = DWT->CYCCNT;
+            // 另寻空间将图像保存下来，以免产生因读写冲突带来的未知后果
+            /* Keep CSI's completed-buffer pointer stable during the short copy.
+             * Clear only the frame being consumed, never a later completion. */
+            uint32 camera_mask = interrupt_global_disable();
+            uint32 consumed_ready_cycle = camera_ready_cycle;
+            memcpy(raw_image, (const void *)mt9v03x_image, sizeof(raw_image));
+            mt9v03x_finish_flag = 0;
+            interrupt_global_enable(camera_mask);
+            memcpy(image, raw_image, sizeof(image));
+            // 获取直方图
+            get_hist_gram((uint8_t *)image, MT9V03X_H, MT9V03X_W, hist_gram);
+            unsigned char threshold = get_threshold_otsu(hist_gram);
+            // 二值化处理
+            binaryzation_process((uint8_t *)image, MT9V03X_H, MT9V03X_W, threshold);
+            // 边界线寻找
+            /* The new band-threshold detector reads raw grayscale without
+             * modifying it. Global binary image is only for LCD comparison. */
+            uint8 entry_was_preparing = img_get_entry_status() == 0;
+            int applied_ring_guide=rb_guiding(&roundabout_state) ? -RB_TURN_SIGN:0;
+            img_set_roundabout_guidance(applied_ring_guide);
+            img_set_roundabout_entry(rb_guiding(&roundabout_state) ? roundabout_state.phase : 0);
+            img_set_exit_search((uint8_t)rb_exit_search(&roundabout_state));
+            uint32 odometry_mask=interrupt_global_disable();
+            float entry_distance=roundabout_state.distance_m, entry_yaw=roundabout_state.yaw_deg;
+            uint32 entry_tick=trial_ticks;
+            uint8 entry_running=trial_running && !trial_bench;
+            interrupt_global_enable(odometry_mask);
+            img_set_entry_odometry(entry_distance,entry_yaw,entry_tick,entry_running);
+            auxiliary_process((uint8_t *)raw_image, MT9V03X_H, MT9V03X_W, 127,
+                              left_line, mid_line, right_line);
+            uint8 island = img_get_roundabout_candidate();
+            scan = rb_scan_frame((const uint8_t *)raw_image, entry_tick, island || rb_busy(&roundabout_state) || cross.phase != CROSS_DRIVE_IDLE);
+            scan_entry_allowed = (uint8_t)rb_scan_allows_entry(&scan, RB_TURN_SIGN);
+            cross_drive_output_t cross_path = cross_drive_step(&cross, &scan,
+                (const uint8_t *)raw_image, img_get_row_thresholds(), entry_tick, entry_running,
+                roundabout_state.fault || (rb_busy(&roundabout_state) && roundabout_state.phase != RB_ALIGN),
+                img_get_road_recovered());
+            uint8 valid = img_get_valid();
+            if(rb_busy(&roundabout_state) && !img_get_near_valid())valid=0;
+            uint8 detected_both = img_get_both_rows();
+            int16_t detected_error = img_get_error();
+            uint32 recognized_cycle = DWT->CYCCNT;
+            uint32 cycles_per_us = system_clock/1000000U;
+            if (!cycles_per_us) cycles_per_us = 1;
+            timing_image_us = (recognized_cycle-process_begin_cycle)/cycles_per_us;
+            /* Publish mode, lease and freshness coherently to the PIT ISR. */
+            int32_t rd_pre[14]={0};
+            rd_pre[RD_CANDIDATE_BEFORE]=img_get_roundabout_candidate();
+            rd_pre[RD_NEAR_BEFORE]=img_get_near_valid();
+            rd_pre[RD_VALID_BEFORE]=img_get_valid();
+            rd_pre[RD_ROWS_BEFORE]=img_get_usable_rows();
+            rd_pre[RD_NEAR_ROWS_BEFORE]=img_diag_near_rows();
+            rd_pre[RD_STRIPE_BEFORE]=img_get_stripe_active();
+            uint32 vision_mask=interrupt_global_disable();
+            rd_pre[RD_PHASE_BEFORE]=roundabout_state.phase;
+            rd_pre[RD_CONFIRM_BEFORE]=roundabout_state.confirm;
+            rb_scan_observe(&roundabout_state,island,scan_entry_allowed && cross.phase == CROSS_DRIVE_IDLE,
+                            cross_path.valid && !img_get_stripe_active(),trial_running && !trial_bench);
+            uint8 just_entered = roundabout_state.just_entered;
+            rd_pre[RD_PHASE_AFTER]=roundabout_state.phase;
+            rd_pre[RD_CONFIRM_AFTER]=roundabout_state.confirm;
+            interrupt_global_enable(vision_mask);
+            if (rd_pre[RD_PHASE_BEFORE] != roundabout_state.phase) {
+                applied_ring_guide = rb_guiding(&roundabout_state) ? -RB_TURN_SIGN:0;
+                img_set_roundabout_guidance(applied_ring_guide);
+                img_set_roundabout_entry(rb_guiding(&roundabout_state) ? roundabout_state.phase:0);
+                img_set_exit_search((uint8_t)rb_exit_search(&roundabout_state));
+                auxiliary_process((uint8_t *)raw_image, MT9V03X_H, MT9V03X_W, 127,
+                                  left_line, mid_line, right_line);
+                valid = img_get_valid();
+                if (!img_get_near_valid()) valid = 0;
+                detected_both = img_get_both_rows();
+                detected_error = img_get_error();
+            }
+            if (cross_path.active) {
+                valid = cross_path.valid && !img_get_stripe_active();
+                detected_error = cross_path.near_error;
+            }
+            uint8 rejected_entry = just_entered && !img_get_entry_path_safe();
+            vision_mask=interrupt_global_disable();
+            if (rejected_entry) {
+                rb_reject_entry(&roundabout_state);
+                rd_pre[RD_PHASE_AFTER]=roundabout_state.phase;
+                just_entered=0;
+                valid=0; /* Existing loss supervisor handles this frame. */
+            }
+            uint8 degraded = valid && (cross_path.active || detected_both < 3 || img_get_stripe_active() ||
+                                      img_get_roundabout_candidate() || rb_busy(&roundabout_state) ||
+                                      rb_suspect(&roundabout_state));
+            vision_ring = (uint8)(rb_busy(&roundabout_state) || rb_suspect(&roundabout_state));
+            vision_stripe = img_get_stripe_active();
+            vision_entry_kind=img_get_entry_status();
+            vision_cross_approach=cross_path.approach_only && valid;
+            vision_bridge=*img_get_entry_bridge_guard();
+            vision_mode = valid ? (degraded ? 2 : 1) : 0;
+            vision_degraded = degraded;
+            vision_special=(special_diag_t){
+                .type=(uint8)scan.type, .frame_type=(uint8)scan.frame_type, .cross_phase=(uint8)cross.phase,
+                .scan_status=scan.full_scan_valid ? 2 : scan.full_scan_attempted,
+                .flags=scan.diagnostic_flags
+            };
+            vision_error = detected_error;
+            usable_rows = img_get_usable_rows(); both_rows = detected_both;
+            control_center = (uint8)(MT9V03X_W/2 + detected_error);
+            if (valid) { if (good_frames<100) ++good_frames; }
+            else good_frames=0;
+            if (valid) trial_invalid_frames=0;
+            else if (trial_invalid_frames < TRIAL_DRIVE_INVALID_FRAME_LIMIT)
+                ++trial_invalid_frames;
+            if (!trial_running) {
+                if(valid && detected_both >= 3 && !img_get_roundabout_candidate()) {if(model_good<100) ++model_good;}
+                else model_good=0;
+            }
+            frame_tick=trial_ticks; ++frame_count;
+            interrupt_global_enable(vision_mask);
+            if (snapshot_requested && !trial_running) snapshot_send(threshold);
+            const entry_path_t *entry_path = img_get_entry_path();
+            const entry_path_t *display_path = img_get_control_path();
+            if (display_path->count) {
+                for (uint16_t i = 0; i < display_path->count; ++i) {
+                    const entry_point_t *point = &display_path->points[i];
+                    image[point->y][point->x] = 0;
+                    if (point->measured & 1) image[point->left_y][point->left_x] = 0;
+                    if (point->measured & 2) image[point->right_y][point->right_x] = 0;
+                }
+            } else {
+                for (uint8_t i = 0; i < MT9V03X_H; ++i) {
+                    if (!mid_line[i]) continue;
+                    if (left_line[i]) image[i][left_line[i]] = 0;
+                    image[i][mid_line[i]] = 0;
+                    if (right_line[i]) image[i][right_line[i]] = 0;
+                }
+            }
+            // 显示图像
+            /* LCD rendering is rate-limited below, after steering is updated. */
+
+            // 使用新巡线模块的多行加权中线偏差。
+            float turn_error=rb_plan_entry_error(roundabout_state.phase,applied_ring_guide,
+                detected_error,img_get_roundabout_entry_error(),img_get_preview_error(),img_get_roundabout_preview_valid(),
+                valid,img_get_stripe_active());
+            if (entry_path->count) turn_error = detected_error;
+            uint8 metric_control=(uint8)ep_metric_error(entry_path,&turn_error);
+            int16_t turn_preview = img_get_preview_error();
+            uint8 turn_preview_valid = (uint8)(!metric_control && img_get_preview_valid());
+            if (cross_path.active) {
+                turn_error = cross_path.near_error;
+                turn_preview = cross_path.preview_error;
+                turn_preview_valid = valid;
+            }
+            if (just_entered) steering_blend_entry(&steering_state, turn_error);
+            else if (entry_was_preparing && entry_path->count)
+                steering_prime_entry(&steering_state, turn_error);
+            steering_result_t turn = steering_update(&steering_state,(int)turn_error,turn_preview,
+                turn_preview_valid,valid,(uint8)(trial_running && !trial_bench),trial_ticks,
+                servo_motor_duty_middle,SERVO_DIR,
+                MIN(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX),MAX(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX));
+            steering_curve = turn.curve; steering_limited = turn.limited;
+            steering_bend=turn.bend_level;steering_slew=turn.slew_limited;steering_severity=turn.severity;
+            steering_speed_scale = valid ? turn.speed_scale : 1.0f;
+            preview_error = turn_preview;
+            float tmp_duty = turn.command;
+            if (trial_running && !trial_bench && vision_mode)
+            {
+                steering_command = tmp_duty;
+                pwm_set_duty(SERVO_MOTOR_PWM, SERVO_MOTOR_DUTY(tmp_duty));
+                uint32 command_cycle = DWT->CYCCNT;
+                timing_recognized_to_pwm_us = (command_cycle-recognized_cycle)/cycles_per_us;
+                if (consumed_ready_cycle) {
+                    timing_ready_to_pwm_us = (command_cycle-consumed_ready_cycle)/cycles_per_us;
+                    if (timing_ready_to_pwm_us > timing_ready_max_us)
+                        timing_ready_max_us = timing_ready_to_pwm_us;
+                }
+                ++timing_samples;
+            }
+
+
+            /* Store this exact consumed raw frame, processed lines and decisions
+             * after the servo command; expensive radio/CRC work is stopped-only. */
+            uint32_t rd_slot;
+            if(rd29_reserve(&rd29_state,auto_run,
+                    rd_pre[RD_CANDIDATE_BEFORE] || rb_busy(&roundabout_state),
+                    trial_fault,frame_count,&rd_slot)) {
+                uint32_t copy_begin=DWT->CYCCNT;
+                rd29_frame_t *r=&rd29_frames[rd_slot];
+                memset(r->m,0,sizeof r->m);
+                memcpy(r->m,rd_pre,sizeof rd_pre);
+                uint32_t rd_mask=interrupt_global_disable();
+                r->m[RD_FRAME]=(int32_t)frame_count;r->m[RD_TICK]=(int32_t)trial_ticks;
+                r->m[RD_RUNNING]=trial_running;r->m[RD_FAULT]=trial_fault;
+                r->m[RD_ROUTE]=roundabout_state.route;
+                r->m[RD_YAW10]=(int32_t)(roundabout_state.yaw_deg*10.0f);
+                r->m[RD_E1]=encoder_data_1;r->m[RD_E2]=encoder_data_2;
+                r->m[RD_P1]=trial_left_pwm;r->m[RD_P2]=trial_right_pwm;
+                interrupt_global_enable(rd_mask);
+                r->m[RD_VALID_AFTER]=valid;r->m[RD_ROWS_AFTER]=img_get_usable_rows();
+                r->m[RD_NEAR_AFTER]=img_get_near_valid();r->m[RD_NEAR_ROWS_AFTER]=img_diag_near_rows();
+                r->m[RD_BOTH_AFTER]=detected_both;r->m[RD_EVIDENCE]=img_get_roundabout_evidence();
+                r->m[RD_CORNER]=img_get_roundabout_corner_row();r->m[RD_ISLAND_BOTTOM]=img_diag_island_bottom();
+                r->m[RD_ENTRY_ERROR]=img_get_roundabout_entry_error();r->m[RD_NEAR_ERROR]=detected_error;
+                r->m[RD_PREVIEW_ERROR]=img_get_preview_error();r->m[RD_TURN_ERROR10]=(int32_t)(turn_error*10.0f);
+                r->m[RD_COMMAND10]=(int32_t)(steering_command*10.0f);r->m[RD_SLEW]=turn.slew_limited;
+                r->m[RD_GUIDE]=applied_ring_guide;r->m[RD_JUST_ENTERED]=just_entered;
+                r->m[RD_READY_CYCLE]=(int32_t)consumed_ready_cycle;r->m[RD_THRESHOLD]=threshold;
+                memcpy(r->pixels,raw_image,sizeof raw_image);
+                memcpy(r->pixels+RD29_PIXELS,left_line,120);
+                memcpy(r->pixels+RD29_PIXELS+120,mid_line,120);
+                memcpy(r->pixels+RD29_PIXELS+240,right_line,120);
+                r->m[RD_COPY_US]=(int32_t)((DWT->CYCCNT-copy_begin)/cycles_per_us);
+                r->m[RD_PROCESS_US]=(int32_t)((DWT->CYCCNT-process_begin_cycle)/cycles_per_us);
+                rd29_commit(&rd29_state,!trial_running);
+            }
+
+            static uint32 sf_last_tick=0;
+            if(sf_view_mode && !trial_running && trial_ticks-sf_last_tick>=(sf_view_mode>=3 ? 50U:100U)) {
+                sf_last_tick=trial_ticks;sf_camera_send();
+            }
+
+            /* 5 Hz LCD: no full-screen clear, no text over the pictures.
+             * Both pictures use the same captured frame at 80 x 51 pixels. */
+            if (trial_ticks-display_tick >= 20) {
+                char line[24];
+                static const char * const phases[] = {"AUTO WAIT       ", "CENTER 1s       ", "AUTO RUN        ", "STOP RESET      "};
+                unsigned int sum=0, white=0;
+                uint8 low=255, high=0;
+                display_tick=trial_ticks;
+                if (trial_fault != 4) tft180_show_string(0,0,phases[auto_phase]);
+                for (uint32 k=0; k<sizeof(raw_image); ++k) {
+                    uint8 v=((uint8 *)raw_image)[k];
+                    if(v<low) low=v;
+                    if(v>high) high=v;
+                    sum+=v;
+                    if(v>threshold) ++white;
+                }
+                tft180_show_gray_image(0,16,(uint8 *)raw_image,MT9V03X_W,MT9V03X_H,80,51,0);
+                tft180_show_gray_image(80,16,(uint8 *)image,MT9V03X_W,MT9V03X_H,80,51,0);
+                if (trial_fault != 4) {
+                    sprintf(line,"T%3u M%u C%3u A%u P%u",threshold,vision_mode,control_center,model_good>=5,roundabout_state.phase);
+                    tft180_show_string(0,72,line);
+                    sprintf(line,"F%6lu V%3lu",(unsigned long)frame_count,(unsigned long)good_frames);
+                    tft180_show_string(0,88,line);
+                    sprintf(line,"R%u X%u E%4d/%4d",trial_running,trial_fault,encoder_data_1,encoder_data_2);
+                    tft180_show_string(0,104,line);
+                }
+                char camera_report[128];
+                sprintf(camera_report,"CAM2 frame=%lu threshold=%u min=%u max=%u mean=%u white=%u\r\n",
+                    (unsigned long)frame_count,threshold,low,high,sum/(unsigned int)sizeof(raw_image),
+                    white*100/(unsigned int)sizeof(raw_image));
+                telemetry_send(camera_report);
+            }
+        }
+        /* Draw even if the camera stopped producing frames. */
+        if (trial_fault == 4 && !fault4_displayed) {
+            char line[24];
+            const special_diag_t diag=fault4_special;
+            tft180_show_string(0,0,"STOP X4 DIAG    ");
+            snprintf(line,sizeof line,"D%u S%u F%u C%u       ",
+                     fault4_reason,diag.type,diag.frame_type,diag.cross_phase);
+            tft180_show_string(0,72,line);
+            snprintf(line,sizeof line,"B%u G%02X A%lu     ",diag.scan_status,diag.flags,(unsigned long)fault4_age);
+            tft180_show_string(0,88,line);
+            tft180_show_string(0,104,"R0 X4              ");
+            fault4_displayed=1;
+        }
+        if (trial_ticks-report_tick >= 20) {
+            if (trial_ticks-timing_report_tick >= 100) {
+                timing_report_tick=trial_ticks;
+                char timing_report[160];
+                sprintf(timing_report,"TIME29 image_us=%lu recognized_to_pwm_us=%lu ready_to_pwm_us=%lu ready_max_us=%lu samples=%lu\r\n",
+                    (unsigned long)timing_image_us,(unsigned long)timing_recognized_to_pwm_us,
+                    (unsigned long)timing_ready_to_pwm_us,(unsigned long)timing_ready_max_us,
+                    (unsigned long)timing_samples);
+                telemetry_send(timing_report);
+            }
+            char report[200]; report_tick=trial_ticks;
+            sprintf(report, "C11LAP30CROSS13 t=%lu run=%u fault=%u frame=%lu good=%lu age=%lu e1=%d e2=%d p1=%d p2=%d\r\n",
+                (unsigned long)trial_ticks,trial_running,trial_fault,(unsigned long)frame_count,
+                (unsigned long)good_frames,(unsigned long)(trial_ticks-frame_tick),
+                encoder_data_1,encoder_data_2,trial_left_pwm,trial_right_pwm);
+            telemetry_send(report);
+            char vision_report[100];
+            sprintf(vision_report,"VIS12 valid=%u error=%d rows=%u both=%u ready=%u\r\n",
+                vision_mode != 0, vision_error, usable_rows, both_rows, model_good);
+            telemetry_send(vision_report);
+            char stripe_report[192];
+            sprintf(stripe_report,"STRIPE29 active=%u rows=%u\r\n",
+                img_get_stripe_active(),img_get_stripe_rows());
+            telemetry_send(stripe_report);
+            sprintf(stripe_report,"RING29 phase=%u route=%u island=%u yaw10=%d fault=%u ev=%u corner=%u entry_err=%d\r\n",
+                roundabout_state.phase,roundabout_state.route,img_get_roundabout_candidate(),
+                (int)(roundabout_state.yaw_deg*10.0f),roundabout_state.fault,
+                img_get_roundabout_evidence(),img_get_roundabout_corner_row(),
+                (int)img_get_roundabout_entry_error());
+            telemetry_send(stripe_report);
+            sprintf(stripe_report,"RING30EXIT road=%u confirm=%u clear=%u search=%u branch=%u entry_ready=%u commit=%u\r\n",
+                img_get_road_recovered(),roundabout_state.exit_confirm,roundabout_state.clear,
+                rb_exit_search(&roundabout_state),img_get_exit_ready(),img_get_entry_ready(),roundabout_state.commit_confirm);
+            telemetry_send(stripe_report);
+            if (scan.full_scan_attempted) {
+                sprintf(stripe_report,"SP_SCAN type=%u frame_type=%u state=%u score=%u conf=%u flags=%u entry_ok=%u\r\n",
+                    (unsigned)scan.type,(unsigned)scan.frame_type,(unsigned)scan.state,
+                    scan.candidate_score,scan.confidence,scan.diagnostic_flags,scan_entry_allowed);
+                telemetry_send(stripe_report);
+            }
+            if (cross.phase != CROSS_DRIVE_IDLE) {
+                sprintf(stripe_report,"CROSS30 phase=%u side=%d clear=%u\r\n",
+                    (unsigned)cross.phase,(int)cross.side,cross.clear_frames);
+                telemetry_send(stripe_report);
+            }
+            sprintf(stripe_report,"ENTRY30 status=%u points=%u goal_x=%u goal_y=%u reason=%u\r\n",
+                img_get_entry_status(),img_get_entry_path()->count,
+                img_get_entry_path()->goal_x,img_get_entry_path()->goal_y,img_get_entry_path()->failure);
+            telemetry_send(stripe_report);
+            if(fault4_reason) {
+                const special_diag_t diag=fault4_special;
+                sprintf(stripe_report,"LOSS29 reason=%u age=%lu frame=%lu good=%lu mode=%u rows=%u ring=%u scan=%u frame_type=%u cross=%u full=%u flags=%u\r\n",
+                    fault4_reason,(unsigned long)fault4_age,(unsigned long)fault4_frame,
+                    (unsigned long)fault4_good,fault4_mode,fault4_rows,fault4_phase,
+                    diag.type,diag.frame_type,diag.cross_phase,diag.scan_status,diag.flags);
+                telemetry_send(stripe_report);
+            }
+            char steering_report[192];
+            sprintf(steering_report,"STEER29 curve=%u near=%d preview=%d command10=%d limited=%u scale1000=%d bend=%u sev1000=%d slew=%u geom_cal=%u\r\n",
+                steering_curve,vision_error,preview_error,(int)(steering_command*10.0f),steering_limited,(int)(steering_speed_scale*1000.0f),steering_bend,(int)(steering_severity*1000.0f),steering_slew,TRACK_GEOMETRY_CALIBRATED);
+            telemetry_send(steering_report);
+            char auto_report[80];
+            uint8 phase = auto_phase;
+            uint32 elapsed = trial_ticks - auto_center_since;
+            uint32 remaining = (phase == AUTO_CENTER && elapsed < AUTO_CENTER_TICKS)
+                               ? AUTO_CENTER_TICKS - elapsed : 0;
+            sprintf(auto_report,"AUTO12 phase=%u wait_ms=%lu autonomous=%u\r\n",
+                phase, (unsigned long)(remaining * 10U), auto_run);
+            telemetry_send(auto_report);
+            drive_trace_report();
+        }
+    }
+}
+
+/* Automatic start: reliable track -> centered steering for 1 s -> run.
+ * STOP latches until reset. BENCH retains its 2 s limit and K lease.
+ * Autonomous running does not require a computer or a wireless heartbeat. */
+volatile uint32 trial_ticks=0, frame_tick=0, good_frames=0, frame_count=0;
+volatile uint8 trial_running=0, trial_fault=0;
+volatile uint8 trial_invalid_frames=0;
+volatile int trial_left_pwm=0, trial_right_pwm=0;
+static uint32 start_tick=0, lease_tick=0;
+static uint8 used=0, stall_ticks=0;
+/* Solely owned by the 10 ms ISR. Steering history remains main-owned.
+ * Arm only after a stripe, preserving all ordinary LAP21 speed behavior. */
+static float stripe_speed_cap=TRIAL_DRIVE_STRIPE_TARGET;
+static uint8 stripe_speed_recovering=0;
+static uint32 sf_read_command(uint8 *ch) {
+    uint32 n=wireless_uart_read_buffer(ch,1);
+    return n ? n:debug_read_ring_buffer(ch,1);
+}
+void trial_tick(void)
+{
+    static char cmd[16]; static uint8 len=0;
+    uint8 ch, n=0;
+    ++trial_ticks;
+    while (n++ < 32 && sf_read_command(&ch)) {
+        if (ch=='\n' || ch=='\r') {
+            cmd[len]=0;
+            if (!strcmp(cmd,"STOP")) { trial_running=0; if (!trial_fault) trial_fault=1; }
+            else if (!trial_running && !snapshot_requested && !strcmp(cmd,"WIMG1")) sf_view_mode=1;
+            else if (!trial_running && !snapshot_requested && !strcmp(cmd,"WIMG2")) sf_view_mode=2;
+            else if (!trial_running && !snapshot_requested && !strcmp(cmd,"UIMG1")) sf_view_mode=3;
+            else if (!trial_running && !snapshot_requested && !strcmp(cmd,"UIMG2")) sf_view_mode=4;
+            else if (!strcmp(cmd,"IMGOFF")) sf_view_mode=0;
+            else if (!strcmp(cmd,"TRACE") && !trial_running && !snapshot_requested) {
+                rd29_requested=1;snapshot_requested=1;
+            }
+            else if (!strcmp(cmd,"SNAP") && !trial_running && !snapshot_requested) snapshot_requested=1;
+            else if (!strcmp(cmd,"K") && trial_running) lease_tick=trial_ticks;
+            else if (wireless_ready && !snapshot_requested && !sf_view_mode && !used && !trial_fault &&
+                     !strcmp(cmd,"BENCH")) {
+                trial_bench = 1;
+                used=1; trial_running=1; start_tick=lease_tick=trial_ticks;
+                stall_ticks=0;
+                My_Pid_Init();
+            }
+            len=0;
+        } else if (len<15) cmd[len++]=(char)ch;
+        else { len=0; trial_running=0; trial_fault=7; }
+    }
+    uint8 track_ready = vision_mode == 1 && good_frames >= 5 && model_good >= 5 &&
+                        trial_ticks - frame_tick < 15;
+    auto_phase = auto_start_step(&auto_start_state, trial_ticks, track_ready,
+                                snapshot_requested || sf_view_mode,
+                                trial_fault || (used && !trial_running) || trial_bench);
+    auto_center_since = auto_start_state.center_since;
+    if (auto_phase == AUTO_CENTER) {
+        /* Hold the calibrated command midpoint throughout the full delay.
+         * Main-loop steering is enabled only after trial_running becomes true. */
+        pwm_set_duty(SERVO_MOTOR_PWM, SERVO_MOTOR_DUTY(servo_motor_duty_middle));
+        steering_command = servo_motor_duty_middle;
+    }
+    if (auto_phase == AUTO_STARTED && !used) {
+        auto_run = 1; trial_bench = 0;
+        used = 1; trial_running = 1; start_tick = lease_tick = trial_ticks;
+        stall_ticks = 0;
+        My_Pid_Init();
+    }
+    /* Check bridge distance/yaw against this tick's validated encoder update. */
+    rb_tick(&roundabout_state,encoder_data_1,encoder_data_2,trial_running && !trial_bench);
+    if (trial_running) {
+        if (trial_ticks-start_tick>=(trial_bench ? 200U : 12000U)) { trial_running=0; trial_fault=2; }
+        else if (!auto_run && trial_ticks-lease_tick>=50) { trial_running=0; trial_fault=3; }
+        else if (!trial_bench && (trial_ticks-frame_tick>=20 || trial_invalid_frames>=TRIAL_DRIVE_INVALID_FRAME_LIMIT ||
+                 (vision_bridge.active && !entry_bridge_allowed(&vision_bridge,roundabout_state.distance_m,
+                                                               roundabout_state.yaw_deg,trial_ticks)))) {
+            fault4_age=trial_ticks-frame_tick;fault4_frame=frame_count;fault4_good=good_frames;
+            fault4_reason=(uint8)((fault4_age>=20 ? 1:0) | (trial_invalid_frames>=TRIAL_DRIVE_INVALID_FRAME_LIMIT ? 2:0) |
+                (vision_bridge.active && !entry_bridge_allowed(&vision_bridge,roundabout_state.distance_m,
+                                                               roundabout_state.yaw_deg,trial_ticks) ? 4:0));
+            fault4_mode=vision_mode;fault4_rows=usable_rows;fault4_phase=roundabout_state.phase;
+            fault4_special=vision_special;
+            trial_running=0;trial_fault=4;
+        }
+        else if (encoder_data_1 < -5 || encoder_data_2 < -5 ||
+                 encoder_data_1 > 150 || encoder_data_2 > 150) { trial_running=0; trial_fault=5; }
+        else if (trial_ticks-start_tick>30) {
+            if (encoder_data_1<2 || encoder_data_2<2) ++stall_ticks; else stall_ticks=0;
+            if (stall_ticks>=20) { trial_running=0; trial_fault=6; }
+        }
+    }
+    if(trial_running && !trial_bench && roundabout_state.fault) {
+        trial_running=0;trial_fault=8;
+    }
+    gpio_set_level(MOTOR1_DIR,MOTOR1_FORWARD_DIR_LEVEL);
+    gpio_set_level(MOTOR2_DIR,MOTOR2_FORWARD_DIR_LEVEL);
+    if (trial_running) {
+        float effective_target = speed_target;
+        if (!trial_bench) {
+            if (vision_ring && effective_target > RB_TARGET_COUNTS)
+                effective_target=RB_TARGET_COUNTS;
+            effective_target *= steering_speed_scale;
+            if (vision_degraded && effective_target > TRIAL_DRIVE_DEGRADED_TARGET)
+                effective_target = TRIAL_DRIVE_DEGRADED_TARGET;
+            if ((vision_entry_kind==2 || vision_entry_kind==4) && effective_target>ENTRY_SINGLE_EDGE_TARGET)
+                effective_target=ENTRY_SINGLE_EDGE_TARGET;
+            if (vision_cross_approach && effective_target > CROSS_APPROACH_TARGET)
+                effective_target = CROSS_APPROACH_TARGET;
+            if (vision_entry_kind==5 && effective_target>ENTRY_BRIDGE_TARGET)
+                effective_target=ENTRY_BRIDGE_TARGET;
+            if (vision_stripe) {
+                stripe_speed_cap=TRIAL_DRIVE_STRIPE_TARGET;
+                stripe_speed_recovering=1;
+            } else if (stripe_speed_recovering) {
+                stripe_speed_cap += speed_target*STEERING_SPEED_RECOVERY_PER_S*0.01f;
+                if (stripe_speed_cap >= speed_target) stripe_speed_recovering=0;
+            }
+            if (stripe_speed_recovering && effective_target > stripe_speed_cap)
+                effective_target=stripe_speed_cap;
+        } else stripe_speed_recovering=0;
+        speed_real=encoder_data_1;
+        speed_pwm=PidLocCtrl(&speed_pid_l,effective_target-speed_real,1.f);
+        trial_left_pwm=(int)constrain_float(TRIAL_DRIVE_FEEDFORWARD+speed_pwm,0,TRIAL_DRIVE_MAX);
+        speed_real=encoder_data_2;
+        speed_pwm=PidLocCtrl(&speed_pid_r,effective_target-speed_real,1.f);
+        trial_right_pwm=(int)constrain_float(TRIAL_DRIVE_FEEDFORWARD+speed_pwm,0,TRIAL_DRIVE_MAX);
+    } else { trial_left_pwm=trial_right_pwm=0; speed_pwm=0; stripe_speed_recovering=0; }
+    pwm_set_duty(MOTOR1_PWM,trial_left_pwm);
+    pwm_set_duty(MOTOR2_PWM,trial_right_pwm);
+    if (used && !drive_trace_frozen) {
+        if (drive_trace_count<128) {
+            volatile drive_trace_t *r=&drive_trace[drive_trace_count++];
+            r->tick=trial_ticks; r->run=trial_running; r->fault=trial_fault;
+            r->stall=stall_ticks; r->p1=trial_left_pwm; r->p2=trial_right_pwm;
+            r->val1=PWM2->SM[0].VAL1; r->val3_l=PWM2->SM[0].VAL3; r->val3_r=PWM2->SM[1].VAL3;
+            r->outen=PWM2->OUTEN; r->mask=PWM2->MASK; r->mctrl=PWM2->MCTRL;
+            r->fsts=PWM2->FSTS; r->source=PWM2->DTSRCSEL; r->dir=GPIO2->DR;
+            r->e1=encoder_data_1; r->e2=encoder_data_2;
+        }
+        if (!trial_running) drive_trace_frozen=1;
+    }
+}
