@@ -5,6 +5,8 @@
 #define STEERING_MAX_WHEEL_ANGLE_RAD 0.7853981634f
 #define STEERING_MODEL_CALIBRATED 0
 #define STEERING_TIGHT_CURVE_SPEED_SCALE (80.0f/100.0f)
+/* Conservative candidate from the former 100*0.8 target, not a measured limit. */
+#define STEERING_TIGHT_CURVE_TARGET_COUNTS 80.0f
 #define STEERING_STRAIGHT_GAIN 0.50f
 #define STEERING_LINEAR_GAIN STEERING_STRAIGHT_GAIN
 #define STEERING_PREVIEW_BLEND 0.40f
@@ -16,6 +18,8 @@
 #define STEERING_SLEW_OUTWARD 110.0f
 #define STEERING_SLEW_RETURN 180.0f
 #define STEERING_SPEED_RECOVERY_PER_S 0.8f
+/* 10 ms ticks; never accumulate slew beyond the image freshness deadline. */
+#define STEERING_MAX_UPDATE_TICKS 20U
 typedef struct {
     float command,error,gain,curvature_reference,speed_scale,severity;
     uint8_t curve,limited,bend_level,slew_limited;
@@ -28,9 +32,15 @@ typedef struct {
 } steering_state_t;
 steering_result_t steering_control(int near,int preview,uint8_t pv,
     float middle,float direction,float low,float high);
+/* requested is counts/10 ms; scale is the controller's 0.8..1 bend demand. */
+float steering_speed_target(float requested,float scale);
 void steering_reset(steering_state_t *s,float middle,uint32_t tick);
 steering_result_t steering_update(steering_state_t *s,int near,int preview,uint8_t pv,
     uint8_t valid,uint8_t active,uint32_t tick,float middle,float direction,float low,float high);
+/* Align bias is signed toward the current island and ranges from -1 to 1. */
+steering_result_t steering_update_with_entry_bias(steering_state_t *s,int near,int preview,
+    uint8_t pv,uint8_t valid,uint8_t active,uint32_t tick,
+    float middle,float direction,float low,float high,float entry_bias);
 /* On the first turn frame, prefill only halfway from the measured approach
  * to the new path. Keep the existing median, IIR and servo slew limits. */
 static inline void steering_blend_entry(steering_state_t *s,float entry_error) {

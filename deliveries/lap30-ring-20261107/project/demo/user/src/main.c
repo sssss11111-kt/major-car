@@ -281,7 +281,7 @@ int main(void)
     system_delay_ms(300);          // 等待主板其他外设上电完成
 
     wireless_ready = (wireless_uart_init() == 0); /* Supplied wireless driver: RTS and IRQ RX FIFO. */
-    telemetry_send("C11LAP30SCAN7D AUTO BOOT\r\n");
+    telemetry_send("C11SCAN9U-LATE AUTO BOOT\r\n");
     Init();
     img_process_reset();
     rb_scan_reset();
@@ -322,7 +322,7 @@ int main(void)
             /* The new band-threshold detector reads raw grayscale without
              * modifying it. Global binary image is only for LCD comparison. */
             uint8 entry_was_preparing = img_get_entry_status() == 0;
-            int applied_ring_guide=rb_guiding(&roundabout_state) ? -RB_TURN_SIGN:0;
+            int applied_ring_guide=rb_guiding(&roundabout_state) ? -roundabout_state.turn_sign:0;
             img_set_roundabout_guidance(applied_ring_guide);
             img_set_roundabout_entry(rb_guiding(&roundabout_state) ? roundabout_state.phase : 0);
             img_set_exit_search((uint8_t)rb_exit_search(&roundabout_state));
@@ -336,7 +336,7 @@ int main(void)
                               left_line, mid_line, right_line);
             uint8 island = img_get_roundabout_candidate();
             scan = rb_scan_frame((const uint8_t *)raw_image, entry_tick, island || rb_busy(&roundabout_state) || cross.phase != CROSS_DRIVE_IDLE);
-            scan_entry_allowed = (uint8_t)rb_scan_allows_entry(&scan, RB_TURN_SIGN);
+            scan_entry_allowed = (uint8_t)rb_scan_allows_entry(&scan, rb_busy(&roundabout_state) ? roundabout_state.turn_sign : rb_scan_entry_side(&scan));
             cross_drive_output_t cross_path = cross_drive_step(&cross, &scan,
                 (const uint8_t *)raw_image, img_get_row_thresholds(), entry_tick, entry_running,
                 roundabout_state.fault || (rb_busy(&roundabout_state) && roundabout_state.phase != RB_ALIGN),
@@ -367,7 +367,7 @@ int main(void)
             rd_pre[RD_CONFIRM_AFTER]=roundabout_state.confirm;
             interrupt_global_enable(vision_mask);
             if (rd_pre[RD_PHASE_BEFORE] != roundabout_state.phase) {
-                applied_ring_guide = rb_guiding(&roundabout_state) ? -RB_TURN_SIGN:0;
+                applied_ring_guide = rb_guiding(&roundabout_state) ? -roundabout_state.turn_sign:0;
                 img_set_roundabout_guidance(applied_ring_guide);
                 img_set_roundabout_entry(rb_guiding(&roundabout_state) ? roundabout_state.phase:0);
                 img_set_exit_search((uint8_t)rb_exit_search(&roundabout_state));
@@ -452,10 +452,11 @@ int main(void)
             if (just_entered) steering_blend_entry(&steering_state, turn_error);
             else if (entry_was_preparing && entry_path->count)
                 steering_prime_entry(&steering_state, turn_error);
-            steering_result_t turn = steering_update(&steering_state,(int)turn_error,turn_preview,
+            float entry_bias = cross_path.active || metric_control ? 0 : img_get_align_turn_bias();
+            steering_result_t turn = steering_update_with_entry_bias(&steering_state,(int)turn_error,turn_preview,
                 turn_preview_valid,valid,(uint8)(trial_running && !trial_bench),trial_ticks,
                 servo_motor_duty_middle,SERVO_DIR,
-                MIN(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX),MAX(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX));
+                MIN(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX),MAX(SERVO_MOTOR_L_MAX,SERVO_MOTOR_R_MAX),entry_bias);
             steering_curve = turn.curve; steering_limited = turn.limited;
             steering_bend=turn.bend_level;steering_slew=turn.slew_limited;steering_severity=turn.severity;
             steering_speed_scale = valid ? turn.speed_scale : 1.0f;
@@ -734,7 +735,7 @@ void trial_tick(void)
         if (!trial_bench) {
             if (vision_ring && effective_target > RB_TARGET_COUNTS)
                 effective_target=RB_TARGET_COUNTS;
-            effective_target *= steering_speed_scale;
+            effective_target = steering_speed_target(effective_target, steering_speed_scale);
             if (vision_degraded && effective_target > TRIAL_DRIVE_DEGRADED_TARGET)
                 effective_target = TRIAL_DRIVE_DEGRADED_TARGET;
             if ((vision_entry_kind==2 || vision_entry_kind==4) && effective_target>ENTRY_SINGLE_EDGE_TARGET)

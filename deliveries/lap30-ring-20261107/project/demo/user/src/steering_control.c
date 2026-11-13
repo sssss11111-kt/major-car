@@ -14,7 +14,7 @@ static float soft_margin(float middle,float low,float high)
 
 /* Pixel-domain bend demand, not a calibrated road-radius measurement. */
 static steering_result_t desired(float near,float preview,uint8_t pv,
-    float middle,float direction,float low,float high)
+    float middle,float direction,float low,float high,float entry_bias)
 {
     steering_result_t out={0};
     float severity=smooth((mag(near)-6.0f)/24.0f);
@@ -23,8 +23,9 @@ static steering_result_t desired(float near,float preview,uint8_t pv,
         severity=maxf(severity,smooth((mag(preview-near)-6.0f)/26.0f));
     }
     out.severity=severity;out.curve=(uint8_t)(severity>0.05f);
-    /* Severity still schedules speed, but never amplifies steering gain. */
     out.gain=STEERING_LINEAR_GAIN;
+    if (near * entry_bias > 0)
+        out.gain += 0.15f * clip(mag(entry_bias),0,1);
     out.error=near;
     if(pv){
         /* Both observations must agree in direction. Authority fades continuously
@@ -53,24 +54,39 @@ static steering_result_t desired(float near,float preview,uint8_t pv,
 }
 steering_result_t steering_control(int near,int preview,uint8_t pv,
     float middle,float direction,float low,float high)
-{return desired((float)near,(float)preview,pv,middle,direction,low,high);}
+{return desired((float)near,(float)preview,pv,middle,direction,low,high,0);}
+float steering_speed_target(float requested,float scale)
+{
+    scale=clip(scale,STEERING_TIGHT_CURVE_SPEED_SCALE,1.0f);
+    float target=requested*scale;
+    /* Blend an absolute full-bend cap into the requested straight speed.
+     * Keep the existing proportional slowdown wherever it is lower. */
+    if(requested>STEERING_TIGHT_CURVE_TARGET_COUNTS){
+        float load=(1.0f-scale)/(1.0f-STEERING_TIGHT_CURVE_SPEED_SCALE);
+        float cap=requested-load*(requested-STEERING_TIGHT_CURVE_TARGET_COUNTS);
+        if(target>cap)target=cap;
+    }
+    return target;
+}
 void steering_reset(steering_state_t *s,float middle,uint32_t tick)
 {
     steering_state_t empty={0};*s=empty;
     s->last_tick=tick;s->last.command=middle;s->last.speed_scale=1;
 }
-steering_result_t steering_update(steering_state_t *s,int near,int preview,
+steering_result_t steering_update_with_entry_bias(steering_state_t *s,int near,int preview,
     uint8_t pv,uint8_t valid,uint8_t active,uint32_t tick,
-    float middle,float direction,float low,float high)
+    float middle,float direction,float low,float high,float entry_bias)
 {
-    if(!valid || !active){
+    uint32_t elapsed=tick-s->last_tick;
+    /* Discard stale history rather than spending a long outage's slew budget.
+     * The vehicle supervisor separately latches its image-timeout stop. */
+    if(!valid || !active || (s->initialized && elapsed>STEERING_MAX_UPDATE_TICKS)){
         steering_reset(s,middle,tick);
-        steering_result_t out=desired((float)near,(float)preview,pv,middle,direction,low,high);
+        steering_result_t out=desired((float)near,(float)preview,pv,middle,direction,low,high,entry_bias);
         out.command=middle;return out;
     }
-    uint32_t elapsed=tick-s->last_tick;
     if(s->initialized && !elapsed)return s->last;
-    float dt=(float)(elapsed>4?4:elapsed)*0.01f;
+    float dt=(float)elapsed*0.01f;
     if(!s->initialized){
         s->near_filter=(float)near;
         s->near_history[0]=s->near_history[1]=(float)near;
@@ -91,7 +107,7 @@ steering_result_t steering_update(steering_state_t *s,int near,int preview,
     float tau=(mag(n)>=20 || (n*s->near_filter<0 && mag(n)>=4))?0.02f:0.04f;
     s->near_filter+=dt/(tau+dt)*(n-s->near_filter);
     steering_result_t out=desired(s->near_filter,s->preview_filter,
-        (uint8_t)(pv && s->preview_count>=2),middle,direction,low,high);
+        (uint8_t)(pv && s->preview_count>=2),middle,direction,low,high,entry_bias);
     const float thresholds[3]={0.05f,0.30f,0.70f};
     while(s->bend_level<3 && out.severity>thresholds[s->bend_level]+0.03f)++s->bend_level;
     while(s->bend_level>0 && out.severity<thresholds[s->bend_level-1]-0.03f)--s->bend_level;
@@ -119,4 +135,12 @@ steering_result_t steering_update(steering_state_t *s,int near,int preview,
     if(out.speed_scale>recovery)out.speed_scale=recovery;
     out.curvature_reference=fraction*tanf(STEERING_MAX_WHEEL_ANGLE_RAD)/STEERING_WHEELBASE_M;
     s->last=out;s->last_tick=tick;return out;
+}
+
+steering_result_t steering_update(steering_state_t *s,int near,int preview,
+    uint8_t pv,uint8_t valid,uint8_t active,uint32_t tick,
+    float middle,float direction,float low,float high)
+{
+    return steering_update_with_entry_bias(s,near,preview,pv,valid,active,tick,
+        middle,direction,low,high,0);
 }

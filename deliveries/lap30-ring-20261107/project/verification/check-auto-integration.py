@@ -6,7 +6,10 @@ import re
 
 p = Path(__file__).resolve().parent
 source = (p.parent/'demo/user/src/main.c').read_text(encoding='utf-8')
-trace = source[source.index('typedef struct {'):source.index('static void drive_trace_report')]
+# Locate the drive trace by its own type, not the first unrelated typedef.
+trace_end = source.index('static void drive_trace_report')
+trace_start = source.rfind('typedef struct {', 0, source.index('} drive_trace_t;'))
+trace = source[trace_start:trace_end]
 supervisor = source[source.index('volatile uint32 trial_ticks=0'):]
 stubs = r'''
 #include <stdint.h>
@@ -17,13 +20,14 @@ stubs = r'''
 #include "entry_bridge.h"
 #include "pid.h"
 #include "steering_control.h"
+#include "cross_drive.h"
 typedef uint8_t uint8;
 typedef uint32_t uint32;
 typedef int32_t int32;
 static auto_start_t auto_start_state={0};
 static volatile uint8 auto_phase=0,auto_run=0,wireless_ready=1,trial_bench=0,snapshot_requested=0,rd29_requested=0,sf_view_mode=0;
 static volatile uint8 vision_mode=1,vision_degraded=0,model_good=5;
-static volatile uint8 vision_stripe=0,vision_ring=0,vision_entry_kind=0;
+static volatile uint8 vision_stripe=0,vision_ring=0,vision_entry_kind=0,vision_cross_approach=0;
 static volatile entry_bridge_guard_t vision_bridge={0};
 static entry_bridge_guard_t mock_bridge={0};
 uint8_t img_get_entry_status(void) {return vision_entry_kind;}
@@ -63,7 +67,9 @@ static void gpio_set_level(int a,int b) {(void)a;(void)b;}
 '''
 stubs += source[source.index('/* FIRST_FAULT4_BEGIN'):source.index('/* FIRST_FAULT4_END */')] + '\nstatic uint8 usable_rows=0;\n'
 publication = source[source.index('uint8 degraded ='):source.index('            vision_error =')]
-publication = ('static struct {uint8 active;} cross_path;\n'
+publication = ('static cross_drive_output_t cross_path;\n'
+               'static cross_drive_t cross;\n'
+               'static special_track_output_t scan;\n'
                'static void publish_mode(uint8 valid,uint8 detected_both) {\n' + publication + '\n}\n')
 tests = r'''
 static void step(void) {frame_tick=trial_ticks;trial_tick();}
@@ -144,6 +150,19 @@ int main(int argc,char **argv) {
         step();CHECK(motor1==1500 && motor2==1500);
         steering_speed_scale=1.0f;step();CHECK(motor1==2500 && motor2==2500);
         vision_degraded=1;step();CHECK(motor1==1500 && motor2==1500);
+    } else if (!strcmp(argv[1],"high_curve_speed")) {
+        speed_target=140;good_frames=5;
+        for(int i=0;i<101;i++)step();
+        CHECK(trial_running && !vision_ring && !vision_degraded);
+        encoder_data_1=80;encoder_data_2=80;
+        steering_speed_scale=0.8f;step();
+        CHECK(speed_pid_l.last_error>-0.001f && speed_pid_l.last_error<0.001f);
+        CHECK(speed_pid_r.last_error>-0.001f && speed_pid_r.last_error<0.001f);
+        CHECK(motor1==TRIAL_DRIVE_FEEDFORWARD && motor2==TRIAL_DRIVE_FEEDFORWARD);
+        steering_speed_scale=1.0f;step();
+        CHECK(speed_pid_l.last_error+80==140 && speed_pid_r.last_error+80==140);
+        speed_target=50;steering_speed_scale=0.8f;step();
+        CHECK(speed_pid_l.last_error+80==40 && speed_pid_r.last_error+80==40);
     } else if (!strcmp(argv[1],"stripe_start")) {
         marker=1;publish_mode(1,40);good_frames=5;
         CHECK(vision_mode==2 && vision_degraded && vision_stripe);
@@ -266,18 +285,22 @@ int main(int argc,char **argv) {
     printf("PASS: actual trial_tick %s\n",argv[1]);return 0;
 }
 '''
-generated = p/'auto-integration-generated.c'
+out = Path(os.environ.get('HOST_TEST_OUT', str(p)))
+out.mkdir(parents=True, exist_ok=True)
+generated = out/'auto-integration-generated.c'
+executable = out/'auto-integration.exe'
+shared_inc = p.parents[3]/'firmware/camera_car/demo/user/inc'
 header = (p.parent/'demo/user/inc/main.h').read_text(encoding='utf-8')
-drive_defines = '\n'.join(re.findall(r'^#define TRIAL_DRIVE_.*$', header, flags=re.M))
+drive_defines = '\n'.join(re.findall(r'^#define (?:TRIAL_DRIVE_|CROSS_APPROACH_TARGET).*$', header, flags=re.M))
 generated.write_text(stubs+drive_defines+'\n'+trace+supervisor+publication+tests,encoding='utf-8')
 if os.environ.get('CC')=='cl':
-    subprocess.run(['cl','/nologo','/TC','/W3','/I'+str(p/'vision-stubs'),'/I'+str(p.parent/'demo/user/inc'),str(generated),str(p.parent/'demo/user/src/pid.c'),str(p.parent/'demo/user/src/auto_start.c'),'/Fe'+str(p/'auto-integration.exe')],cwd=p,check=True)
+    subprocess.run(['cl','/nologo','/TC','/W3','/I'+str(p/'vision-stubs'),'/I'+str(p.parent/'demo/user/inc'),'/I'+str(shared_inc),str(generated),str(p.parent/'demo/user/src/pid.c'),str(p.parent/'demo/user/src/auto_start.c'),str(p.parent/'demo/user/src/steering_control.c'),'/Fe'+str(executable)],cwd=p,check=True)
 else:
     zig=os.environ.get('ZIG') or shutil.which('zig')
     if not zig: raise SystemExit('Set CC=cl in a Visual Studio developer shell, or set ZIG.')
-    subprocess.run([zig,'cc','-Wall','-Wextra','-Werror','-I',str(p/'vision-stubs'),'-I',str(p.parent/'demo/user/inc'),str(generated),str(p.parent/'demo/user/src/pid.c'),str(p.parent/'demo/user/src/auto_start.c'),'-o',str(p/'auto-integration.exe')],check=True)
-for case in ['view','auto','lost','snapshot','stale','running_stale','bench','pwm100','single','curve_speed',
+    subprocess.run([zig,'cc','-Wall','-Wextra','-Werror','-I',str(p/'vision-stubs'),'-I',str(p.parent/'demo/user/inc'),'-I',str(shared_inc),str(generated),str(p.parent/'demo/user/src/pid.c'),str(p.parent/'demo/user/src/auto_start.c'),str(p.parent/'demo/user/src/steering_control.c'),'-o',str(executable)],check=True)
+for case in ['view','auto','lost','snapshot','stale','running_stale','bench','pwm100','single','curve_speed','high_curve_speed',
              'stripe_start','stripe_recovery','stripe_stale','stripe_lost','stripe_encoder',
              'stripe_stall','stripe_degraded','no_stripe_target_change','ring_speed','ring_curve_speed','ring_fault','entry_speed','bridge_time','bridge_distance','bridge_yaw',
              'bridge_stale','bridge_encoder','bridge_stop','bridge_crossing','cross_speed']:
-    subprocess.run([str(p/'auto-integration.exe'),case],check=True)
+    subprocess.run([str(executable),case],check=True)

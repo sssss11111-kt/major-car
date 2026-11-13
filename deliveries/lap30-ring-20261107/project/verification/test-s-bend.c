@@ -47,11 +47,12 @@ int main(int argc,char **argv){
   CHECK(ab(r.speed_scale*100.0f-80)<0.001f);
   r=request(-94,-94,1);CHECK(r.command==116);
  }else if(!strcmp(argv[1],"reverse")){
-  for(int sign=-1;sign<=1;sign+=2)for(uint32_t dt=1;dt<=4;dt*=2){
+  for(int sign=-1;sign<=1;sign+=2)for(uint32_t dt=1;dt<=8;dt*=2){
    steering_state_t s;uint32_t tick=0;steering_reset(&s,92.5f,0);
    for(int i=0;i<100;i++){tick+=dt;r=update(&s,sign*30,sign*40,tick);}
    float old=r.command;int released=0,crossed=0,budget_checked=0;
-   for(int i=1;i<=20/(int)dt;i++){
+   /* The median needs two observations, including at 80 ms cadence. */
+   for(int i=1;i<=(dt>4?40:20)/(int)dt;i++){
     float previous=r.command;tick+=dt;r=update(&s,-sign*30,-sign*40,tick);
     CHECK(ab(r.command-previous)<=180.0f*dt*0.01f+0.001f);
     float before_offset=previous-92.5f,after_offset=r.command-92.5f;

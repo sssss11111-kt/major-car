@@ -8,9 +8,11 @@
 static special_track_state_t scan_state;
 static special_track_config_t scan_config;
 static vision_result_t primary;
+static int observed_side;
 
 void rb_scan_reset(void)
 {
+    observed_side=0;
     special_track_init(&scan_state);
     special_track_config_default(&scan_config);
     scan_config.scan_bottom = IP_BODY_MASK_START_ROW - 2;
@@ -25,12 +27,23 @@ special_track_output_t rb_scan_frame(const uint8_t *raw, uint32_t tick, int forc
     primary.paired_rows = img_get_both_rows();
     special_track_update_rows(&scan_state, &scan_config, raw, img_get_row_thresholds(),
                               &primary, tick * 10u, force_full, &out);
+    observed_side=rb_scan_entry_side(&out);
     return out;
+}
+
+int rb_scan_entry_side(const special_track_output_t *out)
+{
+    if(!out->full_scan_valid ||
+       (out->diagnostic_flags & (SPECIAL_DIAG_CONFLICT | SPECIAL_DIAG_OVERFLOW)) ||
+       out->frame_type==SPECIAL_CROSS_ISLAND || out->type==SPECIAL_CROSS_ISLAND)return 0;
+    if(out->frame_type==SPECIAL_ROUNDABOUT && (out->island_side==1 || out->island_side==-1))
+        return out->island_side;
+    return img_get_roundabout_side();
 }
 
 int rb_scan_allows_entry(const special_track_output_t *out, int expected_island_side)
 {
-    if (!out->full_scan_valid ||
+    if ((expected_island_side!=1 && expected_island_side!=-1) || !out->full_scan_valid ||
         (out->diagnostic_flags & (SPECIAL_DIAG_CONFLICT | SPECIAL_DIAG_OVERFLOW)) ||
         out->frame_type == SPECIAL_CROSS_ISLAND || out->type == SPECIAL_CROSS_ISLAND)
         return 0;
@@ -49,6 +62,8 @@ void rb_scan_observe(volatile rb_state_t *state, int island, int entry_allowed,
         *state = (rb_state_t){.route = state->route};
         return;
     }
+    rb_visual(state,observed_side,img_get_orbit_ready());
+    rb_exit_tip(state,img_get_exit_tip_row(),img_get_exit_tip_x());
     int acquiring = state->phase == RB_IDLE || state->phase == RB_ALIGN;
     rb_geometry(state, img_get_entry_ready() && (!acquiring || entry_allowed),
                 img_get_roundabout_corner_row(), img_get_exit_ready(), img_get_exit_error());

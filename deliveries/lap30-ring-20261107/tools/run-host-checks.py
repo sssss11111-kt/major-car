@@ -24,6 +24,16 @@ commands=[[zig,'cc','-I',str(inc),'-I',str(v/'vision-stubs'),str(src/'steering_c
           [sys.executable,str(v/'check-ring-recovery.py')],
           [sys.executable,'-X','utf8',str(base.parents[1]/'records/ring-research-20261107/entry-r11/entry-regression.py')]]
 commands[0:0]=[[zig,'cc','-Wall','-Wextra','-Werror','-I',str(inc),str(v/'test-track-geometry.c'),'-o',str(v/'test-track-geometry.exe')],[str(v/'test-track-geometry.exe')]]
+commands[-1:-1]=[
+ [zig,'cc','-std=c99','-Wall','-Wextra','-Werror','-I',str(v/'vision-stubs'),'-I',str(inc),
+  str(v/'test-route-curve.c'),'-o',str(v/'test-route-curve.exe')],
+ [str(v/'test-route-curve.exe')],
+ [zig,'cc','-std=c99','-Wall','-Wextra','-Werror','-I',str(v/'vision-stubs'),'-I',str(inc),
+  str(v/'test-entry-handoff.c'),'-o',str(v/'test-entry-handoff.exe')],
+ [str(v/'test-entry-handoff.exe')],
+ [zig,'cc','-std=c99','-Wall','-Wextra','-Werror','-I',str(v/'vision-stubs'),'-I',str(inc),
+  str(src/'img_process.c'),str(v/'test-visual-ring.c'),'-o',str(v/'test-visual-ring.exe')],
+ *[[str(v/'test-visual-ring.exe'),case] for case in ['single','orbit','preview','tip','angle']]]
 if args.current:
  commands=commands[:-1]
  print('SCOPE: current production tests; historical R11 regression excluded explicitly (--current)')

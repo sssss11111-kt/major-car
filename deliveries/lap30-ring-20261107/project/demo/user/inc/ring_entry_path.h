@@ -133,7 +133,7 @@ static int ep_segment_white(const uint8_t *raw, const uint8_t *thresholds,
 /* Check the current island tip along every exported segment. In the distant
  * narrow opening, scale clearance to the two measured banks; the near-field
  * clearance stays capped by the existing provisional pixel margin. */
-static int ep_entry_clearance_ok(const entry_path_t *path, int side) {
+static inline int ep_entry_clearance_ok(const entry_path_t *path, int side) {
     if (!side || path->count < 2 || path->count > EP_MAX_POINTS) return 0;
     if (!ep_context.fresh_island || !ep_context.island_mask ||
         !ep_context.island_left || !ep_context.island_right)
@@ -477,7 +477,7 @@ static float ep_curve_score(const uint8_t *raw, const uint8_t *thresholds,
         px = (int)(x + 0.5f); py = (int)(y + 0.5f);
         if (!ep_white(raw, thresholds, px, py) || !ep_white(raw, thresholds, px-1, py) ||
             !ep_white(raw, thresholds, px+1, py) || !ep_white(raw, thresholds, px, py-1) ||
-            !ep_white(raw, thresholds, px, py+1)) return -1;
+            (py < EP_BOTTOM && !ep_white(raw, thresholds, px, py+1))) return -1;
         if (ep_context.active && ep_context.fresh_island && ep_context.island_mask[py] &&
             ((turn_side < 0 && px > ep_context.island_left[py]) ||
              (turn_side > 0 && px < ep_context.island_right[py]))) return -1;
@@ -754,7 +754,7 @@ static int ep_build_opening(const uint8_t *raw, const uint8_t *thresholds,
     }
     return 1;
 }
-static int ep_build(const uint8_t *raw, const uint8_t *thresholds,
+static inline int ep_build(const uint8_t *raw, const uint8_t *thresholds,
                     int side, int start_x, entry_path_t *path) {
     ep_opening_t openings[EP_MAX_OPENINGS];
     static entry_path_t trial_path;
@@ -905,6 +905,16 @@ static int ep_build_measured_corridor(const uint8_t *raw, const uint8_t *thresho
         for (int bend = -3; bend <= 3; ++bend) {
             for (int end = -3; end <= 3; ++end) {
                 float b = fitted_b + 6*bend, e = fitted_e + 6*end;
+                /* A forward scan may reach a remote branch behind the island.
+                 * During orbit, do not fit that opposite-turning tail into the
+                 * current arc. For this vertical-parameter cubic, signed x''
+                 * is linear: b and e-2*b are its endpoint extrema. Reject a
+                 * reversal, then let the outer loop shorten the measured road.
+                 * ALIGN/ENTER and the recovered exit keep their own contracts. */
+                if (ep_context.active && ep_context.ring_phase == 2) {
+                    float sign = side < 0 ? 1.0f : -1.0f;
+                    if (sign*b < 0 || sign*(e-2*b) < 0) continue;
+                }
                 float control[8] = {(float)start_x, EP_BOTTOM, (float)start_x, EP_BOTTOM-height/3,
                                     start_x+b, EP_BOTTOM-2*height/3, start_x+e, EP_BOTTOM-height};
                 float score = 0.002f*(36*b*b-36*b*e+12*e*e);
