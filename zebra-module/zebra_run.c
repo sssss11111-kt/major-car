@@ -61,7 +61,7 @@ uint16_t zebra_detect_bottom(const uint8_t *gray, int width, int height,
     return result;
 }
 
-void zebra_run_start(zebra_run_t *run, uint32_t frame)
+void zebra_run_start(volatile zebra_run_t *run, uint32_t frame)
 {
     *run = (zebra_run_t){.last_frame = frame, .phase = ZEBRA_LEAVE};
 }
@@ -95,12 +95,11 @@ void zebra_run_step(volatile zebra_run_t *run, uint32_t tick,
         break;
     case ZEBRA_FORWARD:
         run->count_sum += left_counts + right_counts;
-        if (run->count_sum * (0.5f * meters_per_count) >= ZEBRA_FORWARD_METERS) {
+        if (tick - run->phase_tick >= ZEBRA_FORWARD_TICKS ||
+            run->count_sum * (0.5f * meters_per_count) >= ZEBRA_FORWARD_METERS) {
             run->phase = ZEBRA_SETTLE;
             run->phase_tick = tick;
             run->still_ticks = 0;
-        } else if (tick - run->phase_tick >= 1500U) {
-            run->phase = ZEBRA_ABORT;
         }
         break;
     case ZEBRA_SETTLE:
