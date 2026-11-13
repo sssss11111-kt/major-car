@@ -12,6 +12,7 @@ typedef struct {
     uint8_t clear_frames, saw_split, approach_frames;
     int16_t last_near_error;
     uint32_t started_tick;
+    uint8_t straight_owned;
 } cross_drive_t;
 typedef struct {
     uint8_t active, valid, approach_only;

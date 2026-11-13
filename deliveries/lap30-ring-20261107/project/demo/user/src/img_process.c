@@ -49,6 +49,10 @@ static uint8_t  s_ring_candidate, s_near_valid, s_ring_preview_valid;
 static uint8_t s_diag_near_rows;
 static uint8_t s_road_recovered;
 static obstacle_lane_row_t obstacle_lane[OBS_HEIGHT];
+static cross_straight_t s_cross_straight;
+static entry_path_t s_center_route;
+const cross_straight_t *img_get_cross_straight(void) { return &s_cross_straight; }
+const entry_path_t *img_get_cross_path(void) { return &s_center_route; }
 
 const obstacle_lane_row_t *img_get_obstacle_lane(void) { return obstacle_lane; }
 static uint8_t  s_ring_evidence, s_ring_corner_row, s_ring_apex_row;
@@ -1217,6 +1221,8 @@ unsigned char get_threshold_otsu(const short *_hist_gram)
 
 void img_process_reset(void)
 {
+    memset(&s_cross_straight, 0, sizeof s_cross_straight);
+    s_center_route.count = 0;
     memset(&ep_context, 0, sizeof ep_context);
     s_entry_lost_frames = s_entry_reacquire = 0;
     memset(s_half, 0, sizeof s_half);
@@ -1340,6 +1346,8 @@ uint8_t img_get_both_rows(void)   { return s_both_rows; }
 uint8_t img_get_single_rows(void) { return s_single_rows; }
 uint8_t img_get_near_run(void)    { return s_near_run; }
 
+#include "center_route.h"
+
 void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_cols,
                        unsigned char _threshold_val,
                        uint8_t *_left_line, uint8_t *_mid_line, uint8_t *_right_line)
@@ -1363,6 +1371,7 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
     for(int row=0;row<IP_H;++row)outer_bank[row]=-1;
     int measured_l[IP_H] = {0}, measured_r[IP_H] = {0};
     memset(obstacle_lane, 0, sizeof obstacle_lane);
+    s_center_route.count = 0;
     s_road_recovered = 0;
     s_entry_ready=s_exit_ready=s_orbit_ready=0;
     s_exit_tip_row=s_exit_tip_x=0;
@@ -1456,6 +1465,10 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
     }
 
     ip_island(_src_pixel_mat, row_thr);
+    cs_update(&s_cross_straight, _src_pixel_mat, row_thr, s_odometry_tick,
+              s_scene_ok && !s_stripe_recovery && !s_ring_guide &&
+              (!s_ring_candidate || s_cross_straight.active));
+    if (s_cross_straight.active && s_cross_straight.valid) s_ring_candidate = 0;
     if(s_entry_mode==1 || s_entry_mode==2 || s_entry_mode==3) {
         memset(s_approach_side,0,sizeof s_approach_side);
         s_approach_active=s_approach_width_side=0;
@@ -1960,4 +1973,27 @@ void auxiliary_process(uint8_t *_src_pixel_mat, uint8_t _src_rows, uint8_t _src_
         s_entry_path.count = 0;
     }
 
+    if (!s_ring_guide && !s_entry_path.count && !s_stripe_recovery &&
+        s_cross_straight.active && s_cross_straight.bend_follow && !s_cross_straight.valid) {
+        ip_seed_departure(_mid_line);
+        ip_smooth_center(_src_pixel_mat, row_thr, _mid_line);
+        if (s_valid) ip_follow_bend_2d(_src_pixel_mat, row_thr);
+        s_cross_straight.valid = s_valid;
+        s_cross_straight.near_error = s_error;
+        s_cross_straight.preview_error = s_preview_error;
+        /* The ordered outer contour owns its side from the seam onward.
+           Keep the measured near bank up to the contour's first point. */
+        if (s_cross_straight.outer_count) {
+            uint8_t *bank = s_cross_straight.bend_side > 0 ? _left_line : _right_line;
+            uint8_t seam = s_cross_straight.outer_y[0];
+            memset(bank, 0, seam);
+            bank[seam] = s_cross_straight.outer_x[0];
+        }
+    } else if (!s_ring_guide && s_cross_straight.active) {
+        if (s_cross_straight.valid) ip_apply_cross(_left_line, _mid_line, _right_line);
+        else {
+            memset(_mid_line, 0, IP_H);
+            s_valid = s_near_valid = s_preview_valid = 0;
+        }
+    }
 }

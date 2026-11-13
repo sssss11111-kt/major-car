@@ -13,6 +13,8 @@
 #include "ring_entry_path.h"
 #include "entry_bridge.h"
 #include "obstacle_detect.h"
+#include "cross_straight.h"
+const entry_path_t *img_get_cross_path(void);
 const obstacle_lane_row_t *img_get_obstacle_lane(void);
 
 /* Auxiliary roundabout evidence flags (bitmask exported by img_get_roundabout_evidence). */

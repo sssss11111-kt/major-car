@@ -466,9 +466,10 @@ int main(void)
             interrupt_global_enable(vision_mask);
             if (snapshot_requested && !trial_running) snapshot_send(threshold);
             const entry_path_t *entry_path = img_get_entry_path();
-            if (entry_path->count) {
-                for (uint16_t i = 0; i < entry_path->count; ++i) {
-                    const entry_point_t *point = &entry_path->points[i];
+            const entry_path_t *display_path = cross_path.active ? img_get_cross_path() : entry_path;
+            if (display_path->count) {
+                for (uint16_t i = 0; i < display_path->count; ++i) {
+                    const entry_point_t *point = &display_path->points[i];
                     image[point->y][point->x] = 0;
                     if (point->measured & 1) image[point->left_y][point->left_x] = 0;
                     if (point->measured & 2) image[point->right_y][point->right_x] = 0;

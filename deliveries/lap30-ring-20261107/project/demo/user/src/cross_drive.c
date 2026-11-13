@@ -1,4 +1,5 @@
 #include "cross_drive.h"
+#include "cross_straight.h"
 
 #define CROSS_BOTTOM 105
 #define CROSS_SCAN_TOP 40
@@ -62,13 +63,9 @@ static int trace_corridor(const cross_drive_t *s, int side, const uint8_t *raw,
     for (int y = CROSS_BOTTOM; y >= CROSS_SCAN_TOP; --y) {
         interval_t runs[2];
         int count = runs_at(raw, y, thr[y], runs);
-        /* Beyond the verified preview segment, another fork/noisy region
-         * ends extension; it cannot invalidate the current near corridor. */
-        if (count < 0 || (count == 2 && merge_rows >= CROSS_EXIT_FRAMES)) {
-            if (y < CROSS_PREVIEW) break;
-            return 0;
-        }
+        if (count < 0) return 0;
         if (count == 0) break;
+        if (count == 2 && merge_rows >= CROSS_EXIT_FRAMES) return 0;
         if (count == 2) merge_rows = 0;
         if (count == 2 && !result->preferred_side)
             result->preferred_side = choose_side(runs, previous);
@@ -146,6 +143,21 @@ cross_drive_output_t cross_drive_step(cross_drive_t *s, const special_track_outp
                                      int running, int roundabout_busy, int road_recovered)
 {
     cross_drive_output_t out = {0};
+    const cross_straight_t *straight = img_get_cross_straight();
+    if (straight->active && !roundabout_busy) {
+        s->straight_owned = 1;
+        out.active = 1;
+        if (!running) return out;
+        s->phase = straight->valid ? CROSS_DRIVE_FOLLOW : CROSS_DRIVE_LOST;
+        if (straight->valid) {
+            out.valid = 1;
+            out.near_error = straight->near_error;
+            out.preview_error = straight->preview_error;
+        }
+        return out;
+    }
+    if (straight->recovered || s->straight_owned) *s = (cross_drive_t){0};
+    if (straight->bend_released) return out;
     if (s->phase == CROSS_DRIVE_IDLE) {
         if (roundabout_busy || scan->type != SPECIAL_CROSS_ISLAND) return out;
         out.active = 1;
@@ -157,6 +169,7 @@ cross_drive_output_t cross_drive_step(cross_drive_t *s, const special_track_outp
     if (!running || s->phase == CROSS_DRIVE_LOST) return out;
     corridor_t selected = {0};
     if (roundabout_busy || tick - s->started_tick >= CROSS_TIMEOUT_TICKS ||
+        (s->phase == CROSS_DRIVE_APPROACH && tick - s->started_tick >= CROSS_APPROACH_TICKS) ||
         (scan->diagnostic_flags & (SPECIAL_DIAG_LOW_CONTRAST | SPECIAL_DIAG_OVERFLOW |
                                    SPECIAL_DIAG_CONFLICT | SPECIAL_DIAG_CONFIG)) ||
         scan->frame_type == SPECIAL_ROUNDABOUT) {
@@ -165,10 +178,7 @@ cross_drive_output_t cross_drive_step(cross_drive_t *s, const special_track_outp
     }
     if ((s->phase == CROSS_DRIVE_APPROACH && scan->type != SPECIAL_CROSS_ISLAND) ||
         !plan_corridor(s, raw, thresholds, &selected)) {
-        /* Only the partial, near-only retry has the short approach lease.
-         * A complete current-frame corridor may recover at a slower cadence. */
-        if (s->phase == CROSS_DRIVE_APPROACH && tick - s->started_tick < CROSS_APPROACH_TICKS &&
-            s->approach_frames < CROSS_APPROACH_FRAMES &&
+        if (s->phase == CROSS_DRIVE_APPROACH && s->approach_frames < CROSS_APPROACH_FRAMES &&
             measured_stem(raw, thresholds, &out.near_error)) {
             ++s->approach_frames;
             out.valid = out.approach_only = 1;

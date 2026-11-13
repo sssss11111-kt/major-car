@@ -27,6 +27,13 @@ special_track_output_t rb_scan_frame(const uint8_t *raw, uint32_t tick, int forc
     primary.paired_rows = img_get_both_rows();
     special_track_update_rows(&scan_state, &scan_config, raw, img_get_row_thresholds(),
                               &primary, tick * 10u, force_full, &out);
+    const cross_straight_t *straight = img_get_cross_straight();
+    if (straight->active && straight->valid) {
+        out.type = out.frame_type = SPECIAL_CROSS_ISLAND;
+        out.state = SPECIAL_ACTIVE_CROSS;
+        out.full_scan_attempted = out.full_scan_valid = 1;
+        out.diagnostic_flags = 0;
+    }
     observed_side=rb_scan_entry_side(&out);
     return out;
 }
